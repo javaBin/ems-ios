@@ -19,7 +19,7 @@
 
 @synthesize delegate;
 
-- (void)fetchedEventCollection:(NSData *)responseData {
+- (void)fetchedEventCollection:(NSData *)responseData forHref:(NSURL *)href {
     CJCollection *collection = [CJCollection collectionForNSData:responseData];
     
     NSMutableArray *temp = [[NSMutableArray alloc] init];
@@ -55,46 +55,46 @@
             CJLink *link = (CJLink *)obj;
             
             if ([@"session collection" isEqualToString:link.rel]) {
-                NSLog(@"Saw a session collection href of %@", link.href);
+                conf.sessionCollection = link.href;
             }
             if ([@"slot collection" isEqualToString:link.rel]) {
-                NSLog(@"Saw a slot collection href of %@", link.href);
+                conf.slotCollection = link.href;
             }
             if ([@"room collection" isEqualToString:link.rel]) {
-                NSLog(@"Saw a room collection href of %@", link.href);
+                conf.roomCollection = link.href;
             }
         }];
         
         [temp addObject:conf];
     }];
     
-    [delegate finishedConferences:[NSArray arrayWithArray:temp]];
-}
-
-
-- (void)fetchedRoot:(NSData *)responseData {
-    CJCollection *collection = [CJCollection collectionForNSData:responseData];
-    
-    [collection.links enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        CJLink *link = (CJLink *)obj;
-        
-        if ([link.rel isEqualToString:@"event collection"]) {
-            [self fetch:link.href withSelector:@selector(fetchedEventCollection:)];
-        }
-    }];
-    
-}
-
-- (void)fetch:(NSURL *)url withSelector:(SEL)selector {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData* data = [NSData dataWithContentsOfURL:url];
-        [self performSelectorOnMainThread:selector
-                               withObject:data waitUntilDone:YES];
-    });
+    [delegate finishedConferences:[NSArray arrayWithArray:temp] forHref:href];
 }
 
 - (void) fetch:(NSURL *)url {
-    [self fetch:url withSelector:@selector(fetchedRoot:)];
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    dispatch_async(queue, ^{
+        NSData* root = [NSData dataWithContentsOfURL:url];
+        
+        dispatch_async(queue, ^{
+            CJCollection *collection = [CJCollection collectionForNSData:root];
+            
+            [collection.links enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                CJLink *link = (CJLink *)obj;
+                
+                if ([link.rel isEqualToString:@"event collection"]) {
+                    dispatch_async(queue, ^{
+                        NSData* events = [NSData dataWithContentsOfURL:link.href];
+
+                        dispatch_async(queue, ^{
+                            [self fetchedEventCollection:events forHref:url];
+                        });
+                    });
+                }
+            }];
+        });
+    });
 }
 
 

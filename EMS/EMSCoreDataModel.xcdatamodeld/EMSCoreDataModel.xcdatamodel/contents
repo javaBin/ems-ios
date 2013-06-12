@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Conference" syncable="YES">
+        <attribute name="end" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="roomCollection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sessionCollection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="slotCollection" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="slug" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="start" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Conference" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="Conference" positionX="160" positionY="192" width="128" height="165"/>
     </elements>
 </model>

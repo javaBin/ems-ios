@@ -16,3 +16,5 @@
 @property (strong, nonatomic) NSArray *conferences;
 
 @end
+
+// TODO - look at NSFetchedResultsController

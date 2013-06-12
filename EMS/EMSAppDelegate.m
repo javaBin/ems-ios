@@ -57,7 +57,7 @@
 									   otherButtonTitles:nil];
 			[errorAlert show];
 
-			AppLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         } 
     }
 }
@@ -70,7 +70,7 @@
         return __managedObjectContext;
     }
     
-    AppLog(@"No moc - initializing");
+    NSLog(@"No moc - initializing");
     
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
@@ -78,7 +78,7 @@
         [__managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
     
-    AppLog(@"No moc - initialized");
+    NSLog(@"No moc - initialized");
     
     return __managedObjectContext;
 }
@@ -88,12 +88,12 @@
         return __managedObjectModel;
     }
     
-    AppLog(@"No mom - initializing");
+    NSLog(@"No mom - initializing");
     
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"EMSCoreDataModel" withExtension:@"momd"];
     __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     
-    AppLog(@"No mom - initialized");
+    NSLog(@"No mom - initialized");
     
     return __managedObjectModel;
 }
@@ -104,7 +104,7 @@
         return __persistentStoreCoordinator;
     }
     
-    AppLog(@"No persistent store - initializing");
+    NSLog(@"No persistent store - initializing");
     
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"EMSCoreDataModel.sqlite"];
     
@@ -120,10 +120,10 @@
 								   otherButtonTitles:nil];
 		[errorAlert show];
         
-        AppLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
     }
     
-    AppLog(@"No persistent store - initialized");
+    NSLog(@"No persistent store - initialized");
     
     return __persistentStoreCoordinator;
 }
@@ -138,13 +138,15 @@
     
     if (managedObjectContext != nil) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-            /*
-             Replace this implementation with code to handle the error appropriately.
-             
-             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-             */
+            UIAlertView *errorAlert = [[UIAlertView alloc]
+                                       initWithTitle: @"Unable to update data store"
+                                       message: @"The data store failed to update and without it this application has no data to show. This is not an error we can recover from - please exit using the home button."
+                                       delegate:nil
+                                       cancelButtonTitle:@"OK"
+                                       otherButtonTitles:nil];
+            [errorAlert show];
+            
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
         }
     }
 }

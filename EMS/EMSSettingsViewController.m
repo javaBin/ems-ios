@@ -12,6 +12,7 @@
 #import "EMSRetriever.h"
 
 #import "EMSConference.h"
+#import "EMSSlot.h"
 
 @interface EMSSettingsViewController ()
 
@@ -108,7 +109,7 @@
 
 
 // TODO - Temp - get conferences directly - needs to move to model
-- (void)finishedConferences:(NSArray *)conferenceList {
+- (void)finishedConferences:(NSArray *)conferenceList forHref:(NSURL *)href {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     [defaults removeObjectForKey:@"activeConference"];
@@ -120,13 +121,31 @@
     [self.refreshControl endRefreshing];
 }
 
+- (void)finishedSlots:(NSArray *)slotList forHref:(NSURL *)href {
+    NSLog(@"Saw slots from %@", href);
+
+    [slotList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        EMSSlot *slot = (EMSSlot *)obj;
+        
+        NSLog(@"Saw a slot %@ to %@", slot.start, slot.end);
+    }];
+}
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    [defaults setObject:[[[tableView cellForRowAtIndexPath:indexPath] textLabel] text] forKey:@"activeConference"];
+    EMSConference *c = [conferences objectAtIndex:indexPath.row];
+    
+    [defaults setObject:c.name forKey:@"activeConference"];
 
     [self.tableView reloadData];
+    
+    EMSRetriever *retriever = [[EMSRetriever alloc] init];
+    
+    retriever.delegate = self;
+    
+    [retriever refreshSlots:c.slotCollection];
 }
 
 @end

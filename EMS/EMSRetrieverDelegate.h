@@ -12,6 +12,7 @@
 
 @optional
 
-- (void) finishedConferences:(NSArray *)conferences;
+- (void) finishedConferences:(NSArray *)conferences forHref:(NSURL *)href;
+- (void) finishedSlots:(NSArray *)slots forHref:(NSURL *)href;
 
 @end

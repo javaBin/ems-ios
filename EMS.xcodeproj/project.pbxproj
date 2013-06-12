@@ -30,7 +30,8 @@
 		F3939E4E176881380078C709 /* EMSDateConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E4D176881380078C709 /* EMSDateConverter.m */; };
 		F3939E50176887090078C709 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3939E4F176887090078C709 /* CoreData.framework */; };
 		F3939E531768879C0078C709 /* EMSCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */; };
-		F3939E5617688AF50078C709 /* AppLog.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E5517688AF50078C709 /* AppLog.m */; };
+		F3939E591768956E0078C709 /* EMSSlot.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E581768956E0078C709 /* EMSSlot.m */; };
+		F3939E5C176895CE0078C709 /* EMSSlotsRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E5B176895CE0078C709 /* EMSSlotsRetriever.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,8 +72,10 @@
 		F3939E4D176881380078C709 /* EMSDateConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDateConverter.m; sourceTree = "<group>"; };
 		F3939E4F176887090078C709 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		F3939E521768879C0078C709 /* EMSCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EMSCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
-		F3939E5417688AC70078C709 /* AppLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppLog.h; path = EMS/AppLog.h; sourceTree = "<group>"; };
-		F3939E5517688AF50078C709 /* AppLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppLog.m; sourceTree = "<group>"; };
+		F3939E571768956E0078C709 /* EMSSlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSlot.h; sourceTree = "<group>"; };
+		F3939E581768956E0078C709 /* EMSSlot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSlot.m; sourceTree = "<group>"; };
+		F3939E5A176895CE0078C709 /* EMSSlotsRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSlotsRetriever.h; sourceTree = "<group>"; };
+		F3939E5B176895CE0078C709 /* EMSSlotsRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSlotsRetriever.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,8 +96,6 @@
 		F35BB6B917685885009077D3 = {
 			isa = PBXGroup;
 			children = (
-				F3939E5517688AF50078C709 /* AppLog.m */,
-				F3939E5417688AC70078C709 /* AppLog.h */,
 				F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */,
 				F35BB6CB17685885009077D3 /* EMS */,
 				F35BB6C417685885009077D3 /* Frameworks */,
@@ -179,6 +180,10 @@
 				F35BB6FC17686478009077D3 /* EMSRetrieverDelegate.h */,
 				F3939E4C176881380078C709 /* EMSDateConverter.h */,
 				F3939E4D176881380078C709 /* EMSDateConverter.m */,
+				F3939E571768956E0078C709 /* EMSSlot.h */,
+				F3939E581768956E0078C709 /* EMSSlot.m */,
+				F3939E5A176895CE0078C709 /* EMSSlotsRetriever.h */,
+				F3939E5B176895CE0078C709 /* EMSSlotsRetriever.m */,
 			);
 			name = Retrieval;
 			sourceTree = "<group>";
@@ -264,7 +269,8 @@
 				F35BB70317686478009077D3 /* EMSRetriever.m in Sources */,
 				F3939E4E176881380078C709 /* EMSDateConverter.m in Sources */,
 				F3939E531768879C0078C709 /* EMSCoreDataModel.xcdatamodeld in Sources */,
-				F3939E5617688AF50078C709 /* AppLog.m in Sources */,
+				F3939E591768956E0078C709 /* EMSSlot.m in Sources */,
+				F3939E5C176895CE0078C709 /* EMSSlotsRetriever.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
