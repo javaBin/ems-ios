@@ -8,11 +8,18 @@
 
 #import "EMSSettingsViewController.h"
 
+// TODO - Temp - get conferences directly - needs to move to model
+#import "EMSRetriever.h"
+
 @interface EMSSettingsViewController ()
 
 @end
 
 @implementation EMSSettingsViewController
+
+@synthesize conferences;
+
+// TODO - populate conferences from model
 
 - (void)viewDidLoad
 {
@@ -25,10 +32,16 @@
     [refreshControl addTarget:self action:@selector(retrieve) forControlEvents:UIControlEventValueChanged];
     
     self.refreshControl = refreshControl;
+    
+    conferences = [[NSArray alloc] init];
 }
 
 - (void) retrieve {
-    [self.refreshControl endRefreshing];
+    EMSRetriever *retriever = [[EMSRetriever alloc] init];
+    
+    retriever.delegate = self;
+    
+    [retriever refreshConferences];
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,6 +53,10 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (conferences.count > 0) {
+        return conferences.count;
+    }
+
     return 1;
 }
 
@@ -49,17 +66,34 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ConferenceCell"];
     }
-    
-    cell.textLabel.text = @"No conferences retrieved";
-    cell.textLabel.textColor = [UIColor grayColor];
-    cell.detailTextLabel.text = @"Pull to refresh";
-    cell.detailTextLabel.textColor = [UIColor grayColor];
+
+    if (conferences.count > 0) {
+        cell.textLabel.text = [[conferences objectAtIndex:indexPath.row] name];
+        cell.detailTextLabel.text = @"TODO - show dates";
+        cell.textLabel.textColor = [UIColor blackColor];
+        cell.detailTextLabel.textColor = [UIColor blackColor];
+    } else {
+        cell.textLabel.text = @"No conferences retrieved";
+        cell.detailTextLabel.text = @"Pull to refresh";
+        cell.textLabel.textColor = [UIColor grayColor];
+        cell.detailTextLabel.textColor = [UIColor grayColor];
+    }
     
     return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     return @"Available Conferences";
+}
+
+
+// TODO - Temp - get conferences directly - needs to move to model
+- (void)finishedConferences:(NSArray *)conferenceList {
+    conferences = [NSArray arrayWithArray:conferenceList];
+    
+    [self.tableView reloadData];
+    
+    [self.refreshControl endRefreshing];
 }
 
 @end

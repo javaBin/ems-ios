@@ -20,6 +20,13 @@
 		F35BB6E217685885009077D3 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6E017685885009077D3 /* MainStoryboard_iPad.storyboard */; };
 		F35BB6E517685885009077D3 /* EMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6E417685885009077D3 /* EMSViewController.m */; };
 		F35BB6ED17685E71009077D3 /* EMSSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6EC17685E71009077D3 /* EMSSettingsViewController.m */; };
+		F35BB6FD17686478009077D3 /* CJCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6F017686478009077D3 /* CJCollection.m */; };
+		F35BB6FE17686478009077D3 /* CJItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6F217686478009077D3 /* CJItem.m */; };
+		F35BB6FF17686478009077D3 /* CJLink.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6F417686478009077D3 /* CJLink.m */; };
+		F35BB70017686478009077D3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6F517686478009077D3 /* README.md */; };
+		F35BB70117686478009077D3 /* EMSConference.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6F717686478009077D3 /* EMSConference.m */; };
+		F35BB70217686478009077D3 /* EMSConferencesRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6F917686478009077D3 /* EMSConferencesRetriever.m */; };
+		F35BB70317686478009077D3 /* EMSRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6FB17686478009077D3 /* EMSRetriever.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +49,20 @@
 		F35BB6E417685885009077D3 /* EMSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EMSViewController.m; sourceTree = "<group>"; };
 		F35BB6EB17685E71009077D3 /* EMSSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSettingsViewController.h; sourceTree = "<group>"; };
 		F35BB6EC17685E71009077D3 /* EMSSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSettingsViewController.m; sourceTree = "<group>"; };
+		F35BB6EF17686478009077D3 /* CJCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJCollection.h; sourceTree = "<group>"; };
+		F35BB6F017686478009077D3 /* CJCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJCollection.m; sourceTree = "<group>"; };
+		F35BB6F117686478009077D3 /* CJItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJItem.h; sourceTree = "<group>"; };
+		F35BB6F217686478009077D3 /* CJItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJItem.m; sourceTree = "<group>"; };
+		F35BB6F317686478009077D3 /* CJLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJLink.h; sourceTree = "<group>"; };
+		F35BB6F417686478009077D3 /* CJLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJLink.m; sourceTree = "<group>"; };
+		F35BB6F517686478009077D3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		F35BB6F617686478009077D3 /* EMSConference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConference.h; sourceTree = "<group>"; };
+		F35BB6F717686478009077D3 /* EMSConference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConference.m; sourceTree = "<group>"; };
+		F35BB6F817686478009077D3 /* EMSConferencesRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConferencesRetriever.h; sourceTree = "<group>"; };
+		F35BB6F917686478009077D3 /* EMSConferencesRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConferencesRetriever.m; sourceTree = "<group>"; };
+		F35BB6FA17686478009077D3 /* EMSRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSRetriever.h; sourceTree = "<group>"; };
+		F35BB6FB17686478009077D3 /* EMSRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSRetriever.m; sourceTree = "<group>"; };
+		F35BB6FC17686478009077D3 /* EMSRetrieverDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSRetrieverDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +109,8 @@
 		F35BB6CB17685885009077D3 /* EMS */ = {
 			isa = PBXGroup;
 			children = (
+				F35BB6EE17686478009077D3 /* CollectionJSON */,
+				F35BB70417686486009077D3 /* Retrieval */,
 				F35BB6D417685885009077D3 /* EMSAppDelegate.h */,
 				F35BB6D517685885009077D3 /* EMSAppDelegate.m */,
 				F35BB6DD17685885009077D3 /* MainStoryboard_iPhone.storyboard */,
@@ -113,6 +136,34 @@
 				F35BB6DB17685885009077D3 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F35BB6EE17686478009077D3 /* CollectionJSON */ = {
+			isa = PBXGroup;
+			children = (
+				F35BB6EF17686478009077D3 /* CJCollection.h */,
+				F35BB6F017686478009077D3 /* CJCollection.m */,
+				F35BB6F117686478009077D3 /* CJItem.h */,
+				F35BB6F217686478009077D3 /* CJItem.m */,
+				F35BB6F317686478009077D3 /* CJLink.h */,
+				F35BB6F417686478009077D3 /* CJLink.m */,
+				F35BB6F517686478009077D3 /* README.md */,
+			);
+			path = CollectionJSON;
+			sourceTree = "<group>";
+		};
+		F35BB70417686486009077D3 /* Retrieval */ = {
+			isa = PBXGroup;
+			children = (
+				F35BB6F617686478009077D3 /* EMSConference.h */,
+				F35BB6F717686478009077D3 /* EMSConference.m */,
+				F35BB6F817686478009077D3 /* EMSConferencesRetriever.h */,
+				F35BB6F917686478009077D3 /* EMSConferencesRetriever.m */,
+				F35BB6FA17686478009077D3 /* EMSRetriever.h */,
+				F35BB6FB17686478009077D3 /* EMSRetriever.m */,
+				F35BB6FC17686478009077D3 /* EMSRetrieverDelegate.h */,
+			);
+			name = Retrieval;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -173,6 +224,7 @@
 				F35BB6DC17685885009077D3 /* Default-568h@2x.png in Resources */,
 				F35BB6DF17685885009077D3 /* MainStoryboard_iPhone.storyboard in Resources */,
 				F35BB6E217685885009077D3 /* MainStoryboard_iPad.storyboard in Resources */,
+				F35BB70017686478009077D3 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,6 +239,12 @@
 				F35BB6D617685885009077D3 /* EMSAppDelegate.m in Sources */,
 				F35BB6E517685885009077D3 /* EMSViewController.m in Sources */,
 				F35BB6ED17685E71009077D3 /* EMSSettingsViewController.m in Sources */,
+				F35BB6FD17686478009077D3 /* CJCollection.m in Sources */,
+				F35BB6FE17686478009077D3 /* CJItem.m in Sources */,
+				F35BB6FF17686478009077D3 /* CJLink.m in Sources */,
+				F35BB70117686478009077D3 /* EMSConference.m in Sources */,
+				F35BB70217686478009077D3 /* EMSConferencesRetriever.m in Sources */,
+				F35BB70317686478009077D3 /* EMSRetriever.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

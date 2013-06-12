@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EMSSettingsViewController : UITableViewController <UITableViewDataSource>
+// TODO - Temp - get conferences directly - needs to move to model
+#import "EMSRetrieverDelegate.h"
+
+@interface EMSSettingsViewController : UITableViewController <UITableViewDataSource, EMSRetrieverDelegate>
+
+@property (strong, nonatomic) NSArray *conferences;
 
 @end
