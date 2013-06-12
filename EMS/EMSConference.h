@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *slug;
+@property (strong, nonatomic) NSString *venue;
 
 @property (strong, nonatomic) NSDate   *start;
 @property (strong, nonatomic) NSDate   *end;

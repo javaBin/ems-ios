@@ -12,6 +12,7 @@
 
 @synthesize name;
 @synthesize slug;
+@synthesize venue;
 
 @synthesize start;
 @synthesize end;

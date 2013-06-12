@@ -30,7 +30,7 @@
 
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
 
-    refreshControl.tintColor = [UIColor magentaColor];
+    refreshControl.tintColor = [UIColor grayColor];
     
     [refreshControl addTarget:self action:@selector(retrieve) forControlEvents:UIControlEventValueChanged];
     
@@ -73,7 +73,9 @@
     if (conferences.count > 0) {
         EMSConference *c = [conferences objectAtIndex:indexPath.row];
         
-        cell.textLabel.text = c.name;
+        cell.textLabel.text = [NSString stringWithFormat:@"%@ - %@",
+                               c.name,
+                               c.venue];
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         

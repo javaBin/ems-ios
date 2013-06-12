@@ -43,6 +43,9 @@
             if ([@"slug" isEqualToString:field]) {
                 conf.slug = value;
             }
+            if ([@"venue" isEqualToString:field]) {
+                conf.venue = value;
+            }
             if ([@"start" isEqualToString:field]) {
                 conf.start = [EMSDateConverter dateFromString:value];
             }
