@@ -13,6 +13,8 @@
 #import "CJLink.h"
 #import "CJItem.h"
 
+#import "EMSDateConverter.h"
+
 @implementation EMSConferencesRetriever
 
 @synthesize delegate;
@@ -42,10 +44,10 @@
                 conf.slug = value;
             }
             if ([@"start" isEqualToString:field]) {
-                NSLog(@"Start date is %@", value);
+                conf.start = [EMSDateConverter dateFromString:value];
             }
             if ([@"end" isEqualToString:field]) {
-                NSLog(@"End date is %@", value);
+                conf.end = [EMSDateConverter dateFromString:value];
             }
         }];
         

@@ -11,6 +11,8 @@
 // TODO - Temp - get conferences directly - needs to move to model
 #import "EMSRetriever.h"
 
+#import "EMSConference.h"
+
 @interface EMSSettingsViewController ()
 
 @end
@@ -68,10 +70,28 @@
     }
 
     if (conferences.count > 0) {
-        cell.textLabel.text = [[conferences objectAtIndex:indexPath.row] name];
-        cell.detailTextLabel.text = @"TODO - show dates";
+        EMSConference *c = [conferences objectAtIndex:indexPath.row];
+        
+        cell.textLabel.text = c.name;
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ - %@",
+                                     [dateFormatter stringFromDate:c.start],
+                                     [dateFormatter stringFromDate:c.end]];
         cell.textLabel.textColor = [UIColor blackColor];
         cell.detailTextLabel.textColor = [UIColor blackColor];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *activeConference = [defaults objectForKey:@"activeConference"];
+        
+        if ([c.name isEqualToString:activeConference]) {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
     } else {
         cell.textLabel.text = @"No conferences retrieved";
         cell.detailTextLabel.text = @"Pull to refresh";
@@ -89,11 +109,24 @@
 
 // TODO - Temp - get conferences directly - needs to move to model
 - (void)finishedConferences:(NSArray *)conferenceList {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    [defaults removeObjectForKey:@"activeConference"];
+    
     conferences = [NSArray arrayWithArray:conferenceList];
     
     [self.tableView reloadData];
     
     [self.refreshControl endRefreshing];
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    [defaults setObject:[[[tableView cellForRowAtIndexPath:indexPath] textLabel] text] forKey:@"activeConference"];
+
+    [self.tableView reloadData];
 }
 
 @end

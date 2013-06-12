@@ -27,6 +27,10 @@
 		F35BB70117686478009077D3 /* EMSConference.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6F717686478009077D3 /* EMSConference.m */; };
 		F35BB70217686478009077D3 /* EMSConferencesRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6F917686478009077D3 /* EMSConferencesRetriever.m */; };
 		F35BB70317686478009077D3 /* EMSRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6FB17686478009077D3 /* EMSRetriever.m */; };
+		F3939E4E176881380078C709 /* EMSDateConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E4D176881380078C709 /* EMSDateConverter.m */; };
+		F3939E50176887090078C709 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3939E4F176887090078C709 /* CoreData.framework */; };
+		F3939E531768879C0078C709 /* EMSCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */; };
+		F3939E5617688AF50078C709 /* AppLog.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E5517688AF50078C709 /* AppLog.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +67,12 @@
 		F35BB6FA17686478009077D3 /* EMSRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSRetriever.h; sourceTree = "<group>"; };
 		F35BB6FB17686478009077D3 /* EMSRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSRetriever.m; sourceTree = "<group>"; };
 		F35BB6FC17686478009077D3 /* EMSRetrieverDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSRetrieverDelegate.h; sourceTree = "<group>"; };
+		F3939E4C176881380078C709 /* EMSDateConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSDateConverter.h; sourceTree = "<group>"; };
+		F3939E4D176881380078C709 /* EMSDateConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDateConverter.m; sourceTree = "<group>"; };
+		F3939E4F176887090078C709 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		F3939E521768879C0078C709 /* EMSCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EMSCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
+		F3939E5417688AC70078C709 /* AppLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppLog.h; path = EMS/AppLog.h; sourceTree = "<group>"; };
+		F3939E5517688AF50078C709 /* AppLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppLog.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3939E50176887090078C709 /* CoreData.framework in Frameworks */,
 				F35BB6C617685885009077D3 /* UIKit.framework in Frameworks */,
 				F35BB6C817685885009077D3 /* Foundation.framework in Frameworks */,
 				F35BB6CA17685885009077D3 /* CoreGraphics.framework in Frameworks */,
@@ -82,6 +93,9 @@
 		F35BB6B917685885009077D3 = {
 			isa = PBXGroup;
 			children = (
+				F3939E5517688AF50078C709 /* AppLog.m */,
+				F3939E5417688AC70078C709 /* AppLog.h */,
+				F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */,
 				F35BB6CB17685885009077D3 /* EMS */,
 				F35BB6C417685885009077D3 /* Frameworks */,
 				F35BB6C317685885009077D3 /* Products */,
@@ -99,6 +113,7 @@
 		F35BB6C417685885009077D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F3939E4F176887090078C709 /* CoreData.framework */,
 				F35BB6C517685885009077D3 /* UIKit.framework */,
 				F35BB6C717685885009077D3 /* Foundation.framework */,
 				F35BB6C917685885009077D3 /* CoreGraphics.framework */,
@@ -162,6 +177,8 @@
 				F35BB6FA17686478009077D3 /* EMSRetriever.h */,
 				F35BB6FB17686478009077D3 /* EMSRetriever.m */,
 				F35BB6FC17686478009077D3 /* EMSRetrieverDelegate.h */,
+				F3939E4C176881380078C709 /* EMSDateConverter.h */,
+				F3939E4D176881380078C709 /* EMSDateConverter.m */,
 			);
 			name = Retrieval;
 			sourceTree = "<group>";
@@ -245,6 +262,9 @@
 				F35BB70117686478009077D3 /* EMSConference.m in Sources */,
 				F35BB70217686478009077D3 /* EMSConferencesRetriever.m in Sources */,
 				F35BB70317686478009077D3 /* EMSRetriever.m in Sources */,
+				F3939E4E176881380078C709 /* EMSDateConverter.m in Sources */,
+				F3939E531768879C0078C709 /* EMSCoreDataModel.xcdatamodeld in Sources */,
+				F3939E5617688AF50078C709 /* AppLog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,8 +397,23 @@
 				F35BB6EA17685885009077D3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F3939E521768879C0078C709 /* EMSCoreDataModel.xcdatamodel */,
+			);
+			currentVersion = F3939E521768879C0078C709 /* EMSCoreDataModel.xcdatamodel */;
+			name = EMSCoreDataModel.xcdatamodeld;
+			path = EMS/EMSCoreDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = F35BB6BA17685885009077D3 /* Project object */;
 }
