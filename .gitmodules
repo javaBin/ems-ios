@@ -1,0 +1,3 @@
+[submodule "CollectionJSON"]
+	path = CollectionJSON
+	url = git@github.com:chrissearle/Collection-JSON-ObjC.git
