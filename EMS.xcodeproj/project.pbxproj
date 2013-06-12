@@ -19,6 +19,7 @@
 		F35BB6DF17685885009077D3 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6DD17685885009077D3 /* MainStoryboard_iPhone.storyboard */; };
 		F35BB6E217685885009077D3 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6E017685885009077D3 /* MainStoryboard_iPad.storyboard */; };
 		F35BB6E517685885009077D3 /* EMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6E417685885009077D3 /* EMSViewController.m */; };
+		F35BB6ED17685E71009077D3 /* EMSSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6EC17685E71009077D3 /* EMSSettingsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,8 @@
 		F35BB6E117685885009077D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		F35BB6E317685885009077D3 /* EMSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EMSViewController.h; sourceTree = "<group>"; };
 		F35BB6E417685885009077D3 /* EMSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EMSViewController.m; sourceTree = "<group>"; };
+		F35BB6EB17685E71009077D3 /* EMSSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSettingsViewController.h; sourceTree = "<group>"; };
+		F35BB6EC17685E71009077D3 /* EMSSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSettingsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +95,8 @@
 				F35BB6E317685885009077D3 /* EMSViewController.h */,
 				F35BB6E417685885009077D3 /* EMSViewController.m */,
 				F35BB6CC17685885009077D3 /* Supporting Files */,
+				F35BB6EB17685E71009077D3 /* EMSSettingsViewController.h */,
+				F35BB6EC17685E71009077D3 /* EMSSettingsViewController.m */,
 			);
 			path = EMS;
 			sourceTree = "<group>";
@@ -181,6 +186,7 @@
 				F35BB6D217685885009077D3 /* main.m in Sources */,
 				F35BB6D617685885009077D3 /* EMSAppDelegate.m in Sources */,
 				F35BB6E517685885009077D3 /* EMSViewController.m in Sources */,
+				F35BB6ED17685E71009077D3 /* EMSSettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
