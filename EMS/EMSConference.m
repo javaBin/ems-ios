@@ -1,9 +1,5 @@
 //
 //  EMSConference.m
-//  TestRig
-//
-//  Created by Chris Searle on 07.06.13.
-//
 //
 
 #import "EMSConference.h"
