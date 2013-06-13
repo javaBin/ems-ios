@@ -11,5 +11,7 @@
 
 - (void) refreshConferences;
 - (void) refreshSlots:(NSURL *) slotCollection;
+- (void) refreshSessions:(NSURL *) sessionCollection;
+- (void) refreshRooms:(NSURL *) roomCollection;
 
 @end

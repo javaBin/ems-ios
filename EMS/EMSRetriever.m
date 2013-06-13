@@ -6,6 +6,8 @@
 
 #import "EMSConferencesRetriever.h"
 #import "EMSSlotsRetriever.h"
+#import "EMSSessionsRetriever.h"
+#import "EMSRoomsRetriever.h"
 
 @implementation EMSRetriever
 
@@ -28,6 +30,22 @@
     retriever.delegate = delegate;
     
     [retriever fetch:slotCollection];
+}
+
+- (void) refreshSessions:(NSURL *)sessionCollection {
+    EMSSessionsRetriever *retriever = [[EMSSessionsRetriever alloc] init];
+    
+    retriever.delegate = delegate;
+    
+    [retriever fetch:sessionCollection];
+}
+
+- (void) refreshRooms:(NSURL *)roomCollection {
+    EMSRoomsRetriever *retriever = [[EMSRoomsRetriever alloc] init];
+    
+    retriever.delegate = delegate;
+    
+    [retriever fetch:roomCollection];
 }
 
 @end

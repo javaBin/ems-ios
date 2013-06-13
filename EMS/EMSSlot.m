@@ -6,4 +6,8 @@
 
 @implementation EMSSlot
 
+@synthesize start;
+@synthesize end;
+@synthesize href;
+
 @end

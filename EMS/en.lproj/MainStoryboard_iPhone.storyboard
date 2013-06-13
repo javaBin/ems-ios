@@ -7,7 +7,7 @@
         <!--Settings View Controller - Settings-->
         <scene sceneID="Qzx-uX-2TG">
             <objects>
-                <tableViewController id="6ld-j3-ru2" customClass="EMSSettingsViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SettingsView" id="6ld-j3-ru2" customClass="EMSSettingsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="O0o-sM-Nx8">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -46,21 +46,33 @@
             </objects>
             <point key="canvasLocation" x="1529" y="-67"/>
         </scene>
-        <!--Table View Controller - Sessions-->
+        <!--Main View Controller - Sessions-->
         <scene sceneID="C5v-Jb-6FW">
             <objects>
-                <tableViewController id="bNB-PM-Jcs" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gDK-VA-ggF">
+                <tableViewController id="bNB-PM-Jcs" customClass="EMSMainViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" sectionIndexMinimumDisplayRowCount="500" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gDK-VA-ggF">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="PYN-Ut-rdj">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SessionCell" textLabel="kIw-9H-dIi" detailTextLabel="Ic1-0m-wd0" style="IBUITableViewCellStyleSubtitle" id="PYN-Ut-rdj">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kIw-9H-dIi">
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ic1-0m-wd0">
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                             </tableViewCell>
@@ -69,7 +81,7 @@
                     <navigationItem key="navigationItem" title="Sessions" id="iZo-Hp-orM">
                         <barButtonItem key="leftBarButtonItem" title="Settings" id="IHa-T0-39E">
                             <connections>
-                                <segue destination="6ld-j3-ru2" kind="push" id="mpM-Oq-YCs"/>
+                                <segue destination="6ld-j3-ru2" kind="push" identifier="showSettingsView" id="mpM-Oq-YCs"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -95,6 +107,9 @@
         </scene>
     </scenes>
     <classes>
+        <class className="EMSMainViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSMainViewController.h"/>
+        </class>
         <class className="EMSSettingsViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSSettingsViewController.h"/>
         </class>

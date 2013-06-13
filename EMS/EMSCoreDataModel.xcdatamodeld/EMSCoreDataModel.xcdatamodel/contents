@@ -10,8 +10,52 @@
         <attribute name="slug" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="start" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="venue" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="rooms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Room" inverseName="conference" inverseEntity="Room" syncable="YES"/>
+        <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Session" inverseName="conference" inverseEntity="Session" syncable="YES"/>
+        <relationship name="slots" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Slot" inverseName="conference" inverseEntity="Slot" syncable="YES"/>
+    </entity>
+    <entity name="Keyword" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Session" inverseName="keywords" inverseEntity="Session" syncable="YES"/>
+    </entity>
+    <entity name="Room" syncable="YES">
+        <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="conference" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conference" inverseName="rooms" inverseEntity="Conference" syncable="YES"/>
+        <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Session" inverseName="room" inverseEntity="Session" syncable="YES"/>
+    </entity>
+    <entity name="Session" syncable="YES">
+        <attribute name="attachmentCollection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="audience" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="format" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="level" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="roomName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="slotName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="slug" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="speakerCollection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="summary" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="conference" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conference" inverseName="sessions" inverseEntity="Conference" syncable="YES"/>
+        <relationship name="keywords" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Keyword" inverseName="sessions" inverseEntity="Keyword" syncable="YES"/>
+        <relationship name="room" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Room" inverseName="sessions" inverseEntity="Room" syncable="YES"/>
+        <relationship name="slot" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Slot" inverseName="sessions" inverseEntity="Slot" syncable="YES"/>
+    </entity>
+    <entity name="Slot" syncable="YES">
+        <attribute name="end" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="start" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="conference" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conference" inverseName="slots" inverseEntity="Conference" syncable="YES"/>
+        <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Session" inverseName="slot" inverseEntity="Session" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Conference" positionX="160" positionY="192" width="128" height="180"/>
+        <element name="Conference" positionX="160" positionY="192" width="128" height="225"/>
+        <element name="Keyword" positionX="774" positionY="567" width="128" height="73"/>
+        <element name="Room" positionX="376" positionY="255" width="128" height="105"/>
+        <element name="Session" positionX="592" positionY="324" width="128" height="315"/>
+        <element name="Slot" positionX="270" positionY="522" width="128" height="118"/>
     </elements>
 </model>

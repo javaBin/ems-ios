@@ -3,12 +3,14 @@
 //
 
 #import "EMSAppDelegate.h"
+#import "EMSModel.h"
 
 @implementation EMSAppDelegate
 
 @synthesize managedObjectContext=__managedObjectContext;
 @synthesize managedObjectModel=__managedObjectModel;
 @synthesize persistentStoreCoordinator=__persistentStoreCoordinator;
+@synthesize model=__model;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -58,6 +60,19 @@
     }
 }
 
+- (EMSModel *)model {
+    if (__model != nil) {
+        return __model;
+    }
+    
+    NSLog(@"No model - initializing");
+    
+    __model = [[EMSModel alloc] initWithManagedObjectContext:[self managedObjectContext]];
+    
+    return __model;
+}
+
+
 #pragma mark -
 #pragma mark Core Data stack
 
@@ -106,8 +121,12 @@
     
     NSError *error = nil;
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    
-    if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
+                             [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+
+    if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
 		UIAlertView *errorAlert = [[UIAlertView alloc]
 								   initWithTitle: @"Unable to load data store"
 								   message: @"The data store failed to load and without it this application has no data to show. This is not an error we can recover from - please exit using the home button."
@@ -147,5 +166,9 @@
     }
 }
 
++ (EMSAppDelegate *)sharedAppDelegate
+{
+    return (EMSAppDelegate *)[[UIApplication sharedApplication] delegate];
+}
 
 @end

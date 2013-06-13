@@ -4,13 +4,16 @@
 
 #import <UIKit/UIKit.h>
 
-// TODO - Temp - get conferences directly - needs to move to model
 #import "EMSRetrieverDelegate.h"
+#import "EMSConferenceChangedDelegate.h"
+#import "EMSModel.h"
 
-@interface EMSSettingsViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate>
+@interface EMSSettingsViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, NSFetchedResultsControllerDelegate>
 
-@property (strong, nonatomic) NSArray *conferences;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+
+@property (nonatomic, strong) id <EMSConferenceChangedDelegate> delegate;
+
+@property (nonatomic, strong) EMSModel *model;
 
 @end
-
-// TODO - look at NSFetchedResultsController

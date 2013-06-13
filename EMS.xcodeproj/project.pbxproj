@@ -27,12 +27,18 @@
 		F35BB70117686478009077D3 /* EMSConference.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6F717686478009077D3 /* EMSConference.m */; };
 		F35BB70217686478009077D3 /* EMSConferencesRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6F917686478009077D3 /* EMSConferencesRetriever.m */; };
 		F35BB70317686478009077D3 /* EMSRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6FB17686478009077D3 /* EMSRetriever.m */; };
+		F36C4A71176EF58100FED450 /* EMSSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F36C4A70176EF58100FED450 /* EMSSession.m */; };
+		F36C4A74176EF7C300FED450 /* EMSSessionsRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = F36C4A73176EF7C300FED450 /* EMSSessionsRetriever.m */; };
+		F36C4A77176EFF7E00FED450 /* EMSRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = F36C4A76176EFF7E00FED450 /* EMSRoom.m */; };
+		F36C4A7A176F001200FED450 /* EMSRoomsRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = F36C4A79176F001200FED450 /* EMSRoomsRetriever.m */; };
 		F3939E4E176881380078C709 /* EMSDateConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E4D176881380078C709 /* EMSDateConverter.m */; };
 		F3939E50176887090078C709 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3939E4F176887090078C709 /* CoreData.framework */; };
 		F3939E531768879C0078C709 /* EMSCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */; };
 		F3939E591768956E0078C709 /* EMSSlot.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E581768956E0078C709 /* EMSSlot.m */; };
 		F3939E5C176895CE0078C709 /* EMSSlotsRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E5B176895CE0078C709 /* EMSSlotsRetriever.m */; };
 		F3939E5E1769AE260078C709 /* EMS-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = F3939E5D1769AE260078C709 /* EMS-Config.plist */; };
+		F3939E611769C3CE0078C709 /* EMSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E601769C3CD0078C709 /* EMSModel.m */; };
+		F3939E64176B1E520078C709 /* EMSMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E63176B1E520078C709 /* EMSMainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +75,14 @@
 		F35BB6FA17686478009077D3 /* EMSRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSRetriever.h; sourceTree = "<group>"; };
 		F35BB6FB17686478009077D3 /* EMSRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSRetriever.m; sourceTree = "<group>"; };
 		F35BB6FC17686478009077D3 /* EMSRetrieverDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSRetrieverDelegate.h; sourceTree = "<group>"; };
+		F36C4A6F176EF58100FED450 /* EMSSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSession.h; sourceTree = "<group>"; };
+		F36C4A70176EF58100FED450 /* EMSSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSession.m; sourceTree = "<group>"; };
+		F36C4A72176EF7C300FED450 /* EMSSessionsRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSessionsRetriever.h; sourceTree = "<group>"; };
+		F36C4A73176EF7C300FED450 /* EMSSessionsRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSessionsRetriever.m; sourceTree = "<group>"; };
+		F36C4A75176EFF7E00FED450 /* EMSRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSRoom.h; sourceTree = "<group>"; };
+		F36C4A76176EFF7E00FED450 /* EMSRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSRoom.m; sourceTree = "<group>"; };
+		F36C4A78176F001200FED450 /* EMSRoomsRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSRoomsRetriever.h; sourceTree = "<group>"; };
+		F36C4A79176F001200FED450 /* EMSRoomsRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSRoomsRetriever.m; sourceTree = "<group>"; };
 		F3939E4C176881380078C709 /* EMSDateConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSDateConverter.h; sourceTree = "<group>"; };
 		F3939E4D176881380078C709 /* EMSDateConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDateConverter.m; sourceTree = "<group>"; };
 		F3939E4F176887090078C709 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -78,6 +92,11 @@
 		F3939E5A176895CE0078C709 /* EMSSlotsRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSlotsRetriever.h; sourceTree = "<group>"; };
 		F3939E5B176895CE0078C709 /* EMSSlotsRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSlotsRetriever.m; sourceTree = "<group>"; };
 		F3939E5D1769AE260078C709 /* EMS-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Config.plist"; sourceTree = "<group>"; };
+		F3939E5F1769C3CD0078C709 /* EMSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSModel.h; sourceTree = "<group>"; };
+		F3939E601769C3CD0078C709 /* EMSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSModel.m; sourceTree = "<group>"; };
+		F3939E62176B1E510078C709 /* EMSMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSMainViewController.h; sourceTree = "<group>"; };
+		F3939E63176B1E520078C709 /* EMSMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSMainViewController.m; sourceTree = "<group>"; };
+		F3956834176F3CFB00639FFD /* EMSConferenceChangedDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConferenceChangedDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +157,11 @@
 				F35BB6CC17685885009077D3 /* Supporting Files */,
 				F35BB6EB17685E71009077D3 /* EMSSettingsViewController.h */,
 				F35BB6EC17685E71009077D3 /* EMSSettingsViewController.m */,
+				F3939E5F1769C3CD0078C709 /* EMSModel.h */,
+				F3939E601769C3CD0078C709 /* EMSModel.m */,
+				F3939E62176B1E510078C709 /* EMSMainViewController.h */,
+				F3939E63176B1E520078C709 /* EMSMainViewController.m */,
+				F3956834176F3CFB00639FFD /* EMSConferenceChangedDelegate.h */,
 			);
 			path = EMS;
 			sourceTree = "<group>";
@@ -187,6 +211,14 @@
 				F3939E581768956E0078C709 /* EMSSlot.m */,
 				F3939E5A176895CE0078C709 /* EMSSlotsRetriever.h */,
 				F3939E5B176895CE0078C709 /* EMSSlotsRetriever.m */,
+				F36C4A6F176EF58100FED450 /* EMSSession.h */,
+				F36C4A70176EF58100FED450 /* EMSSession.m */,
+				F36C4A72176EF7C300FED450 /* EMSSessionsRetriever.h */,
+				F36C4A73176EF7C300FED450 /* EMSSessionsRetriever.m */,
+				F36C4A75176EFF7E00FED450 /* EMSRoom.h */,
+				F36C4A76176EFF7E00FED450 /* EMSRoom.m */,
+				F36C4A78176F001200FED450 /* EMSRoomsRetriever.h */,
+				F36C4A79176F001200FED450 /* EMSRoomsRetriever.m */,
 			);
 			name = Retrieval;
 			sourceTree = "<group>";
@@ -275,6 +307,12 @@
 				F3939E531768879C0078C709 /* EMSCoreDataModel.xcdatamodeld in Sources */,
 				F3939E591768956E0078C709 /* EMSSlot.m in Sources */,
 				F3939E5C176895CE0078C709 /* EMSSlotsRetriever.m in Sources */,
+				F3939E611769C3CE0078C709 /* EMSModel.m in Sources */,
+				F3939E64176B1E520078C709 /* EMSMainViewController.m in Sources */,
+				F36C4A71176EF58100FED450 /* EMSSession.m in Sources */,
+				F36C4A74176EF7C300FED450 /* EMSSessionsRetriever.m in Sources */,
+				F36C4A77176EFF7E00FED450 /* EMSRoom.m in Sources */,
+				F36C4A7A176F001200FED450 /* EMSRoomsRetriever.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

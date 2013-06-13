@@ -10,29 +10,91 @@
 #import "EMSConference.h"
 #import "EMSSlot.h"
 
+#import "EMSAppDelegate.h"
+
+#import "EMSMainViewController.h"
+
+#import "EMSModel.h"
+
 @interface EMSSettingsViewController ()
 
 @end
 
 @implementation EMSSettingsViewController
 
-@synthesize conferences;
+@synthesize fetchedResultsController = _fetchedResultsController;
+@synthesize delegate;
+@synthesize model;
 
-// TODO - populate conferences from model
+- (void) setUpRefreshControl {
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    
+    refreshControl.tintColor = [UIColor grayColor];
+    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refresh available conferences"];
+    
+    [refreshControl addTarget:self action:@selector(retrieve) forControlEvents:UIControlEventValueChanged];
+    
+    self.refreshControl = refreshControl;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    self.model = [[EMSAppDelegate sharedAppDelegate] model];
+    
+    [self setUpRefreshControl];
+    
+    NSError *error;
 
-    refreshControl.tintColor = [UIColor grayColor];
+	if (![[self fetchedResultsController] performFetch:&error]) {
+		// Update to handle the error appropriately.
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		exit(-1);  // TODO alert
+	}
     
-    [refreshControl addTarget:self action:@selector(retrieve) forControlEvents:UIControlEventValueChanged];
+    id sectionInfo = [[_fetchedResultsController sections] objectAtIndex:0];
     
-    self.refreshControl = refreshControl;
+    if ([sectionInfo numberOfObjects] == 0) {
+        [self.refreshControl beginRefreshing];
+        [self retrieve];
+    }
+}
+
+- (void)viewDidUnload
+{
+    self.model = nil;
+    self.fetchedResultsController = nil;
+}
+
+- (NSFetchedResultsController *)fetchedResultsController {
     
-    conferences = [[NSArray alloc] init];
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
+    }
+
+    NSManagedObjectContext *managedObjectContext = [[EMSAppDelegate sharedAppDelegate] managedObjectContext];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:@"Conference" inManagedObjectContext:managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc]
+                              initWithKey:@"name" ascending:NO];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
+    
+    [fetchRequest setFetchBatchSize:20];
+    
+    NSFetchedResultsController *theFetchedResultsController =
+    [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                        managedObjectContext:managedObjectContext sectionNameKeyPath:nil
+                                                   cacheName:@"Conferences"];
+    self.fetchedResultsController = theFetchedResultsController;
+
+    _fetchedResultsController.delegate = self;
+    
+    return _fetchedResultsController;
 }
 
 - (void) retrieve {
@@ -52,11 +114,35 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (conferences.count > 0) {
-        return conferences.count;
-    }
+    id sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
 
-    return 1;
+    return [sectionInfo numberOfObjects];
+}
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    NSManagedObject *conference = [_fetchedResultsController objectAtIndexPath:indexPath];
+        
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ - %@",
+                           [conference valueForKey:@"name"],
+                           [conference valueForKey:@"venue"]];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ - %@",
+                                 [dateFormatter stringFromDate:[conference valueForKey:@"start"]],
+                                 [dateFormatter stringFromDate:[conference valueForKey:@"end"]]];
+        
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *activeConference = [[defaults URLForKey:@"activeConference"] absoluteString];
+    NSString *cellConference   = [conference valueForKey:@"href"];
+        
+    if ([cellConference isEqualToString:activeConference]) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -66,37 +152,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ConferenceCell"];
     }
 
-    if (conferences.count > 0) {
-        EMSConference *c = [conferences objectAtIndex:indexPath.row];
-        
-        cell.textLabel.text = [NSString stringWithFormat:@"%@ - %@",
-                               c.name,
-                               c.venue];
-        
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        
-        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ - %@",
-                                     [dateFormatter stringFromDate:c.start],
-                                     [dateFormatter stringFromDate:c.end]];
-        cell.textLabel.textColor = [UIColor blackColor];
-        cell.detailTextLabel.textColor = [UIColor blackColor];
-        
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *activeConference = [defaults objectForKey:@"activeConference"];
-        
-        if ([c.name isEqualToString:activeConference]) {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        } else {
-            cell.accessoryType = UITableViewCellAccessoryNone;
-        }
-    } else {
-        cell.textLabel.text = @"No conferences retrieved";
-        cell.detailTextLabel.text = @"Pull to refresh";
-        cell.textLabel.textColor = [UIColor grayColor];
-        cell.detailTextLabel.textColor = [UIColor grayColor];
-    }
+    [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
 }
@@ -106,44 +162,85 @@
 }
 
 
-// TODO - Temp - get conferences directly - needs to move to model
 - (void)finishedConferences:(NSArray *)conferenceList forHref:(NSURL *)href {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [self.model storeConferences:conferenceList error:nil];
 
-    [defaults removeObjectForKey:@"activeConference"];
-    
-    conferences = [NSArray arrayWithArray:conferenceList];
-    
-    [self.tableView reloadData];
-    
     [self.refreshControl endRefreshing];
 }
 
-- (void)finishedSlots:(NSArray *)slotList forHref:(NSURL *)href {
-    NSLog(@"Saw slots from %@", href);
-
-    [slotList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        EMSSlot *slot = (EMSSlot *)obj;
-        
-        NSLog(@"Saw a slot %@ to %@", slot.start, slot.end);
-    }];
-}
-
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
-    EMSConference *c = [conferences objectAtIndex:indexPath.row];
+    NSString *currentConference = [[defaults URLForKey:@"activeConference"] absoluteString];
     
-    [defaults setObject:c.name forKey:@"activeConference"];
+    NSManagedObject *conference = [_fetchedResultsController objectAtIndexPath:indexPath];
+    
+    [defaults setURL:[NSURL URLWithString:[conference valueForKey:@"href"]] forKey:@"activeConference"];
 
     [self.tableView reloadData];
     
-    EMSRetriever *retriever = [[EMSRetriever alloc] init];
+
+    if (!([[conference valueForKey:@"href"] isEqualToString:currentConference])) {
+        [delegate conferenceChanged:self];
+    }
     
-    retriever.delegate = self;
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+#pragma mark - NSFetchedResultsControllerDelegate
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
+    [self.tableView beginUpdates];
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     
-    [retriever refreshSlots:c.slotCollection];
+    UITableView *tableView = self.tableView;
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray
+                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray
+                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id )sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
+    [self.tableView endUpdates];
 }
 
 @end
