@@ -32,6 +32,7 @@
 		F3939E531768879C0078C709 /* EMSCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */; };
 		F3939E591768956E0078C709 /* EMSSlot.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E581768956E0078C709 /* EMSSlot.m */; };
 		F3939E5C176895CE0078C709 /* EMSSlotsRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E5B176895CE0078C709 /* EMSSlotsRetriever.m */; };
+		F3939E5E1769AE260078C709 /* EMS-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = F3939E5D1769AE260078C709 /* EMS-Config.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +77,7 @@
 		F3939E581768956E0078C709 /* EMSSlot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSlot.m; sourceTree = "<group>"; };
 		F3939E5A176895CE0078C709 /* EMSSlotsRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSlotsRetriever.h; sourceTree = "<group>"; };
 		F3939E5B176895CE0078C709 /* EMSSlotsRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSlotsRetriever.m; sourceTree = "<group>"; };
+		F3939E5D1769AE260078C709 /* EMS-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Config.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 				F35BB6D717685885009077D3 /* Default.png */,
 				F35BB6D917685885009077D3 /* Default@2x.png */,
 				F35BB6DB17685885009077D3 /* Default-568h@2x.png */,
+				F3939E5D1769AE260078C709 /* EMS-Config.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 				F35BB6DF17685885009077D3 /* MainStoryboard_iPhone.storyboard in Resources */,
 				F35BB6E217685885009077D3 /* MainStoryboard_iPad.storyboard in Resources */,
 				F35BB70017686478009077D3 /* README.md in Resources */,
+				F3939E5E1769AE260078C709 /* EMS-Config.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

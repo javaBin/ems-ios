@@ -16,7 +16,10 @@
     
     retriever.delegate = delegate;
     
-    [retriever fetch:[NSURL URLWithString:@"http://test.java.no/ems-redux/server/"]];
+	NSString *filePath = [[NSBundle mainBundle] pathForResource:@"EMS-Config" ofType:@"plist"];
+    NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+    
+    [retriever fetch:[NSURL URLWithString:[prefs objectForKey:@"ems-root-url"]]];
 }
 
 - (void) refreshSlots:(NSURL *)slotCollection {
