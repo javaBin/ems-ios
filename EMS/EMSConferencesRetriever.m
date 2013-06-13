@@ -86,7 +86,7 @@
                     dispatch_async(queue, ^{
                         NSData* events = [NSData dataWithContentsOfURL:link.href];
 
-                        dispatch_async(queue, ^{
+                        dispatch_async(dispatch_get_main_queue(), ^{
                             [self fetchedEventCollection:events forHref:url];
                         });
                     });

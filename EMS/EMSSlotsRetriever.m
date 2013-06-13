@@ -52,7 +52,7 @@
     dispatch_async(queue, ^{
         NSData* root = [NSData dataWithContentsOfURL:url];
         
-        dispatch_async(queue, ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchedSlots:root forHref:url];
         });
     });
