@@ -8,6 +8,7 @@
 
 #import "EMSSessionsRetriever.h"
 #import "EMSSession.h"
+#import "EMSSpeaker.h"
 
 #import "CJCollection.h"
 #import "CJItem.h"
@@ -68,8 +69,8 @@
             }
         }];
         
-        // TODO - fetch speakerItems here too - gives just name. Can be used for list before opening a detail view where we fetch speakerCollection
-        
+        NSMutableArray *speakers = [[NSMutableArray alloc] init];
+
         [item.links enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             CJLink *link = (CJLink *)obj;
             
@@ -85,8 +86,18 @@
             if ([@"slot item" isEqualToString:link.rel]) {
                 session.slotItem = link.href;
             }
+            if ([@"speaker item" isEqualToString:link.rel]) {
+                EMSSpeaker *speaker = [[EMSSpeaker alloc] init];
+
+                speaker.href = link.href;
+                speaker.name = link.prompt;
+
+                [speakers addObject:speaker];
+            }
         }];
-        
+
+        session.speakers = [NSArray arrayWithArray:speakers];
+
         [temp addObject:session];
     }];
     

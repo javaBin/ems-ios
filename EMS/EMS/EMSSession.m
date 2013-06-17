@@ -27,5 +27,6 @@
 @synthesize roomItem;
 @synthesize slotItem;
 
+@synthesize speakers;
 
 @end

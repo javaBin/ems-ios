@@ -21,6 +21,7 @@
 @property (strong, nonatomic) NSString *language;
 @property (strong, nonatomic) NSString *summary;
 @property (strong, nonatomic) NSString *level;
+@property (strong, nonatomic) NSArray *speakers;
 
 @property (strong, nonatomic) NSURL *attachmentCollection;
 @property (strong, nonatomic) NSURL *speakerCollection;

@@ -26,6 +26,7 @@
 		839BD66B176F9BD400900712 /* EMSMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD657176F9BD400900712 /* EMSMainViewController.m */; };
 		839BD66C176F9BD400900712 /* EMSSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD659176F9BD400900712 /* EMSSettingsViewController.m */; };
 		839BD66D176F9BD400900712 /* EMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD65B176F9BD400900712 /* EMSViewController.m */; };
+		839BD670176FA67000900712 /* EMSSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD66F176FA67000900712 /* EMSSpeaker.m */; };
 		F35BB6C617685885009077D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB6C517685885009077D3 /* UIKit.framework */; };
 		F35BB6C817685885009077D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB6C717685885009077D3 /* Foundation.framework */; };
 		F35BB6CA17685885009077D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB6C917685885009077D3 /* CoreGraphics.framework */; };
@@ -78,6 +79,8 @@
 		839BD659176F9BD400900712 /* EMSSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSettingsViewController.m; sourceTree = "<group>"; };
 		839BD65A176F9BD400900712 /* EMSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSViewController.h; sourceTree = "<group>"; };
 		839BD65B176F9BD400900712 /* EMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSViewController.m; sourceTree = "<group>"; };
+		839BD66E176FA67000900712 /* EMSSpeaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSpeaker.h; sourceTree = "<group>"; };
+		839BD66F176FA67000900712 /* EMSSpeaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSpeaker.m; sourceTree = "<group>"; };
 		F35BB6C217685885009077D3 /* EMS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EMS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F35BB6C517685885009077D3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F35BB6C717685885009077D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -153,6 +156,8 @@
 				839BD64D176F9BD400900712 /* EMSSlot.m */,
 				839BD64E176F9BD400900712 /* EMSSlotsRetriever.h */,
 				839BD64F176F9BD400900712 /* EMSSlotsRetriever.m */,
+				839BD66E176FA67000900712 /* EMSSpeaker.h */,
+				839BD66F176FA67000900712 /* EMSSpeaker.m */,
 			);
 			name = EMS;
 			path = EMS/EMS;
@@ -187,12 +192,13 @@
 		F35BB6B917685885009077D3 = {
 			isa = PBXGroup;
 			children = (
+				F35BB6EE17686478009077D3 /* CollectionJSON */,
 				839BD637176F9BD400900712 /* Config */,
 				839BD63A176F9BD400900712 /* EMS */,
 				839BD650176F9BD400900712 /* Images */,
 				839BD654176F9BD400900712 /* View */,
 				F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */,
-				F35BB6CB17685885009077D3 /* EMS */,
+				F35BB6CB17685885009077D3 /* App */,
 				F35BB6C417685885009077D3 /* Frameworks */,
 				F35BB6C317685885009077D3 /* Products */,
 			);
@@ -218,10 +224,9 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F35BB6CB17685885009077D3 /* EMS */ = {
+		F35BB6CB17685885009077D3 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				F35BB6EE17686478009077D3 /* CollectionJSON */,
 				F35BB6D417685885009077D3 /* EMSAppDelegate.h */,
 				F35BB6D517685885009077D3 /* EMSAppDelegate.m */,
 				F35BB6DD17685885009077D3 /* MainStoryboard_iPhone.storyboard */,
@@ -230,6 +235,7 @@
 				F3939E5F1769C3CD0078C709 /* EMSModel.h */,
 				F3939E601769C3CD0078C709 /* EMSModel.m */,
 			);
+			name = App;
 			path = EMS;
 			sourceTree = "<group>";
 		};
@@ -255,7 +261,8 @@
 				F35BB6F417686478009077D3 /* CJLink.m */,
 				F35BB6F517686478009077D3 /* README.md */,
 			);
-			path = CollectionJSON;
+			name = CollectionJSON;
+			path = EMS/CollectionJSON;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -366,6 +373,7 @@
 				839BD66B176F9BD400900712 /* EMSMainViewController.m in Sources */,
 				839BD66C176F9BD400900712 /* EMSSettingsViewController.m in Sources */,
 				839BD66D176F9BD400900712 /* EMSViewController.m in Sources */,
+				839BD670176FA67000900712 /* EMSSpeaker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

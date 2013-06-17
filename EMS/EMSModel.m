@@ -8,6 +8,7 @@
 #import "EMSSlot.h"
 #import "EMSRoom.h"
 #import "EMSSession.h"
+#import "EMSSpeaker.h"
 
 #import "EMSAppDelegate.h"
 
@@ -62,6 +63,10 @@
     return [self objectsForPredicate:predicate andSort:sort withType:@"Room"];
 }
 
+- (NSArray *)speakersForPredicate:(NSPredicate *)predicate andSort:(NSArray *)sort {
+    return [self objectsForPredicate:predicate andSort:sort withType:@"Speaker"];
+}
+
 #pragma mark - get single object
 
 - (NSManagedObject *)conferenceForHref:(NSString *)url {
@@ -112,6 +117,18 @@
     return nil;
 }
 
+- (NSManagedObject *)speakerForHref:(NSString *)url {
+    NSArray *matched = [self
+                        speakersForPredicate:[NSPredicate predicateWithFormat: @"(href LIKE %@)", url]
+                        andSort:nil];
+
+    if (matched.count > 0) {
+        return [matched objectAtIndex:0];
+    }
+
+    return nil;
+}
+
 #pragma mark - create hash from href to object
 
 - (NSDictionary *)conferencesKeyedByHref:(NSArray *)conferences {
@@ -149,12 +166,23 @@
 
 - (NSDictionary *)sessionsKeyedByHref:(NSArray *)slots {
     NSMutableDictionary *hrefKeyed = [[NSMutableDictionary alloc] init];
-    
+
     [slots enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         EMSSession *ems = (EMSSession *)obj;
         [hrefKeyed setValue:ems forKey:[ems.href absoluteString]];
     }];
-    
+
+    return [NSDictionary dictionaryWithDictionary:hrefKeyed];
+}
+
+- (NSDictionary *)speakersKeyedByHref:(NSArray *)speakers {
+    NSMutableDictionary *hrefKeyed = [[NSMutableDictionary alloc] init];
+
+    [speakers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        EMSSpeaker *ems = (EMSSpeaker *)obj;
+        [hrefKeyed setValue:ems forKey:[ems.href absoluteString]];
+    }];
+
     return [NSDictionary dictionaryWithDictionary:hrefKeyed];
 }
 
@@ -225,6 +253,32 @@
                           [dateFormatterTime stringFromDate:[slot valueForKey:@"end"]]]
                   forKey:@"slotName"];
     }
+
+    if (session.speakers != nil) {
+        NSMutableSet *speakerSet = [object mutableSetValueForKey:@"speakers"];
+
+        [session.speakers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            EMSSpeaker *speaker = (EMSSpeaker *)obj;
+
+            NSManagedObject *newSpeaker = [self speakerForHref:[speaker.href absoluteString]];
+
+            if (newSpeaker == nil) {
+                newSpeaker = [NSEntityDescription
+                          insertNewObjectForEntityForName:@"Speaker"
+                          inManagedObjectContext:[self managedObjectContext]];
+            }
+
+            [self populateManagedObject:newSpeaker withSpeaker:speaker forConference:conference];
+
+            [speakerSet addObject:newSpeaker];
+         }];
+    }
+}
+
+- (void)populateManagedObject:(NSManagedObject *)object withSpeaker:(EMSSpeaker *)speaker forConference:(NSManagedObject *)conference {
+    [object setValue:[speaker.href absoluteString] forKey:@"href"];
+    [object setValue:speaker.name forKey:@"name"];
+    [object setValue:speaker.bio forKey:@"bio"];
 }
 
 #pragma mark - public interface

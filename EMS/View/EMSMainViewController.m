@@ -215,8 +215,16 @@
     NSManagedObject *session = [_fetchedResultsController objectAtIndexPath:indexPath];
     
     cell.textLabel.text = [session valueForKey:@"title"];
-    
-    cell.detailTextLabel.text = [[session valueForKey:@"room"] valueForKey:@"name"];
+
+    NSMutableString *detail = [NSMutableString stringWithString:[[session valueForKey:@"room"] valueForKey:@"name"]];
+
+    [[session valueForKey:@"speakers"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSManagedObject *speaker = (NSManagedObject *)obj;
+
+        [detail appendFormat:@", %@", [speaker valueForKey:@"name"]];
+    }];
+
+    cell.detailTextLabel.text = [NSString stringWithString:detail];
 }
 
 
