@@ -175,8 +175,10 @@
                                   initWithKey:@"slotName" ascending:YES];
     NSSortDescriptor *sortRoom = [[NSSortDescriptor alloc]
                                   initWithKey:@"room.name" ascending:YES];
-    
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortSlot, sortRoom, nil]];
+    NSSortDescriptor *sortTime = [[NSSortDescriptor alloc]
+                                  initWithKey:@"slot.start" ascending:YES];
+
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortSlot, sortRoom, sortTime, nil]];
     [fetchRequest setFetchBatchSize:20];
     
     NSPredicate *conferencePredicate = [self currentConferencePredicate];

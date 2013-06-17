@@ -240,18 +240,12 @@
         NSManagedObject *slot = [self slotForHref:[session.slotItem absoluteString]];
 
         [object setValue:slot forKey:@"slot"];
-    
-        NSDateFormatter *dateFormatterDate = [[NSDateFormatter alloc] init];
-        NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
-    
-        [dateFormatterDate setDateFormat:@"yyyy-MM-dd"];
-        [dateFormatterTime setDateFormat:@"HH:mm"];
-    
-        [object setValue:[NSString stringWithFormat:@"%@ %@ - %@",
-                          [dateFormatterDate stringFromDate:[slot valueForKey:@"start"]],
-                          [dateFormatterTime stringFromDate:[slot valueForKey:@"start"]],
-                          [dateFormatterTime stringFromDate:[slot valueForKey:@"end"]]]
-                  forKey:@"slotName"];
+
+        if ([session.format isEqualToString:@"lightning-talk"]) {
+            [object setValue:[self getSlotNameForLightningSlot:slot forConference:conference] forKey:@"slotName"];
+        } else {
+            [object setValue:[self getSlotNameForSlot:slot forConference:conference] forKey:@"slotName"];
+        }
     }
 
     if (session.speakers != nil) {
@@ -551,6 +545,38 @@
     
     // TODO error
     [[self managedObjectContext] save:nil];
+}
+
+#pragma mark - utility
+
+- (NSString *) getSlotNameForLightningSlot:(NSManagedObject *)slot forConference:(NSManagedObject *)conference {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(((start <= %@) AND (end >= %@)) AND SELF != %@ AND conference == %@)",
+                              [slot valueForKey:@"start"],
+                              [slot valueForKey:@"end"],
+                              slot,
+                              conference];
+
+    NSArray *slots = [self slotsForPredicate:predicate andSort:nil];
+
+    if (slots != nil && [slots count] > 0) {
+        return [self getSlotNameForSlot:[slots objectAtIndex:0] forConference:conference];
+    }
+
+    // Default to our own name
+    return [self getSlotNameForSlot:slot forConference:conference];
+}
+
+- (NSString *) getSlotNameForSlot:(NSManagedObject *)slot forConference:(NSManagedObject *)conference {
+    NSDateFormatter *dateFormatterDate = [[NSDateFormatter alloc] init];
+    NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
+
+    [dateFormatterDate setDateFormat:@"yyyy-MM-dd"];
+    [dateFormatterTime setDateFormat:@"HH:mm"];
+
+    return [NSString stringWithFormat:@"%@ %@ - %@",
+            [dateFormatterDate stringFromDate:[slot valueForKey:@"start"]],
+            [dateFormatterTime stringFromDate:[slot valueForKey:@"start"]],
+            [dateFormatterTime stringFromDate:[slot valueForKey:@"end"]]];
 }
 
 @end
