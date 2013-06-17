@@ -15,6 +15,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"EMS-Keys" ofType:@"plist"];
+    NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+    
+    [Crashlytics startWithAPIKey:[prefs objectForKey:@"crashlytics-api-key"]];
+    
     // Override point for customization after application launch.
     return YES;
 }
@@ -55,7 +60,7 @@
 									   otherButtonTitles:nil];
 			[errorAlert show];
 
-			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			CLS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
         } 
     }
 }
@@ -65,7 +70,7 @@
         return __model;
     }
     
-    NSLog(@"No model - initializing");
+    CLS_LOG(@"No model - initializing");
     
     __model = [[EMSModel alloc] initWithManagedObjectContext:[self managedObjectContext]];
     
@@ -81,7 +86,7 @@
         return __managedObjectContext;
     }
     
-    NSLog(@"No moc - initializing");
+    CLS_LOG(@"No moc - initializing");
     
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
@@ -89,7 +94,7 @@
         [__managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
     
-    NSLog(@"No moc - initialized");
+    CLS_LOG(@"No moc - initialized");
     
     return __managedObjectContext;
 }
@@ -99,12 +104,12 @@
         return __managedObjectModel;
     }
     
-    NSLog(@"No mom - initializing");
+    CLS_LOG(@"No mom - initializing");
     
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"EMSCoreDataModel" withExtension:@"momd"];
     __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     
-    NSLog(@"No mom - initialized");
+    CLS_LOG(@"No mom - initialized");
     
     return __managedObjectModel;
 }
@@ -115,7 +120,7 @@
         return __persistentStoreCoordinator;
     }
     
-    NSLog(@"No persistent store - initializing");
+    CLS_LOG(@"No persistent store - initializing");
     
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"EMSCoreDataModel.sqlite"];
     
@@ -135,10 +140,10 @@
 								   otherButtonTitles:nil];
 		[errorAlert show];
         
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        CLS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
     }
     
-    NSLog(@"No persistent store - initialized");
+    CLS_LOG(@"No persistent store - initialized");
     
     return __persistentStoreCoordinator;
 }
@@ -161,7 +166,7 @@
                                        otherButtonTitles:nil];
             [errorAlert show];
             
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            CLS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
         }
     }
 }

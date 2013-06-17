@@ -247,7 +247,7 @@
 
     
     // Walk thru non-matching and delete
-    NSLog(@"Deleting %d conferences", [unmatched count]);
+    CLS_LOG(@"Deleting %d conferences", [unmatched count]);
 
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSManagedObject *managedObject = (NSManagedObject *)obj;
@@ -256,7 +256,7 @@
     }];
     
     // Walk thru matching and for each one - update. Store in list
-    NSLog(@"Updating %d conferences", [matched count]);
+    CLS_LOG(@"Updating %d conferences", [matched count]);
 
     NSMutableSet *seen = [[NSMutableSet alloc] init];
     
@@ -269,7 +269,7 @@
     }];
     
     // Walk thru any new ones left
-    NSLog(@"Inserting from %d conferences with %d seen", [hrefKeyed count], [seen count]);
+    CLS_LOG(@"Inserting from %d conferences with %d seen", [hrefKeyed count], [seen count]);
 
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
@@ -317,7 +317,7 @@
     
     
     // Walk thru non-matching and delete
-    NSLog(@"Deleting %d slots", [unmatched count]);
+    CLS_LOG(@"Deleting %d slots", [unmatched count]);
 
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSManagedObject *managedObject = (NSManagedObject *)obj;
@@ -326,7 +326,7 @@
     }];
     
     // Walk thru matching and for each one - update. Store in list
-    NSLog(@"Updating %d slots", [matched count]);
+    CLS_LOG(@"Updating %d slots", [matched count]);
 
     NSMutableSet *seen = [[NSMutableSet alloc] init];
     
@@ -339,7 +339,7 @@
     }];
     
     // Walk thru any new ones left
-    NSLog(@"Inserting from %d slots with %d seen", [hrefKeyed count], [seen count]);
+    CLS_LOG(@"Inserting from %d slots with %d seen", [hrefKeyed count], [seen count]);
 
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
@@ -386,7 +386,7 @@
     
     
     // Walk thru non-matching and delete
-    NSLog(@"Deleting %d rooms", [unmatched count]);
+    CLS_LOG(@"Deleting %d rooms", [unmatched count]);
 
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSManagedObject *managedObject = (NSManagedObject *)obj;
@@ -395,7 +395,7 @@
     }];
     
     // Walk thru matching and for each one - update. Store in list
-    NSLog(@"Updating %d rooms", [matched count]);
+    CLS_LOG(@"Updating %d rooms", [matched count]);
 
     NSMutableSet *seen = [[NSMutableSet alloc] init];
     
@@ -408,7 +408,7 @@
     }];
     
     // Walk thru any new ones left
-    NSLog(@"Inserting from %d rooms with %d seen", [hrefKeyed count], [seen count]);
+    CLS_LOG(@"Inserting from %d rooms with %d seen", [hrefKeyed count], [seen count]);
 
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
@@ -455,7 +455,7 @@
     
     
     // Walk thru non-matching and delete
-    NSLog(@"Deleting %d sessions", [unmatched count]);
+    CLS_LOG(@"Deleting %d sessions", [unmatched count]);
 
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSManagedObject *managedObject = (NSManagedObject *)obj;
@@ -464,7 +464,7 @@
     }];
     
     // Walk thru matching and for each one - update. Store in list
-    NSLog(@"Updating %d sessions", [matched count]);
+    CLS_LOG(@"Updating %d sessions", [matched count]);
 
     NSMutableSet *seen = [[NSMutableSet alloc] init];
     
@@ -478,7 +478,7 @@
     
 
     // Walk thru any new ones left
-    NSLog(@"Inserting from %d sessions with %d seen", [hrefKeyed count], [seen count]);
+    CLS_LOG(@"Inserting from %d sessions with %d seen", [hrefKeyed count], [seen count]);
     
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {

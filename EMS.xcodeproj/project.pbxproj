@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		830C7D79176F8B4900D38B46 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830C7D78176F8B4900D38B46 /* Crashlytics.framework */; };
+		830C7D7B176F8C0000D38B46 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 830C7D7A176F8C0000D38B46 /* EMS-Keys.plist */; };
 		F35BB6C617685885009077D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB6C517685885009077D3 /* UIKit.framework */; };
 		F35BB6C817685885009077D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB6C717685885009077D3 /* Foundation.framework */; };
 		F35BB6CA17685885009077D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB6C917685885009077D3 /* CoreGraphics.framework */; };
@@ -42,6 +44,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		830C7D78176F8B4900D38B46 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		830C7D7A176F8C0000D38B46 /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
 		F35BB6C217685885009077D3 /* EMS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EMS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F35BB6C517685885009077D3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F35BB6C717685885009077D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -108,6 +112,7 @@
 				F35BB6C617685885009077D3 /* UIKit.framework in Frameworks */,
 				F35BB6C817685885009077D3 /* Foundation.framework in Frameworks */,
 				F35BB6CA17685885009077D3 /* CoreGraphics.framework in Frameworks */,
+				830C7D79176F8B4900D38B46 /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +140,7 @@
 		F35BB6C417685885009077D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				830C7D78176F8B4900D38B46 /* Crashlytics.framework */,
 				F3939E4F176887090078C709 /* CoreData.framework */,
 				F35BB6C517685885009077D3 /* UIKit.framework */,
 				F35BB6C717685885009077D3 /* Foundation.framework */,
@@ -177,6 +183,7 @@
 				F35BB6D917685885009077D3 /* Default@2x.png */,
 				F35BB6DB17685885009077D3 /* Default-568h@2x.png */,
 				F3939E5D1769AE260078C709 /* EMS-Config.plist */,
+				830C7D7A176F8C0000D38B46 /* EMS-Keys.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -233,6 +240,7 @@
 				F35BB6BE17685885009077D3 /* Sources */,
 				F35BB6BF17685885009077D3 /* Frameworks */,
 				F35BB6C017685885009077D3 /* Resources */,
+				830C7D77176F8AB200D38B46 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -283,10 +291,27 @@
 				F35BB6E217685885009077D3 /* MainStoryboard_iPad.storyboard in Resources */,
 				F35BB70017686478009077D3 /* README.md in Resources */,
 				F3939E5E1769AE260078C709 /* EMS-Config.plist in Resources */,
+				830C7D7B176F8C0000D38B46 /* EMS-Keys.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		830C7D77176F8AB200D38B46 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 76243485dba0d4938b2917f78d8106a6ff1d0d0b";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F35BB6BE17685885009077D3 /* Sources */ = {
@@ -408,6 +433,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
 				INFOPLIST_FILE = "EMS/EMS-Info.plist";
@@ -422,6 +451,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
 				INFOPLIST_FILE = "EMS/EMS-Info.plist";

@@ -31,7 +31,6 @@
 @synthesize model;
 
 - (void) setUpRefreshControl {
-    NSLog(@"Initializing refresh control");
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     
     refreshControl.tintColor = [UIColor grayColor];
@@ -43,12 +42,14 @@
 }
 
 - (NSManagedObject *)conferenceForHref:(NSString *)href {
-    NSLog(@"Getting conference for %@", href);
+    CLS_LOG(@"Getting conference for %@", href);
+    
     return [self.model conferenceForHref:href];
 }
 
 - (NSManagedObject *)activeConference {
-    NSLog(@"Getting current conference");
+    CLS_LOG(@"Getting current conference");
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *activeConference = [[defaults URLForKey:@"activeConference"] absoluteString];
     
@@ -60,32 +61,39 @@
 }
 
 - (void)initializeFetchedResultsController {
-    NSLog(@"Init FRC");
     NSError *error;
     
     if (![[self fetchedResultsController] performFetch:&error]) {
-        // Update to handle the error appropriately.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        exit(-1);  // TODO alert
+        UIAlertView *errorAlert = [[UIAlertView alloc]
+                                   initWithTitle: @"Unable to connect view to data store"
+                                   message: @"The data store did something unexpected and without it this application has no data to show. This is not an error we can recover from - please exit using the home button."
+                                   delegate:nil
+                                   cancelButtonTitle:@"OK"
+                                   otherButtonTitles:nil];
+        [errorAlert show];
+        
+        CLS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
     }
     
     [self.tableView reloadData];
-    
+
     if ([[_fetchedResultsController sections] count] == 0) {
+        CLS_LOG(@"Checking for existing data found no data - forced refresh");
+        
         [self.refreshControl beginRefreshing];
         [self retrieve];
     }
 }
 
 - (void) conferenceChanged:(id)sender {
-    NSLog(@"Conference changed");
+    CLS_LOG(@"Conference changed");
+    
     [self.fetchedResultsController.fetchRequest setPredicate:[self currentConferencePredicate]];
     [self initializeFetchedResultsController];
 }
 
 - (void)viewDidLoad
 {
-    NSLog(@"View loaded");
     [super viewDidLoad];
     
     self.model = [[EMSAppDelegate sharedAppDelegate] model];
@@ -103,23 +111,21 @@
     // This is also set in the storyboard but appears not to work.
     self.tableView.sectionIndexMinimumDisplayRowCount = 500;
     
-    NSLog(@"Checking");
-
     NSManagedObject *conference = [self activeConference];
     
     if (conference == nil) {
-        NSLog(@"No conference");
+        CLS_LOG(@"No conference - push to settings view");
+
         [self performSegueWithIdentifier:@"showSettingsView" sender:self];
     } else {
-        NSLog(@"Conference found");
+        CLS_LOG(@"Conference found - initialize");
+        
         [self initializeFetchedResultsController];
     }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSLog(@"Preparing to load settings viww");
-    // Make sure your segue name in storyboard is the same as this line
     if ([[segue identifier] isEqualToString:@"showSettingsView"])
     {
         EMSSettingsViewController *destination = [segue destinationViewController];
@@ -130,7 +136,6 @@
 
 - (void)viewDidUnload
 {
-    NSLog(@"viewDidUnload");
     self.model = nil;
     self.fetchedResultsController = nil;
     self.retriever = nil;
@@ -143,8 +148,6 @@
 }
 
 - (NSPredicate *)currentConferencePredicate {
-    NSLog(@"Get current conference predicate");
-
     NSManagedObject *activeConference = [self activeConference];
     
     if (activeConference != nil) {
@@ -157,12 +160,9 @@
 }
 
 - (NSFetchedResultsController *)fetchedResultsController {
-    NSLog(@"Get FRC");
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
     }
-
-    NSLog(@"Build FRC");
 
     NSManagedObjectContext *managedObjectContext = [[EMSAppDelegate sharedAppDelegate] managedObjectContext];
     
@@ -182,8 +182,6 @@
     NSPredicate *conferencePredicate = [self currentConferencePredicate];
     
     if (conferencePredicate != nil) {
-        NSLog(@"With predicate");
-
         [fetchRequest setPredicate:conferencePredicate];
     }
     
@@ -266,18 +264,18 @@
 - (void) retrieve {
     NSManagedObject *conference = [self activeConference];
 
-    NSLog(@"Starting retrieval");
+    CLS_LOG(@"Starting retrieval");
 
     if (conference != nil) {
-        NSLog(@"Starting retrieval - saw conf");
+        CLS_LOG(@"Starting retrieval - saw conf");
 
         if ([conference valueForKey:@"slotCollection"] != nil) {
-            NSLog(@"Starting retrieval - saw slot collection");
+            CLS_LOG(@"Starting retrieval - saw slot collection");
             self.retrievingSlots = YES;
             [self.retriever refreshSlots:[NSURL URLWithString:[conference valueForKey:@"slotCollection"]]];
         }
         if ([conference valueForKey:@"roomCollection"] != nil) {
-            NSLog(@"Starting retrieval - saw room collection");
+            CLS_LOG(@"Starting retrieval - saw room collection");
             self.retrievingRooms = YES;
             [self.retriever refreshRooms:[NSURL URLWithString:[conference valueForKey:@"roomCollection"]]];
         }
@@ -285,16 +283,16 @@
 }
 
 - (void) retrieveSessions {
-    NSLog(@"Starting retrieval of sessions");
+    CLS_LOG(@"Starting retrieval of sessions");
     // Fetch sessions once rooms and slots are done. Don't want to get into a state when trying to persist sessions that it refers to non-existing room or slot
     if (self.retrievingRooms == NO && self.retrievingSlots == NO) {
-        NSLog(@"Starting retrieval of sessions - clear to go");
+        CLS_LOG(@"Starting retrieval of sessions - clear to go");
         [self.retriever refreshSessions:[NSURL URLWithString:[[self activeConference] valueForKey:@"sessionCollection"]]];
     }
 }
 
 - (void) finishedSlots:(NSArray *)slots forHref:(NSURL *)href {
-    NSLog(@"Storing slots %d", [slots count]);
+    CLS_LOG(@"Storing slots %d", [slots count]);
     
     [self.model storeSlots:slots forConference:[href absoluteString] error:nil];
 
@@ -304,7 +302,7 @@
 }
 
 - (void) finishedSessions:(NSArray *)sessions forHref:(NSURL *)href {
-    NSLog(@"Storing sessions %d", [sessions count]);
+    CLS_LOG(@"Storing sessions %d", [sessions count]);
 
     [self.model storeSessions:sessions forConference:[href absoluteString] error:nil];
     
@@ -312,7 +310,7 @@
 }
 
 - (void) finishedRooms:(NSArray *)rooms forHref:(NSURL *)href {
-    NSLog(@"Storing rooms %d", [rooms count]);
+    CLS_LOG(@"Storing rooms %d", [rooms count]);
 
     [self.model storeRooms:rooms forConference:[href absoluteString] error:nil];
     
@@ -324,11 +322,11 @@
 #pragma mark - NSFetchedResultsControllerDelegate
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-    NSLog(@"controller will change content %d", [[self.fetchedResultsController sections] count]);
+//    NSLog(@"controller will change content %d", [[self.fetchedResultsController sections] count]);
     
-    for(int i=0; i < [[self.fetchedResultsController sections] count]; i++) {
-        NSLog(@"Section %d has %d rows", i, [[[self.fetchedResultsController sections] objectAtIndex:i] numberOfObjects]);
-    }
+//    for(int i=0; i < [[self.fetchedResultsController sections] count]; i++) {
+//        NSLog(@"Section %d has %d rows", i, [[[self.fetchedResultsController sections] objectAtIndex:i] numberOfObjects]);
+//    }
     
     // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
     [self.tableView beginUpdates];
@@ -342,22 +340,22 @@
     switch(type) {
             
         case NSFetchedResultsChangeInsert:
-            NSLog(@"didChangeObject insert");
+//            NSLog(@"didChangeObject insert");
             [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
-            NSLog(@"didChangeObject delete");
+//            NSLog(@"didChangeObject delete");
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeUpdate:
-            NSLog(@"didChangeObject update");
+//            NSLog(@"didChangeObject update");
             [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
             
         case NSFetchedResultsChangeMove:
-            NSLog(@"didChangeObject move");
+//            NSLog(@"didChangeObject move");
             [tableView deleteRowsAtIndexPaths:[NSArray
                                                arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [tableView insertRowsAtIndexPaths:[NSArray
@@ -372,12 +370,12 @@
     switch(type) {
             
         case NSFetchedResultsChangeInsert:
-            NSLog(@"didChangeSection insert");
+//            NSLog(@"didChangeSection insert");
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
-            NSLog(@"didChangeSection delete");
+//            NSLog(@"didChangeSection delete");
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
@@ -385,12 +383,11 @@
 
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    NSLog(@"controller did change content %d", [[self.fetchedResultsController sections] count]);
+//    NSLog(@"controller did change content %d", [[self.fetchedResultsController sections] count]);
     
-    for(int i=0; i < [[self.fetchedResultsController sections] count]; i++) {
-        NSLog(@"Section %d has %d rows", i, [[[self.fetchedResultsController sections] objectAtIndex:i] numberOfObjects]);
-    }
-    
+//    for(int i=0; i < [[self.fetchedResultsController sections] count]; i++) {
+//        NSLog(@"Section %d has %d rows", i, [[[self.fetchedResultsController sections] objectAtIndex:i] numberOfObjects]);
+//    }
     
     // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
     [self.tableView endUpdates];

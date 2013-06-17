@@ -48,9 +48,15 @@
     NSError *error;
 
 	if (![[self fetchedResultsController] performFetch:&error]) {
-		// Update to handle the error appropriately.
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-		exit(-1);  // TODO alert
+        UIAlertView *errorAlert = [[UIAlertView alloc]
+                                   initWithTitle: @"Unable to connect view to data store"
+                                   message: @"The data store did something unexpected and without it this application has no data to show. This is not an error we can recover from - please exit using the home button."
+                                   delegate:nil
+                                   cancelButtonTitle:@"OK"
+                                   otherButtonTitles:nil];
+        [errorAlert show];
+        
+        CLS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
 	}
     
     id sectionInfo = [[_fetchedResultsController sections] objectAtIndex:0];
@@ -101,6 +107,8 @@
     EMSRetriever *retriever = [[EMSRetriever alloc] init];
     
     retriever.delegate = self;
+    
+    CLS_LOG(@"Retrieving conferences");
     
     [retriever refreshConferences];
 }
