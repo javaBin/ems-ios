@@ -28,6 +28,7 @@
         <attribute name="attachmentCollection" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="audience" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="favourite" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="format" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
@@ -55,7 +56,7 @@
         <element name="Conference" positionX="160" positionY="192" width="128" height="225"/>
         <element name="Keyword" positionX="774" positionY="567" width="128" height="73"/>
         <element name="Room" positionX="376" positionY="255" width="128" height="105"/>
-        <element name="Session" positionX="592" positionY="324" width="128" height="315"/>
+        <element name="Session" positionX="592" positionY="324" width="128" height="330"/>
         <element name="Slot" positionX="270" positionY="522" width="128" height="118"/>
     </elements>
 </model>

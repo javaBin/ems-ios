@@ -485,7 +485,10 @@
             NSManagedObject *managedObject = [NSEntityDescription
                                               insertNewObjectForEntityForName:@"Session"
                                               inManagedObjectContext:[self managedObjectContext]];
-            
+
+            // New sessions are not favourites by default.
+            [managedObject setValue:[NSNumber numberWithBool:NO] forKey:@"favourite"];
+
             EMSSession *ems = (EMSSession *)obj;
             
             [self populateManagedObject:managedObject withSession:ems forConference:conference];
