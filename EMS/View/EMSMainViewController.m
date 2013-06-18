@@ -268,22 +268,27 @@
 
     EMSSessionCell *sessionCell = (EMSSessionCell *)cell;
     
-    UIImageView *imageView = sessionCell.icon.imageView;
+    UIButton *icon = sessionCell.icon;
     
+    UIImage *normalImage = [UIImage imageNamed:@"star-grey.png"];
+    UIImage *selectedImage = [UIImage imageNamed:@"star.png"];
+
     if ([[session valueForKey:@"format"] isEqualToString:@"lightning-talk"]) {
-        if ([[session valueForKey:@"favourite"] boolValue] == YES) {
-            imageView.image = [UIImage imageNamed:@"lightning.png"];
-        } else {
-            imageView.image = [UIImage imageNamed:@"lightning-grey.png"];
-        }
-    } else {
-        if ([[session valueForKey:@"favourite"] boolValue] == YES) {
-            imageView.image = [UIImage imageNamed:@"star.png"];
-        } else {
-            imageView.image = [UIImage imageNamed:@"star-grey.png"];
-        }
+        normalImage = [UIImage imageNamed:@"lightning-grey.png"];
+        selectedImage = [UIImage imageNamed:@"lightning.png"];
     }
 
+    if(IS_RETINA) {
+        normalImage = [UIImage imageWithCGImage:normalImage.CGImage scale:2 orientation:normalImage.imageOrientation];
+        selectedImage = [UIImage imageWithCGImage:selectedImage.CGImage scale:2 orientation:selectedImage.imageOrientation];
+    }
+
+    [icon setImage:normalImage forState:UIControlStateNormal];
+    [icon setImage:selectedImage forState:UIControlStateSelected];
+    [icon setImage:normalImage forState:UIControlStateHighlighted];
+
+    [icon setSelected:[[session valueForKey:@"favourite"] boolValue]];
+    
     [sessionCell.icon addTarget:self action:@selector(toggleFavourite:) forControlEvents:UIControlEventTouchUpInside];
 
     sessionCell.title.text = [session valueForKey:@"title"];
