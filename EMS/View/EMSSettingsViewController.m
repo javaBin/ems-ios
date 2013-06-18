@@ -4,7 +4,6 @@
 
 #import "EMSSettingsViewController.h"
 
-// TODO - Temp - get conferences directly - needs to move to model
 #import "EMSRetriever.h"
 
 #import "EMSConference.h"

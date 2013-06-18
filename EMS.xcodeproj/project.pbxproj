@@ -60,6 +60,8 @@
 		F3939E50176887090078C709 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3939E4F176887090078C709 /* CoreData.framework */; };
 		F3939E531768879C0078C709 /* EMSCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */; };
 		F3939E611769C3CE0078C709 /* EMSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E601769C3CD0078C709 /* EMSModel.m */; };
+		F3D5E2C41770946100888A7E /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = F3D5E2C31770946100888A7E /* style.css */; };
+		F3D5E2C717709CD100888A7E /* EMSSpeakersRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = F3D5E2C617709CD000888A7E /* EMSSpeakersRetriever.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -142,6 +144,9 @@
 		F3939E521768879C0078C709 /* EMSCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EMSCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		F3939E5F1769C3CD0078C709 /* EMSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSModel.h; sourceTree = "<group>"; };
 		F3939E601769C3CD0078C709 /* EMSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSModel.m; sourceTree = "<group>"; };
+		F3D5E2C31770946100888A7E /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
+		F3D5E2C517709CD000888A7E /* EMSSpeakersRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSpeakersRetriever.h; sourceTree = "<group>"; };
+		F3D5E2C617709CD000888A7E /* EMSSpeakersRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSpeakersRetriever.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +201,8 @@
 				839BD64F176F9BD400900712 /* EMSSlotsRetriever.m */,
 				839BD66E176FA67000900712 /* EMSSpeaker.h */,
 				839BD66F176FA67000900712 /* EMSSpeaker.m */,
+				F3D5E2C517709CD000888A7E /* EMSSpeakersRetriever.h */,
+				F3D5E2C617709CD000888A7E /* EMSSpeakersRetriever.m */,
 			);
 			name = EMS;
 			path = EMS/EMS;
@@ -304,6 +311,7 @@
 				F35BB6CE17685885009077D3 /* InfoPlist.strings */,
 				F35BB6D117685885009077D3 /* main.m */,
 				F35BB6D317685885009077D3 /* EMS-Prefix.pch */,
+				F3D5E2C31770946100888A7E /* style.css */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -401,6 +409,7 @@
 				F3513B63177079A50042D07A /* 28-star-yellow@2x.png in Resources */,
 				F3513B64177079A50042D07A /* 64-zap-yellow.png in Resources */,
 				F3513B65177079A50042D07A /* 64-zap-yellow@2x.png in Resources */,
+				F3D5E2C41770946100888A7E /* style.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +459,7 @@
 				839BD670176FA67000900712 /* EMSSpeaker.m in Sources */,
 				F31862371770340200292371 /* EMSDetailViewController.m in Sources */,
 				F31862421770501800292371 /* EMSSessionCell.m in Sources */,
+				F3D5E2C717709CD100888A7E /* EMSSpeakersRetriever.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

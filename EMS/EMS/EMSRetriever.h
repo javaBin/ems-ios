@@ -13,5 +13,6 @@
 - (void) refreshSlots:(NSURL *) slotCollection;
 - (void) refreshSessions:(NSURL *) sessionCollection;
 - (void) refreshRooms:(NSURL *) roomCollection;
+- (void) refreshSpeakers:(NSURL *) speakerCollection;
 
 @end

@@ -260,17 +260,17 @@
                           inManagedObjectContext:[self managedObjectContext]];
             }
 
-            [self populateManagedObject:newSpeaker withSpeaker:speaker forConference:conference];
-
-            [speakerSet addObject:newSpeaker];
+            [self populateManagedObject:newSpeaker withSpeaker:speaker forSession:speakerSet];
          }];
     }
 }
 
-- (void)populateManagedObject:(NSManagedObject *)object withSpeaker:(EMSSpeaker *)speaker forConference:(NSManagedObject *)conference {
+- (void)populateManagedObject:(NSManagedObject *)object withSpeaker:(EMSSpeaker *)speaker forSession:(NSMutableSet *)session {
     [object setValue:[speaker.href absoluteString] forKey:@"href"];
     [object setValue:speaker.name forKey:@"name"];
     [object setValue:speaker.bio forKey:@"bio"];
+    
+    [session addObject:object];
 }
 
 #pragma mark - public interface
@@ -334,7 +334,7 @@
     
 }
 
-- (void) storeSlots:(NSArray *)slots forConference:(NSString *)href error:(NSError **)error {
+- (void) storeSlots:(NSArray *)slots forHref:(NSString *)href error:(NSError **)error {
     NSArray *conferences = [self
                             conferencesForPredicate:[NSPredicate predicateWithFormat: @"(slotCollection LIKE %@)", href]
                             andSort:nil];
@@ -403,7 +403,7 @@
     [[self managedObjectContext] save:nil];
 }
 
-- (void) storeRooms:(NSArray *)rooms forConference:(NSString *)href error:(NSError **)error {
+- (void) storeRooms:(NSArray *)rooms forHref:(NSString *)href error:(NSError **)error {
     NSArray *conferences = [self
                             conferencesForPredicate:[NSPredicate predicateWithFormat: @"(roomCollection LIKE %@)", href]
                             andSort:nil];
@@ -472,7 +472,79 @@
     [[self managedObjectContext] save:nil];
 }
 
-- (void) storeSessions:(NSArray *)sessions forConference:(NSString *)href error:(NSError **)error {
+- (void) storeSpeakers:(NSArray *)speakers forHref:(NSString *)href error:(NSError **)error {
+    NSArray *sessions = [self
+                         sessionsForPredicate:[NSPredicate predicateWithFormat: @"(speakerCollection LIKE %@)", href]
+                         andSort:nil];
+    
+    if (sessions.count == 0) {
+        // TODO error
+        return;
+    }
+    
+    NSManagedObject *session = [sessions objectAtIndex:0];
+    
+    NSDictionary *hrefKeyed = [self speakersKeyedByHref:speakers];
+    
+    NSArray *sortedHrefs = [hrefKeyed.allKeys sortedArrayUsingSelector: @selector(compare:)];
+    
+    NSArray *sort = @[[[NSSortDescriptor alloc] initWithKey: @"href" ascending:YES]];
+    
+    // Get two lists - all matching - all not matching
+    NSArray *matched = [self
+                        speakersForPredicate:[NSPredicate predicateWithFormat: @"((href IN %@) AND session == %@)", sortedHrefs, session]
+                        andSort:sort];
+    
+    NSArray *unmatched = [self
+                          speakersForPredicate:[NSPredicate predicateWithFormat: @"((NOT (href IN %@)) AND session == %@)", sortedHrefs, session]
+                          andSort:sort];
+    
+    // Walk thru non-matching and delete
+    CLS_LOG(@"Deleting %d speakers", [unmatched count]);
+    
+    [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSManagedObject *managedObject = (NSManagedObject *)obj;
+        
+        [[self managedObjectContext] deleteObject:managedObject];
+    }];
+    
+    NSMutableSet *speakerSet = [session mutableSetValueForKey:@"speakers"];
+
+    // Walk thru matching and for each one - update. Store in list
+    CLS_LOG(@"Updating %d speakers", [matched count]);
+    
+    NSMutableSet *seen = [[NSMutableSet alloc] init];
+
+    [matched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSManagedObject *managedObject = (NSManagedObject *)obj;
+        
+        [seen addObject:[managedObject valueForKey:@"href"]];
+
+        [self populateManagedObject:managedObject withSpeaker:[hrefKeyed objectForKey:[managedObject valueForKey:@"href"]] forSession:speakerSet];
+    }];
+    
+    // Walk thru any new ones left
+    CLS_LOG(@"Inserting from %d speakers with %d seen", [hrefKeyed count], [seen count]);
+    
+    [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        if (![seen containsObject:key]) {
+            NSManagedObject *managedObject = [NSEntityDescription
+                                              insertNewObjectForEntityForName:@"Speaker"
+                                              inManagedObjectContext:[self managedObjectContext]];
+            
+            EMSSpeaker *ems = (EMSSpeaker *)obj;
+            
+            [self populateManagedObject:managedObject withSpeaker:ems forSession:speakerSet];
+        }
+    }];
+    
+    // TODO error
+    [[self managedObjectContext] save:nil];
+}
+
+
+
+- (void) storeSessions:(NSArray *)sessions forHref:(NSString *)href error:(NSError **)error {
     NSArray *conferences = [self
                             conferencesForPredicate:[NSPredicate predicateWithFormat: @"(sessionCollection LIKE %@)", href]
                             andSort:nil];

@@ -8,6 +8,7 @@
 #import "EMSSlotsRetriever.h"
 #import "EMSSessionsRetriever.h"
 #import "EMSRoomsRetriever.h"
+#import "EMSSpeakersRetriever.h"
 
 @implementation EMSRetriever
 
@@ -44,6 +45,14 @@
     retriever.delegate = self.delegate;
     
     [retriever fetch:roomCollection];
+}
+
+- (void) refreshSpeakers:(NSURL *)speakerCollection {
+    EMSSpeakersRetriever *retriever = [[EMSSpeakersRetriever alloc] init];
+    
+    retriever.delegate = self.delegate;
+    
+    [retriever fetch:speakerCollection];
 }
 
 @end

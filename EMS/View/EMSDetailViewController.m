@@ -4,6 +4,10 @@
 
 #import "EMSDetailViewController.h"
 
+#import "EMSAppDelegate.h"
+
+#import "EMSRetriever.h"
+
 @interface EMSDetailViewController ()
 
 @end
@@ -15,6 +19,86 @@
     [super viewDidLoad];
 
     self.title = [self.session valueForKey:@"title"];
+    
+    self.room.text = [self.session valueForKey:@"roomName"];
+    self.level.text = [[self.session valueForKey:@"level"] capitalizedString];
+
+    UIImage *normalImage = [UIImage imageNamed:@"28-star-grey"];
+    UIImage *selectedImage = [UIImage imageNamed:@"28-star-yellow"];
+    UIImage *highlightedImage = [UIImage imageNamed:@"28-star"];
+    
+    if ([[self.session valueForKey:@"format"] isEqualToString:@"lightning-talk"]) {
+        normalImage = [UIImage imageNamed:@"64-zap-grey"];
+        selectedImage = [UIImage imageNamed:@"64-zap-yellow"];
+        highlightedImage = [UIImage imageNamed:@"64-zap"];
+    }
+    
+    [self.button setImage:normalImage forState:UIControlStateNormal];
+    [self.button setImage:selectedImage forState:UIControlStateSelected];
+    [self.button setImage:highlightedImage forState:UIControlStateHighlighted];
+    
+    [self.button setSelected:[[self.session valueForKey:@"favourite"] boolValue]];
+    
+    NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
+    
+    [dateFormatterTime setDateFormat:@"HH:mm"];
+    
+    NSManagedObject *slot = [self.session valueForKey:@"slot"];
+    
+    self.time.text = [NSString stringWithFormat:@"%@ - %@",
+                      [dateFormatterTime stringFromDate:[slot valueForKey:@"start"]],
+                      [dateFormatterTime stringFromDate:[slot valueForKey:@"end"]]];
+    
+    [self buildPage];
+    
+    [self retrieve];
+}
+
+- (IBAction)toggleFavourite:(id)sender {
+    CLS_LOG(@"Trying to toggle favourite for %@", self.session);
+    
+    BOOL isFavourite = [[self.session valueForKey:@"favourite"] boolValue];
+    
+    if (isFavourite == YES) {
+        [self.session setValue:[NSNumber numberWithBool:NO] forKey:@"favourite"];
+    } else {
+        [self.session setValue:[NSNumber numberWithBool:YES] forKey:@"favourite"];
+    }
+    
+    NSError *error;
+    if (![[self.session managedObjectContext] save:&error]) {
+        CLS_LOG(@"Failed to toggle favourite for %@, %@, %@", self.session, error, [error userInfo]);
+        
+        // TODO - die?
+    }
+    
+    [self.button setSelected:[[self.session valueForKey:@"favourite"] boolValue]];
+}
+
+- (void) buildPage {
+    NSString *path = [[NSBundle mainBundle] bundlePath];
+	NSURL *baseURL = [NSURL fileURLWithPath:path];
+    [self.webView loadHTMLString:[self buildPage:self.session] baseURL:baseURL];
+}
+
+- (void) retrieve {
+    EMSRetriever *retriever = [[EMSRetriever alloc] init];
+    
+    retriever.delegate = self;
+    
+    CLS_LOG(@"Retrieving speakers");
+    
+    [retriever refreshSpeakers:[NSURL URLWithString:[self.session valueForKey:@"speakerCollection"]]];
+}
+
+- (void) finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href {
+    CLS_LOG(@"Storing speakers %d", [speakers count]);
+    
+    [[[EMSAppDelegate sharedAppDelegate] model] storeSpeakers:speakers forHref:[href absoluteString] error:nil];
+
+    // TODO - should saving of pics be in model? No - it needs to be in background. We could just save in the retrieve - but that's poor. At this point we have the URL for the pic and we have the href of the speaker. We should probably make a custom retriever.
+    
+    [self buildPage];
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,5 +136,84 @@
     
     [self presentViewController:activityViewController animated:YES completion:nil];
 }
+
+- (NSString *)buildPage:(NSManagedObject *)session {
+    
+	NSString *page = [NSString stringWithFormat:@""
+					  "<html>"
+					  "<head>"
+					  "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"/>"
+                      "<meta name='viewport' content='width=device-width; initial-scale=1.0; maximum-scale=1.0;'>"
+					  "</head>"
+					  "<body>"
+					  "<h1>%@</h1>"
+					  "%@"
+					  "%@"
+					  "%@"
+					  "</body>"
+					  "</html>",
+					  [session valueForKey:@"title"],
+					  [self paraContent:[session valueForKey:@"body"]],
+					  @"",
+					  [self speakerContent:[session valueForKey:@"speakers"]]];
+	
+	return page;
+}
+
+- (NSString *)paraContent:(NSString *)text {
+    NSArray *lines = [text componentsSeparatedByString:@"\n"];
+    
+    return [NSString stringWithFormat:@"<p>%@</p>", [lines componentsJoinedByString:@"</p><p>"]];
+}
+
+
+- (NSString *)speakerContent:(NSArray *)speakers {
+	NSMutableString *result = [[NSMutableString alloc] init];
+
+    if (speakers != nil && [speakers count] > 0) {
+        [result appendString:@"<h2>Speakers</h2>"];
+    
+        [speakers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSManagedObject *speaker = (NSManagedObject *)obj;
+            
+            NSString *name = [speaker valueForKey:@"name"];
+            if (name != nil) {
+                [result appendString:[NSString stringWithFormat:@"<h3>%@</h3>", name]];
+            }
+
+            NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+
+            NSString *pngFilePath = [NSString stringWithFormat:@"%@/%@.png",[docDir stringByAppendingPathComponent:@"bioIcons"],[speaker valueForKey:@"name"]]; // TODO - name as filename?
+
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+
+            if ([fileManager fileExistsAtPath:pngFilePath]) {
+                NSError *fileError = nil;
+                
+                NSDictionary *fileAttributes = [fileManager attributesOfItemAtPath:pngFilePath error:&fileError];
+                
+                if (fileError != nil) {
+                    CLS_LOG(@"Got a file error reading file attributes for file %@", pngFilePath);
+                } else {
+                    if ([fileAttributes fileSize] > 0) {
+                        [result appendString:[NSString stringWithFormat:@"<img src='file://%@' width='50px' style='float: left; margin-right: 3px; margin-bottom: 3px'/>", pngFilePath]];
+                    } else {
+                        CLS_LOG(@"Empty bioPic %@", pngFilePath);
+                    }
+                }
+            }
+           
+            NSString *bio = [speaker valueForKey:@"bio"];
+            if (bio != nil) {
+                [result appendString:[self paraContent:bio]];
+            }
+        }];
+        
+	}
+    
+	return [NSString stringWithString:result];
+}
+
+
 
 @end

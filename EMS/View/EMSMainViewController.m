@@ -365,7 +365,7 @@
 - (void) finishedSlots:(NSArray *)slots forHref:(NSURL *)href {
     CLS_LOG(@"Storing slots %d", [slots count]);
     
-    [[[EMSAppDelegate sharedAppDelegate] model] storeSlots:slots forConference:[href absoluteString] error:nil];
+    [[[EMSAppDelegate sharedAppDelegate] model] storeSlots:slots forHref:[href absoluteString] error:nil];
 
     self.retrievingSlots = NO;
     
@@ -375,7 +375,7 @@
 - (void) finishedSessions:(NSArray *)sessions forHref:(NSURL *)href {
     CLS_LOG(@"Storing sessions %d", [sessions count]);
 
-    [[[EMSAppDelegate sharedAppDelegate] model] storeSessions:sessions forConference:[href absoluteString] error:nil];
+    [[[EMSAppDelegate sharedAppDelegate] model] storeSessions:sessions forHref:[href absoluteString] error:nil];
     
     [self.refreshControl endRefreshing];
 }
@@ -383,7 +383,7 @@
 - (void) finishedRooms:(NSArray *)rooms forHref:(NSURL *)href {
     CLS_LOG(@"Storing rooms %d", [rooms count]);
 
-    [[[EMSAppDelegate sharedAppDelegate] model] storeRooms:rooms forConference:[href absoluteString] error:nil];
+    [[[EMSAppDelegate sharedAppDelegate] model] storeRooms:rooms forHref:[href absoluteString] error:nil];
     
     self.retrievingRooms = NO;
     

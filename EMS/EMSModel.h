@@ -13,9 +13,10 @@
 - (void) storeConferences:(NSArray *)conferences error:(NSError **)error;
 - (NSManagedObject *)conferenceForHref:(NSString *)url;
 
-- (void) storeSlots:(NSArray *)slots forConference:(NSString *)href error:(NSError **)error;
-- (void) storeRooms:(NSArray *)rooms forConference:(NSString *)href error:(NSError **)error;
-- (void) storeSessions:(NSArray *)sessions forConference:(NSString *)href error:(NSError **)error;
+- (void) storeSlots:(NSArray *)slots forHref:(NSString *)href error:(NSError **)error;
+- (void) storeRooms:(NSArray *)rooms forHref:(NSString *)href error:(NSError **)error;
+- (void) storeSessions:(NSArray *)sessions forHref:(NSString *)href error:(NSError **)error;
+- (void) storeSpeakers:(NSArray *)speakers forHref:(NSString *)href error:(NSError **)error;
 
 - (NSManagedObject *)slotForHref:(NSString *)url;
 
