@@ -10,7 +10,4 @@
 
 @implementation EMSRoom
 
-@synthesize name;
-@synthesize href;
-
 @end

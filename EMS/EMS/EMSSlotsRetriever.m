@@ -12,8 +12,6 @@
 
 @implementation EMSSlotsRetriever
 
-@synthesize delegate;
-
 - (void)fetchedSlots:(NSData *)responseData forHref:(NSURL *)href {
     CJCollection *collection = [CJCollection collectionForNSData:responseData];
     
@@ -43,7 +41,7 @@
         [temp addObject:slot];
     }];
 
-    [delegate finishedSlots:[NSArray arrayWithArray:temp] forHref:href];
+    [self.delegate finishedSlots:[NSArray arrayWithArray:temp] forHref:href];
 }
 
 - (void) fetch:(NSURL *)url {

@@ -22,12 +22,6 @@
 
 @implementation EMSSettingsViewController
 
-@synthesize fetchedResultsController = _fetchedResultsController;
-@synthesize delegate;
-@synthesize model;
-@synthesize justRetrieved;
-@synthesize emptyInitial;
-
 - (void) setUpRefreshControl {
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     
@@ -43,7 +37,6 @@
 {
     [super viewDidLoad];
 
-    self.model = [[EMSAppDelegate sharedAppDelegate] model];
     self.justRetrieved = NO;
     self.emptyInitial = NO;
     
@@ -70,12 +63,6 @@
         [self.refreshControl beginRefreshing];
         [self retrieve];
     }
-}
-
-- (void)viewDidUnload
-{
-    self.model = nil;
-    self.fetchedResultsController = nil;
 }
 
 - (NSFetchedResultsController *)fetchedResultsController {
@@ -196,7 +183,7 @@
     [self.tableView reloadData];
     
     if (!([[conference valueForKey:@"href"] isEqualToString:currentConference])) {
-        [delegate conferenceChanged:self];
+        [self.delegate conferenceChanged:self];
     }
     
     [self.navigationController popViewControllerAnimated:YES];
@@ -205,7 +192,7 @@
 - (void)finishedConferences:(NSArray *)conferenceList forHref:(NSURL *)href {
     self.justRetrieved = YES;
 
-    [self.model storeConferences:conferenceList error:nil];
+    [[[EMSAppDelegate sharedAppDelegate] model] storeConferences:conferenceList error:nil];
 
     [self.refreshControl endRefreshing];
 }

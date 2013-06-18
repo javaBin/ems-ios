@@ -13,8 +13,6 @@
 
 @implementation EMSConferencesRetriever
 
-@synthesize delegate;
-
 - (void)fetchedEventCollection:(NSData *)responseData forHref:(NSURL *)href {
     CJCollection *collection = [CJCollection collectionForNSData:responseData];
     
@@ -67,7 +65,7 @@
         [temp addObject:conf];
     }];
     
-    [delegate finishedConferences:[NSArray arrayWithArray:temp] forHref:href];
+    [self.delegate finishedConferences:[NSArray arrayWithArray:temp] forHref:href];
 }
 
 - (void) fetch:(NSURL *)url {

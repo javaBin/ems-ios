@@ -10,13 +10,11 @@
 
 @implementation EMSDetailViewController
 
-@synthesize session;
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    self.title = [session valueForKey:@"title"];
+    self.title = [self.session valueForKey:@"title"];
 }
 
 - (void)didReceiveMemoryWarning

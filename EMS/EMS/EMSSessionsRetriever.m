@@ -16,8 +16,6 @@
 
 @implementation EMSSessionsRetriever
 
-@synthesize delegate;
-
 - (void)fetchedSessions:(NSData *)responseData forHref:(NSURL *)href {
     CJCollection *collection = [CJCollection collectionForNSData:responseData];
     
@@ -101,7 +99,7 @@
         [temp addObject:session];
     }];
     
-    [delegate finishedSessions:[NSArray arrayWithArray:temp] forHref:href];
+    [self.delegate finishedSessions:[NSArray arrayWithArray:temp] forHref:href];
 }
 
 - (void) fetch:(NSURL *)url {

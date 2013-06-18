@@ -12,9 +12,7 @@
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
-@property (nonatomic, strong) id <EMSConferenceChangedDelegate> delegate;
-
-@property (nonatomic, strong) EMSModel *model;
+@property (nonatomic, weak) id <EMSConferenceChangedDelegate> delegate;
 
 @property (nonatomic, assign) BOOL justRetrieved;
 @property (nonatomic, assign) BOOL emptyInitial;

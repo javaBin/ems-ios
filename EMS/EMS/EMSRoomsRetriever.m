@@ -14,8 +14,6 @@
 
 @implementation EMSRoomsRetriever
 
-@synthesize delegate;
-
 - (void)fetchedRooms:(NSData *)responseData forHref:(NSURL *)href {
     CJCollection *collection = [CJCollection collectionForNSData:responseData];
     
@@ -42,7 +40,7 @@
         [temp addObject:room];
     }];
     
-    [delegate finishedRooms:[NSArray arrayWithArray:temp] forHref:href];
+    [self.delegate finishedRooms:[NSArray arrayWithArray:temp] forHref:href];
 }
 
 

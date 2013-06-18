@@ -22,8 +22,6 @@
 @property (nonatomic, assign) BOOL retrievingSlots;
 @property (nonatomic, assign) BOOL retrievingRooms;
 
-@property (nonatomic, strong) EMSModel *model;
-
 - (IBAction)toggleFavourite:(id)sender;
 
 @end

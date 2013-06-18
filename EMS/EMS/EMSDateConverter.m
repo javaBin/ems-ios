@@ -6,7 +6,6 @@
 
 @implementation EMSDateConverter
 
-
 + (NSDate *)dateFromString:(NSString *)dateString {
     NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
     

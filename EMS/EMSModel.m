@@ -14,8 +14,6 @@
 
 @implementation EMSModel
 
-@synthesize managedObjectContext;
-
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)moc {
     self = [super init];
     

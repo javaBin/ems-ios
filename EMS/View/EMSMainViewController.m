@@ -26,13 +26,6 @@
 
 @implementation EMSMainViewController
 
-@synthesize fetchedResultsController = _fetchedResultsController;
-@synthesize retriever;
-@synthesize retrievingRooms;
-@synthesize retrievingSlots;
-
-@synthesize model;
-
 - (void) setUpRefreshControl {
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     
@@ -47,7 +40,7 @@
 - (NSManagedObject *)conferenceForHref:(NSString *)href {
     CLS_LOG(@"Getting conference for %@", href);
     
-    return [self.model conferenceForHref:href];
+    return [[[EMSAppDelegate sharedAppDelegate] model] conferenceForHref:href];
 }
 
 - (NSManagedObject *)activeConference {
@@ -101,8 +94,6 @@
 {
     [super viewDidLoad];
     
-    self.model = [[EMSAppDelegate sharedAppDelegate] model];
-    
     self.retrievingSlots = NO;
     self.retrievingRooms = NO;
     
@@ -149,13 +140,6 @@
         
         destination.session = session;
     }
-}
-
-- (void)viewDidUnload
-{
-    self.model = nil;
-    self.fetchedResultsController = nil;
-    self.retriever = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -381,7 +365,7 @@
 - (void) finishedSlots:(NSArray *)slots forHref:(NSURL *)href {
     CLS_LOG(@"Storing slots %d", [slots count]);
     
-    [self.model storeSlots:slots forConference:[href absoluteString] error:nil];
+    [[[EMSAppDelegate sharedAppDelegate] model] storeSlots:slots forConference:[href absoluteString] error:nil];
 
     self.retrievingSlots = NO;
     
@@ -391,7 +375,7 @@
 - (void) finishedSessions:(NSArray *)sessions forHref:(NSURL *)href {
     CLS_LOG(@"Storing sessions %d", [sessions count]);
 
-    [self.model storeSessions:sessions forConference:[href absoluteString] error:nil];
+    [[[EMSAppDelegate sharedAppDelegate] model] storeSessions:sessions forConference:[href absoluteString] error:nil];
     
     [self.refreshControl endRefreshing];
 }
@@ -399,7 +383,7 @@
 - (void) finishedRooms:(NSArray *)rooms forHref:(NSURL *)href {
     CLS_LOG(@"Storing rooms %d", [rooms count]);
 
-    [self.model storeRooms:rooms forConference:[href absoluteString] error:nil];
+    [[[EMSAppDelegate sharedAppDelegate] model] storeRooms:rooms forConference:[href absoluteString] error:nil];
     
     self.retrievingRooms = NO;
     

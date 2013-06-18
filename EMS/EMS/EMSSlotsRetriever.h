@@ -7,7 +7,7 @@
 
 @interface EMSSlotsRetriever : NSObject
 
-@property (nonatomic, strong) id <EMSRetrieverDelegate> delegate;
+@property (nonatomic, weak) id <EMSRetrieverDelegate> delegate;
 
 - (void) fetch:(NSURL *)url;
 
