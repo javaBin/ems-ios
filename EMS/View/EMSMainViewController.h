@@ -24,4 +24,6 @@
 
 @property (nonatomic, strong) EMSModel *model;
 
+- (IBAction)toggleFavourite:(id)sender;
+
 @end

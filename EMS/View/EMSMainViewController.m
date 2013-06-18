@@ -18,6 +18,8 @@
 #import "EMSSettingsViewController.h"
 #import "EMSDetailViewController.h"
 
+#import "EMSSessionCell.h"
+
 @interface EMSMainViewController ()
 
 @end
@@ -210,6 +212,43 @@
     return _fetchedResultsController;
 }
 
+- (void)toggleFavourite:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    
+	UIView *view = [button superview];
+	
+	while (view != nil) {
+		if ([view isKindOfClass:[EMSSessionCell class]]) {
+			EMSSessionCell *cell = (EMSSessionCell *)view;
+			
+            NSManagedObject *session = cell.session;
+    
+            CLS_LOG(@"Trying to toggle favourite for %@", session);
+            
+            BOOL isFavourite = [[session valueForKey:@"favourite"] boolValue];
+    
+            if (isFavourite == YES) {
+                [session setValue:[NSNumber numberWithBool:NO] forKey:@"favourite"];
+            } else {
+                [session setValue:[NSNumber numberWithBool:YES] forKey:@"favourite"];
+            }
+    
+            NSError *error;
+            if (![[session managedObjectContext] save:&error]) {
+                CLS_LOG(@"Failed to toggle favourite for %@, %@, %@", session, error, [error userInfo]);
+        
+                // TODO - die?
+            }
+			
+			break;
+		}
+        
+		view = [view superview];
+    }
+    
+    [self.tableView reloadData];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -226,18 +265,39 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *session = [_fetchedResultsController objectAtIndexPath:indexPath];
+
+    EMSSessionCell *sessionCell = (EMSSessionCell *)cell;
     
-    cell.textLabel.text = [session valueForKey:@"title"];
+    UIImageView *imageView = sessionCell.icon.imageView;
+    
+    if ([[session valueForKey:@"format"] isEqualToString:@"lightning-talk"]) {
+        if ([[session valueForKey:@"favourite"] boolValue] == YES) {
+            imageView.image = [UIImage imageNamed:@"lightning.png"];
+        } else {
+            imageView.image = [UIImage imageNamed:@"lightning-grey.png"];
+        }
+    } else {
+        if ([[session valueForKey:@"favourite"] boolValue] == YES) {
+            imageView.image = [UIImage imageNamed:@"star.png"];
+        } else {
+            imageView.image = [UIImage imageNamed:@"star-grey.png"];
+        }
+    }
 
-    NSMutableString *detail = [NSMutableString stringWithString:[[session valueForKey:@"room"] valueForKey:@"name"]];
+    [sessionCell.icon addTarget:self action:@selector(toggleFavourite:) forControlEvents:UIControlEventTouchUpInside];
 
+    sessionCell.title.text = [session valueForKey:@"title"];
+    sessionCell.room.text = [[session valueForKey:@"room"] valueForKey:@"name"];
+    
+    NSMutableArray *speakerNames = [[NSMutableArray alloc] init];
     [[session valueForKey:@"speakers"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSManagedObject *speaker = (NSManagedObject *)obj;
-
-        [detail appendFormat:@", %@", [speaker valueForKey:@"name"]];
+        
+        [speakerNames addObject:[speaker valueForKey:@"name"]];
     }];
-
-    cell.detailTextLabel.text = [NSString stringWithString:detail];
+    sessionCell.speaker.text = [speakerNames componentsJoinedByString:@", "];
+    
+    sessionCell.session = session;
 }
 
 
