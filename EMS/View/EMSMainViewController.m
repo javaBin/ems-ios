@@ -1,9 +1,5 @@
 //
 //  EMSMainViewController.m
-//  EMS
-//
-//  Created by Chris Searle on 14.06.13.
-//  Copyright (c) 2013 Chris Searle. All rights reserved.
 //
 
 #import "EMSMainViewController.h"
@@ -97,6 +93,8 @@
     self.retrievingSlots = NO;
     self.retrievingRooms = NO;
     
+    self.currentSearch = @"";
+    
     self.retriever = [[EMSRetriever alloc] init];
     self.retriever.delegate = self;
 
@@ -152,9 +150,20 @@
     NSManagedObject *activeConference = [self activeConference];
     
     if (activeConference != nil) {
-        NSPredicate *conferencePredicate = [NSPredicate predicateWithFormat: @"((state == %@) AND (conference == %@))", @"approved", activeConference];
+        NSMutableArray *predicates = [[NSMutableArray alloc] init];
+        
+        [predicates
+         addObject:[NSPredicate predicateWithFormat: @"((state == %@) AND (conference == %@))", @"approved",
+                    activeConference]];
 
-        return conferencePredicate;
+        if (!([self.currentSearch isEqualToString:@""])) {
+            [predicates
+             addObject:[NSPredicate predicateWithFormat:@"(title contains[cd] %@ OR ANY speakers.name  contains[cd] %@)",
+                        self.currentSearch,
+                        self.currentSearch]];
+        }
+        
+        return [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
     }
     
     return nil;
@@ -463,5 +472,47 @@
     // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
     [self.tableView endUpdates];
 }
+
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+	if ([searchText length] == 0) {
+        [self performSelector:@selector(hideKeyboardWithSearchBar:) withObject:searchBar afterDelay:0];
+	}
+    
+    self.currentSearch = [searchBar text];
+    [self.fetchedResultsController.fetchRequest setPredicate:[self currentConferencePredicate]];
+    [self initializeFetchedResultsController];
+}
+
+- (void)hideKeyboardWithSearchBar:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:NO animated:YES];
+    [searchBar resignFirstResponder];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    [searchBar setShowsCancelButton:YES animated:YES];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    searchBar.text = @"";
+    
+    self.currentSearch = [searchBar text];
+    [self.fetchedResultsController.fetchRequest setPredicate:[self currentConferencePredicate]];
+    [self initializeFetchedResultsController];
+
+    [searchBar setShowsCancelButton:NO animated:YES];
+    [searchBar resignFirstResponder];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    self.currentSearch = [searchBar text];
+    [self.fetchedResultsController.fetchRequest setPredicate:[self currentConferencePredicate]];
+    [self initializeFetchedResultsController];
+	
+    [searchBar setShowsCancelButton:NO animated:YES];
+    [searchBar resignFirstResponder];
+}
+
 
 @end

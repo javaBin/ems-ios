@@ -14,13 +14,15 @@
 
 #import "EMSModel.h"
 
-@interface EMSMainViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, EMSConferenceChangedDelegate, NSFetchedResultsControllerDelegate>
+@interface EMSMainViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, EMSConferenceChangedDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) EMSRetriever *retriever;
 
 @property (nonatomic, assign) BOOL retrievingSlots;
 @property (nonatomic, assign) BOOL retrievingRooms;
+
+@property (nonatomic, strong) NSString *currentSearch;
 
 - (IBAction)toggleFavourite:(id)sender;
 
