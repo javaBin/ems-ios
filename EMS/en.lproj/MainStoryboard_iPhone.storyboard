@@ -158,9 +158,6 @@
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SyP-yk-NN6">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="461" type="user" id="5Kf-6F-XHN"/>
-                                </constraints>
                             </webView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h8d-wv-eM3">
                                 <constraints>
@@ -280,7 +277,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSMainViewController.h"/>
             <relationships>
                 <relationship kind="action" name="toggleFavourite:"/>
-                <relationship kind="outlet" name="search" candidateClass="UISearchBar"/>
             </relationships>
         </class>
         <class className="EMSSessionCell" superclassName="UITableViewCell">
