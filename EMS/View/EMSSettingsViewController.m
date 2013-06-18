@@ -25,6 +25,8 @@
 @synthesize fetchedResultsController = _fetchedResultsController;
 @synthesize delegate;
 @synthesize model;
+@synthesize justRetrieved;
+@synthesize emptyInitial;
 
 - (void) setUpRefreshControl {
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -42,6 +44,8 @@
     [super viewDidLoad];
 
     self.model = [[EMSAppDelegate sharedAppDelegate] model];
+    self.justRetrieved = NO;
+    self.emptyInitial = NO;
     
     [self setUpRefreshControl];
     
@@ -62,6 +66,7 @@
     id sectionInfo = [[_fetchedResultsController sections] objectAtIndex:0];
     
     if ([sectionInfo numberOfObjects] == 0) {
+        self.emptyInitial = YES;
         [self.refreshControl beginRefreshing];
         [self retrieve];
     }
@@ -137,11 +142,19 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ - %@",
-                                 [dateFormatter stringFromDate:[conference valueForKey:@"start"]],
-                                 [dateFormatter stringFromDate:[conference valueForKey:@"end"]]];
-        
+    
+    NSMutableArray *dates = [[NSMutableArray alloc] init];
+
+    if ([conference valueForKey:@"start"] != nil) {
+        [dates addObject:[dateFormatter stringFromDate:[conference valueForKey:@"start"]]];
+    }
+
+    if ([conference valueForKey:@"end"] != nil) {
+        [dates addObject:[dateFormatter stringFromDate:[conference valueForKey:@"end"]]];
+    }
+
+    cell.detailTextLabel.text = [dates componentsJoinedByString:@" - "];
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *activeConference = [[defaults URLForKey:@"activeConference"] absoluteString];
     NSString *cellConference   = [conference valueForKey:@"href"];
@@ -170,28 +183,31 @@
 }
 
 
+- (void) selectConference:(NSManagedObject *)conference {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *currentConference = [[defaults URLForKey:@"activeConference"] absoluteString];
+    
+    [defaults setURL:[NSURL URLWithString:[conference valueForKey:@"href"]] forKey:@"activeConference"];
+    
+    [self.tableView reloadData];
+    
+    if (!([[conference valueForKey:@"href"] isEqualToString:currentConference])) {
+        [delegate conferenceChanged:self];
+    }
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)finishedConferences:(NSArray *)conferenceList forHref:(NSURL *)href {
+    self.justRetrieved = YES;
+
     [self.model storeConferences:conferenceList error:nil];
 
     [self.refreshControl endRefreshing];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *currentConference = [[defaults URLForKey:@"activeConference"] absoluteString];
-    
-    NSManagedObject *conference = [_fetchedResultsController objectAtIndexPath:indexPath];
-    
-    [defaults setURL:[NSURL URLWithString:[conference valueForKey:@"href"]] forKey:@"activeConference"];
-
-    [self.tableView reloadData];
-    
-
-    if (!([[conference valueForKey:@"href"] isEqualToString:currentConference])) {
-        [delegate conferenceChanged:self];
-    }
-    
-    [self.navigationController popViewControllerAnimated:YES];
+    [self selectConference:[_fetchedResultsController objectAtIndexPath:indexPath]];
 }
 
 
@@ -249,6 +265,15 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
     [self.tableView endUpdates];
+    
+    if (self.justRetrieved == YES && self.emptyInitial == YES) {
+        self.justRetrieved = NO;
+        self.emptyInitial = NO;
+        
+        NSManagedObject *conference = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+        
+        [self selectConference:conference];
+    }
 }
 
 @end

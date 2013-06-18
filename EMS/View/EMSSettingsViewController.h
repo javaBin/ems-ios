@@ -16,4 +16,7 @@
 
 @property (nonatomic, strong) EMSModel *model;
 
+@property (nonatomic, assign) BOOL justRetrieved;
+@property (nonatomic, assign) BOOL emptyInitial;
+
 @end

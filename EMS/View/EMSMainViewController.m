@@ -93,6 +93,8 @@
     
     [self.fetchedResultsController.fetchRequest setPredicate:[self currentConferencePredicate]];
     [self initializeFetchedResultsController];
+    
+    self.title = [[self activeConference] valueForKey:@"name"];
 }
 
 - (void)viewDidLoad
@@ -164,7 +166,7 @@
     NSManagedObject *activeConference = [self activeConference];
     
     if (activeConference != nil) {
-        NSPredicate *conferencePredicate = [NSPredicate predicateWithFormat: @"(conference == %@)", activeConference];
+        NSPredicate *conferencePredicate = [NSPredicate predicateWithFormat: @"((state == %@) AND (conference == %@))", @"approved", activeConference];
 
         return conferencePredicate;
     }
