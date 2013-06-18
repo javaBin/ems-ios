@@ -124,7 +124,9 @@
         [self performSegueWithIdentifier:@"showSettingsView" sender:self];
     } else {
         CLS_LOG(@"Conference found - initialize");
-        
+
+        self.title = [conference valueForKey:@"name"];
+
         [self initializeFetchedResultsController];
     }
 }
@@ -272,22 +274,19 @@
     
     UIButton *icon = sessionCell.icon;
     
-    UIImage *normalImage = [UIImage imageNamed:@"star-grey.png"];
-    UIImage *selectedImage = [UIImage imageNamed:@"star.png"];
+    UIImage *normalImage = [UIImage imageNamed:@"28-star-grey"];
+    UIImage *selectedImage = [UIImage imageNamed:@"28-star-yellow"];
+    UIImage *highlightedImage = [UIImage imageNamed:@"28-star"];
 
     if ([[session valueForKey:@"format"] isEqualToString:@"lightning-talk"]) {
-        normalImage = [UIImage imageNamed:@"lightning-grey.png"];
-        selectedImage = [UIImage imageNamed:@"lightning.png"];
-    }
-
-    if(IS_RETINA) {
-        normalImage = [UIImage imageWithCGImage:normalImage.CGImage scale:2 orientation:normalImage.imageOrientation];
-        selectedImage = [UIImage imageWithCGImage:selectedImage.CGImage scale:2 orientation:selectedImage.imageOrientation];
+        normalImage = [UIImage imageNamed:@"64-zap-grey"];
+        selectedImage = [UIImage imageNamed:@"64-zap-yellow"];
+        highlightedImage = [UIImage imageNamed:@"64-zap"];
     }
 
     [icon setImage:normalImage forState:UIControlStateNormal];
     [icon setImage:selectedImage forState:UIControlStateSelected];
-    [icon setImage:normalImage forState:UIControlStateHighlighted];
+    [icon setImage:highlightedImage forState:UIControlStateHighlighted];
 
     [icon setSelected:[[session valueForKey:@"favourite"] boolValue]];
     
