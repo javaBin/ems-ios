@@ -26,10 +26,12 @@
 }
 
 - (void)share:(id)sender {
-    // TODO - decide what to share
+    NSString *shareString = [NSString stringWithFormat:@"%@ - %@", [[self.session valueForKey:@"conference"] valueForKey:@"name"], [self.session valueForKey:@"title"]];
     
-    NSString *shareString = @"CapTech is a great place to work.";
-//    UIImage *shareImage = [UIImage imageNamed:@"captech-logo.jpg"];
+    CLS_LOG(@"About to share for %@", shareString);
+    
+//TODO - image?    UIImage *shareImage = [UIImage imageNamed:@"captech-logo.jpg"];
+    // TODO - web URL?
     NSURL *shareUrl = [NSURL URLWithString:@"http://www.java.no"];
     NSArray *activityItems = [NSArray arrayWithObjects:shareString, /*shareImage, */shareUrl, nil];
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
