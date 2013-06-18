@@ -90,10 +90,14 @@
     NSEntityDescription *entity = [NSEntityDescription
                                    entityForName:@"Conference" inManagedObjectContext:managedObjectContext];
     [fetchRequest setEntity:entity];
+
+    NSSortDescriptor *startSort = [[NSSortDescriptor alloc]
+                                  initWithKey:@"start" ascending:NO];
     
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc]
+    NSSortDescriptor *nameSort = [[NSSortDescriptor alloc]
                               initWithKey:@"name" ascending:NO];
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
+    
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:startSort, nameSort, nil]];
     
     [fetchRequest setFetchBatchSize:20];
     
