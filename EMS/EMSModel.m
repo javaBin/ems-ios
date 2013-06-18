@@ -223,9 +223,7 @@
     [object setValue:session.summary forKey:@"summary"];
     [object setValue:session.level forKey:@"level"];
 
-    NSMutableSet *conferenceLevels = [conference mutableSetValueForKey:@"conferenceLevels"];
-
-    NSSet *foundLevels = [conferenceLevels objectsPassingTest:^BOOL(id obj, BOOL *stop) {
+    NSSet *foundLevels = [[conference valueForKey:@"conferenceLevels"] objectsPassingTest:^BOOL(id obj, BOOL *stop) {
         NSManagedObject *conferenceLevel = (NSManagedObject *)obj;
 
         if ([[conferenceLevel valueForKey:@"name"] isEqualToString:session.level]) {
@@ -239,14 +237,10 @@
         NSManagedObject *conferenceLevel = [NSEntityDescription insertNewObjectForEntityForName:@"ConferenceLevel" inManagedObjectContext:[self managedObjectContext]];
 
         [conferenceLevel setValue:session.level forKey:@"name"];
-
-        [conferenceLevels addObject:conferenceLevel];
+        [conferenceLevel setValue:conference forKey:@"conference"];
     }
 
-    NSMutableSet *keywords = [object mutableSetValueForKey:@"keywords"];
-    NSMutableSet *conferenceKeywords = [conference mutableSetValueForKey:@"conferenceKeywords"];
-
-    [keywords removeAllObjects];
+    [[object mutableSetValueForKey:@"keywords"] removeAllObjects];
 
     if (session.keywords != nil) {
         [session.keywords enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -255,10 +249,10 @@
             NSManagedObject *newKeyword = [NSEntityDescription insertNewObjectForEntityForName:@"Keyword" inManagedObjectContext:[self managedObjectContext]];
 
             [newKeyword setValue:keyword forKey:@"name"];
+            [newKeyword setValue:object forKey:@"session"];
 
-            [keywords addObject:newKeyword];
 
-            NSSet *foundKeywords = [conferenceKeywords objectsPassingTest:^BOOL(id obj, BOOL *stop) {
+            NSSet *foundKeywords = [[conference valueForKey:@"conferenceKeywords"] objectsPassingTest:^BOOL(id obj, BOOL *stop) {
                 NSManagedObject *conferenceKeyword = (NSManagedObject *)obj;
 
                 if ([[conferenceKeyword valueForKey:@"name"] isEqualToString:keyword]) {
@@ -272,8 +266,7 @@
                 NSManagedObject *conferenceKeyword = [NSEntityDescription insertNewObjectForEntityForName:@"ConferenceKeyword" inManagedObjectContext:[self managedObjectContext]];
 
                 [conferenceKeyword setValue:keyword forKey:@"name"];
-
-                [conferenceKeywords addObject:conferenceKeyword];
+                [conferenceKeyword setValue:conference forKey:@"conference"];
             }
         }];
     }

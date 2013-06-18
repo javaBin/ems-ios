@@ -13,6 +13,7 @@
 
 #import "EMSSettingsViewController.h"
 #import "EMSDetailViewController.h"
+#import "EMSSearchViewController.h"
 
 #import "EMSSessionCell.h"
 
@@ -53,6 +54,8 @@
 }
 
 - (void)initializeFetchedResultsController {
+    [self.fetchedResultsController.fetchRequest setPredicate:[self currentConferencePredicate]];
+
     NSError *error;
     
     if (![[self fetchedResultsController] performFetch:&error]) {
@@ -80,7 +83,6 @@
 - (void) conferenceChanged:(id)sender {
     CLS_LOG(@"Conference changed");
     
-    [self.fetchedResultsController.fetchRequest setPredicate:[self currentConferencePredicate]];
     [self initializeFetchedResultsController];
     
     self.title = [[self activeConference] valueForKey:@"name"];
@@ -93,7 +95,7 @@
     self.retrievingSlots = NO;
     self.retrievingRooms = NO;
     
-    self.currentSearch = @"";
+    self.search.text = @"";
     
     self.retriever = [[EMSRetriever alloc] init];
     self.retriever.delegate = self;
@@ -122,6 +124,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    [self.search resignFirstResponder];
+    
     if ([[segue identifier] isEqualToString:@"showSettingsView"]) {
         EMSSettingsViewController *destination = (EMSSettingsViewController *)[segue destinationViewController];
 
@@ -131,12 +135,39 @@
     }
     if ([[segue identifier] isEqualToString:@"showDetailsView"]) {
         EMSDetailViewController *destination = (EMSDetailViewController *)[segue destinationViewController];
-        
+
         NSManagedObject *session = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
-        
+
         CLS_LOG(@"Preparing detail view with %@", session);
-        
+
         destination.session = session;
+    }
+    if ([[segue identifier] isEqualToString:@"showSearchView"]) {
+        EMSSearchViewController *destination = (EMSSearchViewController *)[segue destinationViewController];
+
+        CLS_LOG(@"Preparing search view with %@ and conference %@", self.search.text, [self activeConference]);
+
+        destination.currentSearch = self.search.text;
+        destination.currentLevels = [NSSet setWithSet:self.currentLevels];
+        destination.currentKeywords = [NSSet setWithSet:self.currentKeywords];
+
+        NSMutableArray *levels = [[NSMutableArray alloc] init];
+        [[[self activeConference] valueForKey:@"conferenceLevels"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSManagedObject *level = (NSManagedObject *)obj;
+
+            [levels addObject:[level valueForKey:@"name"]];
+        }];
+        destination.levels = [levels sortedArrayUsingSelector: @selector(compare:)];
+
+        NSMutableArray *keywords = [[NSMutableArray alloc] init];
+        [[[self activeConference] valueForKey:@"conferenceKeywords"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSManagedObject *keyword = (NSManagedObject *)obj;
+
+            [keywords addObject:[keyword valueForKey:@"name"]];
+        }];
+        destination.keywords = [keywords sortedArrayUsingSelector: @selector(compare:)];
+
+        destination.delegate = self;
     }
 }
 
@@ -156,16 +187,38 @@
          addObject:[NSPredicate predicateWithFormat: @"((state == %@) AND (conference == %@))", @"approved",
                     activeConference]];
 
-        if (!([self.currentSearch isEqualToString:@""])) {
+        if (!([self.search.text isEqualToString:@""])) {
             [predicates
-             addObject:[NSPredicate predicateWithFormat:@"(title contains[cd] %@ OR ANY speakers.name  contains[cd] %@)",
-                        self.currentSearch,
-                        self.currentSearch]];
+             addObject:[NSPredicate predicateWithFormat:@"(title CONTAINS[cd] %@ OR ANY speakers.name CONTAINS[cd] %@)",
+                        self.search.text,
+                        self.search.text]];
         }
-        
+
+        if ([self.currentLevels count] > 0) {
+            [predicates
+             addObject:[NSPredicate predicateWithFormat:@"(level IN %@)",
+                        self.currentLevels]];
+        }
+
+
+        if ([self.currentKeywords count] > 0) {
+            NSMutableArray *keywordPredicates = [[NSMutableArray alloc] init];
+
+            [self.currentKeywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+                NSString *keyword = (NSString *)obj;
+
+                [keywordPredicates
+                 addObject:[NSPredicate predicateWithFormat:@"(ANY keywords.name CONTAINS[cd] %@)",
+                            keyword]];
+            }];
+
+            [predicates
+             addObject:[NSCompoundPredicate orPredicateWithSubpredicates:keywordPredicates]];
+        }
+
         return [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
     }
-    
+
     return nil;
 }
 
@@ -313,19 +366,6 @@
     return cell;
 }
 
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-}
-
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     id <NSFetchedResultsSectionInfo> sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
     return [sectionInfo name];
@@ -402,13 +442,6 @@
 #pragma mark - NSFetchedResultsControllerDelegate
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-//    NSLog(@"controller will change content %d", [[self.fetchedResultsController sections] count]);
-    
-//    for(int i=0; i < [[self.fetchedResultsController sections] count]; i++) {
-//        NSLog(@"Section %d has %d rows", i, [[[self.fetchedResultsController sections] objectAtIndex:i] numberOfObjects]);
-//    }
-    
-    // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
     [self.tableView beginUpdates];
 }
 
@@ -420,22 +453,18 @@
     switch(type) {
             
         case NSFetchedResultsChangeInsert:
-//            NSLog(@"didChangeObject insert");
             [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
-//            NSLog(@"didChangeObject delete");
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeUpdate:
-//            NSLog(@"didChangeObject update");
             [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
             
         case NSFetchedResultsChangeMove:
-//            NSLog(@"didChangeObject move");
             [tableView deleteRowsAtIndexPaths:[NSArray
                                                arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [tableView insertRowsAtIndexPaths:[NSArray
@@ -450,12 +479,10 @@
     switch(type) {
             
         case NSFetchedResultsChangeInsert:
-//            NSLog(@"didChangeSection insert");
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
-//            NSLog(@"didChangeSection delete");
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
@@ -463,13 +490,6 @@
 
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-//    NSLog(@"controller did change content %d", [[self.fetchedResultsController sections] count]);
-    
-//    for(int i=0; i < [[self.fetchedResultsController sections] count]; i++) {
-//        NSLog(@"Section %d has %d rows", i, [[[self.fetchedResultsController sections] objectAtIndex:i] numberOfObjects]);
-//    }
-    
-    // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
     [self.tableView endUpdates];
 }
 
@@ -479,8 +499,8 @@
         [self performSelector:@selector(hideKeyboardWithSearchBar:) withObject:searchBar afterDelay:0];
 	}
     
-    self.currentSearch = [searchBar text];
-    [self.fetchedResultsController.fetchRequest setPredicate:[self currentConferencePredicate]];
+    self.search.text = [searchBar text];
+
     [self initializeFetchedResultsController];
 }
 
@@ -497,8 +517,8 @@
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     searchBar.text = @"";
     
-    self.currentSearch = [searchBar text];
-    [self.fetchedResultsController.fetchRequest setPredicate:[self currentConferencePredicate]];
+    self.search.text = [searchBar text];
+
     [self initializeFetchedResultsController];
 
     [searchBar setShowsCancelButton:NO animated:YES];
@@ -506,13 +526,21 @@
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    self.currentSearch = [searchBar text];
-    [self.fetchedResultsController.fetchRequest setPredicate:[self currentConferencePredicate]];
+    self.search.text = [searchBar text];
+
     [self initializeFetchedResultsController];
 	
     [searchBar setShowsCancelButton:NO animated:YES];
     [searchBar resignFirstResponder];
 }
 
+- (void) setSearchText:(NSString *)searchText withKeywords:(NSSet *)keywords andLevels:(NSSet *)levels {
+    self.search.text = searchText;
+
+    self.currentLevels = [NSSet setWithSet:levels];
+    self.currentKeywords = [NSSet setWithSet:keywords];
+
+    [self initializeFetchedResultsController];
+}
 
 @end

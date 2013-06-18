@@ -44,7 +44,66 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oc5-5a-O2E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1529" y="-67"/>
+            <point key="canvasLocation" x="1583" y="-265"/>
+        </scene>
+        <!--Search View Controller - Search-->
+        <scene sceneID="Seh-yI-vwO">
+            <objects>
+                <tableViewController storyboardIdentifier="SearchView" title="Search" id="cM7-wC-1Xm" customClass="EMSSearchViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="DFD-ke-cEd">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="dF3-A5-Ac0">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="cM7-wC-1Xm" id="aKA-8p-prc"/>
+                            </connections>
+                        </searchBar>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchCell" textLabel="SdI-BN-OgO" style="IBUITableViewCellStyleDefault" id="zFU-A1-fQ5">
+                                <rect key="frame" x="0.0" y="80" width="320" height="46"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SdI-BN-OgO">
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="cM7-wC-1Xm" id="h6D-3D-cdL"/>
+                            <outlet property="delegate" destination="cM7-wC-1Xm" id="V3f-DZ-4Ej"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Search/Filter" id="qan-0d-j9g">
+                        <barButtonItem key="leftBarButtonItem" image="298-circlex.png" id="RnF-KH-VEs">
+                            <connections>
+                                <action selector="clear:" destination="cM7-wC-1Xm" id="BuR-KD-UlF"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="258-checkmark.png" id="wYt-es-F1q">
+                            <connections>
+                                <action selector="apply:" destination="cM7-wC-1Xm" id="yhy-5o-UG4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="search" destination="dF3-A5-Ac0" id="pr3-Uc-kzD"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dYb-LO-n5h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2107" y="138"/>
         </scene>
         <!--Main View Controller - Sessions-->
         <scene sceneID="C5v-Jb-6FW">
@@ -141,12 +200,19 @@
                                 <segue destination="6ld-j3-ru2" kind="push" identifier="showSettingsView" id="mpM-Oq-YCs"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="06-magnify.png" id="rEC-so-XYr"/>
+                        <barButtonItem key="rightBarButtonItem" image="06-magnify.png" id="rEC-so-XYr">
+                            <connections>
+                                <segue destination="cM7-wC-1Xm" kind="push" identifier="showSearchView" id="a8q-fW-7l2"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="search" destination="Zif-KH-RXK" id="tq7-GP-YRY"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dcc-le-TER" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1030" y="138"/>
+            <point key="canvasLocation" x="1006" y="138"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="AlI-X6-QM8">
@@ -237,7 +303,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rlf-zs-OLZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1521" y="604"/>
+            <point key="canvasLocation" x="1583" y="590"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gjw-7g-8aF">
@@ -258,7 +324,9 @@
     <resources>
         <image name="06-magnify.png" width="24" height="24"/>
         <image name="19-gear.png" width="26" height="26"/>
+        <image name="258-checkmark.png" width="19" height="18"/>
         <image name="28-star-grey.png" width="26" height="26"/>
+        <image name="298-circlex.png" width="22" height="22"/>
     </resources>
     <classes>
         <class className="EMSDetailViewController" superclassName="UIViewController">
@@ -277,6 +345,15 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSMainViewController.h"/>
             <relationships>
                 <relationship kind="action" name="toggleFavourite:"/>
+                <relationship kind="outlet" name="search" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="EMSSearchViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSSearchViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="apply:"/>
+                <relationship kind="action" name="clear:"/>
+                <relationship kind="outlet" name="search" candidateClass="UISearchBar"/>
             </relationships>
         </class>
         <class className="EMSSessionCell" superclassName="UITableViewCell">

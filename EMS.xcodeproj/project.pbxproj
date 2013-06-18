@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		830C7D79176F8B4900D38B46 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830C7D78176F8B4900D38B46 /* Crashlytics.framework */; };
+		836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836331311770DD2B000F8D95 /* EMSSearchViewController.m */; };
+		836331351770EF78000F8D95 /* 298-circlex.png in Resources */ = {isa = PBXBuildFile; fileRef = 836331331770EF78000F8D95 /* 298-circlex.png */; };
+		836331361770EF78000F8D95 /* 298-circlex@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836331341770EF78000F8D95 /* 298-circlex@2x.png */; };
+		836331391770F01C000F8D95 /* 258-checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 836331371770F01C000F8D95 /* 258-checkmark.png */; };
+		8363313A1770F01C000F8D95 /* 258-checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836331381770F01C000F8D95 /* 258-checkmark@2x.png */; };
 		839BD65C176F9BD400900712 /* EMS-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 839BD638176F9BD400900712 /* EMS-Config.plist */; };
 		839BD65D176F9BD400900712 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 839BD639176F9BD400900712 /* EMS-Keys.plist */; };
 		839BD65E176F9BD400900712 /* EMSConference.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD63C176F9BD400900712 /* EMSConference.m */; };
@@ -66,6 +71,13 @@
 
 /* Begin PBXFileReference section */
 		830C7D78176F8B4900D38B46 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		836331301770DD2B000F8D95 /* EMSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSearchViewController.h; sourceTree = "<group>"; };
+		836331311770DD2B000F8D95 /* EMSSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSearchViewController.m; sourceTree = "<group>"; };
+		836331331770EF78000F8D95 /* 298-circlex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "298-circlex.png"; sourceTree = "<group>"; };
+		836331341770EF78000F8D95 /* 298-circlex@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "298-circlex@2x.png"; sourceTree = "<group>"; };
+		836331371770F01C000F8D95 /* 258-checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "258-checkmark.png"; sourceTree = "<group>"; };
+		836331381770F01C000F8D95 /* 258-checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "258-checkmark@2x.png"; sourceTree = "<group>"; };
+		8363313B1770F06C000F8D95 /* EMSSearchViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EMSSearchViewDelegate.h; sourceTree = "<group>"; };
 		839BD638176F9BD400900712 /* EMS-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Config.plist"; sourceTree = "<group>"; };
 		839BD639176F9BD400900712 /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
 		839BD63B176F9BD400900712 /* EMSConference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConference.h; sourceTree = "<group>"; };
@@ -211,6 +223,10 @@
 		839BD650176F9BD400900712 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				836331371770F01C000F8D95 /* 258-checkmark.png */,
+				836331381770F01C000F8D95 /* 258-checkmark@2x.png */,
+				836331331770EF78000F8D95 /* 298-circlex.png */,
+				836331341770EF78000F8D95 /* 298-circlex@2x.png */,
 				F3513B5E177079A50042D07A /* 28-star-yellow.png */,
 				F3513B5F177079A50042D07A /* 28-star-yellow@2x.png */,
 				F3513B60177079A50042D07A /* 64-zap-yellow.png */,
@@ -249,6 +265,9 @@
 				F31862361770340200292371 /* EMSDetailViewController.m */,
 				F31862401770501800292371 /* EMSSessionCell.h */,
 				F31862411770501800292371 /* EMSSessionCell.m */,
+				836331301770DD2B000F8D95 /* EMSSearchViewController.h */,
+				836331311770DD2B000F8D95 /* EMSSearchViewController.m */,
+				8363313B1770F06C000F8D95 /* EMSSearchViewDelegate.h */,
 			);
 			name = View;
 			path = EMS/View;
@@ -410,6 +429,10 @@
 				F3513B64177079A50042D07A /* 64-zap-yellow.png in Resources */,
 				F3513B65177079A50042D07A /* 64-zap-yellow@2x.png in Resources */,
 				F3D5E2C41770946100888A7E /* style.css in Resources */,
+				836331351770EF78000F8D95 /* 298-circlex.png in Resources */,
+				836331361770EF78000F8D95 /* 298-circlex@2x.png in Resources */,
+				836331391770F01C000F8D95 /* 258-checkmark.png in Resources */,
+				8363313A1770F01C000F8D95 /* 258-checkmark@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +483,7 @@
 				F31862371770340200292371 /* EMSDetailViewController.m in Sources */,
 				F31862421770501800292371 /* EMSSessionCell.m in Sources */,
 				F3D5E2C717709CD100888A7E /* EMSSpeakersRetriever.m in Sources */,
+				836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
