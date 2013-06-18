@@ -25,9 +25,11 @@
         CJItem *item = (CJItem *)obj;
         
         EMSSession *session = [[EMSSession alloc] init];
-        
+
+        session.keywords = nil;
+
         session.href = item.href;
-        
+
         [item.data enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             NSDictionary *dict = (NSDictionary *)obj;
             
@@ -62,11 +64,10 @@
                 session.level = (NSString *)value;
             }
             if ([@"keywords" isEqualToString:field]) {
-                NSArray *keywords = (NSArray *)value;
-                session.keywords = [NSArray arrayWithArray:keywords];
+                session.keywords = [NSArray arrayWithArray:[dict objectForKey:@"array"]];
             }
         }];
-        
+
         NSMutableArray *speakers = [[NSMutableArray alloc] init];
 
         [item.links enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {

@@ -222,7 +222,62 @@
     [object setValue:session.language forKey:@"language"];
     [object setValue:session.summary forKey:@"summary"];
     [object setValue:session.level forKey:@"level"];
-    // TODO keywords
+
+    NSMutableSet *conferenceLevels = [conference mutableSetValueForKey:@"conferenceLevels"];
+
+    NSSet *foundLevels = [conferenceLevels objectsPassingTest:^BOOL(id obj, BOOL *stop) {
+        NSManagedObject *conferenceLevel = (NSManagedObject *)obj;
+
+        if ([[conferenceLevel valueForKey:@"name"] isEqualToString:session.level]) {
+            return YES;
+        }
+
+        return NO;
+    }];
+
+    if ([foundLevels count] == 0) {
+        NSManagedObject *conferenceLevel = [NSEntityDescription insertNewObjectForEntityForName:@"ConferenceLevel" inManagedObjectContext:[self managedObjectContext]];
+
+        [conferenceLevel setValue:session.level forKey:@"name"];
+
+        [conferenceLevels addObject:conferenceLevel];
+    }
+
+    NSMutableSet *keywords = [object mutableSetValueForKey:@"keywords"];
+    NSMutableSet *conferenceKeywords = [conference mutableSetValueForKey:@"conferenceKeywords"];
+
+    [keywords removeAllObjects];
+
+    if (session.keywords != nil) {
+        [session.keywords enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSString *keyword = (NSString *)obj;
+
+            NSManagedObject *newKeyword = [NSEntityDescription insertNewObjectForEntityForName:@"Keyword" inManagedObjectContext:[self managedObjectContext]];
+
+            [newKeyword setValue:keyword forKey:@"name"];
+
+            [keywords addObject:newKeyword];
+
+            NSSet *foundKeywords = [conferenceKeywords objectsPassingTest:^BOOL(id obj, BOOL *stop) {
+                NSManagedObject *conferenceKeyword = (NSManagedObject *)obj;
+
+                if ([[conferenceKeyword valueForKey:@"name"] isEqualToString:keyword]) {
+                    return YES;
+                }
+
+                return NO;
+            }];
+
+            if ([foundKeywords count] == 0) {
+                NSManagedObject *conferenceKeyword = [NSEntityDescription insertNewObjectForEntityForName:@"ConferenceKeyword" inManagedObjectContext:[self managedObjectContext]];
+
+                [conferenceKeyword setValue:keyword forKey:@"name"];
+
+                [conferenceKeywords addObject:conferenceKeyword];
+            }
+        }];
+    }
+
     [object setValue:[session.attachmentCollection absoluteString] forKey:@"attachmentCollection"];
     [object setValue:[session.speakerCollection absoluteString] forKey:@"speakerCollection"];
 
@@ -555,7 +610,13 @@
     }
     
     NSManagedObject *conference = [conferences objectAtIndex:0];
-    
+
+    NSMutableSet *conferenceKeywords = [conference mutableSetValueForKey:@"conferenceKeywords"];
+    [conferenceKeywords removeAllObjects];
+
+    NSMutableSet *conferenceLevels = [conference mutableSetValueForKey:@"conferenceLevels"];
+    [conferenceLevels removeAllObjects];
+
     NSDictionary *hrefKeyed = [self sessionsKeyedByHref:sessions];
     
     NSArray *sortedHrefs = [hrefKeyed.allKeys sortedArrayUsingSelector: @selector(compare:)];
@@ -613,6 +674,8 @@
         }
     }];
     
+    CLS_LOG(@"Persisting");
+
     // TODO error
     [[self managedObjectContext] save:nil];
 }

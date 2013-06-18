@@ -154,7 +154,7 @@
 					  "</html>",
 					  [session valueForKey:@"title"],
 					  [self paraContent:[session valueForKey:@"body"]],
-					  @"",
+					  [self keywordContent:[session valueForKey:@"keywords"]],
 					  [self speakerContent:[session valueForKey:@"speakers"]]];
 	
 	return page;
@@ -166,6 +166,29 @@
     return [NSString stringWithFormat:@"<p>%@</p>", [lines componentsJoinedByString:@"</p><p>"]];
 }
 
+- (NSString *)keywordContent:(NSArray *)keywords {
+	NSMutableString *result = [[NSMutableString alloc] init];
+
+    if (keywords != nil && [keywords count] > 0) {
+        [result appendString:@"<h2>Keywords</h2>"];
+
+        [result appendString:@"<ul>"];
+
+        NSMutableArray *listItems = [[NSMutableArray alloc] init];
+
+        [keywords enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSManagedObject *speaker = (NSManagedObject *)obj;
+
+            [listItems addObject:[speaker valueForKey:@"name"]];
+        }];
+
+        [result appendFormat:@"<li>%@</li>", [listItems componentsJoinedByString:@"</li><li>"]];
+
+        [result appendString:@"</ul>"];
+    }
+
+    return [NSString stringWithString:result];
+}
 
 - (NSString *)speakerContent:(NSArray *)speakers {
 	NSMutableString *result = [[NSMutableString alloc] init];
