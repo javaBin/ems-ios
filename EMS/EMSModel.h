@@ -18,6 +18,8 @@
 - (void) storeSessions:(NSArray *)sessions forHref:(NSString *)href error:(NSError **)error;
 - (void) storeSpeakers:(NSArray *)speakers forHref:(NSString *)href error:(NSError **)error;
 
+- (NSSet *) activeSlotNamesForConference:(NSManagedObject *)conference;
+
 - (NSManagedObject *)slotForHref:(NSString *)url;
 
 @end

@@ -84,8 +84,6 @@
     CLS_LOG(@"Conference changed");
     
     [self initializeFetchedResultsController];
-    
-    self.title = [[self activeConference] valueForKey:@"name"];
 }
 
 - (void)viewDidLoad
@@ -94,7 +92,10 @@
     
     self.retrievingSlots = NO;
     self.retrievingRooms = NO;
-    
+
+    self.filterFavourites = NO;
+    self.filterTime = NO;
+
     self.search.text = @"";
     
     self.retriever = [[EMSRetriever alloc] init];
@@ -115,8 +116,6 @@
         [self performSegueWithIdentifier:@"showSettingsView" sender:self];
     } else {
         CLS_LOG(@"Conference found - initialize");
-
-        self.title = [conference valueForKey:@"name"];
 
         [self initializeFetchedResultsController];
     }
@@ -214,6 +213,18 @@
 
             [predicates
              addObject:[NSCompoundPredicate orPredicateWithSubpredicates:keywordPredicates]];
+        }
+
+        if (self.filterFavourites == YES) {
+            [predicates
+             addObject:[NSPredicate predicateWithFormat:@"favourite = %@", [NSNumber numberWithBool:YES]]];
+        }
+
+        if (self.filterTime == YES) {
+            NSSet *slots = [[[EMSAppDelegate sharedAppDelegate] model] activeSlotNamesForConference:activeConference];
+
+            [predicates
+             addObject:[NSPredicate predicateWithFormat:@"slot IN %@", slots]];
         }
 
         return [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
@@ -539,6 +550,38 @@
 
     self.currentLevels = [NSSet setWithSet:levels];
     self.currentKeywords = [NSSet setWithSet:keywords];
+
+    [self initializeFetchedResultsController];
+}
+
+- (void) segmentChanged:(id)sender {
+    UISegmentedControl *segment = (UISegmentedControl *)sender;
+
+    self.filterFavourites = NO;
+    self.filterTime = NO;
+
+    switch ([segment selectedSegmentIndex]) {
+        case 0:
+        {
+            // All
+            break;
+        }
+        case 1:
+        {
+            // My
+            self.filterFavourites = YES;
+            break;
+        }
+        case 2:
+        {
+            // Now / Next
+            self.filterTime = YES;
+            break;
+        }
+
+        default:
+            break;
+    }
 
     [self initializeFetchedResultsController];
 }

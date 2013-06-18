@@ -705,4 +705,78 @@
             [dateFormatterTime stringFromDate:[slot valueForKey:@"end"]]];
 }
 
+- (NSSet *)slotsForSessionsWithPredicate:(NSPredicate *)predicate forConference:(NSManagedObject *)conference {
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"start" ascending:YES];
+
+    NSArray *slots = [self slotsForPredicate:predicate andSort:[NSArray arrayWithObject:sort]];
+
+    NSMutableSet *results = [[NSMutableSet alloc] init];
+
+    if (slots != nil && [slots count] > 0) {
+        NSString *slotName = [self getSlotNameForSlot:[slots objectAtIndex:0] forConference:conference];
+
+        NSArray *sessions = [self sessionsForPredicate:[NSPredicate predicateWithFormat:@"slotName = %@ AND conference == %@ AND state == %@", slotName, conference, @"approved"] andSort:nil];
+
+        [sessions enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSManagedObject *session = (NSManagedObject *)obj;
+            [results addObject:[session valueForKey:@"slot"]];
+        }];
+    }
+
+    return [NSSet setWithSet:results];
+}
+
+- (NSSet *) activeSlotNamesForConference:(NSManagedObject *)conference {
+#ifdef NOW_AND_NEXT_USE_TEST_DATE
+
+    CLS_LOG(@"WARNING - RUNNING IN NOW_AND_NEXT_USE_TEST_DATE mode");
+
+	// In debug mode we will use the current time of day but always the first day of conference. Otherwise we couldn't test until JZ started ;)
+	NSDate *current = [[NSDate alloc] init];
+
+    NSSortDescriptor *conferenceSlotSort = [NSSortDescriptor sortDescriptorWithKey:@"start" ascending:YES];
+    NSArray *conferenceSlots = [self slotsForPredicate:[NSPredicate predicateWithFormat:@"conference == %@", conference] andSort:[NSArray arrayWithObject:conferenceSlotSort]];
+    NSManagedObject *firstSlot = [conferenceSlots objectAtIndex:0];
+    NSDate *conferenceDate = [firstSlot valueForKey:@"start"];
+
+    CLS_LOG(@"Saw conference date of %@", conferenceDate);
+
+
+	NSCalendar *calendar = [NSCalendar currentCalendar];
+
+	NSDateComponents *timeComp = [calendar components:NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:current];
+	NSDateComponents *dateComp = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:conferenceDate];
+
+    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
+    [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
+    [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+
+	NSDate *date = [inputFormatter dateFromString:[NSString stringWithFormat:@"%04d-%02d-%02d %02d:%02d:00 +0200", [dateComp year], [dateComp month], [dateComp day], [timeComp hour], [timeComp minute]]];
+#else
+    NSDate *date = [[NSDate alloc] init];
+#endif
+
+    CLS_LOG(@"Running now and next with date %@", date);
+
+    // First we get current - that's easy - all slots that current date is within
+    NSPredicate *currentPredicate = [NSPredicate predicateWithFormat:@"start <= %@ AND end >= %@ AND conference == %@ AND ANY sessions.format != %@ AND ANY sessions.state == %@",
+                                     date,
+                                     date,
+                                     conference,
+                                     @"lightning-talk",
+                                     @"approved"];
+
+    NSSet *currentSlots = [self slotsForSessionsWithPredicate:currentPredicate forConference:conference];
+
+    NSPredicate *nextPredicate = [NSPredicate predicateWithFormat:@"start > %@ AND conference == %@ AND ANY sessions.format != %@ AND ANY sessions.state == %@",
+                                  date,
+                                  conference,
+                                  @"lightning-talk",
+                                  @"approved"];
+
+    NSSet *nextSlots = [self slotsForSessionsWithPredicate:nextPredicate forConference:conference];
+
+    return [[NSSet setWithSet:currentSlots] setByAddingObjectsFromSet:nextSlots];
+}
+
 @end

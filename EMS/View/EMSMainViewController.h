@@ -23,11 +23,15 @@
 @property (nonatomic, assign) BOOL retrievingSlots;
 @property (nonatomic, assign) BOOL retrievingRooms;
 
+@property (nonatomic, assign) BOOL filterFavourites;
+@property (nonatomic, assign) BOOL filterTime;
+
 @property (nonatomic, strong) NSSet *currentLevels;
 @property (nonatomic, strong) NSSet *currentKeywords;
 
 @property (nonatomic, strong) IBOutlet UISearchBar *search;
 
 - (IBAction)toggleFavourite:(id)sender;
+- (IBAction)segmentChanged:(id)sender;
 
 @end

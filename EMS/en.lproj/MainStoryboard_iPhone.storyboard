@@ -105,7 +105,7 @@
             </objects>
             <point key="canvasLocation" x="2107" y="138"/>
         </scene>
-        <!--Main View Controller - Sessions-->
+        <!--Main View Controller-->
         <scene sceneID="C5v-Jb-6FW">
             <objects>
                 <tableViewController id="bNB-PM-Jcs" customClass="EMSMainViewController" sceneMemberID="viewController">
@@ -194,12 +194,25 @@
                             </tableViewCell>
                         </prototypes>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Sessions" id="iZo-Hp-orM">
+                    <navigationItem key="navigationItem" id="iZo-Hp-orM">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" image="19-gear.png" id="IHa-T0-39E">
                             <connections>
                                 <segue destination="6ld-j3-ru2" kind="push" identifier="showSettingsView" id="mpM-Oq-YCs"/>
                             </connections>
                         </barButtonItem>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="47E-mD-yuA">
+                            <rect key="frame" x="96" y="7" width="128" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="" image="259-list.png"/>
+                                <segment title="" image="28-star-grey.png"/>
+                                <segment title="" image="11-clock.png"/>
+                            </segments>
+                            <connections>
+                                <action selector="segmentChanged:" destination="bNB-PM-Jcs" eventType="valueChanged" id="BjY-8O-RzI"/>
+                            </connections>
+                        </segmentedControl>
                         <barButtonItem key="rightBarButtonItem" image="06-magnify.png" id="rEC-so-XYr">
                             <connections>
                                 <segue destination="cM7-wC-1Xm" kind="push" identifier="showSearchView" id="a8q-fW-7l2"/>
@@ -323,8 +336,10 @@
     </scenes>
     <resources>
         <image name="06-magnify.png" width="24" height="24"/>
+        <image name="11-clock.png" width="24" height="24"/>
         <image name="19-gear.png" width="26" height="26"/>
         <image name="258-checkmark.png" width="19" height="18"/>
+        <image name="259-list.png" width="20" height="14"/>
         <image name="28-star-grey.png" width="26" height="26"/>
         <image name="298-circlex.png" width="22" height="22"/>
     </resources>
@@ -344,6 +359,7 @@
         <class className="EMSMainViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSMainViewController.h"/>
             <relationships>
+                <relationship kind="action" name="segmentChanged:"/>
                 <relationship kind="action" name="toggleFavourite:"/>
                 <relationship kind="outlet" name="search" candidateClass="UISearchBar"/>
             </relationships>

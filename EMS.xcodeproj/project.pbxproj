@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		830C7D79176F8B4900D38B46 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830C7D78176F8B4900D38B46 /* Crashlytics.framework */; };
+		83172C231770FE67000135E6 /* 11-clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C1F1770FE67000135E6 /* 11-clock.png */; };
+		83172C241770FE67000135E6 /* 11-clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C201770FE67000135E6 /* 11-clock@2x.png */; };
+		83172C251770FE67000135E6 /* 259-list.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C211770FE67000135E6 /* 259-list.png */; };
+		83172C261770FE67000135E6 /* 259-list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C221770FE67000135E6 /* 259-list@2x.png */; };
 		836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836331311770DD2B000F8D95 /* EMSSearchViewController.m */; };
 		836331351770EF78000F8D95 /* 298-circlex.png in Resources */ = {isa = PBXBuildFile; fileRef = 836331331770EF78000F8D95 /* 298-circlex.png */; };
 		836331361770EF78000F8D95 /* 298-circlex@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836331341770EF78000F8D95 /* 298-circlex@2x.png */; };
@@ -71,6 +75,10 @@
 
 /* Begin PBXFileReference section */
 		830C7D78176F8B4900D38B46 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		83172C1F1770FE67000135E6 /* 11-clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-clock.png"; sourceTree = "<group>"; };
+		83172C201770FE67000135E6 /* 11-clock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-clock@2x.png"; sourceTree = "<group>"; };
+		83172C211770FE67000135E6 /* 259-list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "259-list.png"; sourceTree = "<group>"; };
+		83172C221770FE67000135E6 /* 259-list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "259-list@2x.png"; sourceTree = "<group>"; };
 		836331301770DD2B000F8D95 /* EMSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSearchViewController.h; sourceTree = "<group>"; };
 		836331311770DD2B000F8D95 /* EMSSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSearchViewController.m; sourceTree = "<group>"; };
 		836331331770EF78000F8D95 /* 298-circlex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "298-circlex.png"; sourceTree = "<group>"; };
@@ -223,6 +231,10 @@
 		839BD650176F9BD400900712 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				83172C1F1770FE67000135E6 /* 11-clock.png */,
+				83172C201770FE67000135E6 /* 11-clock@2x.png */,
+				83172C211770FE67000135E6 /* 259-list.png */,
+				83172C221770FE67000135E6 /* 259-list@2x.png */,
 				836331371770F01C000F8D95 /* 258-checkmark.png */,
 				836331381770F01C000F8D95 /* 258-checkmark@2x.png */,
 				836331331770EF78000F8D95 /* 298-circlex.png */,
@@ -433,6 +445,10 @@
 				836331361770EF78000F8D95 /* 298-circlex@2x.png in Resources */,
 				836331391770F01C000F8D95 /* 258-checkmark.png in Resources */,
 				8363313A1770F01C000F8D95 /* 258-checkmark@2x.png in Resources */,
+				83172C231770FE67000135E6 /* 11-clock.png in Resources */,
+				83172C241770FE67000135E6 /* 11-clock@2x.png in Resources */,
+				83172C251770FE67000135E6 /* 259-list.png in Resources */,
+				83172C261770FE67000135E6 /* 259-list@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,6 +603,8 @@
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
 				INFOPLIST_FILE = "EMS/EMS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "";
+				"OTHER_CFLAGS[arch=*]" = "-DNOW_AND_NEXT_USE_TEST_DATE=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
