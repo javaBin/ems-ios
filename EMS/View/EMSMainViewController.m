@@ -16,6 +16,7 @@
 #import "EMSAppDelegate.h"
 
 #import "EMSSettingsViewController.h"
+#import "EMSDetailViewController.h"
 
 @interface EMSMainViewController ()
 
@@ -126,11 +127,21 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showSettingsView"])
-    {
-        EMSSettingsViewController *destination = [segue destinationViewController];
+    if ([[segue identifier] isEqualToString:@"showSettingsView"]) {
+        EMSSettingsViewController *destination = (EMSSettingsViewController *)[segue destinationViewController];
 
+        CLS_LOG(@"Preparing settings view");
+        
         destination.delegate = self;
+    }
+    if ([[segue identifier] isEqualToString:@"showDetailsView"]) {
+        EMSDetailViewController *destination = (EMSDetailViewController *)[segue destinationViewController];
+        
+        NSManagedObject *session = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
+        
+        CLS_LOG(@"Preparing detail view with %@", session);
+        
+        destination.session = session;
     }
 }
 

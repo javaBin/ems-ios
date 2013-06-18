@@ -55,11 +55,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SessionCell" textLabel="kIw-9H-dIi" detailTextLabel="Ic1-0m-wd0" style="IBUITableViewCellStyleSubtitle" id="PYN-Ut-rdj">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SessionCell" textLabel="kIw-9H-dIi" detailTextLabel="Ic1-0m-wd0" style="IBUITableViewCellStyleSubtitle" id="PYN-Ut-rdj">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kIw-9H-dIi">
@@ -75,6 +75,9 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <connections>
+                                    <segue destination="3lg-Sh-FWj" kind="push" identifier="showDetailsView" id="fsq-ZM-Vjd"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                     </tableView>
@@ -84,11 +87,33 @@
                                 <segue destination="6ld-j3-ru2" kind="push" identifier="showSettingsView" id="mpM-Oq-YCs"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="rEC-so-XYr"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dcc-le-TER" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1030" y="138"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="AlI-X6-QM8">
+            <objects>
+                <viewController id="3lg-Sh-FWj" customClass="EMSDetailViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LLw-3H-w5Y">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ib1-cg-KjS">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="0JI-IR-TXE">
+                            <connections>
+                                <action selector="share:" destination="3lg-Sh-FWj" id="tB6-oI-VzT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rlf-zs-OLZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1521" y="604"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gjw-7g-8aF">
@@ -107,6 +132,12 @@
         </scene>
     </scenes>
     <classes>
+        <class className="EMSDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSDetailViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="share:"/>
+            </relationships>
+        </class>
         <class className="EMSMainViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSMainViewController.h"/>
         </class>
