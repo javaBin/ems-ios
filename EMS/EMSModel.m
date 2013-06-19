@@ -13,6 +13,8 @@
 #import "EMSAppDelegate.h"
 
 #import "Conference.h"
+#import "ConferenceKeyword.h"
+#import "ConferenceLevel.h"
 
 @implementation EMSModel
 
@@ -244,20 +246,16 @@
     [object setValue:session.level forKey:@"level"];
 
     NSSet *foundLevels = [conference.conferenceLevels objectsPassingTest:^BOOL(id obj, BOOL *stop) {
-        NSManagedObject *conferenceLevel = (NSManagedObject *)obj;
+        ConferenceLevel *conferenceLevel = (ConferenceLevel *)obj;
 
-        if ([[conferenceLevel valueForKey:@"name"] isEqualToString:session.level]) {
-            return YES;
-        }
-
-        return NO;
+        return [conferenceLevel.name isEqualToString:session.level];
     }];
 
     if ([foundLevels count] == 0) {
-        NSManagedObject *conferenceLevel = [NSEntityDescription insertNewObjectForEntityForName:@"ConferenceLevel" inManagedObjectContext:[self managedObjectContext]];
+        ConferenceLevel *conferenceLevel = [NSEntityDescription insertNewObjectForEntityForName:@"ConferenceLevel" inManagedObjectContext:[self managedObjectContext]];
 
-        [conferenceLevel setValue:session.level forKey:@"name"];
-        [conferenceLevel setValue:conference forKey:@"conference"];
+        conferenceLevel.name = session.level;
+        conferenceLevel.conference = conference;
     }
 
     [[object mutableSetValueForKey:@"keywords"] removeAllObjects];
@@ -273,20 +271,16 @@
 
 
             NSSet *foundKeywords = [conference.conferenceKeywords objectsPassingTest:^BOOL(id obj, BOOL *stop) {
-                NSManagedObject *conferenceKeyword = (NSManagedObject *)obj;
+                ConferenceKeyword *conferenceKeyword = (ConferenceKeyword *)obj;
 
-                if ([[conferenceKeyword valueForKey:@"name"] isEqualToString:keyword]) {
-                    return YES;
-                }
-
-                return NO;
+                return [conferenceKeyword.name isEqualToString:keyword];
             }];
 
             if ([foundKeywords count] == 0) {
-                NSManagedObject *conferenceKeyword = [NSEntityDescription insertNewObjectForEntityForName:@"ConferenceKeyword" inManagedObjectContext:[self managedObjectContext]];
+                ConferenceKeyword *conferenceKeyword = [NSEntityDescription insertNewObjectForEntityForName:@"ConferenceKeyword" inManagedObjectContext:[self managedObjectContext]];
 
-                [conferenceKeyword setValue:keyword forKey:@"name"];
-                [conferenceKeyword setValue:conference forKey:@"conference"];
+                conferenceKeyword.name = keyword;
+                conferenceKeyword.conference = conference;
             }
         }];
     }

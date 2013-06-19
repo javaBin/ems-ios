@@ -18,6 +18,8 @@
 #import "EMSSessionCell.h"
 
 #import "Conference.h"
+#import "ConferenceKeyword.h"
+#import "ConferenceLevel.h"
 
 @interface EMSMainViewController ()
 
@@ -170,18 +172,19 @@
         NSMutableArray *levels = [[NSMutableArray alloc] init];
 
         [conference.conferenceLevels enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            NSManagedObject *level = (NSManagedObject *)obj;
+            ConferenceLevel *level = (ConferenceLevel *)obj;
 
-            [levels addObject:[level valueForKey:@"name"]];
+            [levels addObject:level.name];
         }];
+
         destination.levels = [levels sortedArrayUsingSelector: @selector(compare:)];
 
         NSMutableArray *keywords = [[NSMutableArray alloc] init];
 
         [conference.conferenceKeywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            NSManagedObject *keyword = (NSManagedObject *)obj;
+            ConferenceKeyword *keyword = (ConferenceKeyword *)obj;
 
-            [keywords addObject:[keyword valueForKey:@"name"]];
+            [keywords addObject:keyword.name];
         }];
 
         destination.keywords = [keywords sortedArrayUsingSelector: @selector(compare:)];

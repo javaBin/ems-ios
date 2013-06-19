@@ -17,11 +17,11 @@
         <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Session" inverseName="conference" inverseEntity="Session" syncable="YES"/>
         <relationship name="slots" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Slot" inverseName="conference" inverseEntity="Slot" syncable="YES"/>
     </entity>
-    <entity name="ConferenceKeyword" syncable="YES">
+    <entity name="ConferenceKeyword" representedClassName="ConferenceKeyword" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="conference" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conference" inverseName="conferenceKeywords" inverseEntity="Conference" syncable="YES"/>
     </entity>
-    <entity name="ConferenceLevel" syncable="YES">
+    <entity name="ConferenceLevel" representedClassName="ConferenceLevel" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="conference" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conference" inverseName="conferenceLevels" inverseEntity="Conference" syncable="YES"/>
     </entity>

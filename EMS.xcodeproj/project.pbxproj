@@ -39,6 +39,8 @@
 		83AF91B11771E7E100FAE20F /* EMSAdminViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91B01771E7E100FAE20F /* EMSAdminViewController.m */; };
 		83AF91B41772050D00FAE20F /* Slot.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91B31772050D00FAE20F /* Slot.m */; };
 		83AF91B81772056D00FAE20F /* Conference.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91B71772056D00FAE20F /* Conference.m */; };
+		83AF91BB1772103100FAE20F /* ConferenceKeyword.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91BA1772103100FAE20F /* ConferenceKeyword.m */; };
+		83AF91BE1772103100FAE20F /* ConferenceLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91BD1772103100FAE20F /* ConferenceLevel.m */; };
 		F31862371770340200292371 /* EMSDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F31862361770340200292371 /* EMSDetailViewController.m */; };
 		F31862421770501800292371 /* EMSSessionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F31862411770501800292371 /* EMSSessionCell.m */; };
 		F3513B47177074200042D07A /* 19-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B46177074200042D07A /* 19-gear.png */; };
@@ -130,6 +132,10 @@
 		83AF91B31772050D00FAE20F /* Slot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Slot.m; path = EMS/EMSMO/Slot.m; sourceTree = "<group>"; };
 		83AF91B61772056D00FAE20F /* Conference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Conference.h; path = EMS/EMSMO/Conference.h; sourceTree = "<group>"; };
 		83AF91B71772056D00FAE20F /* Conference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Conference.m; path = EMS/EMSMO/Conference.m; sourceTree = "<group>"; };
+		83AF91B91772103100FAE20F /* ConferenceKeyword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConferenceKeyword.h; path = EMS/EMSMO/ConferenceKeyword.h; sourceTree = "<group>"; };
+		83AF91BA1772103100FAE20F /* ConferenceKeyword.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConferenceKeyword.m; path = EMS/EMSMO/ConferenceKeyword.m; sourceTree = "<group>"; };
+		83AF91BC1772103100FAE20F /* ConferenceLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConferenceLevel.h; path = EMS/EMSMO/ConferenceLevel.h; sourceTree = "<group>"; };
+		83AF91BD1772103100FAE20F /* ConferenceLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConferenceLevel.m; path = EMS/EMSMO/ConferenceLevel.m; sourceTree = "<group>"; };
 		F31862351770340200292371 /* EMSDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSDetailViewController.h; sourceTree = "<group>"; };
 		F31862361770340200292371 /* EMSDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDetailViewController.m; sourceTree = "<group>"; };
 		F31862401770501800292371 /* EMSSessionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSessionCell.h; sourceTree = "<group>"; };
@@ -299,6 +305,10 @@
 		83AF91B51772053600FAE20F /* EMSMO */ = {
 			isa = PBXGroup;
 			children = (
+				83AF91BC1772103100FAE20F /* ConferenceLevel.h */,
+				83AF91BD1772103100FAE20F /* ConferenceLevel.m */,
+				83AF91B91772103100FAE20F /* ConferenceKeyword.h */,
+				83AF91BA1772103100FAE20F /* ConferenceKeyword.m */,
 				83AF91B61772056D00FAE20F /* Conference.h */,
 				83AF91B71772056D00FAE20F /* Conference.m */,
 				83AF91B21772050D00FAE20F /* Slot.h */,
@@ -526,6 +536,8 @@
 				83AF91B11771E7E100FAE20F /* EMSAdminViewController.m in Sources */,
 				83AF91B41772050D00FAE20F /* Slot.m in Sources */,
 				83AF91B81772056D00FAE20F /* Conference.m in Sources */,
+				83AF91BB1772103100FAE20F /* ConferenceKeyword.m in Sources */,
+				83AF91BE1772103100FAE20F /* ConferenceLevel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
