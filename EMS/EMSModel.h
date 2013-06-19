@@ -14,14 +14,14 @@
 
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 
-- (void) storeConferences:(NSArray *)conferences error:(NSError **)error;
 - (Conference *)conferenceForHref:(NSString *)url;
 - (Conference *)conferenceForSessionHref:(NSString *)url;
 
-- (void) storeSlots:(NSArray *)slots forHref:(NSString *)href error:(NSError **)error;
-- (void) storeRooms:(NSArray *)rooms forHref:(NSString *)href error:(NSError **)error;
-- (void) storeSessions:(NSArray *)sessions forHref:(NSString *)href error:(NSError **)error;
-- (void) storeSpeakers:(NSArray *)speakers forHref:(NSString *)href error:(NSError **)error;
+- (BOOL) storeConferences:(NSArray *)conferences error:(NSError **)error;
+- (BOOL) storeSlots:(NSArray *)slots forHref:(NSString *)href error:(NSError **)error;
+- (BOOL) storeRooms:(NSArray *)rooms forHref:(NSString *)href error:(NSError **)error;
+- (BOOL) storeSessions:(NSArray *)sessions forHref:(NSString *)href error:(NSError **)error;
+- (BOOL) storeSpeakers:(NSArray *)speakers forHref:(NSString *)href error:(NSError **)error;
 
 - (NSSet *) activeSlotNamesForConference:(Conference *)conference;
 

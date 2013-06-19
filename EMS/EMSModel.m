@@ -342,7 +342,7 @@
 
 #pragma mark - public interface
 
-- (void) storeConferences:(NSArray *)conferences error:(NSError**)error {
+- (BOOL) storeConferences:(NSArray *)conferences error:(NSError**)error {
     NSDictionary *hrefKeyed = [self conferencesKeyedByHref:conferences];
 
     NSArray *sortedHrefs = [hrefKeyed.allKeys sortedArrayUsingSelector: @selector(compare:)];
@@ -395,20 +395,31 @@
             [self populateConference:conference fromEMS:ems];
         }
     }];
-    
+
+    NSError *saveError = nil;
+
     // TODO error
-    [[self managedObjectContext] save:nil];
-    
+    if (![[self managedObjectContext] save:&saveError]) {
+        CLS_LOG(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
+
+        *error = saveError;
+
+        return NO;
+    }
+
+    return YES;
 }
 
-- (void) storeSlots:(NSArray *)slots forHref:(NSString *)href error:(NSError **)error {
+- (BOOL) storeSlots:(NSArray *)slots forHref:(NSString *)href error:(NSError **)error {
     NSArray *conferences = [self
                             conferencesForPredicate:[NSPredicate predicateWithFormat: @"(slotCollection LIKE %@)", href]
                             andSort:nil];
     
     if (conferences.count == 0) {
-        // TODO error
-        return;
+        NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+        [errorDetail setValue:@"Conference not found in database" forKey:NSLocalizedDescriptionKey];
+        *error = [NSError errorWithDomain:@"EMS" code:100 userInfo:errorDetail];
+        return NO;
     }
     
     Conference *conference = [conferences objectAtIndex:0];
@@ -466,18 +477,30 @@
         }
     }];
     
+    NSError *saveError = nil;
+
     // TODO error
-    [[self managedObjectContext] save:nil];
+    if (![[self managedObjectContext] save:&saveError]) {
+        CLS_LOG(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
+
+        *error = saveError;
+
+        return NO;
+    }
+    
+    return YES;
 }
 
-- (void) storeRooms:(NSArray *)rooms forHref:(NSString *)href error:(NSError **)error {
+- (BOOL) storeRooms:(NSArray *)rooms forHref:(NSString *)href error:(NSError **)error {
     NSArray *conferences = [self
                             conferencesForPredicate:[NSPredicate predicateWithFormat: @"(roomCollection LIKE %@)", href]
                             andSort:nil];
     
     if (conferences.count == 0) {
-        // TODO error
-        return;
+        NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+        [errorDetail setValue:@"Conference not found in database" forKey:NSLocalizedDescriptionKey];
+        *error = [NSError errorWithDomain:@"EMS" code:100 userInfo:errorDetail];
+        return NO;
     }
     
     Conference *conference = [conferences objectAtIndex:0];
@@ -535,18 +558,30 @@
         }
     }];
     
+    NSError *saveError = nil;
+
     // TODO error
-    [[self managedObjectContext] save:nil];
+    if (![[self managedObjectContext] save:&saveError]) {
+        CLS_LOG(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
+
+        *error = saveError;
+
+        return NO;
+    }
+    
+    return YES;
 }
 
-- (void) storeSpeakers:(NSArray *)speakers forHref:(NSString *)href error:(NSError **)error {
+- (BOOL) storeSpeakers:(NSArray *)speakers forHref:(NSString *)href error:(NSError **)error {
     NSArray *sessions = [self
                          sessionsForPredicate:[NSPredicate predicateWithFormat: @"(speakerCollection LIKE %@)", href]
                          andSort:nil];
     
     if (sessions.count == 0) {
-        // TODO error
-        return;
+        NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+        [errorDetail setValue:@"Conference not found in database" forKey:NSLocalizedDescriptionKey];
+        *error = [NSError errorWithDomain:@"EMS" code:100 userInfo:errorDetail];
+        return NO;
     }
     
     Session *session = [sessions objectAtIndex:0];
@@ -603,18 +638,30 @@
         }
     }];
     
+    NSError *saveError = nil;
+
     // TODO error
-    [[self managedObjectContext] save:nil];
+    if (![[self managedObjectContext] save:&saveError]) {
+        CLS_LOG(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
+
+        *error = saveError;
+
+        return NO;
+    }
+    
+    return YES;
 }
 
-- (void) storeSessions:(NSArray *)sessions forHref:(NSString *)href error:(NSError **)error {
+- (BOOL) storeSessions:(NSArray *)sessions forHref:(NSString *)href error:(NSError **)error {
     NSArray *conferences = [self
                             conferencesForPredicate:[NSPredicate predicateWithFormat: @"(sessionCollection LIKE %@)", href]
                             andSort:nil];
     
     if (conferences.count == 0) {
-        // TODO error
-        return;
+        NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+        [errorDetail setValue:@"Conference not found in database" forKey:NSLocalizedDescriptionKey];
+        *error = [NSError errorWithDomain:@"EMS" code:100 userInfo:errorDetail];
+        return NO;
     }
     
     Conference *conference = [conferences objectAtIndex:0];
@@ -681,8 +728,18 @@
     
     CLS_LOG(@"Persisting");
 
+    NSError *saveError = nil;
+
     // TODO error
-    [[self managedObjectContext] save:nil];
+    if (![[self managedObjectContext] save:&saveError]) {
+        CLS_LOG(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
+
+        *error = saveError;
+
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma mark - utility
