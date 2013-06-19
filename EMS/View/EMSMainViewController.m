@@ -81,7 +81,8 @@
 
     if (![[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:activeConference.href]) {
         CLS_LOG(@"Checking for existing data found no data - forced refresh");
-        
+
+        [self.tableView setContentOffset:CGPointMake(0, -100) animated:YES];
         [self.refreshControl beginRefreshing];
         [self retrieve];
     }

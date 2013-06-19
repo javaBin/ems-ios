@@ -57,6 +57,8 @@
     
     if (![[[EMSAppDelegate sharedAppDelegate] model] conferencesWithDataAvailable]) {
         self.emptyInitial = YES;
+
+        [self.tableView setContentOffset:CGPointMake(0, -100) animated:YES];
         [self.refreshControl beginRefreshing];
         [self retrieve];
     }
