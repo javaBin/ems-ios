@@ -72,7 +72,7 @@
     
     [self.tableView reloadData];
 
-    if ([[_fetchedResultsController sections] count] == 0) {
+    if (![[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:[[self activeConference] valueForKey:@"href"]]) {
         CLS_LOG(@"Checking for existing data found no data - forced refresh");
         
         [self.refreshControl beginRefreshing];

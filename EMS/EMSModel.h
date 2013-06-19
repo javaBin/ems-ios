@@ -22,4 +22,7 @@
 
 - (NSManagedObject *)slotForHref:(NSString *)url;
 
+- (BOOL)conferencesWithDataAvailable;
+- (BOOL)sessionsAvailableForConference:(NSString *)href;
+
 @end

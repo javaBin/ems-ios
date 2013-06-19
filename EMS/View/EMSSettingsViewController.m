@@ -55,9 +55,7 @@
         CLS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
 	}
     
-    id sectionInfo = [[_fetchedResultsController sections] objectAtIndex:0];
-    
-    if ([sectionInfo numberOfObjects] == 0) {
+    if (![[[EMSAppDelegate sharedAppDelegate] model] conferencesWithDataAvailable]) {
         self.emptyInitial = YES;
         [self.refreshControl beginRefreshing];
         [self retrieve];
@@ -179,15 +177,12 @@
 
 - (void) selectConference:(NSManagedObject *)conference {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *currentConference = [[defaults URLForKey:@"activeConference"] absoluteString];
     
     [defaults setURL:[NSURL URLWithString:[conference valueForKey:@"href"]] forKey:@"activeConference"];
     
     [self.tableView reloadData];
     
-    if (!([[conference valueForKey:@"href"] isEqualToString:currentConference])) {
-        [self.delegate conferenceChanged:self];
-    }
+    [self.delegate conferenceChanged:self];
     
     [self.navigationController popViewControllerAnimated:YES];
 }

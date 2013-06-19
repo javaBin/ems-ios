@@ -784,4 +784,18 @@
     return [[NSSet setWithSet:currentSlots] setByAddingObjectsFromSet:nextSlots];
 }
 
+- (BOOL)conferencesWithDataAvailable {
+    NSArray *conferences = [self conferencesForPredicate:[NSPredicate predicateWithFormat:@"sessions.@count > 0"] andSort:nil];
+    
+    return [conferences count] > 0;
+}
+
+- (BOOL)sessionsAvailableForConference:(NSString *)href {
+    NSManagedObject *conference = [self conferenceForHref:href];
+    
+    NSArray *sessions = [conference valueForKey:@"sessions"];
+    
+    return [sessions count] > 0;
+}
+
 @end
