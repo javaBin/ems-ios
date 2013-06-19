@@ -79,6 +79,18 @@
     return nil;
 }
 
+- (NSManagedObject *)conferenceForSessionHref:(NSString *)url {
+    NSArray *matched = [self
+                        conferencesForPredicate:[NSPredicate predicateWithFormat: @"(ANY sessions.href LIKE %@)", url]
+                        andSort:nil];
+    
+    if (matched.count > 0) {
+        return [matched objectAtIndex:0];
+    }
+    
+    return nil;
+}
+
 - (NSManagedObject *)slotForHref:(NSString *)url {
     NSArray *matched = [self
                         slotsForPredicate:[NSPredicate predicateWithFormat: @"(href LIKE %@)", url]
@@ -732,34 +744,7 @@
 }
 
 - (NSSet *) activeSlotNamesForConference:(NSManagedObject *)conference {
-#ifdef NOW_AND_NEXT_USE_TEST_DATE
-
-    CLS_LOG(@"WARNING - RUNNING IN NOW_AND_NEXT_USE_TEST_DATE mode");
-
-	// In debug mode we will use the current time of day but always the first day of conference. Otherwise we couldn't test until JZ started ;)
-	NSDate *current = [[NSDate alloc] init];
-
-    NSSortDescriptor *conferenceSlotSort = [NSSortDescriptor sortDescriptorWithKey:@"start" ascending:YES];
-    NSArray *conferenceSlots = [self slotsForPredicate:[NSPredicate predicateWithFormat:@"conference == %@", conference] andSort:[NSArray arrayWithObject:conferenceSlotSort]];
-    NSManagedObject *firstSlot = [conferenceSlots objectAtIndex:0];
-    NSDate *conferenceDate = [firstSlot valueForKey:@"start"];
-
-    CLS_LOG(@"Saw conference date of %@", conferenceDate);
-
-
-	NSCalendar *calendar = [NSCalendar currentCalendar];
-
-	NSDateComponents *timeComp = [calendar components:NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:current];
-	NSDateComponents *dateComp = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:conferenceDate];
-
-    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
-    [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
-    [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-
-	NSDate *date = [inputFormatter dateFromString:[NSString stringWithFormat:@"%04d-%02d-%02d %02d:%02d:00 +0200", [dateComp year], [dateComp month], [dateComp day], [timeComp hour], [timeComp minute]]];
-#else
-    NSDate *date = [[NSDate alloc] init];
-#endif
+    NSDate *date = [self dateForConference:conference andDate:[[NSDate alloc] init]];
 
     CLS_LOG(@"Running now and next with date %@", date);
 
@@ -796,6 +781,130 @@
     NSArray *sessions = [conference valueForKey:@"sessions"];
     
     return [sessions count] > 0;
+}
+
+- (NSManagedObject *) toggleFavourite:(NSManagedObject *)session {
+    CLS_LOG(@"Trying to toggle favourite for %@", session);
+    
+    BOOL isFavourite = [[session valueForKey:@"favourite"] boolValue];
+    
+    if (isFavourite == YES) {
+        [session setValue:[NSNumber numberWithBool:NO] forKey:@"favourite"];
+        [self removeNotification:session];
+    } else {
+        [session setValue:[NSNumber numberWithBool:YES] forKey:@"favourite"];
+        [self addNotification:session];
+    }
+    
+    NSError *error;
+    if (![[session managedObjectContext] save:&error]) {
+        CLS_LOG(@"Failed to toggle favourite for %@, %@, %@", session, error, [error userInfo]);
+        
+        // TODO - die?
+    }
+    
+    return session;
+}
+
+- (NSDate *) fiveMinutesBefore:(NSDate *)date {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *offsetComponents = [[NSDateComponents alloc] init];
+    [offsetComponents setMinute:-5];
+    return [calendar dateByAddingComponents:offsetComponents toDate:date options:0];
+}
+
+- (void) addNotification:(NSManagedObject *)session {
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    
+    NSDate *sessionStart = [self fiveMinutesBefore:[self dateForSession:session]];
+    
+    [notification setFireDate:sessionStart];
+    [notification setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    
+    [notification
+     setAlertBody:[NSString stringWithFormat:@"Your next session is %@ in %@ in 5 mins",
+                   [session valueForKey:@"title"],
+                   [[session valueForKey:@"room"] valueForKey:@"name"]]];
+    
+    [notification setSoundName:UILocalNotificationDefaultSoundName];
+    [notification setHasAction:NO];
+    [notification setUserInfo:[NSDictionary dictionaryWithObject:[session valueForKey:@"href"] forKey:@"sessionhref"]];
+    
+    CLS_LOG(@"Adding notification %@ for session %@ to notifications", notification, session);
+    
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+}
+
+- (void) removeNotification:(NSManagedObject *)session {
+    CLS_LOG(@"Looking for session %@ with ID %@", session, [session valueForKey:@"href"]);
+    
+    NSArray *notifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    
+    for (UILocalNotification *notification in notifications) {
+        NSDictionary *userInfo = [notification userInfo];
+        
+        CLS_LOG(@"Saw a notification for %@", userInfo);
+        
+        if (userInfo != nil && [[userInfo allKeys] containsObject:@"sessionhref"]) {
+            if ([[userInfo objectForKey:@"sessionhref"] isEqual:[session valueForKey:@"href"]]) {
+                CLS_LOG(@"Removing notification at %@ from notifications", notification);
+                
+                [[UIApplication sharedApplication] cancelLocalNotification:notification];
+            }
+        }
+    }
+}
+
+- (NSDate *)dateForConference:(NSManagedObject *)conference andDate:(NSDate *)date {
+#ifdef USE_TEST_DATE
+    CLS_LOG(@"WARNING - RUNNING IN USE_TEST_DATE mode");
+    
+	// In debug mode we will use the current time of day but always the first day of conference. Otherwise we couldn't test until JZ started ;)
+    NSSortDescriptor *conferenceSlotSort = [NSSortDescriptor sortDescriptorWithKey:@"start" ascending:YES];
+    NSArray *conferenceSlots = [self slotsForPredicate:[NSPredicate predicateWithFormat:@"conference == %@", conference] andSort:[NSArray arrayWithObject:conferenceSlotSort]];
+    NSManagedObject *firstSlot = [conferenceSlots objectAtIndex:0];
+    NSDate *conferenceDate = [firstSlot valueForKey:@"start"];
+    
+    CLS_LOG(@"Saw conference date of %@", conferenceDate);
+    
+	NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+	NSDateComponents *timeComp = [calendar components:NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:date];
+	NSDateComponents *dateComp = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:conferenceDate];
+    
+    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
+    [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
+    [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    
+	return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04d-%02d-%02d %02d:%02d:00 +0200", [dateComp year], [dateComp month], [dateComp day], [timeComp hour], [timeComp minute]]];
+#else
+    return date;
+#endif
+}
+
+- (NSDate *)dateForSession:(NSManagedObject *)session {
+#ifdef USE_TEST_DATE
+    CLS_LOG(@"WARNING - RUNNING IN USE_TEST_DATE mode");
+    
+	// In debug mode we will use the current day but always the start time of the slot. Otherwise we couldn't test until JZ started ;)
+
+    NSDate *sessionDate = [[session valueForKey:@"slot"] valueForKey:@"start"];
+    
+    CLS_LOG(@"Saw session date of %@", sessionDate);
+    
+	NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+	NSDateComponents *timeComp = [calendar components:NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:sessionDate];
+	NSDateComponents *dateComp = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:[[NSDate alloc] init]];
+    
+    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
+    [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
+    [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    
+	return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04d-%02d-%02d %02d:%02d:00 +0200", [dateComp year], [dateComp month], [dateComp day], [timeComp hour], [timeComp minute]]];
+#else
+    return [[session valueForKey:@"slot"] valueForKey:@"start"];
+#endif
 }
 
 @end

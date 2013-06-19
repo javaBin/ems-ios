@@ -46,10 +46,10 @@
             </objects>
             <point key="canvasLocation" x="1583" y="-265"/>
         </scene>
-        <!--Search View Controller - Search-->
+        <!--Search View Controller - Search/Filter-->
         <scene sceneID="Seh-yI-vwO">
             <objects>
-                <tableViewController storyboardIdentifier="SearchView" title="Search" id="cM7-wC-1Xm" customClass="EMSSearchViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SearchView" id="cM7-wC-1Xm" customClass="EMSSearchViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="DFD-ke-cEd">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -121,6 +121,10 @@
     }
 }
 
+- (void)pushDetailViewForHref:(NSString *)href {
+    [self performSegueWithIdentifier:@"showDetailsView" sender:href];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     [self.search resignFirstResponder];
@@ -135,11 +139,20 @@
     if ([[segue identifier] isEqualToString:@"showDetailsView"]) {
         EMSDetailViewController *destination = (EMSDetailViewController *)[segue destinationViewController];
 
-        NSManagedObject *session = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
+        
+        if ([sender isKindOfClass:[NSString class]]) {
+            NSManagedObject *session = [[[EMSAppDelegate sharedAppDelegate] model] sessionForHref:(NSString *)sender];
+            
+            CLS_LOG(@"Preparing detail view from passed href %@", session);
+            
+            destination.session = session;
+        } else {
+            NSManagedObject *session = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
 
-        CLS_LOG(@"Preparing detail view with %@", session);
+            CLS_LOG(@"Preparing detail view with %@", session);
 
-        destination.session = session;
+            destination.session = session;
+        }
     }
     if ([[segue identifier] isEqualToString:@"showSearchView"]) {
         EMSSearchViewController *destination = (EMSSearchViewController *)[segue destinationViewController];
@@ -283,24 +296,9 @@
 			EMSSessionCell *cell = (EMSSessionCell *)view;
 			
             NSManagedObject *session = cell.session;
-    
-            CLS_LOG(@"Trying to toggle favourite for %@", session);
             
-            BOOL isFavourite = [[session valueForKey:@"favourite"] boolValue];
-    
-            if (isFavourite == YES) {
-                [session setValue:[NSNumber numberWithBool:NO] forKey:@"favourite"];
-            } else {
-                [session setValue:[NSNumber numberWithBool:YES] forKey:@"favourite"];
-            }
-    
-            NSError *error;
-            if (![[session managedObjectContext] save:&error]) {
-                CLS_LOG(@"Failed to toggle favourite for %@, %@, %@", session, error, [error userInfo]);
-        
-                // TODO - die?
-            }
-			
+            [[[EMSAppDelegate sharedAppDelegate] model] toggleFavourite:session];
+
 			break;
 		}
         

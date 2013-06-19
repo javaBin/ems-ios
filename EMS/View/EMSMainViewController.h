@@ -34,4 +34,6 @@
 - (IBAction)toggleFavourite:(id)sender;
 - (IBAction)segmentChanged:(id)sender;
 
+- (void)pushDetailViewForHref:(NSString *)href;
+
 @end

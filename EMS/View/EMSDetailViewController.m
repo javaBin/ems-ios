@@ -55,22 +55,7 @@
 }
 
 - (IBAction)toggleFavourite:(id)sender {
-    CLS_LOG(@"Trying to toggle favourite for %@", self.session);
-    
-    BOOL isFavourite = [[self.session valueForKey:@"favourite"] boolValue];
-    
-    if (isFavourite == YES) {
-        [self.session setValue:[NSNumber numberWithBool:NO] forKey:@"favourite"];
-    } else {
-        [self.session setValue:[NSNumber numberWithBool:YES] forKey:@"favourite"];
-    }
-    
-    NSError *error;
-    if (![[self.session managedObjectContext] save:&error]) {
-        CLS_LOG(@"Failed to toggle favourite for %@, %@, %@", self.session, error, [error userInfo]);
-        
-        // TODO - die?
-    }
+    self.session = [[[EMSAppDelegate sharedAppDelegate] model] toggleFavourite:self.session];
     
     [self.button setSelected:[[self.session valueForKey:@"favourite"] boolValue]];
 }

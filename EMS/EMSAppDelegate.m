@@ -4,6 +4,7 @@
 
 #import "EMSAppDelegate.h"
 #import "EMSModel.h"
+#import "EMSMainViewController.h"
 
 @implementation EMSAppDelegate
 
@@ -21,8 +22,13 @@ int networkCount = 0;
     NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     
     [Crashlytics startWithAPIKey:[prefs objectForKey:@"crashlytics-api-key"]];
+
+    UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     
-    // Override point for customization after application launch.
+    [self activateWithNotification:notification];
+    
+    [[self window] rootViewController];
+
     return YES;
 }
 							
@@ -56,6 +62,44 @@ int networkCount = 0;
         if ([__managedObjectContext hasChanges] && ![__managedObjectContext save:&error]) {
             CLS_LOG(@"Failed to save data at shutdown %@, %@", error, [error userInfo]);
         } 
+    }
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    [self activateWithNotification:notification];
+}
+
+- (void)activateWithNotification:(UILocalNotification *)notification {
+    if (notification != nil) {
+        NSDictionary *userInfo = [notification userInfo];
+
+        CLS_LOG(@"Starting with a notification with userInfo %@", userInfo);
+
+        if (userInfo != nil && [[userInfo allKeys] containsObject:@"sessionhref"]) {
+            NSString *url = [userInfo valueForKey:@"sessionhref"];
+            
+            NSManagedObject *conference = [self.model conferenceForSessionHref:url];
+            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setURL:[NSURL URLWithString: [conference valueForKey:@"href"]] forKey:@"activeConference"];
+            
+            UIViewController *rootViewController = [[self window] rootViewController];
+            
+            if ([rootViewController isKindOfClass:[UINavigationController class]]) {
+                UINavigationController *navController = (UINavigationController *)rootViewController;
+            
+                [navController popToRootViewControllerAnimated:YES];
+                
+                UIViewController *controller = [navController visibleViewController];
+            
+                if ([controller isKindOfClass:[EMSMainViewController class]]) {
+
+                    EMSMainViewController *emsView = (EMSMainViewController *)controller;
+                    
+                    [emsView pushDetailViewForHref:url];
+                }
+            }
+        }
     }
 }
 
