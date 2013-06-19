@@ -128,6 +128,11 @@
     }
 }
 
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.tableView setContentOffset:CGPointMake(0, 44)];
+}
+
 - (void)pushDetailViewForHref:(NSString *)href {
     [self performSegueWithIdentifier:@"showDetailsView" sender:href];
 }
