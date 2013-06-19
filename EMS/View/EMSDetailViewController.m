@@ -107,7 +107,7 @@
     NSURL *shareUrl = [NSURL URLWithString:@"http://www.java.no"];
     NSArray *activityItems = [NSArray arrayWithObjects:shareString, /*shareImage, */shareUrl, nil];
     
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems
+    __block UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems
                                                                                          applicationActivities:nil];
     
     activityViewController.excludedActivityTypes = @[UIActivityTypePrint,
@@ -121,7 +121,7 @@
     
     activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     
-    [self presentViewController:activityViewController animated:YES completion:nil];
+    [self presentViewController:activityViewController animated:YES completion:^{ activityViewController.excludedActivityTypes = nil; activityViewController = nil; }];
 }
 
 - (NSString *)buildPage:(Session *)session {
