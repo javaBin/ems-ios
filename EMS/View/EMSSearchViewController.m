@@ -1,9 +1,5 @@
 //
 //  EMSSearchViewController.m
-//  EMS
-//
-//  Created by Chris Searle on 6/18/13.
-//  Copyright (c) 2013 Chris Searle. All rights reserved.
 //
 
 #import "EMSSearchViewController.h"
