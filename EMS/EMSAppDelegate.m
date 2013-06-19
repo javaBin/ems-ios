@@ -51,16 +51,7 @@
     NSError *error = nil;
     if (__managedObjectContext != nil) {
         if ([__managedObjectContext hasChanges] && ![__managedObjectContext save:&error]) {
-            
-			UIAlertView *errorAlert = [[UIAlertView alloc]
-									   initWithTitle: @"Unable to save data state to the data store at shutdown"
-									   message: @"This is not an error we can recover from - please exit using the home button."
-									   delegate:nil
-									   cancelButtonTitle:@"OK"
-									   otherButtonTitles:nil];
-			[errorAlert show];
-
-			CLS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
+            CLS_LOG(@"Failed to save data at shutdown %@, %@", error, [error userInfo]);
         } 
     }
 }
@@ -132,15 +123,19 @@
                              [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
 
     if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
-		UIAlertView *errorAlert = [[UIAlertView alloc]
-								   initWithTitle: @"Unable to load data store"
-								   message: @"The data store failed to load and without it this application has no data to show. This is not an error we can recover from - please exit using the home button."
-								   delegate:nil
-								   cancelButtonTitle:@"OK"
-								   otherButtonTitles:nil];
-		[errorAlert show];
+        CLS_LOG(@"Failed to set up SQL database. Deleting. %@, %@", error, [error userInfo]);
+
+        //delete the sqlite file and try again
+        [[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:nil];
         
-        CLS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
+        NSError *error2 = nil;
+        if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error2]) {
+
+            CLS_LOG(@"Failed to set up database on second attempt %@, %@", error2, [error2 userInfo]);
+            
+            [self showErrorAlertWithTitle:@"Database error" andMessage:@"We failed to create the database. If this happens again after an application restart please delete and re-install."];
+            
+        }
     }
     
     CLS_LOG(@"No persistent store - initialized");
@@ -158,17 +153,21 @@
     
     if (managedObjectContext != nil) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-            UIAlertView *errorAlert = [[UIAlertView alloc]
-                                       initWithTitle: @"Unable to update data store"
-                                       message: @"The data store failed to update and without it this application has no data to show. This is not an error we can recover from - please exit using the home button."
-                                       delegate:nil
-                                       cancelButtonTitle:@"OK"
-                                       otherButtonTitles:nil];
-            [errorAlert show];
-            
-            CLS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
+            CLS_LOG(@"Failed to save data %@, %@", error, [error userInfo]);
+
+            [self showErrorAlertWithTitle:@"Database error" andMessage:@"We failed to save data to the database. If this happens again after an application restart please delete and re-install."];
         }
     }
+}
+
+- (void)showErrorAlertWithTitle:(NSString *)title andMessage:(NSString *)message {
+    UIAlertView *errorAlert = [[UIAlertView alloc]
+                               initWithTitle: title
+                               message: message
+                               delegate:nil
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles:nil];
+    [errorAlert show];
 }
 
 + (EMSAppDelegate *)sharedAppDelegate
