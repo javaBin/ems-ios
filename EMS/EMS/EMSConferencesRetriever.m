@@ -2,6 +2,8 @@
 //  EMSConferencesRetriever.m
 //
 
+#import "EMSAppDelegate.h"
+
 #import "EMSConferencesRetriever.h"
 #import "EMSConference.h"
 
@@ -68,6 +70,8 @@
         
         [temp addObject:conf];
     }];
+
+    [[EMSAppDelegate sharedAppDelegate] stopNetwork];
     
     [self.delegate finishedConferences:[NSArray arrayWithArray:temp] forHref:href];
 }
@@ -75,6 +79,7 @@
 - (void) fetch:(NSURL *)url {
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
+    [[EMSAppDelegate sharedAppDelegate] startNetwork];
     dispatch_async(queue, ^{
         NSData* root = [NSData dataWithContentsOfURL:url];
         

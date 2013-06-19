@@ -2,6 +2,8 @@
 //  EMSSpeakersRetriever.m
 //
 
+#import "EMSAppDelegate.h"
+
 #import "EMSSpeakersRetriever.h"
 #import "EMSSpeaker.h"
 
@@ -41,12 +43,16 @@
         [temp addObject:speaker];
     }];
     
+    [[EMSAppDelegate sharedAppDelegate] stopNetwork];
+
     [self.delegate finishedSpeakers:[NSArray arrayWithArray:temp] forHref:href];
 }
 
 - (void) fetch:(NSURL *)url {
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
+    [[EMSAppDelegate sharedAppDelegate] startNetwork];
+
     dispatch_async(queue, ^{
         NSData* root = [NSData dataWithContentsOfURL:url];
         

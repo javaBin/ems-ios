@@ -1,10 +1,8 @@
 //
 //  EMSSessionsRetriever.m
-//  EMS
 //
-//  Created by Chris Searle on 17.06.13.
-//  Copyright (c) 2013 Chris Searle. All rights reserved.
-//
+
+#import "EMSAppDelegate.h"
 
 #import "EMSSessionsRetriever.h"
 #import "EMSSession.h"
@@ -100,12 +98,16 @@
         [temp addObject:session];
     }];
     
+    [[EMSAppDelegate sharedAppDelegate] stopNetwork];
+
     [self.delegate finishedSessions:[NSArray arrayWithArray:temp] forHref:href];
 }
 
 - (void) fetch:(NSURL *)url {
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
+    [[EMSAppDelegate sharedAppDelegate] startNetwork];
+
     dispatch_async(queue, ^{
         NSData* root = [NSData dataWithContentsOfURL:url];
         

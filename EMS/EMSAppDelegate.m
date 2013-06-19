@@ -7,6 +7,8 @@
 
 @implementation EMSAppDelegate
 
+int networkCount = 0;
+
 @synthesize managedObjectContext=__managedObjectContext;
 @synthesize managedObjectModel=__managedObjectModel;
 @synthesize persistentStoreCoordinator=__persistentStoreCoordinator;
@@ -26,8 +28,8 @@
 							
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    networkCount = 0;
+    [self stopNetwork];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -43,7 +45,8 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    networkCount = 0;
+    [self stopNetwork];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -173,6 +176,30 @@
 + (EMSAppDelegate *)sharedAppDelegate
 {
     return (EMSAppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
+- (void) startNetwork {
+    networkCount++;
+
+    UIApplication *app = [UIApplication sharedApplication];
+    app.networkActivityIndicatorVisible = YES;
+    
+    CLS_LOG(@"startNetwork finished with %d", networkCount);
+}
+
+- (void) stopNetwork {
+    CLS_LOG(@"stopNetwork started with %d", networkCount);
+
+    networkCount--;
+    
+    if (networkCount < 0) {
+        networkCount = 0;
+    }
+    
+    if (networkCount == 0) {
+        UIApplication *app = [UIApplication sharedApplication];
+        app.networkActivityIndicatorVisible = NO;
+    }
 }
 
 @end

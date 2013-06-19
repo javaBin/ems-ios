@@ -21,4 +21,7 @@
 
 + (EMSAppDelegate *)sharedAppDelegate;
 
+- (void) startNetwork;
+- (void) stopNetwork;
+
 @end
