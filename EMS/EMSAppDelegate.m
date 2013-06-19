@@ -159,9 +159,12 @@ int networkCount = 0;
     if (__persistentStoreCoordinator != nil) {
         return __persistentStoreCoordinator;
     }
-    
+
+    NSURL *oldStoreURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"incogito.sqlite"];
+    [[NSFileManager defaultManager] removeItemAtPath:oldStoreURL.path error:nil];
+
     CLS_LOG(@"No persistent store - initializing");
-    
+
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"EMSCoreDataModel.sqlite"];
     
     NSError *error = nil;

@@ -9,6 +9,7 @@
 
 #import "CJCollection.h"
 #import "CJItem.h"
+#import "CJLink.h"
 
 @implementation EMSSpeakersRetriever
 
@@ -37,8 +38,14 @@
                 speaker.bio = value;
             }
         }];
-        
-        // TODO links - add biopic
+
+        [item.links enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            CJLink *link = (CJLink *)obj;
+
+            if ([@"thumbnail" isEqualToString:link.rel]) {
+                speaker.thumbnailUrl = link.href;
+            }
+        }];
         
         [temp addObject:speaker];
     }];

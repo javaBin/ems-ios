@@ -68,6 +68,7 @@
         <attribute name="bio" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnailUrl" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="session" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Session" inverseName="speakers" inverseEntity="Session" syncable="YES"/>
     </entity>
     <elements>
@@ -78,6 +79,6 @@
         <element name="Room" positionX="432" positionY="153" width="128" height="105"/>
         <element name="Session" positionX="592" positionY="324" width="128" height="345"/>
         <element name="Slot" positionX="268" positionY="584" width="128" height="118"/>
-        <element name="Speaker" positionX="783" positionY="648" width="128" height="103"/>
+        <element name="Speaker" positionX="783" positionY="648" width="128" height="120"/>
     </elements>
 </model>

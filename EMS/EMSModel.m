@@ -333,9 +333,10 @@
 }
 
 - (void)populateSpeaker:(Speaker *)speaker fromEMS:(EMSSpeaker *)ems forSession:(Session *)session {
-    speaker.href = [ems.href absoluteString];
-    speaker.name = ems.name;
-    speaker.bio  = ems.bio;
+    speaker.href         = [ems.href absoluteString];
+    speaker.name         = ems.name;
+    speaker.bio          = ems.bio;
+    speaker.thumbnailUrl = [ems.thumbnailUrl absoluteString];
 
     speaker.session = session;
 }

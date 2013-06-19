@@ -2,6 +2,8 @@
 //  EMSDetailViewController.m
 //
 
+#import <CommonCrypto/CommonDigest.h>
+
 #import "EMSDetailViewController.h"
 
 #import "EMSAppDelegate.h"
@@ -83,8 +85,6 @@
     
     [[[EMSAppDelegate sharedAppDelegate] model] storeSpeakers:speakers forHref:[href absoluteString] error:nil];
 
-    // TODO - should saving of pics be in model? No - it needs to be in background. We could just save in the retrieve - but that's poor. At this point we have the URL for the pic and we have the href of the speaker. We should probably make a custom retriever.
-    
     [self buildPage];
 }
 
@@ -190,28 +190,60 @@
                 [result appendString:[NSString stringWithFormat:@"<h3>%@</h3>", speaker.name]];
             }
 
-            NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            if (speaker.thumbnailUrl != nil) {
+                CLS_LOG(@"Speaker has available thumbnail %@", speaker.thumbnailUrl);
 
-            NSString *pngFilePath = [NSString stringWithFormat:@"%@/%@.png",[docDir stringByAppendingPathComponent:@"bioIcons"],speaker.name]; // TODO - name as filename?
+                NSString *safeFilename = [self md5:speaker.thumbnailUrl];
 
-            NSFileManager *fileManager = [NSFileManager defaultManager];
+                NSString *cacheDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 
-            if ([fileManager fileExistsAtPath:pngFilePath]) {
-                NSError *fileError = nil;
+                NSString *pngFilePath = [NSString stringWithFormat:@"%@/%@.png",cacheDir,safeFilename];
+
+                NSFileManager *fileManager = [NSFileManager defaultManager];
+
+                if ([fileManager fileExistsAtPath:pngFilePath]) {
+                    CLS_LOG(@"Speaker has cached thumbnail %@", speaker.thumbnailUrl);
+
+                    NSError *fileError = nil;
                 
-                NSDictionary *fileAttributes = [fileManager attributesOfItemAtPath:pngFilePath error:&fileError];
+                    NSDictionary *fileAttributes = [fileManager attributesOfItemAtPath:pngFilePath error:&fileError];
                 
-                if (fileError != nil) {
-                    CLS_LOG(@"Got a file error reading file attributes for file %@", pngFilePath);
-                } else {
-                    if ([fileAttributes fileSize] > 0) {
-                        [result appendString:[NSString stringWithFormat:@"<img src='file://%@' width='50px' style='float: left; margin-right: 3px; margin-bottom: 3px'/>", pngFilePath]];
+                    if (fileError != nil) {
+                        CLS_LOG(@"Got a file error reading file attributes for file %@", pngFilePath);
                     } else {
-                        CLS_LOG(@"Empty bioPic %@", pngFilePath);
+                        if ([fileAttributes fileSize] > 0) {
+                            [result appendString:[NSString stringWithFormat:@"<img src='file://%@' width='50px' style='float: left; margin-right: 3px; margin-bottom: 3px'/>", pngFilePath]];
+                        } else {
+                            CLS_LOG(@"Empty bioPic %@", pngFilePath);
+                        }
                     }
-                }
+                } else {
+                    CLS_LOG(@"Speaker needs to fetch thumbnail %@", speaker.thumbnailUrl);
+
+                    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+
+                    [[EMSAppDelegate sharedAppDelegate] startNetwork];
+
+                    dispatch_async(queue, ^{
+                        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:speaker.thumbnailUrl]];
+
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            UIImage *image = [UIImage imageWithData:data];
+
+                            CLS_LOG(@"Saving image file");
+
+                            [[NSData dataWithData:UIImagePNGRepresentation(image)] writeToFile:pngFilePath atomically:YES];
+
+                            [[EMSAppDelegate sharedAppDelegate] stopNetwork];
+
+                            [self buildPage];
+                        });
+                    });
+
+                    
+               }
             }
-           
+
             NSString *bio = speaker.bio;
             if (bio != nil) {
                 [result appendString:[self paraContent:bio]];
@@ -221,6 +253,20 @@
 	}
     
 	return [NSString stringWithString:result];
+}
+
+- (NSString *) md5:(NSString *) input
+{
+    const char *cStr = [input UTF8String];
+    unsigned char digest[16];
+    CC_MD5( cStr, strlen(cStr), digest ); // This is the md5 call
+
+    NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
+
+    for(int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
+        [output appendFormat:@"%02x", digest[i]];
+    
+    return  output;
 }
 
 @end
