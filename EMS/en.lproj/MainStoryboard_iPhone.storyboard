@@ -40,11 +40,59 @@
                             <outlet property="delegate" destination="6ld-j3-ru2" id="shx-QZ-vNj"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Settings" id="LwD-U9-yk6"/>
+                    <navigationItem key="navigationItem" title="Settings" id="LwD-U9-yk6">
+                        <barButtonItem key="rightBarButtonItem" title="Admin" id="EpK-i8-3dh">
+                            <connections>
+                                <segue destination="k4H-y1-b5B" kind="push" id="IJu-dN-LRK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oc5-5a-O2E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1583" y="-265"/>
+        </scene>
+        <!--Admin View Controller - Admin-->
+        <scene sceneID="kG0-AE-uEU">
+            <objects>
+                <tableViewController id="k4H-y1-b5B" customClass="EMSAdminViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="cws-KM-orq">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AdminCell" textLabel="jA7-Dk-xdF" detailTextLabel="FpI-5v-D48" style="IBUITableViewCellStyleSubtitle" id="4tF-AU-TTP">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jA7-Dk-xdF">
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FpI-5v-D48">
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="k4H-y1-b5B" id="zHN-fi-MD2"/>
+                            <outlet property="delegate" destination="k4H-y1-b5B" id="jn6-1V-ROO"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Admin" id="rkO-4I-lKs"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hPt-6W-74O" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2114" y="-530"/>
         </scene>
         <!--Search View Controller - Search/Filter-->
         <scene sceneID="Seh-yI-vwO">
@@ -348,6 +396,9 @@
         <image name="298-circlex.png" width="22" height="22"/>
     </resources>
     <classes>
+        <class className="EMSAdminViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSAdminViewController.h"/>
+        </class>
         <class className="EMSDetailViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSDetailViewController.h"/>
             <relationships>

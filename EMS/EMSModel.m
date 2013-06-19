@@ -817,30 +817,44 @@
     UILocalNotification *notification = [[UILocalNotification alloc] init];
     
     NSDate *sessionStart = [self fiveMinutesBefore:[self dateForSession:session]];
+
+    NSComparisonResult result = [[[NSDate alloc] init] compare:sessionStart];
+
+    if (result == NSOrderedAscending) {
+        [notification setFireDate:sessionStart];
+        [notification setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     
-    [notification setFireDate:sessionStart];
-    [notification setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+        [notification
+         setAlertBody:[NSString stringWithFormat:@"Your next session is %@ in %@ in 5 mins",
+                       [session valueForKey:@"title"],
+                       [[session valueForKey:@"room"] valueForKey:@"name"]]];
     
-    [notification
-     setAlertBody:[NSString stringWithFormat:@"Your next session is %@ in %@ in 5 mins",
-                   [session valueForKey:@"title"],
-                   [[session valueForKey:@"room"] valueForKey:@"name"]]];
+        [notification setSoundName:UILocalNotificationDefaultSoundName];
+        [notification setUserInfo:[NSDictionary dictionaryWithObject:[session valueForKey:@"href"] forKey:@"sessionhref"]];
     
-    [notification setSoundName:UILocalNotificationDefaultSoundName];
-    [notification setHasAction:NO];
-    [notification setUserInfo:[NSDictionary dictionaryWithObject:[session valueForKey:@"href"] forKey:@"sessionhref"]];
+        CLS_LOG(@"Adding notification %@ for session %@ to notifications", notification, session);
     
-    CLS_LOG(@"Adding notification %@ for session %@ to notifications", notification, session);
-    
-    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+        [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+
+        NSMutableArray *storedNotifications = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"notificationDatabase"]];
+
+        [storedNotifications addObject:[NSKeyedArchiver archivedDataWithRootObject:notification]];
+
+        [[NSUserDefaults standardUserDefaults] setValue:storedNotifications forKey:@"notificationDatabase"];
+    }
 }
 
 - (void) removeNotification:(NSManagedObject *)session {
     CLS_LOG(@"Looking for session %@ with ID %@", session, [session valueForKey:@"href"]);
-    
-    NSArray *notifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
-    
-    for (UILocalNotification *notification in notifications) {
+
+    NSArray *notifications = [[NSUserDefaults standardUserDefaults] objectForKey:@"notificationDatabase"];;
+
+    NSMutableArray *remaining = [NSMutableArray arrayWithArray:notifications];
+
+    [notifications enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSData *data = (NSData *)obj;
+        UILocalNotification *notification = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+
         NSDictionary *userInfo = [notification userInfo];
         
         CLS_LOG(@"Saw a notification for %@", userInfo);
@@ -848,11 +862,15 @@
         if (userInfo != nil && [[userInfo allKeys] containsObject:@"sessionhref"]) {
             if ([[userInfo objectForKey:@"sessionhref"] isEqual:[session valueForKey:@"href"]]) {
                 CLS_LOG(@"Removing notification at %@ from notifications", notification);
-                
+
+                [remaining removeObjectAtIndex:[notifications indexOfObject:obj]];
+
                 [[UIApplication sharedApplication] cancelLocalNotification:notification];
             }
         }
-    }
+    }];
+
+    [[NSUserDefaults standardUserDefaults] setValue:remaining forKey:@"notificationDatabase"];
 }
 
 - (NSDate *)dateForConference:(NSManagedObject *)conference andDate:(NSDate *)date {

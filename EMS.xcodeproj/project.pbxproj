@@ -36,6 +36,7 @@
 		839BD66C176F9BD400900712 /* EMSSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD659176F9BD400900712 /* EMSSettingsViewController.m */; };
 		839BD66D176F9BD400900712 /* EMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD65B176F9BD400900712 /* EMSViewController.m */; };
 		839BD670176FA67000900712 /* EMSSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD66F176FA67000900712 /* EMSSpeaker.m */; };
+		83AF91B11771E7E100FAE20F /* EMSAdminViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91B01771E7E100FAE20F /* EMSAdminViewController.m */; };
 		F31862371770340200292371 /* EMSDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F31862361770340200292371 /* EMSDetailViewController.m */; };
 		F31862421770501800292371 /* EMSSessionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F31862411770501800292371 /* EMSSessionCell.m */; };
 		F3513B47177074200042D07A /* 19-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B46177074200042D07A /* 19-gear.png */; };
@@ -121,6 +122,8 @@
 		839BD65B176F9BD400900712 /* EMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSViewController.m; sourceTree = "<group>"; };
 		839BD66E176FA67000900712 /* EMSSpeaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSpeaker.h; sourceTree = "<group>"; };
 		839BD66F176FA67000900712 /* EMSSpeaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSpeaker.m; sourceTree = "<group>"; };
+		83AF91AF1771E7E100FAE20F /* EMSAdminViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSAdminViewController.h; sourceTree = "<group>"; };
+		83AF91B01771E7E100FAE20F /* EMSAdminViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSAdminViewController.m; sourceTree = "<group>"; };
 		F31862351770340200292371 /* EMSDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSDetailViewController.h; sourceTree = "<group>"; };
 		F31862361770340200292371 /* EMSDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDetailViewController.m; sourceTree = "<group>"; };
 		F31862401770501800292371 /* EMSSessionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSessionCell.h; sourceTree = "<group>"; };
@@ -280,6 +283,8 @@
 				836331301770DD2B000F8D95 /* EMSSearchViewController.h */,
 				836331311770DD2B000F8D95 /* EMSSearchViewController.m */,
 				8363313B1770F06C000F8D95 /* EMSSearchViewDelegate.h */,
+				83AF91AF1771E7E100FAE20F /* EMSAdminViewController.h */,
+				83AF91B01771E7E100FAE20F /* EMSAdminViewController.m */,
 			);
 			name = View;
 			path = EMS/View;
@@ -288,11 +293,11 @@
 		F35BB6B917685885009077D3 = {
 			isa = PBXGroup;
 			children = (
+				839BD654176F9BD400900712 /* View */,
 				F35BB6EE17686478009077D3 /* CollectionJSON */,
 				839BD637176F9BD400900712 /* Config */,
 				839BD63A176F9BD400900712 /* EMS */,
 				839BD650176F9BD400900712 /* Images */,
-				839BD654176F9BD400900712 /* View */,
 				F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */,
 				F35BB6CB17685885009077D3 /* App */,
 				F35BB6C417685885009077D3 /* Frameworks */,
@@ -500,6 +505,7 @@
 				F31862421770501800292371 /* EMSSessionCell.m in Sources */,
 				F3D5E2C717709CD100888A7E /* EMSSpeakersRetriever.m in Sources */,
 				836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */,
+				83AF91B11771E7E100FAE20F /* EMSAdminViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
