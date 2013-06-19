@@ -6,6 +6,8 @@
 #import "EMSModel.h"
 #import "EMSMainViewController.h"
 
+#import "Conference.h"
+
 @implementation EMSAppDelegate
 
 int networkCount = 0;
@@ -78,10 +80,10 @@ int networkCount = 0;
         if (userInfo != nil && [[userInfo allKeys] containsObject:@"sessionhref"]) {
             NSString *url = [userInfo valueForKey:@"sessionhref"];
             
-            NSManagedObject *conference = [self.model conferenceForSessionHref:url];
+            Conference *conference = [self.model conferenceForSessionHref:url];
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setURL:[NSURL URLWithString: [conference valueForKey:@"href"]] forKey:@"activeConference"];
+            [defaults setURL:[NSURL URLWithString: conference.href] forKey:@"activeConference"];
             
             UIViewController *rootViewController = [[self window] rootViewController];
             

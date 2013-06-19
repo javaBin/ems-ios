@@ -12,6 +12,8 @@
 
 #import "EMSAppDelegate.h"
 
+#import "Conference.h"
+
 @implementation EMSModel
 
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)moc {
@@ -67,7 +69,7 @@
 
 #pragma mark - get single object
 
-- (NSManagedObject *)conferenceForHref:(NSString *)url {
+- (Conference *)conferenceForHref:(NSString *)url {
     NSArray *matched = [self
                         conferencesForPredicate:[NSPredicate predicateWithFormat: @"(href LIKE %@)", url]
                         andSort:nil];
@@ -198,37 +200,38 @@
 
 #pragma mark - populate managed object from EMS object
 
-- (void)populateManagedObject:(NSManagedObject *)object withConference:(EMSConference *)conference {
-    [object setValue:conference.name forKey:@"name"];
-    [object setValue:conference.slug forKey:@"slug"];
-    [object setValue:conference.venue forKey:@"venue"];
-    [object setValue:[conference.href absoluteString] forKey:@"href"];
-    [object setValue:conference.start forKey:@"start"];
-    [object setValue:conference.end forKey:@"end"];
-    [object setValue:[conference.roomCollection absoluteString] forKey:@"roomCollection"];
-    [object setValue:[conference.sessionCollection absoluteString] forKey:@"sessionCollection"];
-    [object setValue:[conference.slotCollection absoluteString] forKey:@"slotCollection"];
+- (void)populateManagedObject:(Conference *)object withConference:(EMSConference *)conference {
+    object.name = conference.name;
+    object.slug = conference.slug;
+    object.venue = conference.venue;
+    object.href = [conference.href absoluteString];
+    object.start = conference.start;
+    object.end = conference.end;
+    object.roomCollection = [conference.roomCollection absoluteString];
+    object.sessionCollection = [conference.sessionCollection absoluteString];
+    object.slotCollection = [conference.slotCollection absoluteString];
+
     if (conference.hintCount == nil) {
-        [object setValue:0 forKey:@"hintCount"];
+        object.hintCount = 0;
     } else {
-        [object setValue:conference.hintCount forKey:@"hintCount"];
+        object.hintCount = conference.hintCount;
     }
 }
 
-- (void)populateManagedObject:(NSManagedObject *)object withSlot:(EMSSlot *)slot forConference:(NSManagedObject *)conference {
+- (void)populateManagedObject:(NSManagedObject *)object withSlot:(EMSSlot *)slot forConference:(Conference *)conference {
     [object setValue:slot.start forKey:@"start"];
     [object setValue:slot.end forKey:@"end"];
     [object setValue:[slot.href absoluteString] forKey:@"href"];
     [object setValue:conference forKey:@"conference"];
 }
 
-- (void)populateManagedObject:(NSManagedObject *)object withRoom:(EMSRoom *)room forConference:(NSManagedObject *)conference {
+- (void)populateManagedObject:(NSManagedObject *)object withRoom:(EMSRoom *)room forConference:(Conference *)conference {
     [object setValue:room.name forKey:@"name"];
     [object setValue:[room.href absoluteString] forKey:@"href"];
     [object setValue:conference forKey:@"conference"];
 }
 
-- (void)populateManagedObject:(NSManagedObject *)object withSession:(EMSSession *)session forConference:(NSManagedObject *)conference {
+- (void)populateManagedObject:(NSManagedObject *)object withSession:(EMSSession *)session forConference:(Conference *)conference {
     [object setValue:[session.href absoluteString] forKey:@"href"];
     [object setValue:session.title forKey:@"title"];
     [object setValue:session.format forKey:@"format"];
@@ -240,7 +243,7 @@
     [object setValue:session.summary forKey:@"summary"];
     [object setValue:session.level forKey:@"level"];
 
-    NSSet *foundLevels = [[conference valueForKey:@"conferenceLevels"] objectsPassingTest:^BOOL(id obj, BOOL *stop) {
+    NSSet *foundLevels = [conference.conferenceLevels objectsPassingTest:^BOOL(id obj, BOOL *stop) {
         NSManagedObject *conferenceLevel = (NSManagedObject *)obj;
 
         if ([[conferenceLevel valueForKey:@"name"] isEqualToString:session.level]) {
@@ -269,7 +272,7 @@
             [newKeyword setValue:object forKey:@"session"];
 
 
-            NSSet *foundKeywords = [[conference valueForKey:@"conferenceKeywords"] objectsPassingTest:^BOOL(id obj, BOOL *stop) {
+            NSSet *foundKeywords = [conference.conferenceKeywords objectsPassingTest:^BOOL(id obj, BOOL *stop) {
                 NSManagedObject *conferenceKeyword = (NSManagedObject *)obj;
 
                 if ([[conferenceKeyword valueForKey:@"name"] isEqualToString:keyword]) {
@@ -361,9 +364,9 @@
     CLS_LOG(@"Deleting %d conferences", [unmatched count]);
 
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSManagedObject *managedObject = (NSManagedObject *)obj;
+        Conference *conference = (Conference *)obj;
 
-        [[self managedObjectContext] deleteObject:managedObject];
+        [[self managedObjectContext] deleteObject:conference];
     }];
     
     // Walk thru matching and for each one - update. Store in list
@@ -372,11 +375,11 @@
     NSMutableSet *seen = [[NSMutableSet alloc] init];
     
     [matched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSManagedObject *managedObject = (NSManagedObject *)obj;
+        Conference *conference = (Conference *)obj;
 
-        [seen addObject:[managedObject valueForKey:@"href"]];
+        [seen addObject:conference.href];
 
-        [self populateManagedObject:managedObject withConference:[hrefKeyed objectForKey:[managedObject valueForKey:@"href"]]];
+        [self populateManagedObject:conference withConference:[hrefKeyed objectForKey:conference.href]];
     }];
     
     // Walk thru any new ones left
@@ -384,13 +387,13 @@
 
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
-            NSManagedObject *managedObject = [NSEntityDescription
-                                            insertNewObjectForEntityForName:@"Conference"
-                                            inManagedObjectContext:[self managedObjectContext]];
+            Conference *conference = [NSEntityDescription
+                                      insertNewObjectForEntityForName:@"Conference"
+                                      inManagedObjectContext:[self managedObjectContext]];
             
             EMSConference *ems = (EMSConference *)obj;
             
-            [self populateManagedObject:managedObject withConference:ems];
+            [self populateManagedObject:conference withConference:ems];
         }
     }];
     
@@ -409,7 +412,7 @@
         return;
     }
     
-    NSManagedObject *conference = [conferences objectAtIndex:0];
+    Conference *conference = [conferences objectAtIndex:0];
 
     NSDictionary *hrefKeyed = [self slotsKeyedByHref:slots];
 
@@ -478,7 +481,7 @@
         return;
     }
     
-    NSManagedObject *conference = [conferences objectAtIndex:0];
+    Conference *conference = [conferences objectAtIndex:0];
     
     NSDictionary *hrefKeyed = [self roomsKeyedByHref:rooms];
     
@@ -619,13 +622,10 @@
         return;
     }
     
-    NSManagedObject *conference = [conferences objectAtIndex:0];
+    Conference *conference = [conferences objectAtIndex:0];
 
-    NSMutableSet *conferenceKeywords = [conference mutableSetValueForKey:@"conferenceKeywords"];
-    [conferenceKeywords removeAllObjects];
-
-    NSMutableSet *conferenceLevels = [conference mutableSetValueForKey:@"conferenceLevels"];
-    [conferenceLevels removeAllObjects];
+    [conference removeConferenceKeywords:conference.conferenceKeywords];
+    [conference removeConferenceLevels:conference.conferenceLevels];
 
     NSDictionary *hrefKeyed = [self sessionsKeyedByHref:sessions];
     
@@ -692,7 +692,7 @@
 
 #pragma mark - utility
 
-- (NSString *) getSlotNameForLightningSlot:(NSManagedObject *)slot forConference:(NSManagedObject *)conference {
+- (NSString *) getSlotNameForLightningSlot:(NSManagedObject *)slot forConference:(Conference *)conference {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(((start <= %@) AND (end >= %@)) AND SELF != %@ AND conference == %@)",
                               [slot valueForKey:@"start"],
                               [slot valueForKey:@"end"],
@@ -709,7 +709,7 @@
     return [self getSlotNameForSlot:slot forConference:conference];
 }
 
-- (NSString *) getSlotNameForSlot:(NSManagedObject *)slot forConference:(NSManagedObject *)conference {
+- (NSString *) getSlotNameForSlot:(NSManagedObject *)slot forConference:(Conference *)conference {
     NSDateFormatter *dateFormatterDate = [[NSDateFormatter alloc] init];
     NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
 
@@ -722,7 +722,7 @@
             [dateFormatterTime stringFromDate:[slot valueForKey:@"end"]]];
 }
 
-- (NSSet *)slotsForSessionsWithPredicate:(NSPredicate *)predicate forConference:(NSManagedObject *)conference {
+- (NSSet *)slotsForSessionsWithPredicate:(NSPredicate *)predicate forConference:(Conference *)conference {
     NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"start" ascending:YES];
 
     NSArray *slots = [self slotsForPredicate:predicate andSort:[NSArray arrayWithObject:sort]];
@@ -743,7 +743,7 @@
     return [NSSet setWithSet:results];
 }
 
-- (NSSet *) activeSlotNamesForConference:(NSManagedObject *)conference {
+- (NSSet *) activeSlotNamesForConference:(Conference *)conference {
     NSDate *date = [self dateForConference:conference andDate:[[NSDate alloc] init]];
 
     CLS_LOG(@"Running now and next with date %@", date);
@@ -776,11 +776,9 @@
 }
 
 - (BOOL)sessionsAvailableForConference:(NSString *)href {
-    NSManagedObject *conference = [self conferenceForHref:href];
-    
-    NSArray *sessions = [conference valueForKey:@"sessions"];
-    
-    return [sessions count] > 0;
+    Conference *conference = [self conferenceForHref:href];
+
+    return [conference.sessions count] > 0;
 }
 
 - (NSManagedObject *) toggleFavourite:(NSManagedObject *)session {
@@ -873,7 +871,7 @@
     [[NSUserDefaults standardUserDefaults] setValue:remaining forKey:@"notificationDatabase"];
 }
 
-- (NSDate *)dateForConference:(NSManagedObject *)conference andDate:(NSDate *)date {
+- (NSDate *)dateForConference:(Conference *)conference andDate:(NSDate *)date {
 #ifdef USE_TEST_DATE
     CLS_LOG(@"WARNING - RUNNING IN USE_TEST_DATE mode");
     

@@ -17,6 +17,8 @@
 
 #import "EMSSessionCell.h"
 
+#import "Conference.h"
+
 @interface EMSMainViewController ()
 
 @end
@@ -34,13 +36,13 @@
     self.refreshControl = refreshControl;
 }
 
-- (NSManagedObject *)conferenceForHref:(NSString *)href {
+- (Conference *)conferenceForHref:(NSString *)href {
     CLS_LOG(@"Getting conference for %@", href);
     
     return [[[EMSAppDelegate sharedAppDelegate] model] conferenceForHref:href];
 }
 
-- (NSManagedObject *)activeConference {
+- (Conference *)activeConference {
     CLS_LOG(@"Getting current conference");
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -108,7 +110,7 @@
     // This is also set in the storyboard but appears not to work.
     self.tableView.sectionIndexMinimumDisplayRowCount = 500;
     
-    NSManagedObject *conference = [self activeConference];
+    Conference *conference = [self activeConference];
     
     if (conference == nil) {
         CLS_LOG(@"No conference - push to settings view");
@@ -163,8 +165,11 @@
         destination.currentLevels = [NSSet setWithSet:self.currentLevels];
         destination.currentKeywords = [NSSet setWithSet:self.currentKeywords];
 
+        Conference *conference = [self activeConference];
+
         NSMutableArray *levels = [[NSMutableArray alloc] init];
-        [[[self activeConference] valueForKey:@"conferenceLevels"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+
+        [conference.conferenceLevels enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
             NSManagedObject *level = (NSManagedObject *)obj;
 
             [levels addObject:[level valueForKey:@"name"]];
@@ -172,11 +177,13 @@
         destination.levels = [levels sortedArrayUsingSelector: @selector(compare:)];
 
         NSMutableArray *keywords = [[NSMutableArray alloc] init];
-        [[[self activeConference] valueForKey:@"conferenceKeywords"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+
+        [conference.conferenceKeywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
             NSManagedObject *keyword = (NSManagedObject *)obj;
 
             [keywords addObject:[keyword valueForKey:@"name"]];
         }];
+
         destination.keywords = [keywords sortedArrayUsingSelector: @selector(compare:)];
 
         destination.delegate = self;
@@ -190,13 +197,14 @@
 }
 
 - (NSPredicate *)currentConferencePredicate {
-    NSManagedObject *activeConference = [self activeConference];
+    Conference *activeConference = [self activeConference];
     
     if (activeConference != nil) {
         NSMutableArray *predicates = [[NSMutableArray alloc] init];
         
         [predicates
-         addObject:[NSPredicate predicateWithFormat: @"((state == %@) AND (conference == %@))", @"approved",
+         addObject:[NSPredicate predicateWithFormat: @"((state == %@) AND (conference == %@))",
+                    @"approved",
                     activeConference]];
 
         if (!([self.search.text isEqualToString:@""])) {
@@ -391,22 +399,22 @@
 #pragma mark - retrieval
 
 - (void) retrieve {
-    NSManagedObject *conference = [self activeConference];
+    Conference *conference = [self activeConference];
 
     CLS_LOG(@"Starting retrieval");
 
     if (conference != nil) {
         CLS_LOG(@"Starting retrieval - saw conf");
 
-        if ([conference valueForKey:@"slotCollection"] != nil) {
+        if (conference.slotCollection != nil) {
             CLS_LOG(@"Starting retrieval - saw slot collection");
             self.retrievingSlots = YES;
-            [self.retriever refreshSlots:[NSURL URLWithString:[conference valueForKey:@"slotCollection"]]];
+            [self.retriever refreshSlots:[NSURL URLWithString:conference.slotCollection]];
         }
-        if ([conference valueForKey:@"roomCollection"] != nil) {
+        if (conference.roomCollection != nil) {
             CLS_LOG(@"Starting retrieval - saw room collection");
             self.retrievingRooms = YES;
-            [self.retriever refreshRooms:[NSURL URLWithString:[conference valueForKey:@"roomCollection"]]];
+            [self.retriever refreshRooms:[NSURL URLWithString:conference.roomCollection]];
         }
     }
 }

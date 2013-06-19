@@ -4,6 +4,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "Conference.h"
+
 @interface EMSModel : NSObject
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
@@ -11,8 +13,8 @@
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 
 - (void) storeConferences:(NSArray *)conferences error:(NSError **)error;
-- (NSManagedObject *)conferenceForHref:(NSString *)url;
-- (NSManagedObject *)conferenceForSessionHref:(NSString *)url;
+- (Conference *)conferenceForHref:(NSString *)url;
+- (Conference *)conferenceForSessionHref:(NSString *)url;
 
 - (void) storeSlots:(NSArray *)slots forHref:(NSString *)href error:(NSError **)error;
 - (void) storeRooms:(NSArray *)rooms forHref:(NSString *)href error:(NSError **)error;

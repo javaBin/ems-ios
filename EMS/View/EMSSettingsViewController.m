@@ -175,10 +175,10 @@
 }
 
 
-- (void) selectConference:(NSManagedObject *)conference {
+- (void) selectConference:(Conference *)conference {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    [defaults setURL:[NSURL URLWithString:[conference valueForKey:@"href"]] forKey:@"activeConference"];
+    [defaults setURL:[NSURL URLWithString:conference.href] forKey:@"activeConference"];
     
     [self.tableView reloadData];
     
@@ -259,7 +259,7 @@
         self.justRetrieved = NO;
         self.emptyInitial = NO;
         
-        NSManagedObject *conference = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+        Conference *conference = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
         
         [self selectConference:conference];
     }
