@@ -53,6 +53,10 @@
             
             if ([@"session collection" isEqualToString:link.rel]) {
                 conf.sessionCollection = link.href;
+                
+                if (link.otherFields != nil) {
+                    conf.hintCount = [link.otherFields objectForKey:@"count"];
+                }
             }
             if ([@"slot collection" isEqualToString:link.rel]) {
                 conf.slotCollection = link.href;

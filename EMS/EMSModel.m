@@ -196,6 +196,11 @@
     [object setValue:[conference.roomCollection absoluteString] forKey:@"roomCollection"];
     [object setValue:[conference.sessionCollection absoluteString] forKey:@"sessionCollection"];
     [object setValue:[conference.slotCollection absoluteString] forKey:@"slotCollection"];
+    if (conference.hintCount == nil) {
+        [object setValue:0 forKey:@"hintCount"];
+    } else {
+        [object setValue:conference.hintCount forKey:@"hintCount"];
+    }
 }
 
 - (void)populateManagedObject:(NSManagedObject *)object withSlot:(EMSSlot *)slot forConference:(NSManagedObject *)conference {

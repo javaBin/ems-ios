@@ -19,5 +19,6 @@
 @property (strong, nonatomic) NSURL *roomCollection;
 @property (strong, nonatomic) NSURL *sessionCollection;
 
+@property (strong, nonatomic) NSNumber *hintCount;
 
 @end

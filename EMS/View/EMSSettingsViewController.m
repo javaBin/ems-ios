@@ -87,6 +87,10 @@
     
     [fetchRequest setFetchBatchSize:20];
     
+    NSPredicate *countPredicate = [NSPredicate predicateWithFormat:@"hintCount > 0"];
+    
+    [fetchRequest setPredicate:countPredicate];
+    
     NSFetchedResultsController *theFetchedResultsController =
     [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                         managedObjectContext:managedObjectContext sectionNameKeyPath:nil
