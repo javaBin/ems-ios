@@ -15,6 +15,11 @@
 #import "Conference.h"
 #import "ConferenceKeyword.h"
 #import "ConferenceLevel.h"
+#import "Session.h"
+#import "Slot.h"
+#import "Keyword.h"
+#import "Room.h"
+#import "Speaker.h"
 
 @implementation EMSModel
 
@@ -83,7 +88,7 @@
     return nil;
 }
 
-- (NSManagedObject *)conferenceForSessionHref:(NSString *)url {
+- (Conference *)conferenceForSessionHref:(NSString *)url {
     NSArray *matched = [self
                         conferencesForPredicate:[NSPredicate predicateWithFormat: @"(ANY sessions.href LIKE %@)", url]
                         andSort:nil];
@@ -95,7 +100,7 @@
     return nil;
 }
 
-- (NSManagedObject *)slotForHref:(NSString *)url {
+- (Slot *)slotForHref:(NSString *)url {
     NSArray *matched = [self
                         slotsForPredicate:[NSPredicate predicateWithFormat: @"(href LIKE %@)", url]
                         andSort:nil];
@@ -107,7 +112,7 @@
     return nil;
 }
 
-- (NSManagedObject *)roomForHref:(NSString *)url {
+- (Room *)roomForHref:(NSString *)url {
     NSArray *matched = [self
                         roomsForPredicate:[NSPredicate predicateWithFormat: @"(href LIKE %@)", url]
                         andSort:nil];
@@ -119,7 +124,7 @@
     return nil;
 }
 
-- (NSManagedObject *)sessionForHref:(NSString *)url {
+- (Session *)sessionForHref:(NSString *)url {
     NSArray *matched = [self
                         sessionsForPredicate:[NSPredicate predicateWithFormat: @"(href LIKE %@)", url]
                         andSort:nil];
@@ -131,7 +136,7 @@
     return nil;
 }
 
-- (NSManagedObject *)speakerForHref:(NSString *)url {
+- (Speaker *)speakerForHref:(NSString *)url {
     NSArray *matched = [self
                         speakersForPredicate:[NSPredicate predicateWithFormat: @"(href LIKE %@)", url]
                         andSort:nil];
@@ -202,73 +207,75 @@
 
 #pragma mark - populate managed object from EMS object
 
-- (void)populateManagedObject:(Conference *)object withConference:(EMSConference *)conference {
-    object.name = conference.name;
-    object.slug = conference.slug;
-    object.venue = conference.venue;
-    object.href = [conference.href absoluteString];
-    object.start = conference.start;
-    object.end = conference.end;
-    object.roomCollection = [conference.roomCollection absoluteString];
-    object.sessionCollection = [conference.sessionCollection absoluteString];
-    object.slotCollection = [conference.slotCollection absoluteString];
+- (void)populateConference:(Conference *)conference fromEMS:(EMSConference *)ems {
+    conference.name  = ems.name;
+    conference.slug  = ems.slug;
+    conference.venue = ems.venue;
+    conference.href  = [ems.href absoluteString];
+    conference.start = ems.start;
+    conference.end   = ems.end;
 
-    if (conference.hintCount == nil) {
-        object.hintCount = 0;
+    conference.roomCollection    = [ems.roomCollection absoluteString];
+    conference.sessionCollection = [ems.sessionCollection absoluteString];
+    conference.slotCollection    = [ems.slotCollection absoluteString];
+
+    if (ems.hintCount == nil) {
+        conference.hintCount = 0;
     } else {
-        object.hintCount = conference.hintCount;
+        conference.hintCount = ems.hintCount;
     }
 }
 
-- (void)populateManagedObject:(NSManagedObject *)object withSlot:(EMSSlot *)slot forConference:(Conference *)conference {
-    [object setValue:slot.start forKey:@"start"];
-    [object setValue:slot.end forKey:@"end"];
-    [object setValue:[slot.href absoluteString] forKey:@"href"];
-    [object setValue:conference forKey:@"conference"];
+- (void)populateSlot:(Slot *)slot fromEMS:(EMSSlot *)ems forConference:(Conference *)conference {
+    slot.start = ems.start;
+    slot.end   = ems.end;
+    slot.href  = [ems.href absoluteString];
+
+    slot.conference = conference;
 }
 
-- (void)populateManagedObject:(NSManagedObject *)object withRoom:(EMSRoom *)room forConference:(Conference *)conference {
-    [object setValue:room.name forKey:@"name"];
-    [object setValue:[room.href absoluteString] forKey:@"href"];
-    [object setValue:conference forKey:@"conference"];
+- (void)populateRoom:(Room *)room fromEMS:(EMSRoom *)ems forConference:(Conference *)conference {
+    room.name = ems.name;
+    room.href = [ems.href absoluteString];
+
+    room.conference = conference;
 }
 
-- (void)populateManagedObject:(NSManagedObject *)object withSession:(EMSSession *)session forConference:(Conference *)conference {
-    [object setValue:[session.href absoluteString] forKey:@"href"];
-    [object setValue:session.title forKey:@"title"];
-    [object setValue:session.format forKey:@"format"];
-    [object setValue:session.body forKey:@"body"];
-    [object setValue:session.state forKey:@"state"];
-    [object setValue:session.slug forKey:@"slug"];
-    [object setValue:session.audience forKey:@"audience"];
-    [object setValue:session.language forKey:@"language"];
-    [object setValue:session.summary forKey:@"summary"];
-    [object setValue:session.level forKey:@"level"];
+- (void)populateSession:(Session *)session fromEMS:(EMSSession *)ems forConference:(Conference *)conference {
+    session.href = [ems.href absoluteString];
+    session.title = ems.title;
+    session.format = ems.format;
+    session.body = ems.body;
+    session.state = ems.state;
+    session.slug = ems.slug;
+    session.audience = ems.audience;
+    session.language = ems.language;
+    session.summary = ems.summary;
+    session.level = ems.level;
 
     NSSet *foundLevels = [conference.conferenceLevels objectsPassingTest:^BOOL(id obj, BOOL *stop) {
         ConferenceLevel *conferenceLevel = (ConferenceLevel *)obj;
 
-        return [conferenceLevel.name isEqualToString:session.level];
+        return [conferenceLevel.name isEqualToString:ems.level];
     }];
 
     if ([foundLevels count] == 0) {
         ConferenceLevel *conferenceLevel = [NSEntityDescription insertNewObjectForEntityForName:@"ConferenceLevel" inManagedObjectContext:[self managedObjectContext]];
 
-        conferenceLevel.name = session.level;
+        conferenceLevel.name = ems.level;
         conferenceLevel.conference = conference;
     }
 
-    [[object mutableSetValueForKey:@"keywords"] removeAllObjects];
+    [session removeKeywords:session.keywords];
 
-    if (session.keywords != nil) {
-        [session.keywords enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    if (ems.keywords != nil) {
+        [ems.keywords enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             NSString *keyword = (NSString *)obj;
 
-            NSManagedObject *newKeyword = [NSEntityDescription insertNewObjectForEntityForName:@"Keyword" inManagedObjectContext:[self managedObjectContext]];
+            Keyword *newKeyword = [NSEntityDescription insertNewObjectForEntityForName:@"Keyword" inManagedObjectContext:[self managedObjectContext]];
 
-            [newKeyword setValue:keyword forKey:@"name"];
-            [newKeyword setValue:object forKey:@"session"];
-
+            newKeyword.name = keyword;
+            newKeyword.session = session;
 
             NSSet *foundKeywords = [conference.conferenceKeywords objectsPassingTest:^BOOL(id obj, BOOL *stop) {
                 ConferenceKeyword *conferenceKeyword = (ConferenceKeyword *)obj;
@@ -285,54 +292,52 @@
         }];
     }
 
-    [object setValue:[session.attachmentCollection absoluteString] forKey:@"attachmentCollection"];
-    [object setValue:[session.speakerCollection absoluteString] forKey:@"speakerCollection"];
+    session.attachmentCollection = [ems.attachmentCollection absoluteString];
+    session.speakerCollection = [ems.speakerCollection absoluteString];
 
-    [object setValue:conference forKey:@"conference"];
+    session.conference = conference;
 
-    if (session.roomItem != nil) {
-        NSManagedObject *room = [self roomForHref:[session.roomItem absoluteString]];
-        [object setValue:room forKey:@"room"];
-        [object setValue:[room valueForKey:@"name"] forKey:@"roomName"];
+    if (ems.roomItem != nil) {
+        Room *room = [self roomForHref:[ems.roomItem absoluteString]];
+
+        session.room = room;
+        session.roomName = room.name;
     }
     
-    if (session.slotItem != nil) {
-        NSManagedObject *slot = [self slotForHref:[session.slotItem absoluteString]];
+    if (ems.slotItem != nil) {
+        Slot *slot = [self slotForHref:[ems.slotItem absoluteString]];
 
-        [object setValue:slot forKey:@"slot"];
+        session.slot = slot;
 
-        if ([session.format isEqualToString:@"lightning-talk"]) {
-            [object setValue:[self getSlotNameForLightningSlot:slot forConference:conference] forKey:@"slotName"];
+        if ([ems.format isEqualToString:@"lightning-talk"]) {
+            session.slotName = [self getSlotNameForLightningSlot:slot forConference:conference];
         } else {
-            [object setValue:[self getSlotNameForSlot:slot forConference:conference] forKey:@"slotName"];
+            session.slotName = [self getSlotNameForSlot:slot forConference:conference];
         }
     }
 
-    if (session.speakers != nil) {
-        NSMutableSet *speakerSet = [object mutableSetValueForKey:@"speakers"];
+    if (ems.speakers != nil) {
 
-        [session.speakers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            EMSSpeaker *speaker = (EMSSpeaker *)obj;
+        [session removeSpeakers:session.speakers];
 
-            NSManagedObject *newSpeaker = [self speakerForHref:[speaker.href absoluteString]];
+        [ems.speakers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            EMSSpeaker *emsSpeaker = (EMSSpeaker *)obj;
 
-            if (newSpeaker == nil) {
-                newSpeaker = [NSEntityDescription
-                          insertNewObjectForEntityForName:@"Speaker"
-                          inManagedObjectContext:[self managedObjectContext]];
-            }
+            Speaker *speaker = [NSEntityDescription
+                                insertNewObjectForEntityForName:@"Speaker"
+                                inManagedObjectContext:[self managedObjectContext]];
 
-            [self populateManagedObject:newSpeaker withSpeaker:speaker forSession:speakerSet];
+            [self populateSpeaker:speaker fromEMS:emsSpeaker forSession:session];
          }];
     }
 }
 
-- (void)populateManagedObject:(NSManagedObject *)object withSpeaker:(EMSSpeaker *)speaker forSession:(NSMutableSet *)session {
-    [object setValue:[speaker.href absoluteString] forKey:@"href"];
-    [object setValue:speaker.name forKey:@"name"];
-    [object setValue:speaker.bio forKey:@"bio"];
-    
-    [session addObject:object];
+- (void)populateSpeaker:(Speaker *)speaker fromEMS:(EMSSpeaker *)ems forSession:(Session *)session {
+    speaker.href = [ems.href absoluteString];
+    speaker.name = ems.name;
+    speaker.bio  = ems.bio;
+
+    speaker.session = session;
 }
 
 #pragma mark - public interface
@@ -373,7 +378,7 @@
 
         [seen addObject:conference.href];
 
-        [self populateManagedObject:conference withConference:[hrefKeyed objectForKey:conference.href]];
+        [self populateConference:conference fromEMS:[hrefKeyed objectForKey:conference.href]];
     }];
     
     // Walk thru any new ones left
@@ -387,7 +392,7 @@
             
             EMSConference *ems = (EMSConference *)obj;
             
-            [self populateManagedObject:conference withConference:ems];
+            [self populateConference:conference fromEMS:ems];
         }
     }];
     
@@ -428,9 +433,9 @@
     CLS_LOG(@"Deleting %d slots", [unmatched count]);
 
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSManagedObject *managedObject = (NSManagedObject *)obj;
+        Slot *slot = (Slot *)obj;
         
-        [[self managedObjectContext] deleteObject:managedObject];
+        [[self managedObjectContext] deleteObject:slot];
     }];
     
     // Walk thru matching and for each one - update. Store in list
@@ -439,11 +444,11 @@
     NSMutableSet *seen = [[NSMutableSet alloc] init];
     
     [matched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSManagedObject *managedObject = (NSManagedObject *)obj;
+        Slot *slot = (Slot *)obj;
+
+        [seen addObject:slot.href];
         
-        [seen addObject:[managedObject valueForKey:@"href"]];
-        
-        [self populateManagedObject:managedObject withSlot:[hrefKeyed objectForKey:[managedObject valueForKey:@"href"]] forConference:conference];
+        [self populateSlot:slot fromEMS:[hrefKeyed objectForKey:slot.href] forConference:conference];
     }];
     
     // Walk thru any new ones left
@@ -451,13 +456,13 @@
 
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
-            NSManagedObject *managedObject = [NSEntityDescription
-                                     insertNewObjectForEntityForName:@"Slot"
-                                     inManagedObjectContext:[self managedObjectContext]];
+            Slot *slot = [NSEntityDescription
+                          insertNewObjectForEntityForName:@"Slot"
+                          inManagedObjectContext:[self managedObjectContext]];
             
             EMSSlot *ems = (EMSSlot *)obj;
             
-            [self populateManagedObject:managedObject withSlot:ems forConference:conference];
+            [self populateSlot:slot fromEMS:ems forConference:conference];
         }
     }];
     
@@ -497,9 +502,9 @@
     CLS_LOG(@"Deleting %d rooms", [unmatched count]);
 
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSManagedObject *managedObject = (NSManagedObject *)obj;
+        Room *room = (Room *)obj;
         
-        [[self managedObjectContext] deleteObject:managedObject];
+        [[self managedObjectContext] deleteObject:room];
     }];
     
     // Walk thru matching and for each one - update. Store in list
@@ -508,11 +513,11 @@
     NSMutableSet *seen = [[NSMutableSet alloc] init];
     
     [matched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSManagedObject *managedObject = (NSManagedObject *)obj;
+        Room *room = (Room *)obj;
         
-        [seen addObject:[managedObject valueForKey:@"href"]];
+        [seen addObject:room.href];
         
-        [self populateManagedObject:managedObject withRoom:[hrefKeyed objectForKey:[managedObject valueForKey:@"href"]] forConference:conference];
+        [self populateRoom:room fromEMS:[hrefKeyed objectForKey:room.href] forConference:conference];
     }];
     
     // Walk thru any new ones left
@@ -520,13 +525,13 @@
 
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
-            NSManagedObject *managedObject = [NSEntityDescription
-                                              insertNewObjectForEntityForName:@"Room"
-                                              inManagedObjectContext:[self managedObjectContext]];
+            Room *room = [NSEntityDescription
+                          insertNewObjectForEntityForName:@"Room"
+                          inManagedObjectContext:[self managedObjectContext]];
             
             EMSRoom *ems = (EMSRoom *)obj;
             
-            [self populateManagedObject:managedObject withRoom:ems forConference:conference];
+            [self populateRoom:room fromEMS:ems forConference:conference];
         }
     }];
     
@@ -544,7 +549,7 @@
         return;
     }
     
-    NSManagedObject *session = [sessions objectAtIndex:0];
+    Session *session = [sessions objectAtIndex:0];
     
     NSDictionary *hrefKeyed = [self speakersKeyedByHref:speakers];
     
@@ -565,24 +570,22 @@
     CLS_LOG(@"Deleting %d speakers", [unmatched count]);
     
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSManagedObject *managedObject = (NSManagedObject *)obj;
+        Speaker *speaker = (Speaker *)obj;
         
-        [[self managedObjectContext] deleteObject:managedObject];
+        [[self managedObjectContext] deleteObject:speaker];
     }];
     
-    NSMutableSet *speakerSet = [session mutableSetValueForKey:@"speakers"];
-
     // Walk thru matching and for each one - update. Store in list
     CLS_LOG(@"Updating %d speakers", [matched count]);
     
     NSMutableSet *seen = [[NSMutableSet alloc] init];
 
     [matched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSManagedObject *managedObject = (NSManagedObject *)obj;
+        Speaker *speaker = (Speaker *)obj;
         
-        [seen addObject:[managedObject valueForKey:@"href"]];
+        [seen addObject:speaker.href];
 
-        [self populateManagedObject:managedObject withSpeaker:[hrefKeyed objectForKey:[managedObject valueForKey:@"href"]] forSession:speakerSet];
+        [self populateSpeaker:speaker fromEMS:[hrefKeyed objectForKey:speaker.href] forSession:session];
     }];
     
     // Walk thru any new ones left
@@ -590,21 +593,19 @@
     
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
-            NSManagedObject *managedObject = [NSEntityDescription
-                                              insertNewObjectForEntityForName:@"Speaker"
-                                              inManagedObjectContext:[self managedObjectContext]];
+            Speaker *speaker = [NSEntityDescription
+                                insertNewObjectForEntityForName:@"Speaker"
+                                inManagedObjectContext:[self managedObjectContext]];
             
             EMSSpeaker *ems = (EMSSpeaker *)obj;
             
-            [self populateManagedObject:managedObject withSpeaker:ems forSession:speakerSet];
+            [self populateSpeaker:speaker fromEMS:ems forSession:session];
         }
     }];
     
     // TODO error
     [[self managedObjectContext] save:nil];
 }
-
-
 
 - (void) storeSessions:(NSArray *)sessions forHref:(NSString *)href error:(NSError **)error {
     NSArray *conferences = [self
@@ -641,9 +642,9 @@
     CLS_LOG(@"Deleting %d sessions", [unmatched count]);
 
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSManagedObject *managedObject = (NSManagedObject *)obj;
+        Session *session = (Session *)obj;
         
-        [[self managedObjectContext] deleteObject:managedObject];
+        [[self managedObjectContext] deleteObject:session];
     }];
     
     // Walk thru matching and for each one - update. Store in list
@@ -652,11 +653,11 @@
     NSMutableSet *seen = [[NSMutableSet alloc] init];
     
     [matched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSManagedObject *managedObject = (NSManagedObject *)obj;
+        Session *session = (Session *)obj;
         
-        [seen addObject:[managedObject valueForKey:@"href"]];
+        [seen addObject:session.href];
         
-        [self populateManagedObject:managedObject withSession:[hrefKeyed objectForKey:[managedObject valueForKey:@"href"]] forConference:conference];
+        [self populateSession:session fromEMS:[hrefKeyed objectForKey:session.href] forConference:conference];
     }];
     
 
@@ -665,16 +666,16 @@
     
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
-            NSManagedObject *managedObject = [NSEntityDescription
-                                              insertNewObjectForEntityForName:@"Session"
-                                              inManagedObjectContext:[self managedObjectContext]];
+            Session *session = [NSEntityDescription
+                                insertNewObjectForEntityForName:@"Session"
+                                inManagedObjectContext:[self managedObjectContext]];
 
             // New sessions are not favourites by default.
-            [managedObject setValue:[NSNumber numberWithBool:NO] forKey:@"favourite"];
+            session.favourite = [NSNumber numberWithBool:NO];
 
             EMSSession *ems = (EMSSession *)obj;
             
-            [self populateManagedObject:managedObject withSession:ems forConference:conference];
+            [self populateSession:session fromEMS:ems forConference:conference];
         }
     }];
     
@@ -686,10 +687,10 @@
 
 #pragma mark - utility
 
-- (NSString *) getSlotNameForLightningSlot:(NSManagedObject *)slot forConference:(Conference *)conference {
+- (NSString *) getSlotNameForLightningSlot:(Slot *)slot forConference:(Conference *)conference {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(((start <= %@) AND (end >= %@)) AND SELF != %@ AND conference == %@)",
-                              [slot valueForKey:@"start"],
-                              [slot valueForKey:@"end"],
+                              slot.start,
+                              slot.end,
                               slot,
                               conference];
 
@@ -703,7 +704,7 @@
     return [self getSlotNameForSlot:slot forConference:conference];
 }
 
-- (NSString *) getSlotNameForSlot:(NSManagedObject *)slot forConference:(Conference *)conference {
+- (NSString *) getSlotNameForSlot:(Slot *)slot forConference:(Conference *)conference {
     NSDateFormatter *dateFormatterDate = [[NSDateFormatter alloc] init];
     NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
 
@@ -711,9 +712,9 @@
     [dateFormatterTime setDateFormat:@"HH:mm"];
 
     return [NSString stringWithFormat:@"%@ %@ - %@",
-            [dateFormatterDate stringFromDate:[slot valueForKey:@"start"]],
-            [dateFormatterTime stringFromDate:[slot valueForKey:@"start"]],
-            [dateFormatterTime stringFromDate:[slot valueForKey:@"end"]]];
+            [dateFormatterDate stringFromDate:slot.start],
+            [dateFormatterTime stringFromDate:slot.start],
+            [dateFormatterTime stringFromDate:slot.end]];
 }
 
 - (NSSet *)slotsForSessionsWithPredicate:(NSPredicate *)predicate forConference:(Conference *)conference {
@@ -729,8 +730,9 @@
         NSArray *sessions = [self sessionsForPredicate:[NSPredicate predicateWithFormat:@"slotName = %@ AND conference == %@ AND state == %@", slotName, conference, @"approved"] andSort:nil];
 
         [sessions enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            NSManagedObject *session = (NSManagedObject *)obj;
-            [results addObject:[session valueForKey:@"slot"]];
+            Session *session = (Session *)obj;
+
+            [results addObject:session.slot];
         }];
     }
 
@@ -775,16 +777,16 @@
     return [conference.sessions count] > 0;
 }
 
-- (NSManagedObject *) toggleFavourite:(NSManagedObject *)session {
+- (Session *) toggleFavourite:(Session *)session {
     CLS_LOG(@"Trying to toggle favourite for %@", session);
     
-    BOOL isFavourite = [[session valueForKey:@"favourite"] boolValue];
+    BOOL isFavourite = [session.favourite boolValue];
     
     if (isFavourite == YES) {
-        [session setValue:[NSNumber numberWithBool:NO] forKey:@"favourite"];
+        session.favourite = [NSNumber numberWithBool:NO];
         [self removeNotification:session];
     } else {
-        [session setValue:[NSNumber numberWithBool:YES] forKey:@"favourite"];
+        session.favourite = [NSNumber numberWithBool:YES];
         [self addNotification:session];
     }
     
@@ -805,7 +807,7 @@
     return [calendar dateByAddingComponents:offsetComponents toDate:date options:0];
 }
 
-- (void) addNotification:(NSManagedObject *)session {
+- (void) addNotification:(Session *)session {
     UILocalNotification *notification = [[UILocalNotification alloc] init];
     
     NSDate *sessionStart = [self fiveMinutesBefore:[self dateForSession:session]];
@@ -818,11 +820,11 @@
     
         [notification
          setAlertBody:[NSString stringWithFormat:@"Your next session is %@ in %@ in 5 mins",
-                       [session valueForKey:@"title"],
-                       [[session valueForKey:@"room"] valueForKey:@"name"]]];
+                       session.title,
+                       session.room.name]];
     
         [notification setSoundName:UILocalNotificationDefaultSoundName];
-        [notification setUserInfo:[NSDictionary dictionaryWithObject:[session valueForKey:@"href"] forKey:@"sessionhref"]];
+        [notification setUserInfo:[NSDictionary dictionaryWithObject:session.href forKey:@"sessionhref"]];
     
         CLS_LOG(@"Adding notification %@ for session %@ to notifications", notification, session);
     
@@ -836,8 +838,8 @@
     }
 }
 
-- (void) removeNotification:(NSManagedObject *)session {
-    CLS_LOG(@"Looking for session %@ with ID %@", session, [session valueForKey:@"href"]);
+- (void) removeNotification:(Session *)session {
+    CLS_LOG(@"Looking for session %@ with ID %@", session, session.href);
 
     NSArray *notifications = [[NSUserDefaults standardUserDefaults] objectForKey:@"notificationDatabase"];;
 
@@ -852,7 +854,7 @@
         CLS_LOG(@"Saw a notification for %@", userInfo);
         
         if (userInfo != nil && [[userInfo allKeys] containsObject:@"sessionhref"]) {
-            if ([[userInfo objectForKey:@"sessionhref"] isEqual:[session valueForKey:@"href"]]) {
+            if ([[userInfo objectForKey:@"sessionhref"] isEqual:session.href]) {
                 CLS_LOG(@"Removing notification at %@ from notifications", notification);
 
                 [remaining removeObjectAtIndex:[notifications indexOfObject:obj]];
@@ -872,8 +874,8 @@
 	// In debug mode we will use the current time of day but always the first day of conference. Otherwise we couldn't test until JZ started ;)
     NSSortDescriptor *conferenceSlotSort = [NSSortDescriptor sortDescriptorWithKey:@"start" ascending:YES];
     NSArray *conferenceSlots = [self slotsForPredicate:[NSPredicate predicateWithFormat:@"conference == %@", conference] andSort:[NSArray arrayWithObject:conferenceSlotSort]];
-    NSManagedObject *firstSlot = [conferenceSlots objectAtIndex:0];
-    NSDate *conferenceDate = [firstSlot valueForKey:@"start"];
+    Slot *firstSlot = [conferenceSlots objectAtIndex:0];
+    NSDate *conferenceDate = firstSlot.start;
     
     CLS_LOG(@"Saw conference date of %@", conferenceDate);
     
@@ -892,13 +894,13 @@
 #endif
 }
 
-- (NSDate *)dateForSession:(NSManagedObject *)session {
+- (NSDate *)dateForSession:(Session *)session {
 #ifdef USE_TEST_DATE
     CLS_LOG(@"WARNING - RUNNING IN USE_TEST_DATE mode");
     
 	// In debug mode we will use the current day but always the start time of the slot. Otherwise we couldn't test until JZ started ;)
 
-    NSDate *sessionDate = [[session valueForKey:@"slot"] valueForKey:@"start"];
+    NSDate *sessionDate = session.slot.start;
     
     CLS_LOG(@"Saw session date of %@", sessionDate);
     
@@ -913,7 +915,7 @@
     
 	return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04d-%02d-%02d %02d:%02d:00 +0200", [dateComp year], [dateComp month], [dateComp day], [timeComp hour], [timeComp minute]]];
 #else
-    return [[session valueForKey:@"slot"] valueForKey:@"start"];
+    return session.slot.start;
 #endif
 }
 

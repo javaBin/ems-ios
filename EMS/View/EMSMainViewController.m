@@ -20,6 +20,7 @@
 #import "Conference.h"
 #import "ConferenceKeyword.h"
 #import "ConferenceLevel.h"
+#import "Speaker.h"
 
 @interface EMSMainViewController ()
 
@@ -76,7 +77,9 @@
     
     [self.tableView reloadData];
 
-    if (![[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:[[self activeConference] valueForKey:@"href"]]) {
+    Conference *activeConference = [self activeConference];
+
+    if (![[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:activeConference.href]) {
         CLS_LOG(@"Checking for existing data found no data - forced refresh");
         
         [self.refreshControl beginRefreshing];
@@ -90,8 +93,7 @@
     [self initializeFetchedResultsController];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.retrievingSlots = NO;
@@ -143,15 +145,14 @@
     if ([[segue identifier] isEqualToString:@"showDetailsView"]) {
         EMSDetailViewController *destination = (EMSDetailViewController *)[segue destinationViewController];
 
-        
         if ([sender isKindOfClass:[NSString class]]) {
-            NSManagedObject *session = [[[EMSAppDelegate sharedAppDelegate] model] sessionForHref:(NSString *)sender];
+            Session *session = [[[EMSAppDelegate sharedAppDelegate] model] sessionForHref:(NSString *)sender];
             
             CLS_LOG(@"Preparing detail view from passed href %@", session);
             
             destination.session = session;
         } else {
-            NSManagedObject *session = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
+            Session *session = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
 
             CLS_LOG(@"Preparing detail view with %@", session);
 
@@ -306,7 +307,7 @@
 		if ([view isKindOfClass:[EMSSessionCell class]]) {
 			EMSSessionCell *cell = (EMSSessionCell *)view;
 			
-            NSManagedObject *session = cell.session;
+            Session *session = cell.session;
             
             [[[EMSAppDelegate sharedAppDelegate] model] toggleFavourite:session];
 
@@ -334,7 +335,7 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    NSManagedObject *session = [_fetchedResultsController objectAtIndexPath:indexPath];
+    Session *session = [_fetchedResultsController objectAtIndexPath:indexPath];
 
     EMSSessionCell *sessionCell = (EMSSessionCell *)cell;
     
@@ -344,7 +345,7 @@
     UIImage *selectedImage = [UIImage imageNamed:@"28-star-yellow"];
     UIImage *highlightedImage = [UIImage imageNamed:@"28-star"];
 
-    if ([[session valueForKey:@"format"] isEqualToString:@"lightning-talk"]) {
+    if ([session.format isEqualToString:@"lightning-talk"]) {
         normalImage = [UIImage imageNamed:@"64-zap-grey"];
         selectedImage = [UIImage imageNamed:@"64-zap-yellow"];
         highlightedImage = [UIImage imageNamed:@"64-zap"];
@@ -354,7 +355,7 @@
     [icon setImage:selectedImage forState:UIControlStateSelected];
     [icon setImage:highlightedImage forState:UIControlStateHighlighted];
 
-    [icon setSelected:[[session valueForKey:@"favourite"] boolValue]];
+    [icon setSelected:[session.favourite boolValue]];
     
     [sessionCell.icon addTarget:self action:@selector(toggleFavourite:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -362,11 +363,13 @@
     sessionCell.room.text = [[session valueForKey:@"room"] valueForKey:@"name"];
     
     NSMutableArray *speakerNames = [[NSMutableArray alloc] init];
-    [[session valueForKey:@"speakers"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSManagedObject *speaker = (NSManagedObject *)obj;
+
+    [session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        Speaker *speaker = (Speaker *)obj;
         
-        [speakerNames addObject:[speaker valueForKey:@"name"]];
+        [speakerNames addObject:speaker.name];
     }];
+
     sessionCell.speaker.text = [speakerNames componentsJoinedByString:@", "];
     
     sessionCell.session = session;
@@ -402,22 +405,22 @@
 #pragma mark - retrieval
 
 - (void) retrieve {
-    Conference *conference = [self activeConference];
+    Conference *activeConference = [self activeConference];
 
     CLS_LOG(@"Starting retrieval");
 
-    if (conference != nil) {
+    if (activeConference != nil) {
         CLS_LOG(@"Starting retrieval - saw conf");
 
-        if (conference.slotCollection != nil) {
+        if (activeConference.slotCollection != nil) {
             CLS_LOG(@"Starting retrieval - saw slot collection");
             self.retrievingSlots = YES;
-            [self.retriever refreshSlots:[NSURL URLWithString:conference.slotCollection]];
+            [self.retriever refreshSlots:[NSURL URLWithString:activeConference.slotCollection]];
         }
-        if (conference.roomCollection != nil) {
+        if (activeConference.roomCollection != nil) {
             CLS_LOG(@"Starting retrieval - saw room collection");
             self.retrievingRooms = YES;
-            [self.retriever refreshRooms:[NSURL URLWithString:conference.roomCollection]];
+            [self.retriever refreshRooms:[NSURL URLWithString:activeConference.roomCollection]];
         }
     }
 }
@@ -427,7 +430,8 @@
     // Fetch sessions once rooms and slots are done. Don't want to get into a state when trying to persist sessions that it refers to non-existing room or slot
     if (self.retrievingRooms == NO && self.retrievingSlots == NO) {
         CLS_LOG(@"Starting retrieval of sessions - clear to go");
-        [self.retriever refreshSessions:[NSURL URLWithString:[[self activeConference] valueForKey:@"sessionCollection"]]];
+        Conference *activeConference = [self activeConference];
+        [self.retriever refreshSessions:[NSURL URLWithString:activeConference.sessionCollection]];
     }
 }
 

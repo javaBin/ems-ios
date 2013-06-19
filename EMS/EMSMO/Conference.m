@@ -7,6 +7,10 @@
 //
 
 #import "Conference.h"
+#import "ConferenceKeyword.h"
+#import "ConferenceLevel.h"
+#import "Room.h"
+#import "Session.h"
 #import "Slot.h"
 
 

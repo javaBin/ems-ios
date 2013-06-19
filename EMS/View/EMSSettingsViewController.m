@@ -125,11 +125,11 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    NSManagedObject *conference = [_fetchedResultsController objectAtIndexPath:indexPath];
+    Conference *conference = [_fetchedResultsController objectAtIndexPath:indexPath];
         
     cell.textLabel.text = [NSString stringWithFormat:@"%@ - %@",
-                           [conference valueForKey:@"name"],
-                           [conference valueForKey:@"venue"]];
+                           conference.name,
+                           conference.venue];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         
@@ -137,21 +137,20 @@
     
     NSMutableArray *dates = [[NSMutableArray alloc] init];
 
-    if ([conference valueForKey:@"start"] != nil) {
-        [dates addObject:[dateFormatter stringFromDate:[conference valueForKey:@"start"]]];
+    if (conference.start != nil) {
+        [dates addObject:[dateFormatter stringFromDate:conference.start]];
     }
 
-    if ([conference valueForKey:@"end"] != nil) {
-        [dates addObject:[dateFormatter stringFromDate:[conference valueForKey:@"end"]]];
+    if (conference.end != nil) {
+        [dates addObject:[dateFormatter stringFromDate:conference.end]];
     }
 
     cell.detailTextLabel.text = [dates componentsJoinedByString:@" - "];
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *activeConference = [[defaults URLForKey:@"activeConference"] absoluteString];
-    NSString *cellConference   = [conference valueForKey:@"href"];
-        
-    if ([cellConference isEqualToString:activeConference]) {
+
+    if ([conference.href isEqualToString:activeConference]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;

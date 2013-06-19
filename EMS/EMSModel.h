@@ -5,6 +5,8 @@
 #import <Foundation/Foundation.h>
 
 #import "Conference.h"
+#import "Session.h"
+#import "Slot.h"
 
 @interface EMSModel : NSObject
 
@@ -21,14 +23,14 @@
 - (void) storeSessions:(NSArray *)sessions forHref:(NSString *)href error:(NSError **)error;
 - (void) storeSpeakers:(NSArray *)speakers forHref:(NSString *)href error:(NSError **)error;
 
-- (NSSet *) activeSlotNamesForConference:(NSManagedObject *)conference;
+- (NSSet *) activeSlotNamesForConference:(Conference *)conference;
 
-- (NSManagedObject *)sessionForHref:(NSString *)url;
-- (NSManagedObject *)slotForHref:(NSString *)url;
+- (Session *)sessionForHref:(NSString *)url;
+- (Slot *)slotForHref:(NSString *)url;
 
 - (BOOL)conferencesWithDataAvailable;
 - (BOOL)sessionsAvailableForConference:(NSString *)href;
 
-- (NSManagedObject *)toggleFavourite:(NSManagedObject *)session;
+- (Session *)toggleFavourite:(Session *)session;
 
 @end

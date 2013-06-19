@@ -37,10 +37,14 @@
 		839BD66D176F9BD400900712 /* EMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD65B176F9BD400900712 /* EMSViewController.m */; };
 		839BD670176FA67000900712 /* EMSSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD66F176FA67000900712 /* EMSSpeaker.m */; };
 		83AF91B11771E7E100FAE20F /* EMSAdminViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91B01771E7E100FAE20F /* EMSAdminViewController.m */; };
-		83AF91B41772050D00FAE20F /* Slot.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91B31772050D00FAE20F /* Slot.m */; };
-		83AF91B81772056D00FAE20F /* Conference.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91B71772056D00FAE20F /* Conference.m */; };
-		83AF91BB1772103100FAE20F /* ConferenceKeyword.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91BA1772103100FAE20F /* ConferenceKeyword.m */; };
-		83AF91BE1772103100FAE20F /* ConferenceLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91BD1772103100FAE20F /* ConferenceLevel.m */; };
+		83AF91CD177212D600FAE20F /* Slot.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91CC177212D600FAE20F /* Slot.m */; };
+		83AF91D0177212D600FAE20F /* Speaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91CF177212D600FAE20F /* Speaker.m */; };
+		83AF91D3177212D600FAE20F /* Conference.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91D2177212D600FAE20F /* Conference.m */; };
+		83AF91D6177212D600FAE20F /* Keyword.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91D5177212D600FAE20F /* Keyword.m */; };
+		83AF91D9177212D600FAE20F /* ConferenceLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91D8177212D600FAE20F /* ConferenceLevel.m */; };
+		83AF91DC177212D600FAE20F /* ConferenceKeyword.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91DB177212D600FAE20F /* ConferenceKeyword.m */; };
+		83AF91DF177212D600FAE20F /* Room.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91DE177212D600FAE20F /* Room.m */; };
+		83AF91E2177212D600FAE20F /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91E1177212D600FAE20F /* Session.m */; };
 		F31862371770340200292371 /* EMSDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F31862361770340200292371 /* EMSDetailViewController.m */; };
 		F31862421770501800292371 /* EMSSessionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F31862411770501800292371 /* EMSSessionCell.m */; };
 		F3513B47177074200042D07A /* 19-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B46177074200042D07A /* 19-gear.png */; };
@@ -128,14 +132,22 @@
 		839BD66F176FA67000900712 /* EMSSpeaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSpeaker.m; sourceTree = "<group>"; };
 		83AF91AF1771E7E100FAE20F /* EMSAdminViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSAdminViewController.h; sourceTree = "<group>"; };
 		83AF91B01771E7E100FAE20F /* EMSAdminViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSAdminViewController.m; sourceTree = "<group>"; };
-		83AF91B21772050D00FAE20F /* Slot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Slot.h; path = EMS/EMSMO/Slot.h; sourceTree = "<group>"; };
-		83AF91B31772050D00FAE20F /* Slot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Slot.m; path = EMS/EMSMO/Slot.m; sourceTree = "<group>"; };
-		83AF91B61772056D00FAE20F /* Conference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Conference.h; path = EMS/EMSMO/Conference.h; sourceTree = "<group>"; };
-		83AF91B71772056D00FAE20F /* Conference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Conference.m; path = EMS/EMSMO/Conference.m; sourceTree = "<group>"; };
-		83AF91B91772103100FAE20F /* ConferenceKeyword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConferenceKeyword.h; path = EMS/EMSMO/ConferenceKeyword.h; sourceTree = "<group>"; };
-		83AF91BA1772103100FAE20F /* ConferenceKeyword.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConferenceKeyword.m; path = EMS/EMSMO/ConferenceKeyword.m; sourceTree = "<group>"; };
-		83AF91BC1772103100FAE20F /* ConferenceLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConferenceLevel.h; path = EMS/EMSMO/ConferenceLevel.h; sourceTree = "<group>"; };
-		83AF91BD1772103100FAE20F /* ConferenceLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConferenceLevel.m; path = EMS/EMSMO/ConferenceLevel.m; sourceTree = "<group>"; };
+		83AF91CB177212D600FAE20F /* Slot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Slot.h; path = EMS/EMSMO/Slot.h; sourceTree = "<group>"; };
+		83AF91CC177212D600FAE20F /* Slot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Slot.m; path = EMS/EMSMO/Slot.m; sourceTree = "<group>"; };
+		83AF91CE177212D600FAE20F /* Speaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Speaker.h; path = EMS/EMSMO/Speaker.h; sourceTree = "<group>"; };
+		83AF91CF177212D600FAE20F /* Speaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Speaker.m; path = EMS/EMSMO/Speaker.m; sourceTree = "<group>"; };
+		83AF91D1177212D600FAE20F /* Conference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Conference.h; path = EMS/EMSMO/Conference.h; sourceTree = "<group>"; };
+		83AF91D2177212D600FAE20F /* Conference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Conference.m; path = EMS/EMSMO/Conference.m; sourceTree = "<group>"; };
+		83AF91D4177212D600FAE20F /* Keyword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Keyword.h; path = EMS/EMSMO/Keyword.h; sourceTree = "<group>"; };
+		83AF91D5177212D600FAE20F /* Keyword.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Keyword.m; path = EMS/EMSMO/Keyword.m; sourceTree = "<group>"; };
+		83AF91D7177212D600FAE20F /* ConferenceLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConferenceLevel.h; path = EMS/EMSMO/ConferenceLevel.h; sourceTree = "<group>"; };
+		83AF91D8177212D600FAE20F /* ConferenceLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConferenceLevel.m; path = EMS/EMSMO/ConferenceLevel.m; sourceTree = "<group>"; };
+		83AF91DA177212D600FAE20F /* ConferenceKeyword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConferenceKeyword.h; path = EMS/EMSMO/ConferenceKeyword.h; sourceTree = "<group>"; };
+		83AF91DB177212D600FAE20F /* ConferenceKeyword.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConferenceKeyword.m; path = EMS/EMSMO/ConferenceKeyword.m; sourceTree = "<group>"; };
+		83AF91DD177212D600FAE20F /* Room.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Room.h; path = EMS/EMSMO/Room.h; sourceTree = "<group>"; };
+		83AF91DE177212D600FAE20F /* Room.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Room.m; path = EMS/EMSMO/Room.m; sourceTree = "<group>"; };
+		83AF91E0177212D600FAE20F /* Session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Session.h; path = EMS/EMSMO/Session.h; sourceTree = "<group>"; };
+		83AF91E1177212D600FAE20F /* Session.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Session.m; path = EMS/EMSMO/Session.m; sourceTree = "<group>"; };
 		F31862351770340200292371 /* EMSDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSDetailViewController.h; sourceTree = "<group>"; };
 		F31862361770340200292371 /* EMSDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDetailViewController.m; sourceTree = "<group>"; };
 		F31862401770501800292371 /* EMSSessionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSessionCell.h; sourceTree = "<group>"; };
@@ -305,14 +317,22 @@
 		83AF91B51772053600FAE20F /* EMSMO */ = {
 			isa = PBXGroup;
 			children = (
-				83AF91BC1772103100FAE20F /* ConferenceLevel.h */,
-				83AF91BD1772103100FAE20F /* ConferenceLevel.m */,
-				83AF91B91772103100FAE20F /* ConferenceKeyword.h */,
-				83AF91BA1772103100FAE20F /* ConferenceKeyword.m */,
-				83AF91B61772056D00FAE20F /* Conference.h */,
-				83AF91B71772056D00FAE20F /* Conference.m */,
-				83AF91B21772050D00FAE20F /* Slot.h */,
-				83AF91B31772050D00FAE20F /* Slot.m */,
+				83AF91E0177212D600FAE20F /* Session.h */,
+				83AF91E1177212D600FAE20F /* Session.m */,
+				83AF91DD177212D600FAE20F /* Room.h */,
+				83AF91DE177212D600FAE20F /* Room.m */,
+				83AF91DA177212D600FAE20F /* ConferenceKeyword.h */,
+				83AF91DB177212D600FAE20F /* ConferenceKeyword.m */,
+				83AF91D7177212D600FAE20F /* ConferenceLevel.h */,
+				83AF91D8177212D600FAE20F /* ConferenceLevel.m */,
+				83AF91D4177212D600FAE20F /* Keyword.h */,
+				83AF91D5177212D600FAE20F /* Keyword.m */,
+				83AF91D1177212D600FAE20F /* Conference.h */,
+				83AF91D2177212D600FAE20F /* Conference.m */,
+				83AF91CE177212D600FAE20F /* Speaker.h */,
+				83AF91CF177212D600FAE20F /* Speaker.m */,
+				83AF91CB177212D600FAE20F /* Slot.h */,
+				83AF91CC177212D600FAE20F /* Slot.m */,
 			);
 			name = EMSMO;
 			sourceTree = "<group>";
@@ -534,10 +554,14 @@
 				F3D5E2C717709CD100888A7E /* EMSSpeakersRetriever.m in Sources */,
 				836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */,
 				83AF91B11771E7E100FAE20F /* EMSAdminViewController.m in Sources */,
-				83AF91B41772050D00FAE20F /* Slot.m in Sources */,
-				83AF91B81772056D00FAE20F /* Conference.m in Sources */,
-				83AF91BB1772103100FAE20F /* ConferenceKeyword.m in Sources */,
-				83AF91BE1772103100FAE20F /* ConferenceLevel.m in Sources */,
+				83AF91CD177212D600FAE20F /* Slot.m in Sources */,
+				83AF91D0177212D600FAE20F /* Speaker.m in Sources */,
+				83AF91D3177212D600FAE20F /* Conference.m in Sources */,
+				83AF91D6177212D600FAE20F /* Keyword.m in Sources */,
+				83AF91D9177212D600FAE20F /* ConferenceLevel.m in Sources */,
+				83AF91DC177212D600FAE20F /* ConferenceKeyword.m in Sources */,
+				83AF91DF177212D600FAE20F /* Room.m in Sources */,
+				83AF91E2177212D600FAE20F /* Session.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,17 +25,17 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="conference" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conference" inverseName="conferenceLevels" inverseEntity="Conference" syncable="YES"/>
     </entity>
-    <entity name="Keyword" syncable="YES">
+    <entity name="Keyword" representedClassName="Keyword" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="session" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Session" inverseName="keywords" inverseEntity="Session" syncable="YES"/>
     </entity>
-    <entity name="Room" syncable="YES">
+    <entity name="Room" representedClassName="Room" syncable="YES">
         <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="conference" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conference" inverseName="rooms" inverseEntity="Conference" syncable="YES"/>
         <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Session" inverseName="room" inverseEntity="Session" syncable="YES"/>
     </entity>
-    <entity name="Session" syncable="YES">
+    <entity name="Session" representedClassName="Session" syncable="YES">
         <attribute name="attachmentCollection" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="audience" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
@@ -64,7 +64,7 @@
         <relationship name="conference" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conference" inverseName="slots" inverseEntity="Conference" syncable="YES"/>
         <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Session" inverseName="slot" inverseEntity="Session" syncable="YES"/>
     </entity>
-    <entity name="Speaker" syncable="YES">
+    <entity name="Speaker" representedClassName="Speaker" syncable="YES">
         <attribute name="bio" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>

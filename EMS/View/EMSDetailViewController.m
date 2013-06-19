@@ -8,6 +8,10 @@
 
 #import "EMSRetriever.h"
 
+#import "Session.h"
+#import "Speaker.h"
+#import "Keyword.h"
+
 @interface EMSDetailViewController ()
 
 @end
@@ -18,16 +22,16 @@
 {
     [super viewDidLoad];
 
-    self.title = [self.session valueForKey:@"title"];
+    self.title = self.session.title;
     
-    self.room.text = [self.session valueForKey:@"roomName"];
-    self.level.text = [[self.session valueForKey:@"level"] capitalizedString];
+    self.room.text = self.session.roomName;
+    self.level.text = [self.session.level capitalizedString];
 
     UIImage *normalImage = [UIImage imageNamed:@"28-star-grey"];
     UIImage *selectedImage = [UIImage imageNamed:@"28-star-yellow"];
     UIImage *highlightedImage = [UIImage imageNamed:@"28-star"];
     
-    if ([[self.session valueForKey:@"format"] isEqualToString:@"lightning-talk"]) {
+    if ([self.session.format isEqualToString:@"lightning-talk"]) {
         normalImage = [UIImage imageNamed:@"64-zap-grey"];
         selectedImage = [UIImage imageNamed:@"64-zap-yellow"];
         highlightedImage = [UIImage imageNamed:@"64-zap"];
@@ -37,17 +41,15 @@
     [self.button setImage:selectedImage forState:UIControlStateSelected];
     [self.button setImage:highlightedImage forState:UIControlStateHighlighted];
     
-    [self.button setSelected:[[self.session valueForKey:@"favourite"] boolValue]];
+    [self.button setSelected:[self.session.favourite boolValue]];
     
     NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
     
     [dateFormatterTime setDateFormat:@"HH:mm"];
-    
-    NSManagedObject *slot = [self.session valueForKey:@"slot"];
-    
+
     self.time.text = [NSString stringWithFormat:@"%@ - %@",
-                      [dateFormatterTime stringFromDate:[slot valueForKey:@"start"]],
-                      [dateFormatterTime stringFromDate:[slot valueForKey:@"end"]]];
+                      [dateFormatterTime stringFromDate:self.session.slot.start],
+                      [dateFormatterTime stringFromDate:self.session.slot.end]];
     
     [self buildPage];
     
@@ -57,7 +59,7 @@
 - (IBAction)toggleFavourite:(id)sender {
     self.session = [[[EMSAppDelegate sharedAppDelegate] model] toggleFavourite:self.session];
     
-    [self.button setSelected:[[self.session valueForKey:@"favourite"] boolValue]];
+    [self.button setSelected:[self.session.favourite boolValue]];
 }
 
 - (void) buildPage {
@@ -73,7 +75,7 @@
     
     CLS_LOG(@"Retrieving speakers");
     
-    [retriever refreshSpeakers:[NSURL URLWithString:[self.session valueForKey:@"speakerCollection"]]];
+    [retriever refreshSpeakers:[NSURL URLWithString:self.session.speakerCollection]];
 }
 
 - (void) finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href {
@@ -96,7 +98,7 @@
 - (void)share:(id)sender {
     // More info - http://blogs.captechconsulting.com/blog/steven-beyers/cocoaconf-dc-recap-sharing-uiactivityviewcontroller
 
-    NSString *shareString = [NSString stringWithFormat:@"%@ - %@", [[self.session valueForKey:@"conference"] valueForKey:@"name"], [self.session valueForKey:@"title"]];
+    NSString *shareString = [NSString stringWithFormat:@"%@ - %@", self.session.conference.name, self.session.title];
     
     CLS_LOG(@"About to share for %@", shareString);
     
@@ -122,7 +124,7 @@
     [self presentViewController:activityViewController animated:YES completion:nil];
 }
 
-- (NSString *)buildPage:(NSManagedObject *)session {
+- (NSString *)buildPage:(Session *)session {
     
 	NSString *page = [NSString stringWithFormat:@""
 					  "<html>"
@@ -138,9 +140,9 @@
 					  "</body>"
 					  "</html>",
 					  [session valueForKey:@"title"],
-					  [self paraContent:[session valueForKey:@"body"]],
-					  [self keywordContent:[session valueForKey:@"keywords"]],
-					  [self speakerContent:[session valueForKey:@"speakers"]]];
+					  [self paraContent:session.body],
+					  [self keywordContent:session.keywords],
+					  [self speakerContent:session.speakers]];
 	
 	return page;
 }
@@ -151,7 +153,7 @@
     return [NSString stringWithFormat:@"<p>%@</p>", [lines componentsJoinedByString:@"</p><p>"]];
 }
 
-- (NSString *)keywordContent:(NSArray *)keywords {
+- (NSString *)keywordContent:(NSSet *)keywords {
 	NSMutableString *result = [[NSMutableString alloc] init];
 
     if (keywords != nil && [keywords count] > 0) {
@@ -161,13 +163,13 @@
 
         NSMutableArray *listItems = [[NSMutableArray alloc] init];
 
-        [keywords enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            NSManagedObject *speaker = (NSManagedObject *)obj;
+        [keywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+            Keyword *keyword = (Keyword *)obj;
 
-            [listItems addObject:[speaker valueForKey:@"name"]];
+            [listItems addObject:keyword.name];
         }];
 
-        [result appendFormat:@"<li>%@</li>", [listItems componentsJoinedByString:@"</li><li>"]];
+        [result appendFormat:@"<li>%@</li>", [[listItems sortedArrayUsingSelector:@selector(compare:)] componentsJoinedByString:@"</li><li>"]];
 
         [result appendString:@"</ul>"];
     }
@@ -175,23 +177,22 @@
     return [NSString stringWithString:result];
 }
 
-- (NSString *)speakerContent:(NSArray *)speakers {
+- (NSString *)speakerContent:(NSSet *)speakers {
 	NSMutableString *result = [[NSMutableString alloc] init];
 
     if (speakers != nil && [speakers count] > 0) {
         [result appendString:@"<h2>Speakers</h2>"];
     
-        [speakers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            NSManagedObject *speaker = (NSManagedObject *)obj;
+        [speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+            Speaker *speaker = (Speaker *)obj;
             
-            NSString *name = [speaker valueForKey:@"name"];
-            if (name != nil) {
-                [result appendString:[NSString stringWithFormat:@"<h3>%@</h3>", name]];
+            if (speaker.name != nil) {
+                [result appendString:[NSString stringWithFormat:@"<h3>%@</h3>", speaker.name]];
             }
 
             NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 
-            NSString *pngFilePath = [NSString stringWithFormat:@"%@/%@.png",[docDir stringByAppendingPathComponent:@"bioIcons"],[speaker valueForKey:@"name"]]; // TODO - name as filename?
+            NSString *pngFilePath = [NSString stringWithFormat:@"%@/%@.png",[docDir stringByAppendingPathComponent:@"bioIcons"],speaker.name]; // TODO - name as filename?
 
             NSFileManager *fileManager = [NSFileManager defaultManager];
 
@@ -211,7 +212,7 @@
                 }
             }
            
-            NSString *bio = [speaker valueForKey:@"bio"];
+            NSString *bio = speaker.bio;
             if (bio != nil) {
                 [result appendString:[self paraContent:bio]];
             }
@@ -221,7 +222,5 @@
     
 	return [NSString stringWithString:result];
 }
-
-
 
 @end

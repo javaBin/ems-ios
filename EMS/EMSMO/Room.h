@@ -1,5 +1,5 @@
 //
-//  Slot.h
+//  Room.h
 //  EMS
 //
 //  Created by Chris Searle on 6/19/13.
@@ -11,16 +11,15 @@
 
 @class Conference, Session;
 
-@interface Slot : NSManagedObject
+@interface Room : NSManagedObject
 
-@property (nonatomic, retain) NSDate * end;
 @property (nonatomic, retain) NSString * href;
-@property (nonatomic, retain) NSDate * start;
+@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) Conference *conference;
 @property (nonatomic, retain) NSSet *sessions;
 @end
 
-@interface Slot (CoreDataGeneratedAccessors)
+@interface Room (CoreDataGeneratedAccessors)
 
 - (void)addSessionsObject:(Session *)value;
 - (void)removeSessionsObject:(Session *)value;

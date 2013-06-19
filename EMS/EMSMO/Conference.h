@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Slot;
+@class ConferenceKeyword, ConferenceLevel, Room, Session, Slot;
 
 @interface Conference : NSManagedObject
 
@@ -32,23 +32,23 @@
 
 @interface Conference (CoreDataGeneratedAccessors)
 
-- (void)addConferenceKeywordsObject:(NSManagedObject *)value;
-- (void)removeConferenceKeywordsObject:(NSManagedObject *)value;
+- (void)addConferenceKeywordsObject:(ConferenceKeyword *)value;
+- (void)removeConferenceKeywordsObject:(ConferenceKeyword *)value;
 - (void)addConferenceKeywords:(NSSet *)values;
 - (void)removeConferenceKeywords:(NSSet *)values;
 
-- (void)addConferenceLevelsObject:(NSManagedObject *)value;
-- (void)removeConferenceLevelsObject:(NSManagedObject *)value;
+- (void)addConferenceLevelsObject:(ConferenceLevel *)value;
+- (void)removeConferenceLevelsObject:(ConferenceLevel *)value;
 - (void)addConferenceLevels:(NSSet *)values;
 - (void)removeConferenceLevels:(NSSet *)values;
 
-- (void)addRoomsObject:(NSManagedObject *)value;
-- (void)removeRoomsObject:(NSManagedObject *)value;
+- (void)addRoomsObject:(Room *)value;
+- (void)removeRoomsObject:(Room *)value;
 - (void)addRooms:(NSSet *)values;
 - (void)removeRooms:(NSSet *)values;
 
-- (void)addSessionsObject:(NSManagedObject *)value;
-- (void)removeSessionsObject:(NSManagedObject *)value;
+- (void)addSessionsObject:(Session *)value;
+- (void)removeSessionsObject:(Session *)value;
 - (void)addSessions:(NSSet *)values;
 - (void)removeSessions:(NSSet *)values;
 

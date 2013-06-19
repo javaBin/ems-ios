@@ -5,6 +5,7 @@
 #import "EMSAdminViewController.h"
 
 #import "EMSAppDelegate.h"
+#import "Session.h"
 
 @interface EMSAdminViewController ()
 
@@ -70,9 +71,9 @@
 
                 [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm Z"];
                 
-                NSManagedObject *session = [[[EMSAppDelegate sharedAppDelegate] model] sessionForHref:[userInfo objectForKey:@"sessionhref"]];
+                Session *session = [[[EMSAppDelegate sharedAppDelegate] model] sessionForHref:[userInfo objectForKey:@"sessionhref"]];
 
-                cell.textLabel.text = [session valueForKey:@"title"];
+                cell.textLabel.text = session.title;
 
                 cell.detailTextLabel.text = [dateFormatter stringFromDate:[notification fireDate]];
             }
