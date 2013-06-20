@@ -134,7 +134,9 @@
     [super viewWillAppear:animated];
     if (!self.refreshControl.refreshing) {
         if ([self.search.text isEqualToString:@""]) {
-            [self.tableView setContentOffset:CGPointMake(0, 44)];
+            if (self.tableView.contentOffset.y < 44) {
+                [self.tableView setContentOffset:CGPointMake(0, 44)];
+            }
         }
     }
 }
