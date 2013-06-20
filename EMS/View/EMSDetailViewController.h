@@ -12,9 +12,7 @@
 @property (nonatomic, strong) Session *session;
 @property (nonatomic, strong) IBOutlet UIWebView *webView;
 
-@property (nonatomic, strong) IBOutlet UILabel *room;
-@property (nonatomic, strong) IBOutlet UILabel *time;
-@property (nonatomic, strong) IBOutlet UILabel *level;
+@property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 
 @property (nonatomic, strong) IBOutlet UIButton *button;
 

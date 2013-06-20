@@ -29,11 +29,21 @@
 {
     [super viewDidLoad];
 
-    self.title = self.session.title;
+    NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
     
-    self.room.text = self.session.roomName;
-    self.level.text = [self.session.level capitalizedString];
+    [dateFormatterTime setDateFormat:@"HH:mm"];
+    
+    NSMutableString *title = [[NSMutableString alloc] init];
+    [title appendString:[NSString stringWithFormat:@"%@ - %@",
+                         [dateFormatterTime stringFromDate:self.session.slot.start],
+                         [dateFormatterTime stringFromDate:self.session.slot.end]]];
 
+    if (self.session.roomName != nil) {
+        [title appendString:[NSString stringWithFormat:@" : %@", self.session.roomName]];
+    }
+    
+    self.title = [NSString stringWithString:title];
+    
     UIImage *normalImage = [UIImage imageNamed:@"28-star-grey"];
     UIImage *selectedImage = [UIImage imageNamed:@"28-star-yellow"];
     UIImage *highlightedImage = [UIImage imageNamed:@"28-star"];
@@ -50,13 +60,7 @@
     
     [self.button setSelected:[self.session.favourite boolValue]];
     
-    NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
-    
-    [dateFormatterTime setDateFormat:@"HH:mm"];
-
-    self.time.text = [NSString stringWithFormat:@"%@ - %@",
-                      [dateFormatterTime stringFromDate:self.session.slot.start],
-                      [dateFormatterTime stringFromDate:self.session.slot.end]];
+    self.titleLabel.text = self.session.title;
     
     [self buildPage];
     
@@ -99,11 +103,18 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (NSString *)cleanString:(NSString *)value {
+    return [[value capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+}
+
 - (NSString *)buildCalendarNotes {
     NSMutableString *result = [[NSMutableString alloc] init];
     
     [result appendString:@"Details\n\n"];
     [result appendString:self.session.body];
+    
+    [result appendString:@"\n\nInformation\n\n"];
+    [result appendFormat:@"* %@\n\n", [[@[[self cleanString:self.session.level]] sortedArrayUsingSelector:@selector(compare:)] componentsJoinedByString:@"\n* "]];
     
     if (self.session.keywords != nil && [self.session.keywords count] > 0) {
         [result appendString:@"\n\nKeywords\n\n"];
@@ -198,14 +209,14 @@
                       "<meta name='viewport' content='width=device-width; initial-scale=1.0; maximum-scale=1.0;'>"
 					  "</head>"
 					  "<body>"
-					  "<h1>%@</h1>"
 					  "%@"
+                      "%@"
 					  "%@"
 					  "%@"
 					  "</body>"
 					  "</html>",
-					  [session valueForKey:@"title"],
 					  [self paraContent:session.body],
+                      [self dataContent:@[[self cleanString:self.session.level]]],
 					  [self keywordContent:session.keywords],
 					  [self speakerContent:session.speakers]];
 	
@@ -216,6 +227,22 @@
     NSArray *lines = [text componentsSeparatedByString:@"\n"];
     
     return [NSString stringWithFormat:@"<p>%@</p>", [lines componentsJoinedByString:@"</p><p>"]];
+}
+
+- (NSString *)dataContent:(NSArray *)data {
+	NSMutableString *result = [[NSMutableString alloc] init];
+    
+    if (data != nil && [data count] > 0) {
+        [result appendString:@"<h2>Information</h2>"];
+        
+        [result appendString:@"<ul>"];
+        
+        [result appendFormat:@"<li>%@</li>", [[data sortedArrayUsingSelector:@selector(compare:)] componentsJoinedByString:@"</li><li>"]];
+        
+        [result appendString:@"</ul>"];
+    }
+    
+    return [NSString stringWithString:result];
 }
 
 - (NSString *)keywordContent:(NSSet *)keywords {
