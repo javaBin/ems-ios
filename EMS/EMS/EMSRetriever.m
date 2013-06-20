@@ -20,7 +20,11 @@
 	NSString *filePath = [[NSBundle mainBundle] pathForResource:@"EMS-Config" ofType:@"plist"];
     NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     
+#ifdef DEBUG
     [retriever fetch:[NSURL URLWithString:[prefs objectForKey:@"ems-root-url"]]];
+#else
+    [retriever fetch:[NSURL URLWithString:[prefs objectForKey:@"ems-root-url-prod"]]];
+#endif
 }
 
 - (void) refreshSlots:(NSURL *)slotCollection {
