@@ -84,7 +84,7 @@
         {
             NSString *level = [self.levels objectAtIndex:indexPath.row];
 
-            cell.textLabel.text = level;
+            cell.textLabel.text = [level capitalizedString];
 
             if ([self.currentLevels containsObject:level]) {
                 cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -196,7 +196,15 @@
 }
 
 - (void)apply:(id)sender {
-    [self.delegate setSearchText:self.search.text withKeywords:[NSSet setWithSet:self.currentKeywords] andLevels:[NSSet setWithSet:self.currentLevels]];
+    NSMutableSet *lowerCasedLevels = [[NSMutableSet alloc] init];
+    
+    [self.currentLevels enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        NSString *level = (NSString *)obj;
+        
+        [lowerCasedLevels addObject:[level lowercaseString]];
+    }];
+    
+    [self.delegate setSearchText:self.search.text withKeywords:[NSSet setWithSet:self.currentKeywords] andLevels:[NSSet setWithSet:lowerCasedLevels]];
 
     [self.navigationController popViewControllerAnimated:YES];
 }

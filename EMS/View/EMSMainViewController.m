@@ -184,8 +184,24 @@
             [levels addObject:level.name];
         }];
 
-        destination.levels = [levels sortedArrayUsingSelector: @selector(compare:)];
-
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"EMS-Config" ofType:@"plist"];
+        NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+        NSDictionary *sort = [prefs objectForKey:@"level-sort"];
+        
+        destination.levels = [levels sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            NSNumber *firstKey = [sort valueForKey:obj1];
+            NSNumber *secondKey = [sort valueForKey:obj2];
+            
+            if ([firstKey integerValue] > [secondKey integerValue]) {
+                return (NSComparisonResult)NSOrderedDescending;
+            }
+            
+            if ([firstKey integerValue] < [secondKey integerValue]) {
+                return (NSComparisonResult)NSOrderedAscending;
+            }
+            return (NSComparisonResult)NSOrderedSame;
+        }];
+        
         NSMutableArray *keywords = [[NSMutableArray alloc] init];
 
         [conference.conferenceKeywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {

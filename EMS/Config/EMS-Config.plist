@@ -2,6 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>level-sort</key>
+	<dict>
+		<key>beginner</key>
+		<integer>1</integer>
+		<key>beginner-intermediate</key>
+		<integer>2</integer>
+		<key>intermediate</key>
+		<integer>3</integer>
+		<key>intermediate-advanced</key>
+		<integer>4</integer>
+		<key>advanced</key>
+		<integer>5</integer>
+		<key>hardcore</key>
+		<integer>6</integer>
+	</dict>
 	<key>ems-root-url</key>
 	<string>http://test.java.no/ems-redux/server/</string>
 </dict>
