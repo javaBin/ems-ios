@@ -104,6 +104,9 @@
 }
 
 - (NSString *)cleanString:(NSString *)value {
+    if (value == nil) {
+        return @"";
+    }
     return [[value capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
 }
 
