@@ -12,8 +12,8 @@
         <attribute name="start" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="venue" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="conferenceKeywords" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ConferenceKeyword" inverseName="conference" inverseEntity="ConferenceKeyword" syncable="YES"/>
-        <relationship name="conferenceLevels" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ConferenceLevel" inverseName="conference" inverseEntity="ConferenceLevel" syncable="YES"/>
-        <relationship name="conferenceTypes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ConferenceType" inverseName="conference" inverseEntity="ConferenceType" syncable="YES"/>
+        <relationship name="conferenceLevels" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ConferenceLevel" inverseName="conference" inverseEntity="ConferenceLevel" syncable="YES"/>
+        <relationship name="conferenceTypes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ConferenceType" inverseName="conference" inverseEntity="ConferenceType" syncable="YES"/>
         <relationship name="rooms" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Room" inverseName="conference" inverseEntity="Room" syncable="YES"/>
         <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Session" inverseName="conference" inverseEntity="Session" syncable="YES"/>
         <relationship name="slots" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Slot" inverseName="conference" inverseEntity="Slot" syncable="YES"/>
@@ -38,7 +38,7 @@
         <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="conference" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conference" inverseName="rooms" inverseEntity="Conference" syncable="YES"/>
-        <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Session" inverseName="room" inverseEntity="Session" syncable="YES"/>
+        <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Session" inverseName="room" inverseEntity="Session" syncable="YES"/>
     </entity>
     <entity name="Session" representedClassName="Session" syncable="YES">
         <attribute name="attachmentCollection" optional="YES" attributeType="String" syncable="YES"/>
@@ -67,7 +67,7 @@
         <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="start" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="conference" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conference" inverseName="slots" inverseEntity="Conference" syncable="YES"/>
-        <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Session" inverseName="slot" inverseEntity="Session" syncable="YES"/>
+        <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Session" inverseName="slot" inverseEntity="Session" syncable="YES"/>
     </entity>
     <entity name="Speaker" representedClassName="Speaker" syncable="YES">
         <attribute name="bio" optional="YES" attributeType="String" syncable="YES"/>
@@ -80,11 +80,11 @@
         <element name="Conference" positionX="160" positionY="192" width="128" height="285"/>
         <element name="ConferenceKeyword" positionX="160" positionY="192" width="128" height="75"/>
         <element name="ConferenceLevel" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="ConferenceType" positionX="160" positionY="192" width="128" height="75"/>
         <element name="Keyword" positionX="781" positionY="522" width="128" height="75"/>
         <element name="Room" positionX="432" positionY="153" width="128" height="105"/>
         <element name="Session" positionX="592" positionY="324" width="128" height="345"/>
-        <element name="Slot" positionX="268" positionY="584" width="128" height="118"/>
+        <element name="Slot" positionX="268" positionY="584" width="128" height="120"/>
         <element name="Speaker" positionX="783" positionY="648" width="128" height="120"/>
-        <element name="ConferenceType" positionX="160" positionY="192" width="128" height="75"/>
     </elements>
 </model>

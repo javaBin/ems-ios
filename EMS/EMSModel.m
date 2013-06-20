@@ -83,6 +83,9 @@
                         andSort:nil];
     
     if (matched.count > 0) {
+        if (matched.count > 1) {
+            CLS_LOG(@"WARNING - found %d conferences for href %@", matched.count, url);
+        }
         return [matched objectAtIndex:0];
     }
     
@@ -95,6 +98,9 @@
                         andSort:nil];
     
     if (matched.count > 0) {
+        if (matched.count > 1) {
+            CLS_LOG(@"WARNING - found %d conferences for sessions href %@", matched.count, url);
+        }
         return [matched objectAtIndex:0];
     }
     
@@ -107,6 +113,9 @@
                         andSort:nil];
     
     if (matched.count > 0) {
+        if (matched.count > 1) {
+            CLS_LOG(@"WARNING - found %d slots for href %@", matched.count, url);
+        }
         return [matched objectAtIndex:0];
     }
     
@@ -119,6 +128,9 @@
                         andSort:nil];
     
     if (matched.count > 0) {
+        if (matched.count > 1) {
+            CLS_LOG(@"WARNING - found %d rooms for href %@", matched.count, url);
+        }
         return [matched objectAtIndex:0];
     }
     
@@ -131,6 +143,9 @@
                         andSort:nil];
     
     if (matched.count > 0) {
+        if (matched.count > 1) {
+            CLS_LOG(@"WARNING - found %d sessions for href %@", matched.count, url);
+        }
         return [matched objectAtIndex:0];
     }
     
@@ -143,6 +158,9 @@
                         andSort:nil];
 
     if (matched.count > 0) {
+        if (matched.count > 1) {
+            CLS_LOG(@"WARNING - found %d speakers for href %@", matched.count, url);
+        }
         return [matched objectAtIndex:0];
     }
 
@@ -280,24 +298,30 @@
         conferenceType.conference = conference;
     }
 
-    [session removeKeywords:session.keywords];
-
     if (ems.keywords != nil) {
         [ems.keywords enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             NSString *keyword = (NSString *)obj;
 
-            Keyword *newKeyword = [NSEntityDescription insertNewObjectForEntityForName:@"Keyword" inManagedObjectContext:[self managedObjectContext]];
+            NSSet *foundKeywords = [session.keywords objectsPassingTest:^BOOL(id obj, BOOL *stop) {
+                Keyword *sessionKeyword = (Keyword *)obj;
+                
+                return [sessionKeyword.name isEqualToString:keyword];
+            }];
+            
+            if ([foundKeywords count] == 0) {
+                Keyword *newKeyword = [NSEntityDescription insertNewObjectForEntityForName:@"Keyword" inManagedObjectContext:[self managedObjectContext]];
 
-            newKeyword.name = keyword;
-            newKeyword.session = session;
+                newKeyword.name = keyword;
+                newKeyword.session = session;
+            }
 
-            NSSet *foundKeywords = [conference.conferenceKeywords objectsPassingTest:^BOOL(id obj, BOOL *stop) {
+            NSSet *foundConferenceKeywords = [conference.conferenceKeywords objectsPassingTest:^BOOL(id obj, BOOL *stop) {
                 ConferenceKeyword *conferenceKeyword = (ConferenceKeyword *)obj;
 
                 return [conferenceKeyword.name isEqualToString:keyword];
             }];
 
-            if ([foundKeywords count] == 0) {
+            if ([foundConferenceKeywords count] == 0) {
                 ConferenceKeyword *conferenceKeyword = [NSEntityDescription insertNewObjectForEntityForName:@"ConferenceKeyword" inManagedObjectContext:[self managedObjectContext]];
 
                 conferenceKeyword.name = keyword;
@@ -306,6 +330,21 @@
         }];
     }
 
+    if (ems.keywords != nil) {
+        [self deleteAllObjectForPredicate:[NSPredicate predicateWithFormat:@"(session = %@) AND (NOT(name IN %@))",
+                                           session,
+                                           ems.keywords]
+                                  andType:@"Keyword"];
+    } else {
+        if (session.keywords != nil) {
+            [session.keywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+                Keyword *keyword = (Keyword *)obj;
+                
+                [self.managedObjectContext deleteObject:keyword];
+            }];
+        }
+    }
+    
     session.attachmentCollection = [ems.attachmentCollection absoluteString];
     session.speakerCollection = [ems.speakerCollection absoluteString];
 
@@ -331,18 +370,42 @@
     }
 
     if (ems.speakers != nil) {
-
-        [session removeSpeakers:session.speakers];
-
         [ems.speakers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             EMSSpeaker *emsSpeaker = (EMSSpeaker *)obj;
 
-            Speaker *speaker = [NSEntityDescription
-                                insertNewObjectForEntityForName:@"Speaker"
-                                inManagedObjectContext:[self managedObjectContext]];
-
+            Speaker *speaker = [self speakerForHref:[emsSpeaker.href absoluteString]];
+            
+            if (speaker == nil) {
+                speaker = [NSEntityDescription insertNewObjectForEntityForName:@"Speaker"
+                                                        inManagedObjectContext:[self managedObjectContext]];
+            }
+            
             [self populateSpeaker:speaker fromEMS:emsSpeaker forSession:session];
-         }];
+        }];
+        
+        NSSet *emsSpeakers = [NSSet setWithArray:ems.speakers];
+        
+        [session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+            Speaker *speaker = (Speaker *)obj;
+            
+            NSSet *foundSpeakers = [emsSpeakers objectsPassingTest:^BOOL(id obj, BOOL *stop) {
+                EMSSpeaker *emsSpeaker = (EMSSpeaker *)obj;
+                
+                return [[emsSpeaker.href absoluteString] isEqualToString:speaker.href];
+            }];
+            
+            if (foundSpeakers.count == 0) {
+                [self.managedObjectContext deleteObject:speaker];
+            }
+        }];
+    } else {
+        if (session.speakers != nil) {
+            [session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+                Speaker *speaker = (Speaker *)obj;
+                
+                [self.managedObjectContext deleteObject:speaker];
+            }];
+        }
     }
 }
 
@@ -437,6 +500,10 @@
         return NO;
     }
     
+    if (conferences.count > 1) {
+        CLS_LOG(@"WARNING - found %d conferences for slot collection href %@", conferences.count, href);
+    }
+    
     Conference *conference = [conferences objectAtIndex:0];
 
     NSDictionary *hrefKeyed = [self slotsKeyedByHref:slots];
@@ -518,6 +585,10 @@
         return NO;
     }
     
+    if (conferences.count > 1) {
+        CLS_LOG(@"WARNING - found %d conferences for room collection href %@", conferences.count, href);
+    }
+
     Conference *conference = [conferences objectAtIndex:0];
     
     NSDictionary *hrefKeyed = [self roomsKeyedByHref:rooms];
@@ -599,6 +670,10 @@
         return NO;
     }
     
+    if (sessions.count > 1) {
+        CLS_LOG(@"WARNING - found %d sessions for speaker collection href %@", sessions.count, href);
+    }
+
     Session *session = [sessions objectAtIndex:0];
     
     NSDictionary *hrefKeyed = [self speakersKeyedByHref:speakers];
@@ -678,12 +753,12 @@
         *error = [NSError errorWithDomain:@"EMS" code:100 userInfo:errorDetail];
         return NO;
     }
+
+    if (conferences.count > 1) {
+        CLS_LOG(@"WARNING - found %d conferences for session collection href %@", conferences.count, href);
+    }
     
     Conference *conference = [conferences objectAtIndex:0];
-
-    [conference removeConferenceKeywords:conference.conferenceKeywords];
-    [conference removeConferenceLevels:conference.conferenceLevels];
-    [conference removeConferenceTypes:conference.conferenceTypes];
 
     NSDictionary *hrefKeyed = [self sessionsKeyedByHref:sessions];
     
@@ -742,8 +817,14 @@
         }
     }];
     
+    CLS_LOG(@"Need to delete conference metafields where none on session");
+ 
+    // TODO - delete metafields
+//    [self deleteAllObjectForPredicate:[NSPredicate predicateWithFormat:@"NONE conference.sessions.keywords == SELF"] andType:@"ConferenceKeyword"];
+//    [self deleteAllObjectForPredicate:[NSPredicate predicateWithFormat:@"NONE conference.sessions.levels == SELF"] andType:@"ConferenceLevel"];
+//    [self deleteAllObjectForPredicate:[NSPredicate predicateWithFormat:@"NONE conference.sessions.format == SELF"] andType:@"ConferenceType"];
+    
     CLS_LOG(@"Persisting");
-
     NSError *saveError = nil;
 
     // TODO error
@@ -990,6 +1071,18 @@
 #else
     return session.slot.start;
 #endif
+}
+
+- (void) deleteAllObjectForPredicate:(NSPredicate *)predicate andType:(NSString *)type {
+    NSArray *objects = [self objectsForPredicate:predicate
+                                         andSort:nil
+                                        withType:type];
+
+    [objects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSManagedObject *object = (NSManagedObject *)obj;
+    
+        [self.managedObjectContext deleteObject:object];
+    }];
 }
 
 @end
