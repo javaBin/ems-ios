@@ -12,14 +12,6 @@
 		83172C241770FE67000135E6 /* 11-clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C201770FE67000135E6 /* 11-clock@2x.png */; };
 		83172C251770FE67000135E6 /* 259-list.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C211770FE67000135E6 /* 259-list.png */; };
 		83172C261770FE67000135E6 /* 259-list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C221770FE67000135E6 /* 259-list@2x.png */; };
-		833EFA6017723E37001A4FD0 /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = 833EFA5F17723E37001A4FD0 /* Session.m */; };
-		833EFA6317723E37001A4FD0 /* Keyword.m in Sources */ = {isa = PBXBuildFile; fileRef = 833EFA6217723E37001A4FD0 /* Keyword.m */; };
-		833EFA6617723E38001A4FD0 /* Room.m in Sources */ = {isa = PBXBuildFile; fileRef = 833EFA6517723E38001A4FD0 /* Room.m */; };
-		833EFA6917723E38001A4FD0 /* Slot.m in Sources */ = {isa = PBXBuildFile; fileRef = 833EFA6817723E38001A4FD0 /* Slot.m */; };
-		833EFA6C17723E38001A4FD0 /* Speaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 833EFA6B17723E38001A4FD0 /* Speaker.m */; };
-		833EFA6F17723E38001A4FD0 /* ConferenceLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 833EFA6E17723E38001A4FD0 /* ConferenceLevel.m */; };
-		833EFA7217723E38001A4FD0 /* Conference.m in Sources */ = {isa = PBXBuildFile; fileRef = 833EFA7117723E38001A4FD0 /* Conference.m */; };
-		833EFA7517723E38001A4FD0 /* ConferenceKeyword.m in Sources */ = {isa = PBXBuildFile; fileRef = 833EFA7417723E38001A4FD0 /* ConferenceKeyword.m */; };
 		836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836331311770DD2B000F8D95 /* EMSSearchViewController.m */; };
 		836331351770EF78000F8D95 /* 298-circlex.png in Resources */ = {isa = PBXBuildFile; fileRef = 836331331770EF78000F8D95 /* 298-circlex.png */; };
 		836331361770EF78000F8D95 /* 298-circlex@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836331341770EF78000F8D95 /* 298-circlex@2x.png */; };
@@ -78,6 +70,15 @@
 		F3939E50176887090078C709 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3939E4F176887090078C709 /* CoreData.framework */; };
 		F3939E531768879C0078C709 /* EMSCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */; };
 		F3939E611769C3CE0078C709 /* EMSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E601769C3CD0078C709 /* EMSModel.m */; };
+		F3AE33C71772EA93000EE4A9 /* Speaker.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C61772EA93000EE4A9 /* Speaker.m */; };
+		F3AE33CA1772EA93000EE4A9 /* Conference.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C91772EA93000EE4A9 /* Conference.m */; };
+		F3AE33CD1772EA93000EE4A9 /* Keyword.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33CC1772EA93000EE4A9 /* Keyword.m */; };
+		F3AE33D01772EA94000EE4A9 /* ConferenceLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33CF1772EA94000EE4A9 /* ConferenceLevel.m */; };
+		F3AE33D31772EA94000EE4A9 /* Room.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33D21772EA94000EE4A9 /* Room.m */; };
+		F3AE33D61772EA94000EE4A9 /* Slot.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33D51772EA94000EE4A9 /* Slot.m */; };
+		F3AE33D91772EA94000EE4A9 /* ConferenceKeyword.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33D81772EA94000EE4A9 /* ConferenceKeyword.m */; };
+		F3AE33DC1772EA94000EE4A9 /* ConferenceType.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33DB1772EA94000EE4A9 /* ConferenceType.m */; };
+		F3AE33DF1772EA94000EE4A9 /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33DE1772EA94000EE4A9 /* Session.m */; };
 		F3D5E2C41770946100888A7E /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = F3D5E2C31770946100888A7E /* style.css */; };
 		F3D5E2C717709CD100888A7E /* EMSSpeakersRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = F3D5E2C617709CD000888A7E /* EMSSpeakersRetriever.m */; };
 /* End PBXBuildFile section */
@@ -88,22 +89,6 @@
 		83172C201770FE67000135E6 /* 11-clock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-clock@2x.png"; sourceTree = "<group>"; };
 		83172C211770FE67000135E6 /* 259-list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "259-list.png"; sourceTree = "<group>"; };
 		83172C221770FE67000135E6 /* 259-list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "259-list@2x.png"; sourceTree = "<group>"; };
-		833EFA5E17723E37001A4FD0 /* Session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Session.h; path = EMS/EMSMO/Session.h; sourceTree = "<group>"; };
-		833EFA5F17723E37001A4FD0 /* Session.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Session.m; path = EMS/EMSMO/Session.m; sourceTree = "<group>"; };
-		833EFA6117723E37001A4FD0 /* Keyword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Keyword.h; path = EMS/EMSMO/Keyword.h; sourceTree = "<group>"; };
-		833EFA6217723E37001A4FD0 /* Keyword.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Keyword.m; path = EMS/EMSMO/Keyword.m; sourceTree = "<group>"; };
-		833EFA6417723E38001A4FD0 /* Room.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Room.h; path = EMS/EMSMO/Room.h; sourceTree = "<group>"; };
-		833EFA6517723E38001A4FD0 /* Room.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Room.m; path = EMS/EMSMO/Room.m; sourceTree = "<group>"; };
-		833EFA6717723E38001A4FD0 /* Slot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Slot.h; path = EMS/EMSMO/Slot.h; sourceTree = "<group>"; };
-		833EFA6817723E38001A4FD0 /* Slot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Slot.m; path = EMS/EMSMO/Slot.m; sourceTree = "<group>"; };
-		833EFA6A17723E38001A4FD0 /* Speaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Speaker.h; path = EMS/EMSMO/Speaker.h; sourceTree = "<group>"; };
-		833EFA6B17723E38001A4FD0 /* Speaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Speaker.m; path = EMS/EMSMO/Speaker.m; sourceTree = "<group>"; };
-		833EFA6D17723E38001A4FD0 /* ConferenceLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConferenceLevel.h; path = EMS/EMSMO/ConferenceLevel.h; sourceTree = "<group>"; };
-		833EFA6E17723E38001A4FD0 /* ConferenceLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConferenceLevel.m; path = EMS/EMSMO/ConferenceLevel.m; sourceTree = "<group>"; };
-		833EFA7017723E38001A4FD0 /* Conference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Conference.h; path = EMS/EMSMO/Conference.h; sourceTree = "<group>"; };
-		833EFA7117723E38001A4FD0 /* Conference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Conference.m; path = EMS/EMSMO/Conference.m; sourceTree = "<group>"; };
-		833EFA7317723E38001A4FD0 /* ConferenceKeyword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConferenceKeyword.h; path = EMS/EMSMO/ConferenceKeyword.h; sourceTree = "<group>"; };
-		833EFA7417723E38001A4FD0 /* ConferenceKeyword.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConferenceKeyword.m; path = EMS/EMSMO/ConferenceKeyword.m; sourceTree = "<group>"; };
 		836331301770DD2B000F8D95 /* EMSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSearchViewController.h; sourceTree = "<group>"; };
 		836331311770DD2B000F8D95 /* EMSSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSearchViewController.m; sourceTree = "<group>"; };
 		836331331770EF78000F8D95 /* 298-circlex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "298-circlex.png"; sourceTree = "<group>"; };
@@ -191,6 +176,24 @@
 		F3939E521768879C0078C709 /* EMSCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EMSCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		F3939E5F1769C3CD0078C709 /* EMSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSModel.h; sourceTree = "<group>"; };
 		F3939E601769C3CD0078C709 /* EMSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSModel.m; sourceTree = "<group>"; };
+		F3AE33C51772EA93000EE4A9 /* Speaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Speaker.h; path = EMS/EMSMO/Speaker.h; sourceTree = "<group>"; };
+		F3AE33C61772EA93000EE4A9 /* Speaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Speaker.m; path = EMS/EMSMO/Speaker.m; sourceTree = "<group>"; };
+		F3AE33C81772EA93000EE4A9 /* Conference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Conference.h; path = EMS/EMSMO/Conference.h; sourceTree = "<group>"; };
+		F3AE33C91772EA93000EE4A9 /* Conference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Conference.m; path = EMS/EMSMO/Conference.m; sourceTree = "<group>"; };
+		F3AE33CB1772EA93000EE4A9 /* Keyword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Keyword.h; path = EMS/EMSMO/Keyword.h; sourceTree = "<group>"; };
+		F3AE33CC1772EA93000EE4A9 /* Keyword.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Keyword.m; path = EMS/EMSMO/Keyword.m; sourceTree = "<group>"; };
+		F3AE33CE1772EA94000EE4A9 /* ConferenceLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConferenceLevel.h; path = EMS/EMSMO/ConferenceLevel.h; sourceTree = "<group>"; };
+		F3AE33CF1772EA94000EE4A9 /* ConferenceLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConferenceLevel.m; path = EMS/EMSMO/ConferenceLevel.m; sourceTree = "<group>"; };
+		F3AE33D11772EA94000EE4A9 /* Room.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Room.h; path = EMS/EMSMO/Room.h; sourceTree = "<group>"; };
+		F3AE33D21772EA94000EE4A9 /* Room.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Room.m; path = EMS/EMSMO/Room.m; sourceTree = "<group>"; };
+		F3AE33D41772EA94000EE4A9 /* Slot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Slot.h; path = EMS/EMSMO/Slot.h; sourceTree = "<group>"; };
+		F3AE33D51772EA94000EE4A9 /* Slot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Slot.m; path = EMS/EMSMO/Slot.m; sourceTree = "<group>"; };
+		F3AE33D71772EA94000EE4A9 /* ConferenceKeyword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConferenceKeyword.h; path = EMS/EMSMO/ConferenceKeyword.h; sourceTree = "<group>"; };
+		F3AE33D81772EA94000EE4A9 /* ConferenceKeyword.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConferenceKeyword.m; path = EMS/EMSMO/ConferenceKeyword.m; sourceTree = "<group>"; };
+		F3AE33DA1772EA94000EE4A9 /* ConferenceType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConferenceType.h; path = EMS/EMSMO/ConferenceType.h; sourceTree = "<group>"; };
+		F3AE33DB1772EA94000EE4A9 /* ConferenceType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConferenceType.m; path = EMS/EMSMO/ConferenceType.m; sourceTree = "<group>"; };
+		F3AE33DD1772EA94000EE4A9 /* Session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Session.h; path = EMS/EMSMO/Session.h; sourceTree = "<group>"; };
+		F3AE33DE1772EA94000EE4A9 /* Session.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Session.m; path = EMS/EMSMO/Session.m; sourceTree = "<group>"; };
 		F3D5E2C31770946100888A7E /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		F3D5E2C517709CD000888A7E /* EMSSpeakersRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSpeakersRetriever.h; sourceTree = "<group>"; };
 		F3D5E2C617709CD000888A7E /* EMSSpeakersRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSpeakersRetriever.m; sourceTree = "<group>"; };
@@ -317,22 +320,24 @@
 		83AF91B51772053600FAE20F /* EMSMO */ = {
 			isa = PBXGroup;
 			children = (
-				833EFA7317723E38001A4FD0 /* ConferenceKeyword.h */,
-				833EFA7417723E38001A4FD0 /* ConferenceKeyword.m */,
-				833EFA7017723E38001A4FD0 /* Conference.h */,
-				833EFA7117723E38001A4FD0 /* Conference.m */,
-				833EFA6D17723E38001A4FD0 /* ConferenceLevel.h */,
-				833EFA6E17723E38001A4FD0 /* ConferenceLevel.m */,
-				833EFA6A17723E38001A4FD0 /* Speaker.h */,
-				833EFA6B17723E38001A4FD0 /* Speaker.m */,
-				833EFA6717723E38001A4FD0 /* Slot.h */,
-				833EFA6817723E38001A4FD0 /* Slot.m */,
-				833EFA6417723E38001A4FD0 /* Room.h */,
-				833EFA6517723E38001A4FD0 /* Room.m */,
-				833EFA6117723E37001A4FD0 /* Keyword.h */,
-				833EFA6217723E37001A4FD0 /* Keyword.m */,
-				833EFA5E17723E37001A4FD0 /* Session.h */,
-				833EFA5F17723E37001A4FD0 /* Session.m */,
+				F3AE33DD1772EA94000EE4A9 /* Session.h */,
+				F3AE33DE1772EA94000EE4A9 /* Session.m */,
+				F3AE33DA1772EA94000EE4A9 /* ConferenceType.h */,
+				F3AE33DB1772EA94000EE4A9 /* ConferenceType.m */,
+				F3AE33D71772EA94000EE4A9 /* ConferenceKeyword.h */,
+				F3AE33D81772EA94000EE4A9 /* ConferenceKeyword.m */,
+				F3AE33D41772EA94000EE4A9 /* Slot.h */,
+				F3AE33D51772EA94000EE4A9 /* Slot.m */,
+				F3AE33D11772EA94000EE4A9 /* Room.h */,
+				F3AE33D21772EA94000EE4A9 /* Room.m */,
+				F3AE33CE1772EA94000EE4A9 /* ConferenceLevel.h */,
+				F3AE33CF1772EA94000EE4A9 /* ConferenceLevel.m */,
+				F3AE33CB1772EA93000EE4A9 /* Keyword.h */,
+				F3AE33CC1772EA93000EE4A9 /* Keyword.m */,
+				F3AE33C81772EA93000EE4A9 /* Conference.h */,
+				F3AE33C91772EA93000EE4A9 /* Conference.m */,
+				F3AE33C51772EA93000EE4A9 /* Speaker.h */,
+				F3AE33C61772EA93000EE4A9 /* Speaker.m */,
 			);
 			name = EMSMO;
 			sourceTree = "<group>";
@@ -554,14 +559,15 @@
 				F3D5E2C717709CD100888A7E /* EMSSpeakersRetriever.m in Sources */,
 				836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */,
 				83AF91B11771E7E100FAE20F /* EMSAdminViewController.m in Sources */,
-				833EFA6017723E37001A4FD0 /* Session.m in Sources */,
-				833EFA6317723E37001A4FD0 /* Keyword.m in Sources */,
-				833EFA6617723E38001A4FD0 /* Room.m in Sources */,
-				833EFA6917723E38001A4FD0 /* Slot.m in Sources */,
-				833EFA6C17723E38001A4FD0 /* Speaker.m in Sources */,
-				833EFA6F17723E38001A4FD0 /* ConferenceLevel.m in Sources */,
-				833EFA7217723E38001A4FD0 /* Conference.m in Sources */,
-				833EFA7517723E38001A4FD0 /* ConferenceKeyword.m in Sources */,
+				F3AE33C71772EA93000EE4A9 /* Speaker.m in Sources */,
+				F3AE33CA1772EA93000EE4A9 /* Conference.m in Sources */,
+				F3AE33CD1772EA93000EE4A9 /* Keyword.m in Sources */,
+				F3AE33D01772EA94000EE4A9 /* ConferenceLevel.m in Sources */,
+				F3AE33D31772EA94000EE4A9 /* Room.m in Sources */,
+				F3AE33D61772EA94000EE4A9 /* Slot.m in Sources */,
+				F3AE33D91772EA94000EE4A9 /* ConferenceKeyword.m in Sources */,
+				F3AE33DC1772EA94000EE4A9 /* ConferenceType.m in Sources */,
+				F3AE33DF1772EA94000EE4A9 /* Session.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

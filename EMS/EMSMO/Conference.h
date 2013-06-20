@@ -2,7 +2,7 @@
 //  Conference.h
 //  EMS
 //
-//  Created by Chris Searle on 6/19/13.
+//  Created by Chris Searle on 20.06.13.
 //  Copyright (c) 2013 Chris Searle. All rights reserved.
 //
 
@@ -28,6 +28,7 @@
 @property (nonatomic, retain) NSSet *rooms;
 @property (nonatomic, retain) NSSet *sessions;
 @property (nonatomic, retain) NSSet *slots;
+@property (nonatomic, retain) NSSet *conferenceTypes;
 @end
 
 @interface Conference (CoreDataGeneratedAccessors)
@@ -56,5 +57,10 @@
 - (void)removeSlotsObject:(Slot *)value;
 - (void)addSlots:(NSSet *)values;
 - (void)removeSlots:(NSSet *)values;
+
+- (void)addConferenceTypesObject:(NSManagedObject *)value;
+- (void)removeConferenceTypesObject:(NSManagedObject *)value;
+- (void)addConferenceTypes:(NSSet *)values;
+- (void)removeConferenceTypes:(NSSet *)values;
 
 @end

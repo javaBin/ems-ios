@@ -1,5 +1,5 @@
 //
-//  ConferenceLevel.h
+//  ConferenceType.h
 //  EMS
 //
 //  Created by Chris Searle on 20.06.13.
@@ -11,7 +11,7 @@
 
 @class Conference;
 
-@interface ConferenceLevel : NSManagedObject
+@interface ConferenceType : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) Conference *conference;

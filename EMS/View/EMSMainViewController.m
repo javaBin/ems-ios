@@ -20,6 +20,7 @@
 #import "Conference.h"
 #import "ConferenceKeyword.h"
 #import "ConferenceLevel.h"
+#import "ConferenceType.h"
 #import "Speaker.h"
 
 @interface EMSMainViewController ()
@@ -177,6 +178,7 @@
         destination.currentSearch = self.search.text;
         destination.currentLevels = [NSSet setWithSet:self.currentLevels];
         destination.currentKeywords = [NSSet setWithSet:self.currentKeywords];
+        destination.currentTypes = [NSSet setWithSet:self.currentTypes];
 
         Conference *conference = [self activeConference];
 
@@ -216,6 +218,16 @@
 
         destination.keywords = [keywords sortedArrayUsingSelector: @selector(compare:)];
 
+        NSMutableArray *types = [[NSMutableArray alloc] init];
+        
+        [conference.conferenceTypes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+            ConferenceType *type = (ConferenceType *)obj;
+            
+            [types addObject:type.name];
+        }];
+
+        destination.types = [types sortedArrayUsingSelector: @selector(compare:)];
+
         destination.delegate = self;
     }
 }
@@ -250,6 +262,11 @@
                         self.currentLevels]];
         }
 
+        if ([self.currentTypes count] > 0) {
+            [predicates
+             addObject:[NSPredicate predicateWithFormat:@"(format IN %@)",
+                        self.currentTypes]];
+        }
 
         if ([self.currentKeywords count] > 0) {
             NSMutableArray *keywordPredicates = [[NSMutableArray alloc] init];
@@ -584,11 +601,12 @@
     [searchBar resignFirstResponder];
 }
 
-- (void) setSearchText:(NSString *)searchText withKeywords:(NSSet *)keywords andLevels:(NSSet *)levels {
+- (void) setSearchText:(NSString *)searchText withKeywords:(NSSet *)keywords andLevels:(NSSet *)levels andTypes:(NSSet *)types {
     self.search.text = searchText;
 
     self.currentLevels = [NSSet setWithSet:levels];
     self.currentKeywords = [NSSet setWithSet:keywords];
+    self.currentTypes = [NSSet setWithSet:types];
 
     [self initializeFetchedResultsController];
 }

@@ -15,6 +15,7 @@
 #import "Conference.h"
 #import "ConferenceKeyword.h"
 #import "ConferenceLevel.h"
+#import "ConferenceType.h"
 #import "Session.h"
 #import "Slot.h"
 #import "Keyword.h"
@@ -264,6 +265,19 @@
 
         conferenceLevel.name = ems.level;
         conferenceLevel.conference = conference;
+    }
+
+    NSSet *foundTypes = [conference.conferenceTypes objectsPassingTest:^BOOL(id obj, BOOL *stop) {
+        ConferenceType *conferenceType = (ConferenceType *)obj;
+        
+        return [conferenceType.name isEqualToString:ems.format];
+    }];
+    
+    if ([foundTypes count] == 0) {
+        ConferenceType *conferenceType = [NSEntityDescription insertNewObjectForEntityForName:@"ConferenceType" inManagedObjectContext:[self managedObjectContext]];
+        
+        conferenceType.name = ems.format;
+        conferenceType.conference = conference;
     }
 
     [session removeKeywords:session.keywords];
@@ -669,6 +683,7 @@
 
     [conference removeConferenceKeywords:conference.conferenceKeywords];
     [conference removeConferenceLevels:conference.conferenceLevels];
+    [conference removeConferenceTypes:conference.conferenceTypes];
 
     NSDictionary *hrefKeyed = [self sessionsKeyedByHref:sessions];
     

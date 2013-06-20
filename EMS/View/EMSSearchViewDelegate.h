@@ -8,6 +8,6 @@
 
 @required
 
-- (void) setSearchText:(NSString *)searchText withKeywords:(NSSet *)keywords andLevels:(NSSet *)levels;
+- (void) setSearchText:(NSString *)searchText withKeywords:(NSSet *)keywords andLevels:(NSSet *)levels andTypes:(NSSet *)types;
 
 @end

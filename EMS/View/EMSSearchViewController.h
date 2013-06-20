@@ -13,9 +13,11 @@
 @property (nonatomic, strong) NSString *currentSearch;
 @property (nonatomic, strong) NSSet *currentLevels;
 @property (nonatomic, strong) NSSet *currentKeywords;
+@property (nonatomic, strong) NSSet *currentTypes;
 @property (nonatomic, strong) IBOutlet UISearchBar *search;
 @property (nonatomic, strong) NSArray *levels;
 @property (nonatomic, strong) NSArray *keywords;
+@property (nonatomic, strong) NSArray *types;
 
 - (IBAction)clear:(id)sender;
 - (IBAction)apply:(id)sender;

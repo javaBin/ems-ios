@@ -36,7 +36,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -50,9 +50,36 @@
             return [self.levels count];
             break;
 
+        case 2:
+            return [self.types count];
+            break;
+
         default:
             return 0;
             break;
+    }
+}
+
+- (void)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
+             fromList:(NSArray *)list andCurrentList:(NSSet *)currentList
+          capitalized:(BOOL)capitalized
+              cleaned:(BOOL)cleaned {
+    NSString *value = [list objectAtIndex:indexPath.row];
+    
+    if (capitalized) {
+        value = [value capitalizedString];
+    }
+
+    if (cleaned) {
+        value = [value stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+    }
+    
+    cell.textLabel.text = value;
+    
+    if ([currentList containsObject:[list objectAtIndex:indexPath.row]]) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
 }
 
@@ -67,34 +94,22 @@
     switch (indexPath.section) {
         case 0:
         {
-            NSString *keyword = [self.keywords objectAtIndex:indexPath.row];
-
-            cell.textLabel.text = keyword;
-
-            if ([self.currentKeywords containsObject:keyword]) {
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            } else {
-                cell.accessoryType = UITableViewCellAccessoryNone;
-            }
-
+            [self configureCell:cell forIndexPath:indexPath fromList:self.keywords andCurrentList:self.currentKeywords capitalized:NO cleaned:NO];
             break;
         }
 
         case 1:
         {
-            NSString *level = [self.levels objectAtIndex:indexPath.row];
-
-            cell.textLabel.text = [level capitalizedString];
-
-            if ([self.currentLevels containsObject:level]) {
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            } else {
-                cell.accessoryType = UITableViewCellAccessoryNone;
-            }
-
+            [self configureCell:cell forIndexPath:indexPath fromList:self.levels andCurrentList:self.currentLevels capitalized:YES cleaned:NO];
             break;
         }
-
+            
+        case 2:
+        {
+            [self configureCell:cell forIndexPath:indexPath fromList:self.types andCurrentList:self.currentTypes capitalized:YES cleaned:YES];
+            break;
+        }
+            
         default:
             break;
     }
@@ -111,12 +126,29 @@
         case 1:
             return @"Levels";
             break;
+        case 2:
+            return @"Types";
+            break;
 
         default:
             break;
     }
 
     return nil;
+}
+
+- (NSSet *) selectRowForIndexPath:(NSIndexPath *)indexPath forList:(NSArray *)list andCurrentList:(NSSet *)currentList {
+    NSString *value = [list objectAtIndex:indexPath.row];
+
+    NSMutableSet *values = [NSMutableSet setWithSet:currentList];
+
+    if ([currentList containsObject:value]) {
+        [values removeObject:value];
+    } else {
+        [values addObject:value];
+    }
+    
+    return [NSSet setWithSet:values];
 }
 
 #pragma mark - Table view delegate
@@ -126,40 +158,22 @@
     switch (indexPath.section) {
         case 0:
         {
-            NSString *keyword = [self.keywords objectAtIndex:indexPath.row];
-
-            // Keywords
-            NSMutableSet *keywords = [NSMutableSet setWithSet:self.currentKeywords];
-
-            if ([keywords containsObject:keyword]) {
-                [keywords removeObject:keyword];
-            } else {
-                [keywords addObject:keyword];
-            }
-
-            self.currentKeywords = [NSSet setWithSet:keywords];
-
+            self.currentKeywords = [self selectRowForIndexPath:indexPath forList:self.keywords andCurrentList:self.currentKeywords];
             break;
         }
 
         case 1:
         {
-            NSString *level = [self.levels objectAtIndex:indexPath.row];
-
-            // Keywords
-            NSMutableSet *levels = [NSMutableSet setWithSet:self.currentLevels];
-
-            if ([levels containsObject:level]) {
-                [levels removeObject:level];
-            } else {
-                [levels addObject:level];
-            }
-
-            self.currentLevels = [NSSet setWithSet:levels];
-
+            self.currentLevels = [self selectRowForIndexPath:indexPath forList:self.levels andCurrentList:self.currentLevels];
             break;
         }
-
+            
+        case 2:
+        {
+            self.currentTypes = [self selectRowForIndexPath:indexPath forList:self.types andCurrentList:self.currentTypes];
+            break;
+        }
+            
         default:
             break;
     }
@@ -203,8 +217,19 @@
         
         [lowerCasedLevels addObject:[level lowercaseString]];
     }];
+
+    NSMutableSet *lowerCasedTypes = [[NSMutableSet alloc] init];
     
-    [self.delegate setSearchText:self.search.text withKeywords:[NSSet setWithSet:self.currentKeywords] andLevels:[NSSet setWithSet:lowerCasedLevels]];
+    [self.currentTypes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        NSString *type = (NSString *)obj;
+        
+        [lowerCasedTypes addObject:[type lowercaseString]];
+    }];
+    
+    [self.delegate setSearchText:self.search.text
+                    withKeywords:[NSSet setWithSet:self.currentKeywords]
+                       andLevels:[NSSet setWithSet:lowerCasedLevels]
+                        andTypes:[NSSet setWithSet:lowerCasedTypes]];
 
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -213,6 +238,7 @@
     self.search.text = @"";
     self.currentKeywords = nil;
     self.currentLevels = nil;
+    self.currentTypes = nil;
 
     [self apply:sender];
 }
