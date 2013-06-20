@@ -82,8 +82,7 @@ int networkCount = 0;
             
             Conference *conference = [self.model conferenceForSessionHref:url];
             
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setURL:[NSURL URLWithString: conference.href] forKey:@"activeConference"];
+            [EMSAppDelegate storeCurrentConference:[NSURL URLWithString: conference.href]];
             
             UIViewController *rootViewController = [[self window] rootViewController];
             
@@ -253,5 +252,23 @@ int networkCount = 0;
         app.networkActivityIndicatorVisible = NO;
     }
 }
+
++ (void) storeCurrentConference:(NSURL *)href {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setURL:href forKey:@"activeConference"];
+    
+    [Crashlytics setObjectValue:href forKey:@"lastStoredConference"];
+}
+
++ (NSURL *) currentConference {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSURL *href = [defaults URLForKey:@"activeConference"];
+    
+    [Crashlytics setObjectValue:href forKey:@"lastRetrievedConference"];
+
+    return href;
+}
+
 
 @end

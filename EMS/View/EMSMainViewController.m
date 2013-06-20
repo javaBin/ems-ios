@@ -2,6 +2,8 @@
 //  EMSMainViewController.m
 //
 
+#import <Crashlytics/Crashlytics.h>
+
 #import "EMSMainViewController.h"
 #import "EMSModel.h"
 
@@ -49,8 +51,7 @@
 - (Conference *)activeConference {
     CLS_LOG(@"Getting current conference");
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *activeConference = [[defaults URLForKey:@"activeConference"] absoluteString];
+    NSString *activeConference = [[EMSAppDelegate currentConference] absoluteString];
     
     if (activeConference != nil) {
         return [self conferenceForHref:activeConference];
@@ -162,12 +163,16 @@
             CLS_LOG(@"Preparing detail view from passed href %@", session);
             
             destination.session = session;
+            
+            [Crashlytics setObjectValue:session.href forKey:@"lastDetailSessionFromNotification"];
         } else {
             Session *session = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
 
             CLS_LOG(@"Preparing detail view with %@", session);
 
             destination.session = session;
+
+            [Crashlytics setObjectValue:session.href forKey:@"lastDetailSession"];
         }
     }
     if ([[segue identifier] isEqualToString:@"showSearchView"]) {
@@ -296,7 +301,11 @@
              addObject:[NSPredicate predicateWithFormat:@"slot IN %@", slots]];
         }
 
-        return [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
+        NSPredicate *resultPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
+        
+        [Crashlytics setObjectValue:resultPredicate forKey:@"activePredicate"];
+        
+        return resultPredicate;
     }
 
     return nil;

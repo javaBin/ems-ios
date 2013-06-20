@@ -24,4 +24,7 @@
 - (void) startNetwork;
 - (void) stopNetwork;
 
++ (void) storeCurrentConference:(NSURL *)href;
++ (NSURL *) currentConference;
+
 @end

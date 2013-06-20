@@ -149,8 +149,7 @@
 
     cell.detailTextLabel.text = [dates componentsJoinedByString:@" - "];
 
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *activeConference = [[defaults URLForKey:@"activeConference"] absoluteString];
+    NSString *activeConference = [[EMSAppDelegate currentConference] absoluteString];
 
     if ([conference.href isEqualToString:activeConference]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -177,9 +176,7 @@
 
 
 - (void) selectConference:(Conference *)conference {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    [defaults setURL:[NSURL URLWithString:conference.href] forKey:@"activeConference"];
+    [EMSAppDelegate storeCurrentConference:[NSURL URLWithString: conference.href]];
     
     [self.tableView reloadData];
     

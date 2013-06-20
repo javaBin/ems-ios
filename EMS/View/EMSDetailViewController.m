@@ -4,6 +4,7 @@
 
 #import <CommonCrypto/CommonDigest.h>
 #import <EventKit/EventKit.h>
+#import <Crashlytics/Crashlytics.h>
 
 #import "EMSDetailViewController.h"
 
@@ -177,6 +178,8 @@
 }
 
 - (void)share:(id)sender {
+    [Crashlytics setObjectValue:self.session.href forKey:@"lastSharedSession"];
+    
     // More info - http://blogs.captechconsulting.com/blog/steven-beyers/cocoaconf-dc-recap-sharing-uiactivityviewcontroller
 
     NSString *shareString = [NSString stringWithFormat:@"%@ - %@", self.session.conference.name, self.session.title];
