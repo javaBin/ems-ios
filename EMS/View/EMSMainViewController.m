@@ -131,7 +131,9 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (!self.refreshControl.refreshing) {
-        [self.tableView setContentOffset:CGPointMake(0, 44)];
+        if ([self.search.text isEqualToString:@""]) {
+            [self.tableView setContentOffset:CGPointMake(0, 44)];
+        }
     }
 }
 
