@@ -161,32 +161,35 @@ int networkCount = 0;
     }
 
     NSURL *oldStoreURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"incogito.sqlite"];
-    [[NSFileManager defaultManager] removeItemAtPath:oldStoreURL.path error:nil];
+    [[NSFileManager defaultManager] removeItemAtPath:oldStoreURL.path error:nil]; // Not interested in error - just removing old cruft
 
     CLS_LOG(@"No persistent store - initializing");
 
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"EMSCoreDataModel.sqlite"];
     
-    NSError *error = nil;
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
 
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
                              [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
 
+    NSError *error = nil;
     if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
         CLS_LOG(@"Failed to set up SQL database. Deleting. %@, %@", error, [error userInfo]);
 
         //delete the sqlite file and try again
-        [[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:nil];
+        NSError *deleteError = nil;
+        
+        if (![[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:&deleteError]) {
+            CLS_LOG(@"Failed to delete database on failed first attempt %@, %@", deleteError, [deleteError userInfo]);
+        }
         
         NSError *error2 = nil;
+            
         if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error2]) {
-
             CLS_LOG(@"Failed to set up database on second attempt %@, %@", error2, [error2 userInfo]);
             
             [self showErrorAlertWithTitle:@"Database error" andMessage:@"We failed to create the database. If this happens again after an application restart please delete and re-install."];
-            
         }
     }
     

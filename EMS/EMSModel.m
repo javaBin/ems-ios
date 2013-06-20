@@ -49,8 +49,10 @@
     NSError *error;
     
     NSArray *objects = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
-    
-    // TODO - handle error
+
+    if (!objects) {
+        CLS_LOG(@"Failed to fetch objects for predicate %@, sort %@, type %@ - %@ - %@", predicate, sort, type, error, [error userInfo]);
+    }
     
     return objects;
 }
@@ -476,7 +478,6 @@
 
     NSError *saveError = nil;
 
-    // TODO error
     if (![[self managedObjectContext] save:&saveError]) {
         CLS_LOG(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
 
@@ -561,7 +562,6 @@
     
     NSError *saveError = nil;
 
-    // TODO error
     if (![[self managedObjectContext] save:&saveError]) {
         CLS_LOG(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
 
@@ -646,7 +646,6 @@
     
     NSError *saveError = nil;
 
-    // TODO error
     if (![[self managedObjectContext] save:&saveError]) {
         CLS_LOG(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
 
@@ -730,7 +729,6 @@
     
     NSError *saveError = nil;
 
-    // TODO error
     if (![[self managedObjectContext] save:&saveError]) {
         CLS_LOG(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
 
@@ -827,7 +825,6 @@
     CLS_LOG(@"Persisting");
     NSError *saveError = nil;
 
-    // TODO error
     if (![[self managedObjectContext] save:&saveError]) {
         CLS_LOG(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
 
@@ -947,8 +944,6 @@
     NSError *error;
     if (![[session managedObjectContext] save:&error]) {
         CLS_LOG(@"Failed to toggle favourite for %@, %@, %@", session, error, [error userInfo]);
-        
-        // TODO - die?
     }
     
     return session;

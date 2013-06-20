@@ -482,7 +482,11 @@
 - (void) finishedSlots:(NSArray *)slots forHref:(NSURL *)href {
     CLS_LOG(@"Storing slots %d", [slots count]);
     
-    [[[EMSAppDelegate sharedAppDelegate] model] storeSlots:slots forHref:[href absoluteString] error:nil];
+    NSError *error = nil;
+    
+    if (![[[EMSAppDelegate sharedAppDelegate] model] storeSlots:slots forHref:[href absoluteString] error:&error]) {
+        CLS_LOG(@"Failed to store slots %@ - %@", error, [error userInfo]);
+    }
 
     self.retrievingSlots = NO;
     
@@ -492,7 +496,12 @@
 - (void) finishedSessions:(NSArray *)sessions forHref:(NSURL *)href {
     CLS_LOG(@"Storing sessions %d", [sessions count]);
 
-    [[[EMSAppDelegate sharedAppDelegate] model] storeSessions:sessions forHref:[href absoluteString] error:nil];
+    NSError *error = nil;
+
+    if (![[[EMSAppDelegate sharedAppDelegate] model] storeSessions:sessions forHref:[href absoluteString] error:&error]) {
+        CLS_LOG(@"Failed to store sessions %@ - %@", error, [error userInfo]);
+    }
+
     
     [self.refreshControl endRefreshing];
 }
@@ -500,7 +509,11 @@
 - (void) finishedRooms:(NSArray *)rooms forHref:(NSURL *)href {
     CLS_LOG(@"Storing rooms %d", [rooms count]);
 
-    [[[EMSAppDelegate sharedAppDelegate] model] storeRooms:rooms forHref:[href absoluteString] error:nil];
+    NSError *error = nil;
+    
+    if (![[[EMSAppDelegate sharedAppDelegate] model] storeRooms:rooms forHref:[href absoluteString] error:&error]) {
+        CLS_LOG(@"Failed to store rooms %@ - %@", error, [error userInfo]);
+    }
     
     self.retrievingRooms = NO;
     

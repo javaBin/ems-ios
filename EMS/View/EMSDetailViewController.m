@@ -92,7 +92,11 @@
 - (void) finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href {
     CLS_LOG(@"Storing speakers %d", [speakers count]);
     
-    [[[EMSAppDelegate sharedAppDelegate] model] storeSpeakers:speakers forHref:[href absoluteString] error:nil];
+    NSError *error = nil;
+    
+    if (![[[EMSAppDelegate sharedAppDelegate] model] storeSpeakers:speakers forHref:[href absoluteString] error:&error]) {
+        CLS_LOG(@"Failed to store speakers %@ - %@", error, [error userInfo]);
+    }
 
     [self buildPage];
 }

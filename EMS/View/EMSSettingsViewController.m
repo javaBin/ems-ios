@@ -191,7 +191,11 @@
 - (void)finishedConferences:(NSArray *)conferenceList forHref:(NSURL *)href {
     self.justRetrieved = YES;
 
-    [[[EMSAppDelegate sharedAppDelegate] model] storeConferences:conferenceList error:nil];
+    NSError *error = nil;
+    
+    if (![[[EMSAppDelegate sharedAppDelegate] model] storeConferences:conferenceList error:&error]) {
+        CLS_LOG(@"Failed to store conferences %@ - %@", error, [error userInfo]);
+    }
 
     [self.refreshControl endRefreshing];
 }

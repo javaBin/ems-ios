@@ -11,7 +11,4 @@
 @property (strong, nonatomic) NSString *bio;
 @property (strong, nonatomic) NSURL *thumbnailUrl;
 
-
-// TODO - pic
-
 @end
