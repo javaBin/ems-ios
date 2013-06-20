@@ -251,7 +251,8 @@
 
         if (!([self.search.text isEqualToString:@""])) {
             [predicates
-             addObject:[NSPredicate predicateWithFormat:@"(title CONTAINS[cd] %@ OR ANY speakers.name CONTAINS[cd] %@)",
+             addObject:[NSPredicate predicateWithFormat:@"(title CONTAINS[cd] %@ OR body CONTAINS[cd] %@ OR ANY speakers.name CONTAINS[cd] %@)",
+                        self.search.text,
                         self.search.text,
                         self.search.text]];
         }
