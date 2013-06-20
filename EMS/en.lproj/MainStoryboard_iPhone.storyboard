@@ -258,7 +258,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="" image="259-list.png"/>
-                                <segment title="" image="28-star-grey.png"/>
+                                <segment title="" image="28-star.png"/>
                                 <segment title="" image="11-clock.png"/>
                             </segments>
                             <connections>
@@ -290,19 +290,15 @@
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SyP-yk-NN6">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h8d-wv-eM3">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="22:00 - 22:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h8d-wv-eM3">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="148" id="BMO-OV-Hpq"/>
                                     <constraint firstAttribute="height" constant="21" id="QTz-xM-wOe"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Intermediate" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="epF-st-3wg">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="apx-Ki-t6A"/>
-                                </constraints>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Intermediate" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="epF-st-3wg">
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -310,7 +306,7 @@
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Room 2" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q35-VC-8on">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" type="user" id="QaG-qv-meT"/>
-                                    <constraint firstAttribute="width" constant="42" id="myg-hA-1mI"/>
+                                    <constraint firstAttribute="width" constant="70" id="hTA-KA-jd6"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -339,6 +335,7 @@
                             <constraint firstItem="h8d-wv-eM3" firstAttribute="top" secondItem="LLw-3H-w5Y" secondAttribute="top" constant="19" id="1ym-3U-ETp"/>
                             <constraint firstItem="h8d-wv-eM3" firstAttribute="leading" secondItem="LLw-3H-w5Y" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="2mF-r0-Lrz"/>
                             <constraint firstItem="SyP-yk-NN6" firstAttribute="trailing" secondItem="LLw-3H-w5Y" secondAttribute="trailing" type="default" id="B02-R3-bJX"/>
+                            <constraint firstItem="epF-st-3wg" firstAttribute="leading" secondItem="q35-VC-8on" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="CMe-iu-es9"/>
                             <constraint firstItem="2Ru-D1-L9h" firstAttribute="top" secondItem="LLw-3H-w5Y" secondAttribute="top" type="default" id="EX4-zB-1Tu"/>
                             <constraint firstItem="SyP-yk-NN6" firstAttribute="top" secondItem="LLw-3H-w5Y" secondAttribute="top" constant="43" type="user" id="Okj-BL-u9A"/>
                             <constraint firstItem="q35-VC-8on" firstAttribute="leading" secondItem="LLw-3H-w5Y" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="U4V-Qr-TpN"/>
@@ -348,7 +345,8 @@
                             <constraint firstItem="epF-st-3wg" firstAttribute="baseline" secondItem="q35-VC-8on" secondAttribute="baseline" type="default" id="o7y-K9-o43"/>
                             <constraint firstItem="2Ru-D1-L9h" firstAttribute="trailing" secondItem="LLw-3H-w5Y" secondAttribute="trailing" type="default" id="rLl-Dm-O7B"/>
                             <constraint firstItem="epF-st-3wg" firstAttribute="top" secondItem="LLw-3H-w5Y" secondAttribute="top" type="default" id="tQH-z4-7dd"/>
-                            <constraint firstItem="epF-st-3wg" firstAttribute="trailing" secondItem="h8d-wv-eM3" secondAttribute="trailing" type="default" id="vSa-3b-7YZ"/>
+                            <constraint firstItem="epF-st-3wg" firstAttribute="leading" secondItem="h8d-wv-eM3" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="ubi-Jk-DZX"/>
+                            <constraint firstItem="2Ru-D1-L9h" firstAttribute="leading" secondItem="epF-st-3wg" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="wR7-Ud-PrI"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ib1-cg-KjS">
@@ -393,6 +391,7 @@
         <image name="258-checkmark.png" width="19" height="18"/>
         <image name="259-list.png" width="20" height="14"/>
         <image name="28-star-grey.png" width="26" height="26"/>
+        <image name="28-star.png" width="26" height="26"/>
         <image name="298-circlex.png" width="22" height="22"/>
     </resources>
     <classes>
