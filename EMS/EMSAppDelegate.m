@@ -28,7 +28,6 @@ int networkCount = 0;
     [Crashlytics startWithAPIKey:[prefs objectForKey:@"crashlytics-api-key"]];
 
     [GAI sharedInstance].trackUncaughtExceptions = YES;
-    [GAI sharedInstance].dispatchInterval = 20;
 #ifdef DEBUG
     [GAI sharedInstance].debug = YES;
 #endif
