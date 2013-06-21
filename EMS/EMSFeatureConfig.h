@@ -12,4 +12,6 @@ typedef enum EMSFeature : NSUInteger {
 
 + (BOOL)isFeatureEnabled:(EMSFeature) feature;
 
+- (void) refreshConfigFile;
+
 @end

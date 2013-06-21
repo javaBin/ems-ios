@@ -59,6 +59,9 @@ int networkCount = 0;
 {
     networkCount = 0;
     [self stopNetwork];
+
+    EMSFeatureConfig *featureConfig = [[EMSFeatureConfig alloc] init];
+    [featureConfig refreshConfigFile];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
