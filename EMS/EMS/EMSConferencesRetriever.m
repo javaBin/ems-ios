@@ -15,8 +15,16 @@
 
 @implementation EMSConferencesRetriever
 
-- (void)fetchedEventCollection:(NSData *)responseData forHref:(NSURL *)href {
-    CJCollection *collection = [CJCollection collectionForNSData:responseData];
+- (NSArray *)processData:(NSData *)data andHref:(NSURL *) href {
+    NSError *error = nil;
+    
+    CJCollection *collection = [CJCollection collectionForNSData:data error:&error];
+    
+    if (!collection) {
+        CLS_LOG(@"Failed to retrieve conferences %@ - %@ - %@", href, error, [error userInfo]);
+        
+        return [NSArray array];
+    }
     
     NSMutableArray *temp = [[NSMutableArray alloc] init];
     
@@ -29,7 +37,7 @@
         
         [item.data enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             NSDictionary *dict = (NSDictionary *)obj;
-
+            
             NSString *field = [dict objectForKey:@"name"];
             NSString *value = [dict objectForKey:@"value"];
             
@@ -70,10 +78,16 @@
         
         [temp addObject:conf];
     }];
+    
+    return [NSArray arrayWithArray:temp];
+}
+
+- (void)fetchedEventCollection:(NSData *)responseData forHref:(NSURL *)href {
+    NSArray *collection = [self processData:responseData andHref:href];
 
     [[EMSAppDelegate sharedAppDelegate] stopNetwork];
     
-    [self.delegate finishedConferences:[NSArray arrayWithArray:temp] forHref:href];
+    [self.delegate finishedConferences:collection forHref:href];
 }
 
 - (void) fetch:(NSURL *)url {
@@ -81,25 +95,55 @@
     
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
     dispatch_async(queue, ^{
-        NSData* root = [NSData dataWithContentsOfURL:url];
+        NSError *rootError = nil;
         
-        dispatch_async(queue, ^{
-            CJCollection *collection = [CJCollection collectionForNSData:root];
+        NSData* root = [NSData dataWithContentsOfURL:url options:NSDataReadingMappedIfSafe error:&rootError];
+        
+        if (root == nil) {
+            CLS_LOG(@"Retrieved nil root %@ - %@ - %@", url, rootError, [rootError userInfo]);
             
-            [collection.links enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                CJLink *link = (CJLink *)obj;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self fetchedEventCollection:nil forHref:url];
+            });
+        }
+        
+        if (root != nil) {
+            dispatch_async(queue, ^{
+                NSError *error = nil;
                 
-                if ([link.rel isEqualToString:@"event collection"]) {
-                    dispatch_async(queue, ^{
-                        NSData* events = [NSData dataWithContentsOfURL:link.href];
+                CJCollection *collection = [CJCollection collectionForNSData:root error:&error];
+            
+                if (!collection) {
+                    CLS_LOG(@"Failed to retrieve root %@ - %@ - %@", url, error, [error userInfo]);
 
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [self fetchedEventCollection:events forHref:url];
-                        });
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self fetchedEventCollection:nil forHref:url];
                     });
                 }
-            }];
-        });
+
+                if (collection) {
+                    [collection.links enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                        CJLink *link = (CJLink *)obj;
+                
+                        if ([link.rel isEqualToString:@"event collection"]) {
+                            dispatch_async(queue, ^{
+                                NSError *eventsError = nil;
+                            
+                                NSData* events = [NSData dataWithContentsOfURL:link.href options:NSDataReadingMappedIfSafe error:&eventsError];
+
+                                if (events == nil) {
+                                    CLS_LOG(@"Retrieved nil events %@ - %@ - %@", url, eventsError, [eventsError userInfo]);
+                                }
+
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    [self fetchedEventCollection:events forHref:url];
+                                });
+                            });
+                        }
+                    }];
+                }
+            });
+        }
     });
 }
 

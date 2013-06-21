@@ -14,14 +14,22 @@
 
 @implementation EMSSlotsRetriever
 
-- (void)fetchedSlots:(NSData *)responseData forHref:(NSURL *)href {
-    CJCollection *collection = [CJCollection collectionForNSData:responseData];
+- (NSArray *)processData:(NSData *)data forHref:(NSURL *)href {
+    NSError *error = nil;
+    
+    CJCollection *collection = [CJCollection collectionForNSData:data error:&error];
+    
+    if (!collection) {
+        CLS_LOG(@"Failed to retrieve slots %@ - %@ - %@", href, error, [error userInfo]);
+        
+        return [NSArray array];
+    }
     
     NSMutableArray *temp = [[NSMutableArray alloc] init];
     
     [collection.items enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         CJItem *item = (CJItem *)obj;
-
+        
         EMSSlot *slot = [[EMSSlot alloc] init];
         
         slot.href = item.href;
@@ -42,10 +50,16 @@
         
         [temp addObject:slot];
     }];
+    
+    return [NSArray arrayWithArray:temp];
+}
 
+- (void)fetchedSlots:(NSData *)responseData forHref:(NSURL *)href {
+    NSArray *collection = [self processData:responseData forHref:href];
+    
     [[EMSAppDelegate sharedAppDelegate] stopNetwork];
 
-    [self.delegate finishedSlots:[NSArray arrayWithArray:temp] forHref:href];
+    [self.delegate finishedSlots:collection forHref:href];
 }
 
 - (void) fetch:(NSURL *)url {
@@ -54,8 +68,14 @@
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
 
     dispatch_async(queue, ^{
-        NSData* root = [NSData dataWithContentsOfURL:url];
+        NSError *rootError = nil;
         
+        NSData* root = [NSData dataWithContentsOfURL:url options:NSDataReadingMappedIfSafe error:&rootError];
+        
+        if (root == nil) {
+            CLS_LOG(@"Retrieved nil root %@ - %@ - %@", url, rootError, [rootError userInfo]);
+        }
+
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchedSlots:root forHref:url];
         });

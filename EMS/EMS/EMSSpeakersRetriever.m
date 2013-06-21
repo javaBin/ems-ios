@@ -13,8 +13,16 @@
 
 @implementation EMSSpeakersRetriever
 
-- (void)fetchedSpeakers:(NSData *)responseData forHref:(NSURL *)href {
-    CJCollection *collection = [CJCollection collectionForNSData:responseData];
+- (NSArray *)processData:(NSData *)data forHref:(NSURL *)href {
+    NSError *error = nil;
+    
+    CJCollection *collection = [CJCollection collectionForNSData:data error:&error];
+    
+    if (!collection) {
+        CLS_LOG(@"Failed to retrieve speakers %@ - %@ - %@", href, error, [error userInfo]);
+        
+        return [NSArray array];
+    }
     
     NSMutableArray *temp = [[NSMutableArray alloc] init];
     
@@ -38,10 +46,10 @@
                 speaker.bio = value;
             }
         }];
-
+        
         [item.links enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             CJLink *link = (CJLink *)obj;
-
+            
             if ([@"thumbnail" isEqualToString:link.rel]) {
                 speaker.thumbnailUrl = link.href;
             }
@@ -50,9 +58,15 @@
         [temp addObject:speaker];
     }];
     
+    return [NSArray arrayWithArray:temp];
+}
+
+- (void)fetchedSpeakers:(NSData *)responseData forHref:(NSURL *)href {
+    NSArray *collection = [self processData:responseData forHref:href];
+    
     [[EMSAppDelegate sharedAppDelegate] stopNetwork];
 
-    [self.delegate finishedSpeakers:[NSArray arrayWithArray:temp] forHref:href];
+    [self.delegate finishedSpeakers:collection forHref:href];
 }
 
 - (void) fetch:(NSURL *)url {
@@ -61,8 +75,14 @@
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
 
     dispatch_async(queue, ^{
-        NSData* root = [NSData dataWithContentsOfURL:url];
+        NSError *rootError = nil;
         
+        NSData* root = [NSData dataWithContentsOfURL:url options:NSDataReadingMappedIfSafe error:&rootError];
+        
+        if (root == nil) {
+            CLS_LOG(@"Retrieved nil root %@ - %@ - %@", url, rootError, [rootError userInfo]);
+        }
+
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchedSpeakers:root forHref:url];
         });

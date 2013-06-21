@@ -579,9 +579,11 @@
                             andSort:nil];
     
     if (conferences.count == 0) {
-        NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-        [errorDetail setValue:@"Conference not found in database" forKey:NSLocalizedDescriptionKey];
-        *error = [NSError errorWithDomain:@"EMS" code:100 userInfo:errorDetail];
+        if (error != NULL) {
+            NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+            [errorDetail setValue:@"Conference not found in database" forKey:NSLocalizedDescriptionKey];
+            *error = [NSError errorWithDomain:@"EMS" code:100 userInfo:errorDetail];
+        }
         return NO;
     }
     
@@ -663,9 +665,11 @@
                          andSort:nil];
     
     if (sessions.count == 0) {
-        NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-        [errorDetail setValue:@"Conference not found in database" forKey:NSLocalizedDescriptionKey];
-        *error = [NSError errorWithDomain:@"EMS" code:100 userInfo:errorDetail];
+        if (error != NULL) {
+            NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+            [errorDetail setValue:@"Conference not found in database" forKey:NSLocalizedDescriptionKey];
+            *error = [NSError errorWithDomain:@"EMS" code:100 userInfo:errorDetail];
+        }
         return NO;
     }
     

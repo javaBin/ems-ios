@@ -12,8 +12,16 @@
 
 @implementation EMSRoomsRetriever
 
-- (void)fetchedRooms:(NSData *)responseData forHref:(NSURL *)href {
-    CJCollection *collection = [CJCollection collectionForNSData:responseData];
+- (NSArray *)processData:(NSData *)data forHref:(NSURL *)href {
+    NSError *error = nil;
+    
+    CJCollection *collection = [CJCollection collectionForNSData:data error:&error];
+    
+    if (!collection) {
+        CLS_LOG(@"Failed to retrieve rooms %@ - %@ - %@", href, error, [error userInfo]);
+        
+        return [NSArray array];
+    }
     
     NSMutableArray *temp = [[NSMutableArray alloc] init];
     
@@ -38,9 +46,15 @@
         [temp addObject:room];
     }];
     
+    return [NSArray arrayWithArray:temp];
+}
+
+- (void)fetchedRooms:(NSData *)responseData forHref:(NSURL *)href {
+    NSArray *collection = [self processData:responseData forHref:href];
+    
     [[EMSAppDelegate sharedAppDelegate] stopNetwork];
 
-    [self.delegate finishedRooms:[NSArray arrayWithArray:temp] forHref:href];
+    [self.delegate finishedRooms:collection forHref:href];
 }
 
 
@@ -50,7 +64,13 @@
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
 
     dispatch_async(queue, ^{
-        NSData* root = [NSData dataWithContentsOfURL:url];
+        NSError *rootError = nil;
+        
+        NSData* root = [NSData dataWithContentsOfURL:url options:NSDataReadingMappedIfSafe error:&rootError];
+        
+        if (root == nil) {
+            CLS_LOG(@"Retrieved nil root %@ - %@ - %@", url, rootError, [rootError userInfo]);
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchedRooms:root forHref:url];

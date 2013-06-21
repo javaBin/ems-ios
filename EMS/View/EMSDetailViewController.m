@@ -327,19 +327,31 @@
                     [[EMSAppDelegate sharedAppDelegate] startNetwork];
 
                     dispatch_async(queue, ^{
-                        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:speaker.thumbnailUrl]];
+                        NSError *thumbnailError = nil;
+                        
+                        NSURL *url = [NSURL URLWithString:speaker.thumbnailUrl];
+                        
+                        NSData* data = [NSData dataWithContentsOfURL:url
+                                        options:NSDataReadingMappedIfSafe
+                                        error:&thumbnailError];
 
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            UIImage *image = [UIImage imageWithData:data];
-
-                            CLS_LOG(@"Saving image file");
-
-                            [[NSData dataWithData:UIImagePNGRepresentation(image)] writeToFile:pngFilePath atomically:YES];
+                        if (data == nil) {
+                            CLS_LOG(@"Failed to retrieve thumbnail %@ - %@ - %@", url, thumbnailError, [thumbnailError userInfo]);
 
                             [[EMSAppDelegate sharedAppDelegate] stopNetwork];
+                        } else {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                UIImage *image = [UIImage imageWithData:data];
 
-                            [self buildPage];
-                        });
+                                CLS_LOG(@"Saving image file");
+
+                                [[NSData dataWithData:UIImagePNGRepresentation(image)] writeToFile:pngFilePath atomically:YES];
+
+                                [[EMSAppDelegate sharedAppDelegate] stopNetwork];
+
+                                [self buildPage];
+                            });
+                        }
                     });
 
                     
