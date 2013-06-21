@@ -43,6 +43,7 @@
 		F30FCBDF17746057003EEC3A /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F30FCBDE17746057003EEC3A /* Default-Landscape~ipad.png */; };
 		F31862371770340200292371 /* EMSDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F31862361770340200292371 /* EMSDetailViewController.m */; };
 		F31862421770501800292371 /* EMSSessionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F31862411770501800292371 /* EMSSessionCell.m */; };
+		F350599017747D6A007E7FE4 /* hardcore.png in Resources */ = {isa = PBXBuildFile; fileRef = F350598F17747D6A007E7FE4 /* hardcore.png */; };
 		F3513B47177074200042D07A /* 19-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B46177074200042D07A /* 19-gear.png */; };
 		F3513B49177076A80042D07A /* 19-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B48177076A80042D07A /* 19-gear@2x.png */; };
 		F3513B4C1770776C0042D07A /* 06-magnify.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B4A1770776C0042D07A /* 06-magnify.png */; };
@@ -154,6 +155,7 @@
 		F31862361770340200292371 /* EMSDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDetailViewController.m; sourceTree = "<group>"; };
 		F31862401770501800292371 /* EMSSessionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSessionCell.h; sourceTree = "<group>"; };
 		F31862411770501800292371 /* EMSSessionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSessionCell.m; sourceTree = "<group>"; };
+		F350598F17747D6A007E7FE4 /* hardcore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hardcore.png; sourceTree = "<group>"; };
 		F3513B46177074200042D07A /* 19-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "19-gear.png"; sourceTree = "<group>"; };
 		F3513B48177076A80042D07A /* 19-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "19-gear@2x.png"; sourceTree = "<group>"; };
 		F3513B4A1770776C0042D07A /* 06-magnify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-magnify.png"; sourceTree = "<group>"; };
@@ -480,6 +482,7 @@
 		F3EC969C17747625004A5F25 /* levels */ = {
 			isa = PBXGroup;
 			children = (
+				F350598F17747D6A007E7FE4 /* hardcore.png */,
 				F3EC96AB1774783E004A5F25 /* beginner-intermediate.png */,
 				F3EC96AC1774783E004A5F25 /* intermediate-advanced.png */,
 				F3EC96A81774780B004A5F25 /* beginner.png */,
@@ -586,6 +589,7 @@
 				F3EC96AA1774780B004A5F25 /* beginner.png in Resources */,
 				F3EC96AD1774783E004A5F25 /* beginner-intermediate.png in Resources */,
 				F3EC96AE1774783E004A5F25 /* intermediate-advanced.png in Resources */,
+				F350599017747D6A007E7FE4 /* hardcore.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
