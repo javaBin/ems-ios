@@ -34,6 +34,7 @@
 		839BD66D176F9BD400900712 /* EMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD65B176F9BD400900712 /* EMSViewController.m */; };
 		839BD670176FA67000900712 /* EMSSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD66F176FA67000900712 /* EMSSpeaker.m */; };
 		83AF91B11771E7E100FAE20F /* EMSAdminViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91B01771E7E100FAE20F /* EMSAdminViewController.m */; };
+		83D5CBA417749EEA00527620 /* EMSFeatureConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */; };
 		F30FCBD317745F91003EEC3A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = F30FCBD217745F91003EEC3A /* Default.png */; };
 		F30FCBD517745F9C003EEC3A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F30FCBD417745F9C003EEC3A /* Default@2x.png */; };
 		F30FCBD717745FA4003EEC3A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F30FCBD617745FA4003EEC3A /* Default-568h@2x.png */; };
@@ -144,6 +145,8 @@
 		839BD66F176FA67000900712 /* EMSSpeaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSpeaker.m; sourceTree = "<group>"; };
 		83AF91AF1771E7E100FAE20F /* EMSAdminViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSAdminViewController.h; sourceTree = "<group>"; };
 		83AF91B01771E7E100FAE20F /* EMSAdminViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSAdminViewController.m; sourceTree = "<group>"; };
+		83D5CBA217749EEA00527620 /* EMSFeatureConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSFeatureConfig.h; sourceTree = "<group>"; };
+		83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSFeatureConfig.m; sourceTree = "<group>"; };
 		F30FCBD217745F91003EEC3A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../../Default.png; sourceTree = "<group>"; };
 		F30FCBD417745F9C003EEC3A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../../Default@2x.png"; sourceTree = "<group>"; };
 		F30FCBD617745FA4003EEC3A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -425,6 +428,8 @@
 				F35BB6CC17685885009077D3 /* Supporting Files */,
 				F3939E5F1769C3CD0078C709 /* EMSModel.h */,
 				F3939E601769C3CD0078C709 /* EMSModel.m */,
+				83D5CBA217749EEA00527620 /* EMSFeatureConfig.h */,
+				83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */,
 			);
 			name = App;
 			path = EMS;
@@ -653,6 +658,7 @@
 				F3AE33DF1772EA94000EE4A9 /* Session.m in Sources */,
 				F3E601DE1772F6BB000673AE /* NHCalendarActivity.m in Sources */,
 				F3E601DF1772F6BB000673AE /* NHCalendarEvent.m in Sources */,
+				83D5CBA417749EEA00527620 /* EMSFeatureConfig.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

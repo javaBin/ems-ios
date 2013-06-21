@@ -6,6 +6,8 @@
 #import "EMSModel.h"
 #import "EMSMainViewController.h"
 
+#import "EMSFeatureConfig.h"
+
 #import "Conference.h"
 
 @implementation EMSAppDelegate
@@ -25,10 +27,12 @@ int networkCount = 0;
     
     [Crashlytics startWithAPIKey:[prefs objectForKey:@"crashlytics-api-key"]];
 
-    UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    if ([EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
+        UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     
-    [self activateWithNotification:notification];
-    
+        [self activateWithNotification:notification];
+    }
+
     [[self window] rootViewController];
 
     return YES;
@@ -68,10 +72,16 @@ int networkCount = 0;
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    [self activateWithNotification:notification];
+    if ([EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
+        [self activateWithNotification:notification];
+    }
 }
 
 - (void)activateWithNotification:(UILocalNotification *)notification {
+    if (![EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
+        return;
+    }
+    
     if (notification != nil) {
         NSDictionary *userInfo = [notification userInfo];
 

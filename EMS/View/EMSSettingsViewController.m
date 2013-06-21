@@ -10,6 +10,7 @@
 #import "EMSSlot.h"
 
 #import "EMSAppDelegate.h"
+#import "EMSFeatureConfig.h"
 
 #import "EMSMainViewController.h"
 
@@ -40,7 +41,17 @@
     self.emptyInitial = NO;
     
     [self setUpRefreshControl];
-    
+
+#ifndef DEBUG
+    self.navigationItem.rightBarButtonItem = nil;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+#else
+    if (![EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
+        self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+    }
+#endif
+
     NSError *error;
 
 	if (![[self fetchedResultsController] performFetch:&error]) {
@@ -205,7 +216,6 @@
 #pragma mark - NSFetchedResultsControllerDelegate
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-    // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
     [self.tableView beginUpdates];
 }
 
@@ -254,7 +264,6 @@
 
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
     [self.tableView endUpdates];
     
     if (self.justRetrieved == YES && self.emptyInitial == YES) {

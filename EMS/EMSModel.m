@@ -11,6 +11,7 @@
 #import "EMSSpeaker.h"
 
 #import "EMSAppDelegate.h"
+#import "EMSFeatureConfig.h"
 
 #import "Conference.h"
 #import "ConferenceKeyword.h"
@@ -961,6 +962,10 @@
 }
 
 - (void) addNotification:(Session *)session {
+    if (![EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
+        return;
+    }
+
     UILocalNotification *notification = [[UILocalNotification alloc] init];
     
     NSDate *sessionStart = [self fiveMinutesBefore:[self dateForSession:session]];
@@ -992,6 +997,10 @@
 }
 
 - (void) removeNotification:(Session *)session {
+    if (![EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
+        return;
+    }
+
     CLS_LOG(@"Looking for session %@ with ID %@", session, session.href);
 
     NSArray *notifications = [[NSUserDefaults standardUserDefaults] objectForKey:@"notificationDatabase"];;
