@@ -13,5 +13,7 @@
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
     #import <Crashlytics/Crashlytics.h>
+    #import "GAI.h"
+    #import "GAITracker.h"
 #endif
 

@@ -12,6 +12,8 @@
 		83172C241770FE67000135E6 /* 11-clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C201770FE67000135E6 /* 11-clock@2x.png */; };
 		83172C251770FE67000135E6 /* 259-list.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C211770FE67000135E6 /* 259-list.png */; };
 		83172C261770FE67000135E6 /* 259-list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C221770FE67000135E6 /* 259-list@2x.png */; };
+		833EF2D91774E475005E24A3 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 833EF2D81774E475005E24A3 /* libGoogleAnalytics.a */; };
+		833EF2DB1774E49F005E24A3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */; };
 		836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836331311770DD2B000F8D95 /* EMSSearchViewController.m */; };
 		836331351770EF78000F8D95 /* 298-circlex.png in Resources */ = {isa = PBXBuildFile; fileRef = 836331331770EF78000F8D95 /* 298-circlex.png */; };
 		836331361770EF78000F8D95 /* 298-circlex@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836331341770EF78000F8D95 /* 298-circlex@2x.png */; };
@@ -104,6 +106,13 @@
 		83172C201770FE67000135E6 /* 11-clock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-clock@2x.png"; sourceTree = "<group>"; };
 		83172C211770FE67000135E6 /* 259-list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "259-list.png"; sourceTree = "<group>"; };
 		83172C221770FE67000135E6 /* 259-list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "259-list@2x.png"; sourceTree = "<group>"; };
+		833EF2D31774E475005E24A3 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
+		833EF2D41774E475005E24A3 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
+		833EF2D51774E475005E24A3 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
+		833EF2D61774E475005E24A3 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransaction.h; sourceTree = "<group>"; };
+		833EF2D71774E475005E24A3 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransactionItem.h; sourceTree = "<group>"; };
+		833EF2D81774E475005E24A3 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
+		833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		836331301770DD2B000F8D95 /* EMSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSearchViewController.h; sourceTree = "<group>"; };
 		836331311770DD2B000F8D95 /* EMSSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSearchViewController.m; sourceTree = "<group>"; };
 		836331331770EF78000F8D95 /* 298-circlex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "298-circlex.png"; sourceTree = "<group>"; };
@@ -237,18 +246,33 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				833EF2DB1774E49F005E24A3 /* SystemConfiguration.framework in Frameworks */,
 				F3E601E11772F7EC000673AE /* EventKit.framework in Frameworks */,
 				F3939E50176887090078C709 /* CoreData.framework in Frameworks */,
 				F35BB6C617685885009077D3 /* UIKit.framework in Frameworks */,
 				F35BB6C817685885009077D3 /* Foundation.framework in Frameworks */,
 				F35BB6CA17685885009077D3 /* CoreGraphics.framework in Frameworks */,
 				830C7D79176F8B4900D38B46 /* Crashlytics.framework in Frameworks */,
+				833EF2D91774E475005E24A3 /* libGoogleAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		833EF2D21774E45D005E24A3 /* GoogleAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				833EF2D31774E475005E24A3 /* GAI.h */,
+				833EF2D41774E475005E24A3 /* GAITrackedViewController.h */,
+				833EF2D51774E475005E24A3 /* GAITracker.h */,
+				833EF2D61774E475005E24A3 /* GAITransaction.h */,
+				833EF2D71774E475005E24A3 /* GAITransactionItem.h */,
+				833EF2D81774E475005E24A3 /* libGoogleAnalytics.a */,
+			);
+			name = GoogleAnalytics;
+			sourceTree = "<group>";
+		};
 		839BD637176F9BD400900712 /* Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -407,6 +431,7 @@
 		F35BB6C417685885009077D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */,
 				F3E601E01772F7EC000673AE /* EventKit.framework */,
 				830C7D78176F8B4900D38B46 /* Crashlytics.framework */,
 				F3939E4F176887090078C709 /* CoreData.framework */,
@@ -465,6 +490,7 @@
 		F3E601D61772F6A2000673AE /* externals */ = {
 			isa = PBXGroup;
 			children = (
+				833EF2D21774E45D005E24A3 /* GoogleAnalytics */,
 				F35BB6EE17686478009077D3 /* CollectionJSON */,
 				F3E601D71772F6BB000673AE /* NHCalendarActivity */,
 			);
@@ -762,6 +788,10 @@
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
 				INFOPLIST_FILE = "EMS/EMS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				OTHER_CFLAGS = "";
 				"OTHER_CFLAGS[arch=*]" = "-DUSE_TEST_DATE=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -782,6 +812,10 @@
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
 				INFOPLIST_FILE = "EMS/EMS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;

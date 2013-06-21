@@ -14,6 +14,8 @@
 
 @implementation EMSSlotsRetriever
 
+NSDate *timer;
+
 - (NSArray *)processData:(NSData *)data forHref:(NSURL *)href {
     NSError *error = nil;
     
@@ -59,6 +61,13 @@
     
     [[EMSAppDelegate sharedAppDelegate] stopNetwork];
 
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker sendTimingWithCategory:@"retrieval"
+                          withValue:[[NSDate date] timeIntervalSinceDate:timer]
+                           withName:@"slots"
+                          withLabel:nil];
+
+
     [self.delegate finishedSlots:collection forHref:href];
 }
 
@@ -66,6 +75,8 @@
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
+
+    timer = [NSDate date];
 
     dispatch_async(queue, ^{
         NSError *rootError = nil;

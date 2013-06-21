@@ -68,6 +68,12 @@
     [self retrieve];
 }
 
+- (void) viewDidAppear:(BOOL)animated {
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker sendView:@"Detail Screen"];
+}
+
+
 - (IBAction)toggleFavourite:(id)sender {
     self.session = [[[EMSAppDelegate sharedAppDelegate] model] toggleFavourite:self.session];
     
@@ -203,6 +209,14 @@
     
     [activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
         CLS_LOG(@"Sharing of %@ via %@ - completed %d", shareString, activityType, completed);
+
+        if (completed) {
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+
+            [tracker sendSocial:activityType
+                     withAction:@"Share"
+                     withTarget:[NSURL URLWithString:self.session.href]];
+        }
     }];
     
     activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;

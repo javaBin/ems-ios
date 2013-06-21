@@ -75,6 +75,11 @@
     }
 }
 
+- (void) viewDidAppear:(BOOL)animated {
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker sendView:@"Settings Screen"];
+}
+
 - (NSFetchedResultsController *)fetchedResultsController {
     
     if (_fetchedResultsController != nil) {
@@ -192,7 +197,14 @@
     [self.tableView reloadData];
     
     [self.delegate conferenceChanged:self];
+
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     
+    [tracker trackEventWithCategory:@"settingsView"
+                         withAction:@"selectConference"
+                          withLabel:conference.href
+                          withValue:nil];
+
     [self.navigationController popViewControllerAnimated:YES];
 }
 

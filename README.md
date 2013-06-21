@@ -15,5 +15,6 @@ The file EMS/EMS-Keys.plist is not provided. You will need to create this plist 
 The current keys it provides are:
 
 * crashlytics-api-key
+* google-analytics-tracking-id
 
 

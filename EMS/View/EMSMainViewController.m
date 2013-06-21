@@ -141,6 +141,11 @@
     }
 }
 
+- (void) viewDidAppear:(BOOL)animated {
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker sendView:@"Main Screen"];
+}
+
 - (void)pushDetailViewForHref:(NSString *)href {
     [self performSegueWithIdentifier:@"showDetailsView" sender:href];
 }
@@ -149,7 +154,9 @@
 {
     [self.search setShowsCancelButton:NO animated:YES];
     [self.search resignFirstResponder];
-    
+
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+
     if ([[segue identifier] isEqualToString:@"showSettingsView"]) {
         EMSSettingsViewController *destination = (EMSSettingsViewController *)[segue destinationViewController];
 
@@ -168,6 +175,12 @@
             destination.session = session;
             
             [Crashlytics setObjectValue:session.href forKey:@"lastDetailSessionFromNotification"];
+
+            [tracker trackEventWithCategory:@"listView"
+                                 withAction:@"detailFromNotification"
+                                  withLabel:session.href
+                                  withValue:nil];
+
         } else {
             Session *session = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
 
@@ -176,6 +189,12 @@
             destination.session = session;
 
             [Crashlytics setObjectValue:session.href forKey:@"lastDetailSession"];
+
+
+            [tracker trackEventWithCategory:@"listView"
+                                 withAction:@"detail"
+                                  withLabel:session.href
+                                  withValue:nil];
         }
     }
     if ([[segue identifier] isEqualToString:@"showSearchView"]) {
@@ -237,6 +256,12 @@
         destination.types = [types sortedArrayUsingSelector: @selector(compare:)];
 
         destination.delegate = self;
+
+
+        [tracker trackEventWithCategory:@"listView"
+                             withAction:@"search"
+                              withLabel:nil
+                              withValue:nil];
     }
 }
 
@@ -647,21 +672,39 @@
     self.filterFavourites = NO;
     self.filterTime = NO;
 
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+
     switch ([segment selectedSegmentIndex]) {
         case 0:
         {
             // All
+            [tracker trackEventWithCategory:@"listView"
+                                 withAction:@"all"
+                                  withLabel:nil
+                                  withValue:nil];
+
             break;
         }
         case 1:
         {
             // My
+            [tracker trackEventWithCategory:@"listView"
+                                 withAction:@"favourites"
+                                  withLabel:nil
+                                  withValue:nil];
+
+
             self.filterFavourites = YES;
             break;
         }
         case 2:
         {
             // Now / Next
+            [tracker trackEventWithCategory:@"listView"
+                                 withAction:@"now/next"
+                                  withLabel:nil
+                                  withValue:nil];
+
             self.filterTime = YES;
             break;
         }

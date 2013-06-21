@@ -937,15 +937,29 @@
     CLS_LOG(@"Trying to toggle favourite for %@", session);
     
     BOOL isFavourite = [session.favourite boolValue];
-    
+
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+
     if (isFavourite == YES) {
         session.favourite = [NSNumber numberWithBool:NO];
+
         [self removeNotification:session];
+
+        [tracker trackEventWithCategory:@"favourite"
+                             withAction:@"remove"
+                              withLabel:session.href
+                              withValue:nil];
     } else {
         session.favourite = [NSNumber numberWithBool:YES];
+
         [self addNotification:session];
+
+        [tracker trackEventWithCategory:@"favourite"
+                             withAction:@"add"
+                              withLabel:session.href
+                              withValue:nil];
     }
-    
+
     NSError *error;
     if (![[session managedObjectContext] save:&error]) {
         CLS_LOG(@"Failed to toggle favourite for %@, %@, %@", session, error, [error userInfo]);

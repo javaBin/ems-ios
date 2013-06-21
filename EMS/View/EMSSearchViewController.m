@@ -26,6 +26,11 @@
     self.search.text = self.currentSearch;
 }
 
+- (void) viewDidAppear:(BOOL)animated {
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker sendView:@"Search Screen"];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
