@@ -415,6 +415,10 @@
     
     [sessionCell.icon addTarget:self action:@selector(toggleFavourite:) forControlEvents:UIControlEventTouchUpInside];
 
+    UIImageView *level = sessionCell.level;
+    
+    [level setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png", session.level]]];
+    
     sessionCell.title.text = [session valueForKey:@"title"];
     sessionCell.room.text = [[session valueForKey:@"room"] valueForKey:@"name"];
     

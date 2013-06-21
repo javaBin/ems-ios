@@ -89,6 +89,11 @@
 		F3E601DE1772F6BB000673AE /* NHCalendarActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = F3E601DA1772F6BB000673AE /* NHCalendarActivity.m */; };
 		F3E601DF1772F6BB000673AE /* NHCalendarEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F3E601DC1772F6BB000673AE /* NHCalendarEvent.m */; };
 		F3E601E11772F7EC000673AE /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3E601E01772F7EC000673AE /* EventKit.framework */; };
+		F3EC96A217747625004A5F25 /* advanced.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EC969D17747625004A5F25 /* advanced.png */; };
+		F3EC96A317747625004A5F25 /* intermediate.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EC969E17747625004A5F25 /* intermediate.png */; };
+		F3EC96AA1774780B004A5F25 /* beginner.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EC96A81774780B004A5F25 /* beginner.png */; };
+		F3EC96AD1774783E004A5F25 /* beginner-intermediate.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EC96AB1774783E004A5F25 /* beginner-intermediate.png */; };
+		F3EC96AE1774783E004A5F25 /* intermediate-advanced.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EC96AC1774783E004A5F25 /* intermediate-advanced.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -215,6 +220,11 @@
 		F3E601DB1772F6BB000673AE /* NHCalendarEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NHCalendarEvent.h; sourceTree = "<group>"; };
 		F3E601DC1772F6BB000673AE /* NHCalendarEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NHCalendarEvent.m; sourceTree = "<group>"; };
 		F3E601E01772F7EC000673AE /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		F3EC969D17747625004A5F25 /* advanced.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = advanced.png; sourceTree = "<group>"; };
+		F3EC969E17747625004A5F25 /* intermediate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intermediate.png; sourceTree = "<group>"; };
+		F3EC96A81774780B004A5F25 /* beginner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beginner.png; sourceTree = "<group>"; };
+		F3EC96AB1774783E004A5F25 /* beginner-intermediate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beginner-intermediate.png"; sourceTree = "<group>"; };
+		F3EC96AC1774783E004A5F25 /* intermediate-advanced.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "intermediate-advanced.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -280,6 +290,7 @@
 		839BD650176F9BD400900712 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F3EC969C17747625004A5F25 /* levels */,
 				F30FCBDE17746057003EEC3A /* Default-Landscape~ipad.png */,
 				F30FCBDC17746052003EEC3A /* Default-Landscape@2x~ipad.png */,
 				F30FCBDA1774604C003EEC3A /* Default-Portrait~ipad.png */,
@@ -466,6 +477,18 @@
 			path = EMS/externals/NHCalendarActivity;
 			sourceTree = "<group>";
 		};
+		F3EC969C17747625004A5F25 /* levels */ = {
+			isa = PBXGroup;
+			children = (
+				F3EC96AB1774783E004A5F25 /* beginner-intermediate.png */,
+				F3EC96AC1774783E004A5F25 /* intermediate-advanced.png */,
+				F3EC96A81774780B004A5F25 /* beginner.png */,
+				F3EC969D17747625004A5F25 /* advanced.png */,
+				F3EC969E17747625004A5F25 /* intermediate.png */,
+			);
+			path = levels;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -558,6 +581,11 @@
 				F30FCBDB1774604C003EEC3A /* Default-Portrait~ipad.png in Resources */,
 				F30FCBDD17746052003EEC3A /* Default-Landscape@2x~ipad.png in Resources */,
 				F30FCBDF17746057003EEC3A /* Default-Landscape~ipad.png in Resources */,
+				F3EC96A217747625004A5F25 /* advanced.png in Resources */,
+				F3EC96A317747625004A5F25 /* intermediate.png in Resources */,
+				F3EC96AA1774780B004A5F25 /* beginner.png in Resources */,
+				F3EC96AD1774783E004A5F25 /* beginner-intermediate.png in Resources */,
+				F3EC96AE1774783E004A5F25 /* intermediate-advanced.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

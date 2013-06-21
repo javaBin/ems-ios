@@ -116,7 +116,7 @@
                         </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchCell" textLabel="SdI-BN-OgO" style="IBUITableViewCellStyleDefault" id="zFU-A1-fQ5">
-                                <rect key="frame" x="0.0" y="80" width="320" height="45"/>
+                                <rect key="frame" x="0.0" y="80" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -173,6 +173,10 @@
                                 <outlet property="delegate" destination="bNB-PM-Jcs" id="YgO-CW-VNi"/>
                             </connections>
                         </searchBar>
+                        <imageView key="tableFooterView" userInteractionEnabled="NO" contentMode="scaleToFill" id="hmS-pc-Ter">
+                            <rect key="frame" x="0.0" y="504" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SessionCell" id="PYN-Ut-rdj" customClass="EMSSessionCell">
                                 <rect key="frame" x="0.0" y="66" width="320" height="44"/>
@@ -184,6 +188,7 @@
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="100" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yJo-EW-r4i">
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="AJF-xg-5nh"/>
+                                                <constraint firstAttribute="width" constant="254" id="iLc-Y1-ZRd"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -220,24 +225,32 @@
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Yf-Of-ufN">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="8" id="YOq-5w-evG"/>
+                                                <constraint firstAttribute="height" constant="9" id="djy-bU-cJ8"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
                                     <constraint firstItem="gYM-vI-9Vp" firstAttribute="leading" secondItem="PYN-Ut-rdj" secondAttribute="leading" type="default" id="3gG-V6-RZZ"/>
                                     <constraint firstItem="YNX-Sn-TQr" firstAttribute="baseline" secondItem="B78-nb-RfB" secondAttribute="baseline" type="user" id="8zg-JU-kvJ"/>
-                                    <constraint firstItem="yJo-EW-r4i" firstAttribute="trailing" secondItem="YNX-Sn-TQr" secondAttribute="trailing" type="default" id="AUj-R9-6yp"/>
                                     <constraint firstItem="yJo-EW-r4i" firstAttribute="top" secondItem="PYN-Ut-rdj" secondAttribute="top" constant="2" id="E0t-5z-Ydv"/>
                                     <constraint firstItem="B78-nb-RfB" firstAttribute="bottom" secondItem="PYN-Ut-rdj" secondAttribute="bottom" type="default" id="HwX-gf-MBR"/>
-                                    <constraint firstItem="YNX-Sn-TQr" firstAttribute="leading" secondItem="B78-nb-RfB" secondAttribute="trailing" constant="8" symbolic="YES" type="user" id="KlG-e6-1IW"/>
-                                    <constraint firstItem="B78-nb-RfB" firstAttribute="leading" secondItem="yJo-EW-r4i" secondAttribute="leading" type="default" id="RxK-hJ-h60"/>
+                                    <constraint firstItem="2Yf-Of-ufN" firstAttribute="centerY" secondItem="B78-nb-RfB" secondAttribute="centerY" type="default" id="bGD-9L-5eN"/>
+                                    <constraint firstItem="2Yf-Of-ufN" firstAttribute="leading" secondItem="yJo-EW-r4i" secondAttribute="leading" type="default" id="cYr-eA-T1a"/>
+                                    <constraint firstItem="B78-nb-RfB" firstAttribute="leading" secondItem="2Yf-Of-ufN" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="fdf-CY-DsX"/>
                                     <constraint firstItem="gYM-vI-9Vp" firstAttribute="bottom" secondItem="PYN-Ut-rdj" secondAttribute="bottom" type="default" id="ilb-TO-s6f"/>
                                     <constraint firstItem="gYM-vI-9Vp" firstAttribute="top" secondItem="PYN-Ut-rdj" secondAttribute="top" type="default" id="jcz-Nc-U3O"/>
+                                    <constraint firstItem="YNX-Sn-TQr" firstAttribute="leading" secondItem="B78-nb-RfB" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="jol-Q3-GHN"/>
                                     <constraint firstItem="YNX-Sn-TQr" firstAttribute="top" secondItem="B78-nb-RfB" secondAttribute="top" type="user" id="keA-WM-ams"/>
                                     <constraint firstItem="yJo-EW-r4i" firstAttribute="leading" secondItem="PYN-Ut-rdj" secondAttribute="leading" constant="40" id="pCO-1d-zrC"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="icon" destination="gYM-vI-9Vp" id="w2f-D6-2La"/>
+                                    <outlet property="level" destination="2Yf-Of-ufN" id="fSK-xH-NB6"/>
                                     <outlet property="room" destination="B78-nb-RfB" id="gDB-Qw-HcP"/>
                                     <outlet property="speaker" destination="YNX-Sn-TQr" id="Jbw-uY-eUr"/>
                                     <outlet property="title" destination="yJo-EW-r4i" id="Aa3-cR-s9w"/>
@@ -407,6 +420,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSSessionCell.h"/>
             <relationships>
                 <relationship kind="outlet" name="icon" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="level" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="room" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="speaker" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="title" candidateClass="UILabel"/>

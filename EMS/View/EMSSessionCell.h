@@ -12,6 +12,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *room;
 @property (nonatomic, strong) IBOutlet UILabel *speaker;
 @property (nonatomic, strong) IBOutlet UIButton *icon;
+@property (nonatomic, strong) IBOutlet UIImageView *level;
 @property (nonatomic, strong) Session *session;
 
 @end
