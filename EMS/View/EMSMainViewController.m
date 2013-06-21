@@ -147,6 +147,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    [self.search setShowsCancelButton:NO animated:YES];
     [self.search resignFirstResponder];
     
     if ([[segue identifier] isEqualToString:@"showSettingsView"]) {
