@@ -62,6 +62,7 @@ NSDate *timer;
                            withName:@"rooms"
                           withLabel:nil];
 
+    [[GAI sharedInstance] dispatch];
 
     [self.delegate finishedRooms:collection forHref:href];
 }

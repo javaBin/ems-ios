@@ -74,6 +74,8 @@ NSDate *timer;
                            withName:@"speakers"
                           withLabel:nil];
 
+    [[GAI sharedInstance] dispatch];
+
     [self.delegate finishedSpeakers:collection forHref:href];
 }
 

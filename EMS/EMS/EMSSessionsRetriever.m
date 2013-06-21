@@ -122,6 +122,7 @@ NSDate *timer;
                            withName:@"sessions"
                           withLabel:nil];
 
+    [[GAI sharedInstance] dispatch];
 
     [self.delegate finishedSessions:collection forHref:href];
 }

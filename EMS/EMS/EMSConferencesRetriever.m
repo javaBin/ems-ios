@@ -95,6 +95,7 @@ NSDate *timer;
                            withName:@"conferences"
                           withLabel:nil];
 
+    [[GAI sharedInstance] dispatch];
 
     [self.delegate finishedConferences:collection forHref:href];
 }

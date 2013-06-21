@@ -363,6 +363,8 @@
 
                                 [[EMSAppDelegate sharedAppDelegate] stopNetwork];
 
+                                [[GAI sharedInstance] dispatch];
+
                                 [self buildPage];
                             });
                         }
