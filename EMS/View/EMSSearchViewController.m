@@ -68,7 +68,8 @@
 - (void)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
              fromList:(NSArray *)list andCurrentList:(NSSet *)currentList
           capitalized:(BOOL)capitalized
-              cleaned:(BOOL)cleaned {
+              cleaned:(BOOL)cleaned
+            withImage:(BOOL)imageFlag {
     NSString *value = [list objectAtIndex:indexPath.row];
     
     if (capitalized) {
@@ -86,6 +87,12 @@
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
+
+    if (imageFlag) {
+        cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", [list objectAtIndex:indexPath.row]]];
+    } else {
+        cell.imageView.image = nil;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -99,19 +106,19 @@
     switch (indexPath.section) {
         case 0:
         {
-            [self configureCell:cell forIndexPath:indexPath fromList:self.keywords andCurrentList:self.currentKeywords capitalized:NO cleaned:NO];
+            [self configureCell:cell forIndexPath:indexPath fromList:self.keywords andCurrentList:self.currentKeywords capitalized:NO cleaned:NO withImage:NO];
             break;
         }
 
         case 1:
         {
-            [self configureCell:cell forIndexPath:indexPath fromList:self.levels andCurrentList:self.currentLevels capitalized:YES cleaned:NO];
+            [self configureCell:cell forIndexPath:indexPath fromList:self.levels andCurrentList:self.currentLevels capitalized:YES cleaned:NO withImage:YES];
             break;
         }
             
         case 2:
         {
-            [self configureCell:cell forIndexPath:indexPath fromList:self.types andCurrentList:self.currentTypes capitalized:YES cleaned:YES];
+            [self configureCell:cell forIndexPath:indexPath fromList:self.types andCurrentList:self.currentTypes capitalized:YES cleaned:YES withImage:NO];
             break;
         }
             

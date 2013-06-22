@@ -240,7 +240,7 @@
 					  "</body>"
 					  "</html>",
 					  [self paraContent:session.body],
-                      [self dataContent:@[[self cleanString:self.session.level]]],
+                      [self levelContent:session.level],
 					  [self keywordContent:session.keywords],
 					  [self speakerContent:session.speakers]];
 	
@@ -253,17 +253,20 @@
     return [NSString stringWithFormat:@"<p>%@</p>", [lines componentsJoinedByString:@"</p><p>"]];
 }
 
-- (NSString *)dataContent:(NSArray *)data {
+- (NSString *)levelContent:(NSString *)level {
 	NSMutableString *result = [[NSMutableString alloc] init];
     
-    if (data != nil && [data count] > 0) {
+    if (level != nil) {
         [result appendString:@"<h2>Information</h2>"];
         
-        [result appendString:@"<ul>"];
+        [result appendString:@"<p>"];
+
+        NSString *levelPath = [[NSBundle mainBundle] pathForResource:level ofType:@"png"];
+        NSURL *levelUrl = [NSURL fileURLWithPath:levelPath];
+
+        [result appendFormat:@"<img src='%@' /> %@", levelUrl, [self cleanString:level]];
         
-        [result appendFormat:@"<li>%@</li>", [[data sortedArrayUsingSelector:@selector(compare:)] componentsJoinedByString:@"</li><li>"]];
-        
-        [result appendString:@"</ul>"];
+        [result appendString:@"</p>"];
     }
     
     return [NSString stringWithString:result];
