@@ -69,6 +69,8 @@
 
         if (data == nil) {
             CLS_LOG(@"Retrieved nil config %@ - %@ - %@", onlineConfig, error, [error userInfo]);
+
+            [[EMSAppDelegate sharedAppDelegate] stopNetwork];
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
                 CLS_LOG(@"Storing config file");
