@@ -1,3 +1,6 @@
+html {
+    -webkit-text-size-adjust: none; /* Never autoresize text */
+}
 body {
   font-family: Helvetica;
 }
@@ -5,8 +8,14 @@ p {
   font-size: 13px;
   margin-bottom: 8px;
 }
+ul {
+  margin: 0;
+  margin-bottom: 8px;
+  padding: 0;
+}
 li {
   font-size: 13px;
+  list-style-position: inside;
 }
 h1 {
   font-size: 17px;
@@ -15,6 +24,8 @@ h1 {
 h2 {
   font-size: 15px;
   font-weight: bold;
+  color: #5E8DFF;
+  border-bottom: solid 1px #5E8DFF;
 }
 h3 {
   font-size: 15px;

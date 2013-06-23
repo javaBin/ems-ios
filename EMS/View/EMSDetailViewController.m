@@ -243,7 +243,8 @@
                       [self levelContent:session.level],
 					  [self keywordContent:session.keywords],
 					  [self speakerContent:session.speakers]];
-	
+
+    CLS_LOG(@"%@", page);
 	return page;
 }
 
@@ -257,7 +258,7 @@
 	NSMutableString *result = [[NSMutableString alloc] init];
     
     if (level != nil) {
-        [result appendString:@"<h2>Information</h2>"];
+        [result appendString:@"<h2>Level</h2>"];
         
         [result appendString:@"<p>"];
 

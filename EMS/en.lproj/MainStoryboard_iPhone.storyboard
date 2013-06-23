@@ -9,7 +9,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="SettingsView" id="6ld-j3-ru2" customClass="EMSSettingsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="O0o-sM-Nx8">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
@@ -57,7 +57,7 @@
             <objects>
                 <tableViewController id="k4H-y1-b5B" customClass="EMSAdminViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="cws-KM-orq">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -99,7 +99,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="SearchView" id="cM7-wC-1Xm" customClass="EMSSearchViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="DFD-ke-cEd">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" id="dF3-A5-Ac0">
@@ -162,7 +162,7 @@
             <objects>
                 <tableViewController id="bNB-PM-Jcs" customClass="EMSMainViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" sectionIndexMinimumDisplayRowCount="500" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gDK-VA-ggF">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" id="Zif-KH-RXK">
@@ -174,7 +174,7 @@
                             </connections>
                         </searchBar>
                         <imageView key="tableFooterView" userInteractionEnabled="NO" contentMode="scaleToFill" id="hmS-pc-Ter">
-                            <rect key="frame" x="0.0" y="504" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="416" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <prototypes>
@@ -297,7 +297,7 @@
             <objects>
                 <viewController id="3lg-Sh-FWj" customClass="EMSDetailViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LLw-3H-w5Y">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SyP-yk-NN6">
@@ -306,7 +306,6 @@
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="252" translatesAutoresizingMaskIntoConstraints="NO" id="q35-VC-8on">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="4lc-z6-3Mh"/>
-                                    <constraint firstAttribute="width" constant="252" id="pbs-ab-qxL"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -314,7 +313,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ru-D1-L9h">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="6fc-Y8-NHk"/>
+                                    <constraint firstAttribute="width" constant="50" type="user" id="6fc-Y8-NHk"/>
                                     <constraint firstAttribute="height" constant="45" id="GhO-L3-yFr"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -334,12 +333,13 @@
                         <constraints>
                             <constraint firstItem="q35-VC-8on" firstAttribute="top" secondItem="LLw-3H-w5Y" secondAttribute="top" type="default" id="3lB-Gp-5bl"/>
                             <constraint firstItem="SyP-yk-NN6" firstAttribute="trailing" secondItem="LLw-3H-w5Y" secondAttribute="trailing" type="default" id="B02-R3-bJX"/>
+                            <constraint firstAttribute="trailing" secondItem="q35-VC-8on" secondAttribute="trailing" constant="58" type="user" id="GKP-8v-ixi"/>
                             <constraint firstItem="SyP-yk-NN6" firstAttribute="top" secondItem="LLw-3H-w5Y" secondAttribute="top" constant="43" type="user" id="Okj-BL-u9A"/>
-                            <constraint firstItem="2Ru-D1-L9h" firstAttribute="leading" secondItem="q35-VC-8on" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="Zks-3s-iTj"/>
-                            <constraint firstItem="SyP-yk-NN6" firstAttribute="bottom" secondItem="LLw-3H-w5Y" secondAttribute="bottom" type="user" id="aSP-16-YtE"/>
                             <constraint firstItem="SyP-yk-NN6" firstAttribute="leading" secondItem="LLw-3H-w5Y" secondAttribute="leading" type="default" id="bVH-Hk-F9g"/>
-                            <constraint firstItem="2Ru-D1-L9h" firstAttribute="trailing" secondItem="LLw-3H-w5Y" secondAttribute="trailing" type="default" id="lAe-Es-G8w"/>
-                            <constraint firstItem="2Ru-D1-L9h" firstAttribute="top" secondItem="LLw-3H-w5Y" secondAttribute="top" constant="-3" id="q2v-AK-pbJ"/>
+                            <constraint firstItem="SyP-yk-NN6" firstAttribute="bottom" secondItem="LLw-3H-w5Y" secondAttribute="bottom" type="default" id="hdW-go-uhU"/>
+                            <constraint firstItem="2Ru-D1-L9h" firstAttribute="trailing" secondItem="LLw-3H-w5Y" secondAttribute="trailing" type="user" id="lAe-Es-G8w"/>
+                            <constraint firstItem="q35-VC-8on" firstAttribute="leading" secondItem="LLw-3H-w5Y" secondAttribute="leading" constant="10" type="user" id="n2J-W5-TkD"/>
+                            <constraint firstItem="2Ru-D1-L9h" firstAttribute="top" secondItem="LLw-3H-w5Y" secondAttribute="top" type="user" id="q2v-AK-pbJ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ib1-cg-KjS">
@@ -436,6 +436,6 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
 </document>
