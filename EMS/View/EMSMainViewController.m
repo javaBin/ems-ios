@@ -139,6 +139,13 @@
             }
         }
     }
+
+    if (self.currentKeywords.count > 0 || self.currentLevels.count > 0 || self.currentTypes.count > 0) {
+        self.advancedSearchButton.tintColor = [UIColor yellowColor];
+    } else {
+        [self.advancedSearchButton setTintColor:nil];
+    }
+
 }
 
 - (void) viewDidAppear:(BOOL)animated {

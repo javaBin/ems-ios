@@ -285,6 +285,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="advancedSearchButton" destination="rEC-so-XYr" id="TM5-Vk-1IK"/>
                         <outlet property="search" destination="Zif-KH-RXK" id="tq7-GP-YRY"/>
                     </connections>
                 </tableViewController>
@@ -405,6 +406,7 @@
             <relationships>
                 <relationship kind="action" name="segmentChanged:"/>
                 <relationship kind="action" name="toggleFavourite:"/>
+                <relationship kind="outlet" name="advancedSearchButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="search" candidateClass="UISearchBar"/>
             </relationships>
         </class>

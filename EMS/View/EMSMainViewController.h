@@ -27,6 +27,8 @@
 @property (nonatomic, strong) NSSet *currentTypes;
 
 @property (nonatomic, strong) IBOutlet UISearchBar *search;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *advancedSearchButton;
+
 
 - (IBAction)toggleFavourite:(id)sender;
 - (IBAction)segmentChanged:(id)sender;
