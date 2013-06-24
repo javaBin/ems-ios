@@ -106,6 +106,24 @@
     self.filterTime = NO;
 
     self.search.text = @"";
+    self.currentKeywords = [NSSet set];
+    self.currentLevels = [NSSet set];
+    self.currentTypes = [NSSet set];
+    
+    NSDictionary *searchPrefs = [EMSAppDelegate currentSearch];
+    
+    if ([searchPrefs valueForKey:@"text"] != nil) {
+        self.search.text = [searchPrefs valueForKey:@"text"];
+    }
+    if ([searchPrefs valueForKey:@"keyword"] != nil) {
+        self.currentKeywords = [NSSet setWithSet:[searchPrefs valueForKey:@"keyword"]];
+    }
+    if ([searchPrefs valueForKey:@"level"] != nil) {
+        self.currentLevels = [NSSet setWithSet:[searchPrefs valueForKey:@"level"]];
+    }
+    if ([searchPrefs valueForKey:@"type"] != nil) {
+        self.currentTypes = [NSSet setWithSet:[searchPrefs valueForKey:@"type"]];
+    }
     
     self.retriever = [[EMSRetriever alloc] init];
     self.retriever.delegate = self;
@@ -628,7 +646,7 @@
         [self performSelector:@selector(hideKeyboardWithSearchBar:) withObject:searchBar afterDelay:0];
 	}
     
-    self.search.text = [searchBar text];
+    [self storeSearchPrefs];
 
     [self initializeFetchedResultsController];
 }
@@ -646,7 +664,7 @@
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     searchBar.text = @"";
     
-    self.search.text = [searchBar text];
+    [self storeSearchPrefs];
 
     [self initializeFetchedResultsController];
 
@@ -655,12 +673,21 @@
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    self.search.text = [searchBar text];
+    [self storeSearchPrefs];
 
     [self initializeFetchedResultsController];
 	
     [searchBar setShowsCancelButton:NO animated:YES];
     [searchBar resignFirstResponder];
+}
+
+- (void) storeSearchPrefs {
+    [EMSAppDelegate storeCurrentSearch:[NSDictionary
+                                        dictionaryWithObjects:@[self.search.text,
+                                        self.currentLevels,
+                                        self.currentKeywords,
+                                        self.currentTypes]
+                                        forKeys:@[@"text", @"level", @"keyword", @"type"]]];
 }
 
 - (void) setSearchText:(NSString *)searchText withKeywords:(NSSet *)keywords andLevels:(NSSet *)levels andTypes:(NSSet *)types {
@@ -670,6 +697,8 @@
     self.currentKeywords = [NSSet setWithSet:keywords];
     self.currentTypes = [NSSet setWithSet:types];
 
+    [self storeSearchPrefs];
+    
     [self initializeFetchedResultsController];
 }
 

@@ -288,6 +288,8 @@ int networkCount = 0;
 + (void) storeCurrentConference:(NSURL *)href {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setURL:href forKey:@"activeConference"];
+
+    [defaults synchronize];
     
     [Crashlytics setObjectValue:href forKey:@"lastStoredConference"];
 }
@@ -300,6 +302,54 @@ int networkCount = 0;
     [Crashlytics setObjectValue:href forKey:@"lastRetrievedConference"];
 
     return href;
+}
+
++ (void) setValueFor:(NSUserDefaults *)defaults ifNotNil:(NSDictionary *)dict forKey:(NSString *)key {
+    if ([dict valueForKey:key] != nil) {
+        if ([[dict valueForKey:key] isKindOfClass:[NSSet class]]) {
+            [defaults setValue:[[dict valueForKey:key] allObjects] forKey:key];
+        } else {
+            [defaults setValue:[dict valueForKey:key] forKey:key];
+        }
+    }
+}
+
++ (void) setValueFor:(NSDictionary *)dict ifPresent:(NSUserDefaults *)defaults forKey:(NSString *)key {
+    if ([defaults valueForKey:key] != nil) {
+        if ([[defaults valueForKey:key] isKindOfClass:[NSArray class]]) {
+            [dict setValue:[NSSet setWithArray:[defaults valueForKey:key]] forKey:key];
+        } else {
+            [dict setValue:[defaults valueForKey:key] forKey:key];
+        }
+    }
+}
+
++ (void) storeCurrentSearch:(NSDictionary *)search {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [EMSAppDelegate setValueFor:defaults ifNotNil:search forKey:@"text"];
+    [EMSAppDelegate setValueFor:defaults ifNotNil:search forKey:@"level"];
+    [EMSAppDelegate setValueFor:defaults ifNotNil:search forKey:@"keyword"];
+    [EMSAppDelegate setValueFor:defaults ifNotNil:search forKey:@"type"];
+
+    [defaults synchronize];
+    
+    [Crashlytics setObjectValue:search forKey:@"lastStoredSearch"];
+}
+
++ (NSString *) currentSearch {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSMutableDictionary *search = [[NSMutableDictionary alloc] init];
+    
+    [EMSAppDelegate setValueFor:search ifPresent:defaults forKey:@"text"];
+    [EMSAppDelegate setValueFor:search ifPresent:defaults forKey:@"level"];
+    [EMSAppDelegate setValueFor:search ifPresent:defaults forKey:@"keyword"];
+    [EMSAppDelegate setValueFor:search ifPresent:defaults forKey:@"type"];
+    
+    [Crashlytics setObjectValue:search forKey:@"lastRetrievedSearch"];
+    
+    return [NSDictionary dictionaryWithDictionary:search];
 }
 
 
