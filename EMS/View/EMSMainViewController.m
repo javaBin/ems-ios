@@ -141,9 +141,9 @@
     }
 
     if (self.currentKeywords.count > 0 || self.currentLevels.count > 0 || self.currentTypes.count > 0) {
-        self.advancedSearchButton.tintColor = [UIColor yellowColor];
+        [self.advancedSearchButton setStyle:UIBarButtonItemStyleDone];
     } else {
-        [self.advancedSearchButton setTintColor:nil];
+        [self.advancedSearchButton setStyle:UIBarButtonItemStyleBordered];
     }
 
 }
