@@ -212,12 +212,18 @@
     self.justRetrieved = YES;
 
     NSError *error = nil;
-    
-    if (![[[EMSAppDelegate sharedAppDelegate] model] storeConferences:conferenceList error:&error]) {
+
+    EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
+
+    if (![backgroundModel storeConferences:conferenceList error:&error]) {
         CLS_LOG(@"Failed to store conferences %@ - %@", error, [error userInfo]);
     }
 
-    [self.refreshControl endRefreshing];
+    [[EMSAppDelegate sharedAppDelegate] backgroundModelDone:backgroundModel];
+
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [self.refreshControl endRefreshing];
+    });
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

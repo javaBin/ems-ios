@@ -185,6 +185,35 @@ int networkCount = 0;
     return __managedObjectModel;
 }
 
+- (EMSModel *)modelForBackground {
+    NSManagedObjectContext *backgroundContext = [[NSManagedObjectContext alloc] init];
+    [backgroundContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
+    EMSModel *backgroundModel = [[EMSModel alloc] initWithManagedObjectContext:backgroundContext];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(backgroundContextDidSave:)
+                                                 name:NSManagedObjectContextDidSaveNotification
+                                               object:backgroundContext];
+
+    return backgroundModel;
+}
+
+- (void)backgroundModelDone:(EMSModel *)model {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NSManagedObjectContextDidSaveNotification
+                                                  object:[model managedObjectContext]];
+}
+
+- (void)backgroundContextDidSave:(NSNotification *)notification {
+    if (![NSThread isMainThread]) {
+        [self performSelectorOnMainThread:@selector(backgroundContextDidSave:)
+                               withObject:notification
+                            waitUntilDone:NO];
+        return;
+    }
+
+    [self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+}
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
     if (__persistentStoreCoordinator != nil) {

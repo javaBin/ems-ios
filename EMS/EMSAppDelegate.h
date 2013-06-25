@@ -27,4 +27,7 @@
 + (void) storeCurrentConference:(NSURL *)href;
 + (NSURL *) currentConference;
 
+- (EMSModel *)modelForBackground;
+- (void)backgroundModelDone:(EMSModel *)model;
+
 @end

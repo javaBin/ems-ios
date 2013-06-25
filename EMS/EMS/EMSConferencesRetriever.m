@@ -148,7 +148,7 @@ NSDate *timer;
                                     CLS_LOG(@"Retrieved nil events %@ - %@ - %@", url, eventsError, [eventsError userInfo]);
                                 }
 
-                                dispatch_async(dispatch_get_main_queue(), ^{
+                                dispatch_async(queue, ^{
                                     [self fetchedEventCollection:events forHref:url];
                                 });
                             });
