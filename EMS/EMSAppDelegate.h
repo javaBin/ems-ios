@@ -27,7 +27,4 @@
 + (void) storeCurrentConference:(NSURL *)href;
 + (NSURL *) currentConference;
 
-+ (void) storeCurrentSearch:(NSDictionary *)search;
-+ (NSDictionary *) currentSearch;
-
 @end

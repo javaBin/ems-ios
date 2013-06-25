@@ -75,6 +75,7 @@
 		F35BB6FE17686478009077D3 /* CJItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6F217686478009077D3 /* CJItem.m */; };
 		F35BB6FF17686478009077D3 /* CJLink.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6F417686478009077D3 /* CJLink.m */; };
 		F35BB70017686478009077D3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6F517686478009077D3 /* README.md */; };
+		F37953CB17797E41000B7CDD /* EMSAdvancedSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = F37953CA17797E41000B7CDD /* EMSAdvancedSearch.m */; };
 		F3939E50176887090078C709 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3939E4F176887090078C709 /* CoreData.framework */; };
 		F3939E531768879C0078C709 /* EMSCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */; };
 		F3939E611769C3CE0078C709 /* EMSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E601769C3CD0078C709 /* EMSModel.m */; };
@@ -203,6 +204,8 @@
 		F35BB6F317686478009077D3 /* CJLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJLink.h; sourceTree = "<group>"; };
 		F35BB6F417686478009077D3 /* CJLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJLink.m; sourceTree = "<group>"; };
 		F35BB6F517686478009077D3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		F37953C917797E41000B7CDD /* EMSAdvancedSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSAdvancedSearch.h; sourceTree = "<group>"; };
+		F37953CA17797E41000B7CDD /* EMSAdvancedSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSAdvancedSearch.m; sourceTree = "<group>"; };
 		F3939E4F176887090078C709 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		F3939E521768879C0078C709 /* EMSCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EMSCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		F3939E5F1769C3CD0078C709 /* EMSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSModel.h; sourceTree = "<group>"; };
@@ -455,6 +458,8 @@
 				F3939E601769C3CD0078C709 /* EMSModel.m */,
 				83D5CBA217749EEA00527620 /* EMSFeatureConfig.h */,
 				83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */,
+				F37953C917797E41000B7CDD /* EMSAdvancedSearch.h */,
+				F37953CA17797E41000B7CDD /* EMSAdvancedSearch.m */,
 			);
 			name = App;
 			path = EMS;
@@ -685,6 +690,7 @@
 				F3E601DE1772F6BB000673AE /* NHCalendarActivity.m in Sources */,
 				F3E601DF1772F6BB000673AE /* NHCalendarEvent.m in Sources */,
 				83D5CBA417749EEA00527620 /* EMSFeatureConfig.m in Sources */,
+				F37953CB17797E41000B7CDD /* EMSAdvancedSearch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,7 +14,7 @@
 {
     [super viewDidLoad];
 
-    self.search.text = self.currentSearch;
+    self.search.text = [self.advancedSearch search];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -101,25 +101,25 @@
     switch (indexPath.section) {
         case 0:
         {
-            [self configureCell:cell forIndexPath:indexPath fromList:self.keywords andCurrentList:self.currentKeywords capitalized:NO cleaned:NO withImage:NO];
+            [self configureCell:cell forIndexPath:indexPath fromList:self.keywords andCurrentList:[self.advancedSearch fieldValuesForKey:emsKeyword] capitalized:NO cleaned:NO withImage:NO];
             break;
         }
 
         case 1:
         {
-            [self configureCell:cell forIndexPath:indexPath fromList:self.levels andCurrentList:self.currentLevels capitalized:YES cleaned:NO withImage:YES];
+            [self configureCell:cell forIndexPath:indexPath fromList:self.levels andCurrentList:[self.advancedSearch fieldValuesForKey:emsLevel] capitalized:YES cleaned:NO withImage:YES];
             break;
         }
             
         case 2:
         {
-            [self configureCell:cell forIndexPath:indexPath fromList:self.types andCurrentList:self.currentTypes capitalized:YES cleaned:YES withImage:NO];
+            [self configureCell:cell forIndexPath:indexPath fromList:self.types andCurrentList:[self.advancedSearch fieldValuesForKey:emsType] capitalized:YES cleaned:YES withImage:NO];
             break;
         }
             
         case 3:
         {
-            [self configureCell:cell forIndexPath:indexPath fromList:self.rooms andCurrentList:self.currentRooms capitalized:NO cleaned:NO withImage:NO];
+            [self configureCell:cell forIndexPath:indexPath fromList:self.rooms andCurrentList:[self.advancedSearch fieldValuesForKey:emsRoom] capitalized:NO cleaned:NO withImage:NO];
             break;
         }
             
@@ -153,18 +153,18 @@
     return nil;
 }
 
-- (NSSet *) selectRowForIndexPath:(NSIndexPath *)indexPath forList:(NSArray *)list andCurrentList:(NSSet *)currentList {
+- (void) selectRowForIndexPath:(NSIndexPath *)indexPath forList:(NSArray *)list andKey:(EMSSearchField)key {
     NSString *value = [list objectAtIndex:indexPath.row];
 
-    NSMutableSet *values = [NSMutableSet setWithSet:currentList];
+    NSMutableSet *values = [NSMutableSet setWithSet:[self.advancedSearch fieldValuesForKey:key]];
 
-    if ([currentList containsObject:value]) {
+    if ([[self.advancedSearch fieldValuesForKey:key] containsObject:value]) {
         [values removeObject:value];
     } else {
         [values addObject:value];
     }
     
-    return [NSSet setWithSet:values];
+    [self.advancedSearch setFieldValues:[NSSet setWithSet:values] forKey:key];
 }
 
 #pragma mark - Table view delegate
@@ -174,25 +174,25 @@
     switch (indexPath.section) {
         case 0:
         {
-            self.currentKeywords = [self selectRowForIndexPath:indexPath forList:self.keywords andCurrentList:self.currentKeywords];
+            [self selectRowForIndexPath:indexPath forList:self.keywords andKey:emsKeyword];
             break;
         }
 
         case 1:
         {
-            self.currentLevels = [self selectRowForIndexPath:indexPath forList:self.levels andCurrentList:self.currentLevels];
+            [self selectRowForIndexPath:indexPath forList:self.levels andKey:emsLevel];
             break;
         }
             
         case 2:
         {
-            self.currentTypes = [self selectRowForIndexPath:indexPath forList:self.types andCurrentList:self.currentTypes];
+            [self selectRowForIndexPath:indexPath forList:self.types andKey:emsType];
             break;
         }
             
         case 3:
         {
-            self.currentRooms = [self selectRowForIndexPath:indexPath forList:self.rooms andCurrentList:self.currentRooms];
+            [self selectRowForIndexPath:indexPath forList:self.rooms andKey:emsRoom];
             break;
         }
             
@@ -234,7 +234,7 @@
 - (void)apply:(id)sender {
     NSMutableSet *lowerCasedLevels = [[NSMutableSet alloc] init];
     
-    [self.currentLevels enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+    [[self.advancedSearch fieldValuesForKey:emsLevel] enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         NSString *level = (NSString *)obj;
         
         [lowerCasedLevels addObject:[level lowercaseString]];
@@ -242,28 +242,22 @@
 
     NSMutableSet *lowerCasedTypes = [[NSMutableSet alloc] init];
     
-    [self.currentTypes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+    [[self.advancedSearch fieldValuesForKey:emsType] enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         NSString *type = (NSString *)obj;
         
         [lowerCasedTypes addObject:[type lowercaseString]];
     }];
     
-    [self.delegate setSearchText:self.search.text
-                    withKeywords:[NSSet setWithSet:self.currentKeywords]
-                       andLevels:[NSSet setWithSet:lowerCasedLevels]
-                        andTypes:[NSSet setWithSet:lowerCasedTypes]
-                        andRooms:[NSSet setWithSet:self.currentRooms]];
+    [self.delegate advancedSearchUpdated];
 
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)clear:(id)sender {
-    self.search.text = @"";
-    self.currentKeywords = nil;
-    self.currentLevels = nil;
-    self.currentTypes = nil;
-    self.currentRooms = nil;
+    [self.advancedSearch clear];
 
+    self.search.text = [self.advancedSearch search];
+    
     [self apply:sender];
 }
 

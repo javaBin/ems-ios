@@ -106,29 +106,9 @@
     self.filterFavourites = NO;
     self.filterTime = NO;
 
-    self.search.text = @"";
-    self.currentKeywords = [NSSet set];
-    self.currentLevels = [NSSet set];
-    self.currentTypes = [NSSet set];
-    self.currentRooms = [NSSet set];
+    self.advancedSearch = [[EMSAdvancedSearch alloc] init];
     
-    NSDictionary *searchPrefs = [EMSAppDelegate currentSearch];
-    
-    if ([searchPrefs valueForKey:@"text"] != nil) {
-        self.search.text = [searchPrefs valueForKey:@"text"];
-    }
-    if ([searchPrefs valueForKey:@"keyword"] != nil) {
-        self.currentKeywords = [NSSet setWithSet:[searchPrefs valueForKey:@"keyword"]];
-    }
-    if ([searchPrefs valueForKey:@"level"] != nil) {
-        self.currentLevels = [NSSet setWithSet:[searchPrefs valueForKey:@"level"]];
-    }
-    if ([searchPrefs valueForKey:@"type"] != nil) {
-        self.currentTypes = [NSSet setWithSet:[searchPrefs valueForKey:@"type"]];
-    }
-    if ([searchPrefs valueForKey:@"room"] != nil) {
-        self.currentRooms = [NSSet setWithSet:[searchPrefs valueForKey:@"room"]];
-    }
+    self.search.text = [self.advancedSearch search];
     
     self.retriever = [[EMSRetriever alloc] init];
     self.retriever.delegate = self;
@@ -163,7 +143,7 @@
         }
     }
 
-    if (self.currentKeywords.count > 0 || self.currentLevels.count > 0 || self.currentTypes.count > 0 || self.currentRooms.count > 0) {
+    if ([self.advancedSearch hasAdvancedSearch]) {
         [self.advancedSearchButton setStyle:UIBarButtonItemStyleDone];
     } else {
         [self.advancedSearchButton setStyle:UIBarButtonItemStyleBordered];
@@ -232,11 +212,7 @@
 
         CLS_LOG(@"Preparing search view with %@ and conference %@", self.search.text, [self activeConference]);
 
-        destination.currentSearch = self.search.text;
-        destination.currentLevels = [NSSet setWithSet:self.currentLevels];
-        destination.currentKeywords = [NSSet setWithSet:self.currentKeywords];
-        destination.currentTypes = [NSSet setWithSet:self.currentTypes];
-        destination.currentRooms = [NSSet setWithSet:self.currentRooms];
+        destination.advancedSearch = self.advancedSearch;
         
         Conference *conference = [self activeConference];
 
@@ -285,7 +261,6 @@
         }];
         
         destination.rooms = [rooms sortedArrayUsingSelector: @selector(compare:)];
-
         
         NSMutableArray *types = [[NSMutableArray alloc] init];
         
@@ -298,7 +273,6 @@
         destination.types = [types sortedArrayUsingSelector: @selector(compare:)];
 
         destination.delegate = self;
-
 
         [tracker trackEventWithCategory:@"listView"
                              withAction:@"search"
@@ -324,36 +298,36 @@
                     @"approved",
                     activeConference]];
 
-        if (!([self.search.text isEqualToString:@""])) {
+        if (!([[self.advancedSearch search] isEqualToString:@""])) {
             [predicates
              addObject:[NSPredicate predicateWithFormat:@"(title CONTAINS[cd] %@ OR body CONTAINS[cd] %@ OR ANY speakers.name CONTAINS[cd] %@)",
-                        self.search.text,
-                        self.search.text,
-                        self.search.text]];
+                        [self.advancedSearch search],
+                        [self.advancedSearch search],
+                        [self.advancedSearch search]]];
         }
 
-        if ([self.currentLevels count] > 0) {
+        if ([[self.advancedSearch fieldValuesForKey:emsLevel] count] > 0) {
             [predicates
              addObject:[NSPredicate predicateWithFormat:@"(level IN %@)",
-                        self.currentLevels]];
+                        [self.advancedSearch fieldValuesForKey:emsLevel]]];
         }
 
-        if ([self.currentTypes count] > 0) {
+        if ([[self.advancedSearch fieldValuesForKey:emsType] count] > 0) {
             [predicates
              addObject:[NSPredicate predicateWithFormat:@"(format IN %@)",
-                        self.currentTypes]];
+                        [self.advancedSearch fieldValuesForKey:emsType]]];
         }
 
-        if ([self.currentRooms count] > 0) {
+        if ([[self.advancedSearch fieldValuesForKey:emsRoom] count] > 0) {
             [predicates
              addObject:[NSPredicate predicateWithFormat:@"(room.name IN %@)",
-                        self.currentRooms]];
+                        [self.advancedSearch fieldValuesForKey:emsRoom]]];
         }
         
-        if ([self.currentKeywords count] > 0) {
+        if ([[self.advancedSearch fieldValuesForKey:emsKeyword] count] > 0) {
             NSMutableArray *keywordPredicates = [[NSMutableArray alloc] init];
 
-            [self.currentKeywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+            [[self.advancedSearch fieldValuesForKey:emsKeyword] enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
                 NSString *keyword = (NSString *)obj;
 
                 [keywordPredicates
@@ -705,25 +679,15 @@
 }
 
 - (void) storeSearchPrefs {
-    [EMSAppDelegate storeCurrentSearch:[NSDictionary
-                                        dictionaryWithObjects:@[self.search.text,
-                                        self.currentLevels,
-                                        self.currentKeywords,
-                                        self.currentTypes,
-                                        self.currentRooms]
-                                        forKeys:@[@"text", @"level", @"keyword", @"type", @"room"]]];
+    [self.advancedSearch setSearch:self.search.text];
 }
 
-- (void) setSearchText:(NSString *)searchText withKeywords:(NSSet *)keywords andLevels:(NSSet *)levels andTypes:(NSSet *)types andRooms:(NSSet *)rooms {
-    self.search.text = searchText;
+- (void) advancedSearchUpdated {
+    // Need to reload
+    self.advancedSearch = [[EMSAdvancedSearch alloc] init];
 
-    self.currentLevels = [NSSet setWithSet:levels];
-    self.currentKeywords = [NSSet setWithSet:keywords];
-    self.currentTypes = [NSSet setWithSet:types];
-    self.currentRooms = [NSSet setWithSet:rooms];
+    self.search.text = [self.advancedSearch search];
 
-    [self storeSearchPrefs];
-    
     [self initializeFetchedResultsController];
 }
 

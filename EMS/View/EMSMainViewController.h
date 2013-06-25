@@ -9,6 +9,9 @@
 #import "EMSSearchViewDelegate.h"
 #import "EMSRetriever.h"
 
+
+#import "EMSAdvancedSearch.h"
+
 #import "EMSModel.h"
 
 @interface EMSMainViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, EMSConferenceChangedDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate>
@@ -22,14 +25,10 @@
 @property (nonatomic, assign) BOOL filterFavourites;
 @property (nonatomic, assign) BOOL filterTime;
 
-@property (nonatomic, strong) NSSet *currentLevels;
-@property (nonatomic, strong) NSSet *currentKeywords;
-@property (nonatomic, strong) NSSet *currentTypes;
-@property (nonatomic, strong) NSSet *currentRooms;
+@property (nonatomic, strong) EMSAdvancedSearch *advancedSearch;
 
 @property (nonatomic, strong) IBOutlet UISearchBar *search;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *advancedSearchButton;
-
 
 - (IBAction)toggleFavourite:(id)sender;
 - (IBAction)segmentChanged:(id)sender;
