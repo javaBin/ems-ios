@@ -546,14 +546,20 @@
     CLS_LOG(@"Storing slots %d", [slots count]);
     
     NSError *error = nil;
-    
-    if (![[[EMSAppDelegate sharedAppDelegate] model] storeSlots:slots forHref:[href absoluteString] error:&error]) {
+
+    EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
+
+    if (![backgroundModel storeSlots:slots forHref:[href absoluteString] error:&error]) {
         CLS_LOG(@"Failed to store slots %@ - %@", error, [error userInfo]);
     }
 
-    self.retrievingSlots = NO;
-    
-    [self retrieveSessions];
+    [[EMSAppDelegate sharedAppDelegate] backgroundModelDone:backgroundModel];
+
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        self.retrievingSlots = NO;
+
+        [self retrieveSessions];
+    });
 }
 
 - (void) finishedSessions:(NSArray *)sessions forHref:(NSURL *)href {
@@ -561,12 +567,17 @@
 
     NSError *error = nil;
 
-    if (![[[EMSAppDelegate sharedAppDelegate] model] storeSessions:sessions forHref:[href absoluteString] error:&error]) {
+    EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
+
+    if (![backgroundModel storeSessions:sessions forHref:[href absoluteString] error:&error]) {
         CLS_LOG(@"Failed to store sessions %@ - %@", error, [error userInfo]);
     }
 
-    
-    [self.refreshControl endRefreshing];
+    [[EMSAppDelegate sharedAppDelegate] backgroundModelDone:backgroundModel];
+
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [self.refreshControl endRefreshing];
+    });
 }
 
 - (void) finishedRooms:(NSArray *)rooms forHref:(NSURL *)href {
@@ -574,13 +585,19 @@
 
     NSError *error = nil;
     
-    if (![[[EMSAppDelegate sharedAppDelegate] model] storeRooms:rooms forHref:[href absoluteString] error:&error]) {
+    EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
+
+    if (![backgroundModel  storeRooms:rooms forHref:[href absoluteString] error:&error]) {
         CLS_LOG(@"Failed to store rooms %@ - %@", error, [error userInfo]);
     }
-    
-    self.retrievingRooms = NO;
-    
-    [self retrieveSessions];
+
+    [[EMSAppDelegate sharedAppDelegate] backgroundModelDone:backgroundModel];
+
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        self.retrievingRooms = NO;
+
+        [self retrieveSessions];
+    });
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate

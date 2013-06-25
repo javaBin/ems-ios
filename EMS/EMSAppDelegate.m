@@ -186,6 +186,8 @@ int networkCount = 0;
 }
 
 - (EMSModel *)modelForBackground {
+    CLS_LOG(@"Creating background model");
+
     NSManagedObjectContext *backgroundContext = [[NSManagedObjectContext alloc] init];
     [backgroundContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
     EMSModel *backgroundModel = [[EMSModel alloc] initWithManagedObjectContext:backgroundContext];
@@ -202,15 +204,27 @@ int networkCount = 0;
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:NSManagedObjectContextDidSaveNotification
                                                   object:[model managedObjectContext]];
+
+    CLS_LOG(@"Background model done");
 }
 
 - (void)backgroundContextDidSave:(NSNotification *)notification {
+    CLS_LOG(@"Background context saved");
+
     if (![NSThread isMainThread]) {
+        CLS_LOG(@"Background context saved - not on main thread - pushing to main thread");
         [self performSelectorOnMainThread:@selector(backgroundContextDidSave:)
                                withObject:notification
                             waitUntilDone:NO];
         return;
     }
+
+    NSDictionary *userInfo = [notification userInfo];
+
+    CLS_LOG(@"Background context saved - on main thread - merging %d added %d updated %d deleted",
+            [[userInfo objectForKey:NSInsertedObjectsKey] count],
+            [[userInfo objectForKey:NSUpdatedObjectsKey] count],
+            [[userInfo objectForKey:NSDeletedObjectsKey] count]);
 
     [self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
 }

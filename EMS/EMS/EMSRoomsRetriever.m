@@ -84,7 +84,7 @@ NSDate *timer;
             CLS_LOG(@"Retrieved nil root %@ - %@ - %@", url, rootError, [rootError userInfo]);
         }
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(queue, ^{
             [self fetchedRooms:root forHref:url];
         });
     });

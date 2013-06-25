@@ -115,7 +115,7 @@ NSDate *timer;
         if (root == nil) {
             CLS_LOG(@"Retrieved nil root %@ - %@ - %@", url, rootError, [rootError userInfo]);
             
-            dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_async(queue, ^{
                 [self fetchedEventCollection:nil forHref:url];
             });
         }
@@ -129,7 +129,7 @@ NSDate *timer;
                 if (!collection) {
                     CLS_LOG(@"Failed to retrieve root %@ - %@ - %@", url, error, [error userInfo]);
 
-                    dispatch_async(dispatch_get_main_queue(), ^{
+                    dispatch_async(queue, ^{
                         [self fetchedEventCollection:nil forHref:url];
                     });
                 }

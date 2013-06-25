@@ -92,7 +92,7 @@
     retriever.delegate = self;
     
     CLS_LOG(@"Retrieving speakers");
-    
+
     [retriever refreshSpeakers:[NSURL URLWithString:self.session.speakerCollection]];
 }
 
@@ -100,12 +100,18 @@
     CLS_LOG(@"Storing speakers %d", [speakers count]);
     
     NSError *error = nil;
-    
-    if (![[[EMSAppDelegate sharedAppDelegate] model] storeSpeakers:speakers forHref:[href absoluteString] error:&error]) {
+
+    EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
+
+    if (![backgroundModel storeSpeakers:speakers forHref:[href absoluteString] error:&error]) {
         CLS_LOG(@"Failed to store speakers %@ - %@", error, [error userInfo]);
     }
 
-    [self buildPage];
+    [[EMSAppDelegate sharedAppDelegate] backgroundModelDone:backgroundModel];
+
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [self buildPage];
+    });
 }
 
 - (void)didReceiveMemoryWarning
@@ -244,7 +250,6 @@
 					  [self keywordContent:session.keywords],
 					  [self speakerContent:session.speakers]];
 
-    CLS_LOG(@"%@", page);
 	return page;
 }
 
