@@ -88,6 +88,8 @@
     if (matched.count > 0) {
         if (matched.count > 1) {
             CLS_LOG(@"WARNING - found %d conferences for href %@", matched.count, url);
+
+            [self analyticsWarningForType:@"conference" andHref:url withCount:[NSNumber numberWithInt:matched.count]];
         }
         return [matched objectAtIndex:0];
     }
@@ -103,6 +105,8 @@
     if (matched.count > 0) {
         if (matched.count > 1) {
             CLS_LOG(@"WARNING - found %d conferences for sessions href %@", matched.count, url);
+
+            [self analyticsWarningForType:@"conferenceForSession" andHref:url withCount:[NSNumber numberWithInt:matched.count]];
         }
         return [matched objectAtIndex:0];
     }
@@ -118,6 +122,8 @@
     if (matched.count > 0) {
         if (matched.count > 1) {
             CLS_LOG(@"WARNING - found %d slots for href %@", matched.count, url);
+
+            [self analyticsWarningForType:@"slot" andHref:url withCount:[NSNumber numberWithInt:matched.count]];
         }
         return [matched objectAtIndex:0];
     }
@@ -133,6 +139,8 @@
     if (matched.count > 0) {
         if (matched.count > 1) {
             CLS_LOG(@"WARNING - found %d rooms for href %@", matched.count, url);
+
+            [self analyticsWarningForType:@"room" andHref:url withCount:[NSNumber numberWithInt:matched.count]];
         }
         return [matched objectAtIndex:0];
     }
@@ -148,6 +156,8 @@
     if (matched.count > 0) {
         if (matched.count > 1) {
             CLS_LOG(@"WARNING - found %d sessions for href %@", matched.count, url);
+
+            [self analyticsWarningForType:@"session" andHref:url withCount:[NSNumber numberWithInt:matched.count]];
         }
         return [matched objectAtIndex:0];
     }
@@ -163,6 +173,8 @@
     if (matched.count > 0) {
         if (matched.count > 1) {
             CLS_LOG(@"WARNING - found %d speakers for href %@", matched.count, url);
+
+            [self analyticsWarningForType:@"speaker" andHref:url withCount:[NSNumber numberWithInt:matched.count]];
         }
         return [matched objectAtIndex:0];
     }
@@ -504,6 +516,8 @@
     
     if (conferences.count > 1) {
         CLS_LOG(@"WARNING - found %d conferences for slot collection href %@", conferences.count, href);
+
+        [self analyticsWarningForType:@"conferenceForSlotCollection" andHref:href withCount:[NSNumber numberWithInt:conferences.count]];
     }
     
     Conference *conference = [conferences objectAtIndex:0];
@@ -590,6 +604,8 @@
     
     if (conferences.count > 1) {
         CLS_LOG(@"WARNING - found %d conferences for room collection href %@", conferences.count, href);
+
+        [self analyticsWarningForType:@"conferenceForRoomCollection" andHref:href withCount:[NSNumber numberWithInt:conferences.count]];
     }
 
     Conference *conference = [conferences objectAtIndex:0];
@@ -676,6 +692,8 @@
     
     if (sessions.count > 1) {
         CLS_LOG(@"WARNING - found %d sessions for speaker collection href %@", sessions.count, href);
+
+        [self analyticsWarningForType:@"sessionsForSpeakerCollection" andHref:href withCount:[NSNumber numberWithInt:sessions.count]];
     }
 
     Session *session = [sessions objectAtIndex:0];
@@ -759,6 +777,8 @@
 
     if (conferences.count > 1) {
         CLS_LOG(@"WARNING - found %d conferences for session collection href %@", conferences.count, href);
+
+        [self analyticsWarningForType:@"conferenceForSessionCollection" andHref:href withCount:[NSNumber numberWithInt:conferences.count]];
     }
     
     Conference *conference = [conferences objectAtIndex:0];
@@ -1105,6 +1125,16 @@
     
         [self.managedObjectContext deleteObject:object];
     }];
+}
+
+- (void) analyticsWarningForType:(NSString *)type andHref:(NSString *)href withCount:(NSNumber *)count {
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+
+    [tracker trackEventWithCategory:@"warning"
+                         withAction:type
+                          withLabel:href
+                          withValue:count];
+
 }
 
 @end
