@@ -69,7 +69,7 @@ NSDate *timer;
 
 
 - (void) fetch:(NSURL *)url {
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_queue_t queue = dispatch_queue_create("ems_room_queue", DISPATCH_QUEUE_CONCURRENT);
     
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
 
