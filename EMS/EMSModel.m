@@ -436,6 +436,16 @@
 #pragma mark - public interface
 
 - (BOOL) storeConferences:(NSArray *)conferences error:(NSError**)error {
+    if (conferences == nil || conferences.count == 0) {
+        if (error != NULL) {
+            NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+            [errorDetail setValue:@"Empty conference list seen" forKey:NSLocalizedDescriptionKey];
+            *error = [NSError errorWithDomain:@"EMSModel" code:100 userInfo:errorDetail];
+        }
+
+        return NO;
+    }
+
     NSDictionary *hrefKeyed = [self conferencesKeyedByHref:conferences];
 
     NSArray *sortedHrefs = [hrefKeyed.allKeys sortedArrayUsingSelector: @selector(compare:)];
@@ -503,6 +513,16 @@
 }
 
 - (BOOL) storeSlots:(NSArray *)slots forHref:(NSString *)href error:(NSError **)error {
+    if (slots == nil || slots.count == 0) {
+        if (error != NULL) {
+            NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+            [errorDetail setValue:@"Empty slots list seen" forKey:NSLocalizedDescriptionKey];
+            *error = [NSError errorWithDomain:@"EMSModel" code:200 userInfo:errorDetail];
+        }
+
+        return NO;
+    }
+    
     NSArray *conferences = [self
                             conferencesForPredicate:[NSPredicate predicateWithFormat: @"(slotCollection LIKE %@)", href]
                             andSort:nil];
@@ -589,6 +609,16 @@
 }
 
 - (BOOL) storeRooms:(NSArray *)rooms forHref:(NSString *)href error:(NSError **)error {
+    if (rooms == nil || rooms.count == 0) {
+        if (error != NULL) {
+            NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+            [errorDetail setValue:@"Empty rooms list seen" forKey:NSLocalizedDescriptionKey];
+            *error = [NSError errorWithDomain:@"EMSModel" code:300 userInfo:errorDetail];
+        }
+
+        return NO;
+    }
+    
     NSArray *conferences = [self
                             conferencesForPredicate:[NSPredicate predicateWithFormat: @"(roomCollection LIKE %@)", href]
                             andSort:nil];
@@ -677,6 +707,16 @@
 }
 
 - (BOOL) storeSpeakers:(NSArray *)speakers forHref:(NSString *)href error:(NSError **)error {
+    if (speakers == nil || speakers.count == 0) {
+        if (error != NULL) {
+            NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+            [errorDetail setValue:@"Empty speakers list seen" forKey:NSLocalizedDescriptionKey];
+            *error = [NSError errorWithDomain:@"EMSModel" code:400 userInfo:errorDetail];
+        }
+
+        return NO;
+    }
+    
     NSArray *sessions = [self
                          sessionsForPredicate:[NSPredicate predicateWithFormat: @"(speakerCollection LIKE %@)", href]
                          andSort:nil];
@@ -764,6 +804,16 @@
 }
 
 - (BOOL) storeSessions:(NSArray *)sessions forHref:(NSString *)href error:(NSError **)error {
+    if (sessions == nil || sessions.count == 0) {
+        if (error != NULL) {
+            NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+            [errorDetail setValue:@"Empty sessions list seen" forKey:NSLocalizedDescriptionKey];
+            *error = [NSError errorWithDomain:@"EMSModel" code:500 userInfo:errorDetail];
+        }
+
+        return NO;
+    }
+    
     NSArray *conferences = [self
                             conferencesForPredicate:[NSPredicate predicateWithFormat: @"(sessionCollection LIKE %@)", href]
                             andSort:nil];
