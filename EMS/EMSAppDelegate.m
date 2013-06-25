@@ -212,10 +212,12 @@ int networkCount = 0;
     CLS_LOG(@"Background context saved");
 
     if (![NSThread isMainThread]) {
+        
         CLS_LOG(@"Background context saved - not on main thread - pushing to main thread");
-        [self performSelectorOnMainThread:@selector(backgroundContextDidSave:)
-                               withObject:notification
-                            waitUntilDone:NO];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self backgroundContextDidSave:notification];
+        });
+
         return;
     }
 
