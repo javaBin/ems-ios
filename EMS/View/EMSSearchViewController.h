@@ -14,10 +14,12 @@
 @property (nonatomic, strong) NSSet *currentLevels;
 @property (nonatomic, strong) NSSet *currentKeywords;
 @property (nonatomic, strong) NSSet *currentTypes;
+@property (nonatomic, strong) NSSet *currentRooms;
 @property (nonatomic, strong) IBOutlet UISearchBar *search;
 @property (nonatomic, strong) NSArray *levels;
 @property (nonatomic, strong) NSArray *keywords;
 @property (nonatomic, strong) NSArray *types;
+@property (nonatomic, strong) NSArray *rooms;
 
 - (IBAction)clear:(id)sender;
 - (IBAction)apply:(id)sender;

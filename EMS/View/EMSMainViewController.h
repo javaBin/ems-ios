@@ -25,6 +25,7 @@
 @property (nonatomic, strong) NSSet *currentLevels;
 @property (nonatomic, strong) NSSet *currentKeywords;
 @property (nonatomic, strong) NSSet *currentTypes;
+@property (nonatomic, strong) NSSet *currentRooms;
 
 @property (nonatomic, strong) IBOutlet UISearchBar *search;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *advancedSearchButton;

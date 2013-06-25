@@ -331,6 +331,7 @@ int networkCount = 0;
     [EMSAppDelegate setValueFor:defaults ifNotNil:search forKey:@"level"];
     [EMSAppDelegate setValueFor:defaults ifNotNil:search forKey:@"keyword"];
     [EMSAppDelegate setValueFor:defaults ifNotNil:search forKey:@"type"];
+    [EMSAppDelegate setValueFor:defaults ifNotNil:search forKey:@"room"];
 
     [defaults synchronize];
     
@@ -346,6 +347,7 @@ int networkCount = 0;
     [EMSAppDelegate setValueFor:search ifPresent:defaults forKey:@"level"];
     [EMSAppDelegate setValueFor:search ifPresent:defaults forKey:@"keyword"];
     [EMSAppDelegate setValueFor:search ifPresent:defaults forKey:@"type"];
+    [EMSAppDelegate setValueFor:search ifPresent:defaults forKey:@"room"];
     
     [Crashlytics setObjectValue:search forKey:@"lastRetrievedSearch"];
     

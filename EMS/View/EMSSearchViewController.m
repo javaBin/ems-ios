@@ -10,15 +10,6 @@
 
 @implementation EMSSearchViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -41,24 +32,28 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
         case 0:
-            return [self.keywords count];
+            return self.keywords.count;
             break;
 
         case 1:
-            return [self.levels count];
+            return self.levels.count;
             break;
 
         case 2:
-            return [self.types count];
+            return self.types.count;
             break;
-
+            
+        case 3:
+            return self.rooms.count;
+            break;
+            
         default:
             return 0;
             break;
@@ -122,6 +117,12 @@
             break;
         }
             
+        case 3:
+        {
+            [self configureCell:cell forIndexPath:indexPath fromList:self.rooms andCurrentList:self.currentRooms capitalized:NO cleaned:NO withImage:NO];
+            break;
+        }
+            
         default:
             break;
     }
@@ -140,6 +141,9 @@
             break;
         case 2:
             return @"Types";
+            break;
+        case 3:
+            return @"Rooms";
             break;
 
         default:
@@ -183,6 +187,12 @@
         case 2:
         {
             self.currentTypes = [self selectRowForIndexPath:indexPath forList:self.types andCurrentList:self.currentTypes];
+            break;
+        }
+            
+        case 3:
+        {
+            self.currentRooms = [self selectRowForIndexPath:indexPath forList:self.rooms andCurrentList:self.currentRooms];
             break;
         }
             
@@ -241,7 +251,8 @@
     [self.delegate setSearchText:self.search.text
                     withKeywords:[NSSet setWithSet:self.currentKeywords]
                        andLevels:[NSSet setWithSet:lowerCasedLevels]
-                        andTypes:[NSSet setWithSet:lowerCasedTypes]];
+                        andTypes:[NSSet setWithSet:lowerCasedTypes]
+                        andRooms:[NSSet setWithSet:self.currentRooms]];
 
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -251,6 +262,7 @@
     self.currentKeywords = nil;
     self.currentLevels = nil;
     self.currentTypes = nil;
+    self.currentRooms = nil;
 
     [self apply:sender];
 }

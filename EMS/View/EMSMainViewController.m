@@ -24,6 +24,7 @@
 #import "ConferenceLevel.h"
 #import "ConferenceType.h"
 #import "Speaker.h"
+#import "Room.h"
 
 @interface EMSMainViewController ()
 
@@ -109,6 +110,7 @@
     self.currentKeywords = [NSSet set];
     self.currentLevels = [NSSet set];
     self.currentTypes = [NSSet set];
+    self.currentRooms = [NSSet set];
     
     NSDictionary *searchPrefs = [EMSAppDelegate currentSearch];
     
@@ -123,6 +125,9 @@
     }
     if ([searchPrefs valueForKey:@"type"] != nil) {
         self.currentTypes = [NSSet setWithSet:[searchPrefs valueForKey:@"type"]];
+    }
+    if ([searchPrefs valueForKey:@"room"] != nil) {
+        self.currentRooms = [NSSet setWithSet:[searchPrefs valueForKey:@"room"]];
     }
     
     self.retriever = [[EMSRetriever alloc] init];
@@ -158,7 +163,7 @@
         }
     }
 
-    if (self.currentKeywords.count > 0 || self.currentLevels.count > 0 || self.currentTypes.count > 0) {
+    if (self.currentKeywords.count > 0 || self.currentLevels.count > 0 || self.currentTypes.count > 0 || self.currentRooms.count > 0) {
         [self.advancedSearchButton setStyle:UIBarButtonItemStyleDone];
     } else {
         [self.advancedSearchButton setStyle:UIBarButtonItemStyleBordered];
@@ -231,7 +236,8 @@
         destination.currentLevels = [NSSet setWithSet:self.currentLevels];
         destination.currentKeywords = [NSSet setWithSet:self.currentKeywords];
         destination.currentTypes = [NSSet setWithSet:self.currentTypes];
-
+        destination.currentRooms = [NSSet setWithSet:self.currentRooms];
+        
         Conference *conference = [self activeConference];
 
         NSMutableArray *levels = [[NSMutableArray alloc] init];
@@ -270,6 +276,17 @@
 
         destination.keywords = [keywords sortedArrayUsingSelector: @selector(compare:)];
 
+        NSMutableArray *rooms = [[NSMutableArray alloc] init];
+        
+        [conference.rooms enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+            Room *room = (Room *)obj;
+            
+            [rooms addObject:room.name];
+        }];
+        
+        destination.rooms = [rooms sortedArrayUsingSelector: @selector(compare:)];
+
+        
         NSMutableArray *types = [[NSMutableArray alloc] init];
         
         [conference.conferenceTypes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
@@ -327,6 +344,12 @@
                         self.currentTypes]];
         }
 
+        if ([self.currentRooms count] > 0) {
+            [predicates
+             addObject:[NSPredicate predicateWithFormat:@"(room.name IN %@)",
+                        self.currentRooms]];
+        }
+        
         if ([self.currentKeywords count] > 0) {
             NSMutableArray *keywordPredicates = [[NSMutableArray alloc] init];
 
@@ -686,16 +709,18 @@
                                         dictionaryWithObjects:@[self.search.text,
                                         self.currentLevels,
                                         self.currentKeywords,
-                                        self.currentTypes]
-                                        forKeys:@[@"text", @"level", @"keyword", @"type"]]];
+                                        self.currentTypes,
+                                        self.currentRooms]
+                                        forKeys:@[@"text", @"level", @"keyword", @"type", @"room"]]];
 }
 
-- (void) setSearchText:(NSString *)searchText withKeywords:(NSSet *)keywords andLevels:(NSSet *)levels andTypes:(NSSet *)types {
+- (void) setSearchText:(NSString *)searchText withKeywords:(NSSet *)keywords andLevels:(NSSet *)levels andTypes:(NSSet *)types andRooms:(NSSet *)rooms {
     self.search.text = searchText;
 
     self.currentLevels = [NSSet setWithSet:levels];
     self.currentKeywords = [NSSet setWithSet:keywords];
     self.currentTypes = [NSSet setWithSet:types];
+    self.currentRooms = [NSSet setWithSet:rooms];
 
     [self storeSearchPrefs];
     
