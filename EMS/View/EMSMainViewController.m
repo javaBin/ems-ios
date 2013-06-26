@@ -25,6 +25,7 @@
 #import "ConferenceType.h"
 #import "Speaker.h"
 #import "Room.h"
+#import "Keyword.h"
 
 @interface EMSMainViewController ()
 
@@ -466,9 +467,36 @@
     
     [level setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png", session.level]]];
     
-    sessionCell.title.text = [session valueForKey:@"title"];
-    sessionCell.room.text = [[session valueForKey:@"room"] valueForKey:@"name"];
-    
+    sessionCell.title.text = session.title;
+    sessionCell.room.text = session.room.name;
+
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        sessionCell.summary.text = session.summary;
+
+        NSMutableArray *keywordNames = [[NSMutableArray alloc] init];
+
+        [session.keywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+            Keyword *keyword = (Keyword *)obj;
+
+            [keywordNames addObject:keyword.name];
+        }];
+
+        NSArray *sortedKeywords = [keywordNames sortedArrayUsingSelector:@selector(compare:)];
+
+        if (sortedKeywords.count > 4) {
+            NSMutableArray *temp = [NSMutableArray arrayWithArray:[sortedKeywords subarrayWithRange:NSMakeRange(0, 3)]];
+
+            [temp addObject:[NSString stringWithFormat:@"and %d more", sortedKeywords.count - 3]];
+
+            sortedKeywords = [NSArray arrayWithArray:temp];
+        }
+        if (sortedKeywords.count > 0) {
+            sessionCell.keywords.text = [NSString stringWithFormat:@"\u2022 %@\n", [sortedKeywords componentsJoinedByString:@"\n\u2022 "]];
+        } else {
+            sessionCell.keywords.text = @"";
+        }
+    }
+
     NSMutableArray *speakerNames = [[NSMutableArray alloc] init];
 
     [session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {

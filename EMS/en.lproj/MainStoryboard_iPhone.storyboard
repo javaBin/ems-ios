@@ -116,7 +116,7 @@
                         </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchCell" textLabel="SdI-BN-OgO" style="IBUITableViewCellStyleDefault" id="zFU-A1-fQ5">
-                                <rect key="frame" x="0.0" y="80" width="320" height="46"/>
+                                <rect key="frame" x="0.0" y="80" width="320" height="45"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -188,7 +188,7 @@
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="100" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yJo-EW-r4i">
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="AJF-xg-5nh"/>
-                                                <constraint firstAttribute="width" constant="254" id="iLc-Y1-ZRd"/>
+                                                <constraint firstAttribute="width" constant="254" type="user" id="iLc-Y1-ZRd"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -205,7 +205,6 @@
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="300" contentMode="left" text="Speakers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YNX-Sn-TQr">
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="205" id="760-cw-no4"/>
                                                 <constraint firstAttribute="height" constant="21" type="user" id="pMj-bP-Kq8"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
@@ -238,15 +237,17 @@
                                     <constraint firstItem="gYM-vI-9Vp" firstAttribute="leading" secondItem="PYN-Ut-rdj" secondAttribute="leading" type="default" id="3gG-V6-RZZ"/>
                                     <constraint firstItem="YNX-Sn-TQr" firstAttribute="baseline" secondItem="B78-nb-RfB" secondAttribute="baseline" type="user" id="8zg-JU-kvJ"/>
                                     <constraint firstItem="yJo-EW-r4i" firstAttribute="top" secondItem="PYN-Ut-rdj" secondAttribute="top" constant="2" id="E0t-5z-Ydv"/>
-                                    <constraint firstItem="B78-nb-RfB" firstAttribute="bottom" secondItem="PYN-Ut-rdj" secondAttribute="bottom" type="default" id="HwX-gf-MBR"/>
+                                    <constraint firstItem="YNX-Sn-TQr" firstAttribute="bottom" secondItem="PYN-Ut-rdj" secondAttribute="bottom" type="default" id="IcA-3a-aul"/>
                                     <constraint firstItem="2Yf-Of-ufN" firstAttribute="centerY" secondItem="B78-nb-RfB" secondAttribute="centerY" type="default" id="bGD-9L-5eN"/>
                                     <constraint firstItem="2Yf-Of-ufN" firstAttribute="leading" secondItem="yJo-EW-r4i" secondAttribute="leading" type="default" id="cYr-eA-T1a"/>
+                                    <constraint firstAttribute="trailing" secondItem="yJo-EW-r4i" secondAttribute="trailing" constant="26" type="user" id="dYo-Ur-2K4"/>
                                     <constraint firstItem="B78-nb-RfB" firstAttribute="leading" secondItem="2Yf-Of-ufN" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="fdf-CY-DsX"/>
                                     <constraint firstItem="gYM-vI-9Vp" firstAttribute="bottom" secondItem="PYN-Ut-rdj" secondAttribute="bottom" type="default" id="ilb-TO-s6f"/>
                                     <constraint firstItem="gYM-vI-9Vp" firstAttribute="top" secondItem="PYN-Ut-rdj" secondAttribute="top" type="default" id="jcz-Nc-U3O"/>
                                     <constraint firstItem="YNX-Sn-TQr" firstAttribute="leading" secondItem="B78-nb-RfB" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="jol-Q3-GHN"/>
                                     <constraint firstItem="YNX-Sn-TQr" firstAttribute="top" secondItem="B78-nb-RfB" secondAttribute="top" type="user" id="keA-WM-ams"/>
-                                    <constraint firstItem="yJo-EW-r4i" firstAttribute="leading" secondItem="PYN-Ut-rdj" secondAttribute="leading" constant="40" id="pCO-1d-zrC"/>
+                                    <constraint firstItem="yJo-EW-r4i" firstAttribute="leading" secondItem="PYN-Ut-rdj" secondAttribute="leading" constant="40" type="user" id="pCO-1d-zrC"/>
+                                    <constraint firstAttribute="trailing" secondItem="YNX-Sn-TQr" secondAttribute="trailing" constant="26" type="user" id="pSa-i8-nWu"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="icon" destination="gYM-vI-9Vp" id="w2f-D6-2La"/>
@@ -422,9 +423,11 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSSessionCell.h"/>
             <relationships>
                 <relationship kind="outlet" name="icon" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="keywords" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="level" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="room" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="speaker" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="summary" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="title" candidateClass="UILabel"/>
             </relationships>
         </class>
