@@ -6,6 +6,8 @@
 	<string>https://dl.dropboxusercontent.com/u/102984/EMS-Config.plist</string>
 	<key>features</key>
 	<dict>
+		<key>speaker-thumbnails</key>
+		<true/>
 		<key>local-notifications</key>
 		<false/>
 	</dict>

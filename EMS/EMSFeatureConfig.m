@@ -43,6 +43,10 @@
         return [[features objectForKey:@"local-notifications"] boolValue];
     }
 
+    if (feature == fBioPics) {
+        return [[features objectForKey:@"speaker-thumbnails"] boolValue];
+    }
+
     return NO;
 }
 

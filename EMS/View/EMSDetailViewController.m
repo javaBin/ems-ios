@@ -12,6 +12,8 @@
 
 #import "EMSRetriever.h"
 
+#import "EMSFeatureConfig.h"
+
 #import "Session.h"
 #import "Speaker.h"
 #import "Keyword.h"
@@ -347,7 +349,7 @@
 
     if (speakers != nil && [speakers count] > 0) {
         [result appendString:@"<h2>Speakers</h2>"];
-    
+
         [speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
             Speaker *speaker = (Speaker *)obj;
             
@@ -355,91 +357,38 @@
                 [result appendString:[NSString stringWithFormat:@"<h3>%@</h3>", speaker.name]];
             }
 
-            if (speaker.thumbnailUrl != nil) {
-                CLS_LOG(@"Speaker has available thumbnail %@", speaker.thumbnailUrl);
+            if ([EMSFeatureConfig isFeatureEnabled:fBioPics]) {
+                if (speaker.thumbnailUrl != nil) {
+                    CLS_LOG(@"Speaker has available thumbnail %@", speaker.thumbnailUrl);
 
-                NSString *safeFilename = [self md5:speaker.thumbnailUrl];
+                    NSString *pngFilePath = [self pathForCachedThumbnail:speaker];
 
-                NSString *cacheDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+                    NSFileManager *fileManager = [NSFileManager defaultManager];
 
-                NSString *pngFilePath = [NSString stringWithFormat:@"%@/%@.png",cacheDir,safeFilename];
+                    NSData *thumbData = nil;
 
-                NSFileManager *fileManager = [NSFileManager defaultManager];
+                    if ([fileManager fileExistsAtPath:pngFilePath]) {
+                        CLS_LOG(@"Speaker has cached thumbnail %@", speaker.thumbnailUrl);
 
-                NSData *thumbData = nil;
-
-                if ([fileManager fileExistsAtPath:pngFilePath]) {
-                    CLS_LOG(@"Speaker has cached thumbnail %@", speaker.thumbnailUrl);
-
-                    NSError *fileError = nil;
+                        NSError *fileError = nil;
                 
-                    NSDictionary *fileAttributes = [fileManager attributesOfItemAtPath:pngFilePath error:&fileError];
+                        NSDictionary *fileAttributes = [fileManager attributesOfItemAtPath:pngFilePath error:&fileError];
                 
-                    if (fileError != nil) {
-                        CLS_LOG(@"Got a file error reading file attributes for file %@", pngFilePath);
-                    } else {
-                        if ([fileAttributes fileSize] > 0) {
-                            thumbData = [NSData dataWithContentsOfFile:pngFilePath];
-
-                            [result appendString:[NSString stringWithFormat:@"<img src='file://%@' width='50px' style='float: left; margin-right: 3px; margin-bottom: 3px'/>", pngFilePath]];
+                        if (fileError != nil) {
+                            CLS_LOG(@"Got a file error reading file attributes for file %@", pngFilePath);
                         } else {
-                            CLS_LOG(@"Empty bioPic %@", pngFilePath);
-                        }
-                    }
-                }
+                            if ([fileAttributes fileSize] > 0) {
+                                thumbData = [NSData dataWithContentsOfFile:pngFilePath];
 
-
-                CLS_LOG(@"Checking for updated thumbnail %@", speaker.thumbnailUrl);
-
-                dispatch_queue_t queue = dispatch_queue_create("thumbnail_queue", DISPATCH_QUEUE_CONCURRENT);
-
-                [[EMSAppDelegate sharedAppDelegate] startNetwork];
-
-                dispatch_async(queue, ^{
-                    NSError *thumbnailError = nil;
-                        
-                    NSURL *url = [NSURL URLWithString:speaker.thumbnailUrl];
-                        
-                    NSData* data = [NSData dataWithContentsOfURL:url
-                                    options:NSDataReadingMappedIfSafe
-                                    error:&thumbnailError];
-
-                    if (data == nil) {
-                        CLS_LOG(@"Failed to retrieve thumbnail %@ - %@ - %@", url, thumbnailError, [thumbnailError userInfo]);
-
-                        [[EMSAppDelegate sharedAppDelegate] stopNetwork];
-                    } else {
-                        UIImage *image = [UIImage imageWithData:data];
-
-                        NSData *newThumbData = [NSData dataWithData:UIImagePNGRepresentation(image)];
-
-                        __block BOOL needToSave = NO;
-
-                        if (thumbData == nil) {
-                            CLS_LOG(@"No existing bioPic - need to save");
-                            needToSave = YES;
-                        } else if (![thumbData isEqualToData:newThumbData]) {
-                            CLS_LOG(@"Thumbnail data didn't match - update");
-                            needToSave = YES;
-                        }
-
-                        if (needToSave == YES) {
-                            CLS_LOG(@"Saving image file");
-
-                            [newThumbData writeToFile:pngFilePath atomically:YES];
-                        }
-
-                        [[EMSAppDelegate sharedAppDelegate] stopNetwork];
-
-                        [[GAI sharedInstance] dispatch];
-
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            if (needToSave == YES) {
-                                [self buildPage];
+                                [result appendString:[NSString stringWithFormat:@"<img src='file://%@' width='50px' style='float: left; margin-right: 3px; margin-bottom: 3px'/>", pngFilePath]];
+                            } else {
+                                CLS_LOG(@"Empty bioPic %@", pngFilePath);
                             }
-                        });
+                        }
                     }
-                });
+
+                    [self checkForNewThumbnailForSpeaker:speaker compareWith:thumbData withFilename:pngFilePath];
+                }
             }
 
             NSString *bio = [self.cachedSpeakerBios objectForKey:speaker.name];
@@ -451,6 +400,68 @@
 	}
     
 	return [NSString stringWithString:result];
+}
+
+- (void) checkForNewThumbnailForSpeaker:(Speaker *)speaker compareWith:(NSData *)thumbData withFilename:(NSString *) pngFilePath{
+    CLS_LOG(@"Checking for updated thumbnail %@", speaker.thumbnailUrl);
+
+    dispatch_queue_t queue = dispatch_queue_create("thumbnail_queue", DISPATCH_QUEUE_CONCURRENT);
+
+    [[EMSAppDelegate sharedAppDelegate] startNetwork];
+
+    dispatch_async(queue, ^{
+        NSError *thumbnailError = nil;
+
+        NSURL *url = [NSURL URLWithString:speaker.thumbnailUrl];
+
+        NSData* data = [NSData dataWithContentsOfURL:url
+                                             options:NSDataReadingMappedIfSafe
+                                               error:&thumbnailError];
+
+        if (data == nil) {
+            CLS_LOG(@"Failed to retrieve thumbnail %@ - %@ - %@", url, thumbnailError, [thumbnailError userInfo]);
+
+            [[EMSAppDelegate sharedAppDelegate] stopNetwork];
+        } else {
+            UIImage *image = [UIImage imageWithData:data];
+
+            NSData *newThumbData = [NSData dataWithData:UIImagePNGRepresentation(image)];
+
+            __block BOOL needToSave = NO;
+
+            if (thumbData == nil) {
+                CLS_LOG(@"No existing bioPic - need to save");
+                needToSave = YES;
+            } else if (![thumbData isEqualToData:newThumbData]) {
+                CLS_LOG(@"Thumbnail data didn't match - update");
+                needToSave = YES;
+            }
+
+            if (needToSave == YES) {
+                CLS_LOG(@"Saving image file");
+
+                [newThumbData writeToFile:pngFilePath atomically:YES];
+            }
+
+            [[EMSAppDelegate sharedAppDelegate] stopNetwork];
+
+            [[GAI sharedInstance] dispatch];
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (needToSave == YES) {
+                    [self buildPage];
+                }
+            });
+        }
+    });
+}
+
+- (NSString *)pathForCachedThumbnail:(Speaker *)speaker {
+    NSString *safeFilename = [self md5:speaker.thumbnailUrl];
+
+    NSString *cacheDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+
+    return [NSString stringWithFormat:@"%@/%@.png",cacheDir,safeFilename];
 }
 
 - (NSString *) md5:(NSString *) input
@@ -488,6 +499,10 @@
 }
 
 - (IBAction)clearImageCache:(id)sender {
+    if (![EMSFeatureConfig isFeatureEnabled:fBioPics]) {
+        return;
+    }
+
     CLS_LOG(@"Clearing image cache");
 
     __block BOOL removedAFile = NO;
@@ -498,34 +513,37 @@
         if (speaker.thumbnailUrl != nil) {
             CLS_LOG(@"Speaker has available thumbnail %@", speaker.thumbnailUrl);
 
-            NSString *safeFilename = [self md5:speaker.thumbnailUrl];
-
-            NSString *cacheDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-
-            NSString *pngFilePath = [NSString stringWithFormat:@"%@/%@.png",cacheDir,safeFilename];
-
-            NSFileManager *fileManager = [NSFileManager defaultManager];
-
-            if ([fileManager fileExistsAtPath:pngFilePath]) {
-                CLS_LOG(@"Speaker has cached thumbnail %@", speaker.thumbnailUrl);
-
-                NSError *fileError = nil;
-
-                [fileManager removeItemAtPath:pngFilePath error:&fileError];
-
-                if (fileError != nil) {
-                    CLS_LOG(@"Got a file error deleting file %@", pngFilePath);
-                } else {
-                    CLS_LOG(@"File deleted %@", pngFilePath);
-                    removedAFile = YES;
-                }
-            }
+            removedAFile = [self removedCachedFileForSpeaker:speaker];
         }
     }];
 
     if (removedAFile == YES) {
         [self buildPage];
     }
+}
+
+- (BOOL)removedCachedFileForSpeaker:(Speaker *)speaker {
+    NSString *pngFilePath = [self pathForCachedThumbnail:speaker];
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    if ([fileManager fileExistsAtPath:pngFilePath]) {
+        CLS_LOG(@"Speaker has cached thumbnail to delete %@", pngFilePath);
+
+        NSError *fileError = nil;
+
+        [fileManager removeItemAtPath:pngFilePath error:&fileError];
+
+        if (fileError != nil) {
+            CLS_LOG(@"Got a file error deleting file %@", pngFilePath);
+        } else {
+            CLS_LOG(@"File deleted %@", pngFilePath);
+
+            return YES;
+        }
+    }
+
+    return NO;
 }
 
 @end
