@@ -62,7 +62,21 @@
     [self.button setSelected:[self.session.favourite boolValue]];
     
     self.titleLabel.text = self.session.title;
-    
+
+    NSMutableDictionary *speakerBios = [[NSMutableDictionary alloc] init];
+
+    [self.session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        Speaker *speaker = (Speaker *)obj;
+
+        if (speaker.bio != nil) {
+            [speakerBios setObject:speaker.bio forKey:speaker.name];
+        } else {
+            [speakerBios setObject:@"" forKey:speaker.name];
+        }
+    }];
+
+    self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
+
     [self buildPage];
     
     [self retrieve];
@@ -110,7 +124,31 @@
     [[EMSAppDelegate sharedAppDelegate] backgroundModelDone:backgroundModel];
 
     dispatch_sync(dispatch_get_main_queue(), ^{
-        [self buildPage];
+        __block BOOL newBios = NO;
+
+        NSMutableDictionary *speakerBios = [NSMutableDictionary dictionaryWithDictionary:self.cachedSpeakerBios];
+
+        [self.cachedSpeakerBios enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            NSString *name = (NSString *)key;
+            NSString *bio = (NSString *)obj;
+
+            [self.session.speakers enumerateObjectsUsingBlock:^(id speakerObj, BOOL *stop) {
+                Speaker *speaker = (Speaker *)speakerObj;
+
+                if ([speaker.name isEqualToString:name]) {
+                    if (![speaker.bio isEqualToString:bio]) {
+                        [speakerBios setObject:speaker.bio forKey:speaker.name];
+                        newBios = YES;
+                    }
+                }
+            }];
+        }];
+
+         if (newBios == YES) {
+             CLS_LOG(@"Saw updated bios - updating screen");
+             self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
+             [self buildPage];
+         }
     });
 }
 
@@ -157,9 +195,11 @@
             Speaker *speaker = (Speaker *)obj;
             
             [result appendString:speaker.name];
-            if (speaker.bio != nil) {
+
+            NSString *bio = [self.cachedSpeakerBios objectForKey:speaker.name];
+            if (![bio isEqualToString:@""]) {
                 [result appendString:@"\n\n"];
-                [result appendString:speaker.bio];
+                [result appendString:bio];
             }
             [result appendString:@"\n\n"];
         }];
@@ -383,8 +423,8 @@
                }
             }
 
-            NSString *bio = speaker.bio;
-            if (bio != nil) {
+            NSString *bio = [self.cachedSpeakerBios objectForKey:speaker.name];
+            if (![bio isEqualToString:@""]) {
                 [result appendString:[self paraContent:bio]];
             }
         }];
@@ -426,6 +466,47 @@
 #else
     return date;
 #endif
+}
+
+- (IBAction)clearImageCache:(id)sender {
+    CLS_LOG(@"Clearing image cache");
+
+    __block BOOL removedAFile = NO;
+
+    [self.session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        Speaker *speaker = (Speaker *)obj;
+
+        if (speaker.thumbnailUrl != nil) {
+            CLS_LOG(@"Speaker has available thumbnail %@", speaker.thumbnailUrl);
+
+            NSString *safeFilename = [self md5:speaker.thumbnailUrl];
+
+            NSString *cacheDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+
+            NSString *pngFilePath = [NSString stringWithFormat:@"%@/%@.png",cacheDir,safeFilename];
+
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+
+            if ([fileManager fileExistsAtPath:pngFilePath]) {
+                CLS_LOG(@"Speaker has cached thumbnail %@", speaker.thumbnailUrl);
+
+                NSError *fileError = nil;
+
+                [fileManager removeItemAtPath:pngFilePath error:&fileError];
+
+                if (fileError != nil) {
+                    CLS_LOG(@"Got a file error deleting file %@", pngFilePath);
+                } else {
+                    CLS_LOG(@"File deleted %@", pngFilePath);
+                    removedAFile = YES;
+                }
+            }
+        }
+    }];
+
+    if (removedAFile == YES) {
+        [self buildPage];
+    }
 }
 
 @end

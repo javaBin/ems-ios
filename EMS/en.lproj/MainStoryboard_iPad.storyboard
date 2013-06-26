@@ -336,6 +336,10 @@
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="thv-Nv-DUc">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="MmW-fc-sId" appends="YES" id="rgE-q1-NIF"/>
+                                </connections>
                             </webView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="700" translatesAutoresizingMaskIntoConstraints="NO" id="EZz-Q4-iHl">
                                 <constraints>
@@ -392,6 +396,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J0b-XW-WHi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer numberOfTapsRequired="3" numberOfTouchesRequired="3" id="MmW-fc-sId">
+                    <connections>
+                        <action selector="clearImageCache:" destination="ynZ-6T-4n5" id="UfA-CR-zeM"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="907" y="1210"/>
         </scene>
@@ -429,6 +438,7 @@
         <class className="EMSDetailViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSDetailViewController.h"/>
             <relationships>
+                <relationship kind="action" name="clearImageCache:"/>
                 <relationship kind="action" name="share:"/>
                 <relationship kind="action" name="toggleFavourite:"/>
                 <relationship kind="outlet" name="button" candidateClass="UIButton"/>

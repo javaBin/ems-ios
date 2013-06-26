@@ -16,7 +16,10 @@
 
 @property (nonatomic, strong) IBOutlet UIButton *button;
 
+@property (nonatomic, strong) NSDictionary *cachedSpeakerBios;
+
 - (IBAction)share:(id)sender;
 - (IBAction)toggleFavourite:(id)sender;
+- (IBAction)clearImageCache:(id)sender;
 
 @end
