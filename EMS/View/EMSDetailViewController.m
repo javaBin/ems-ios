@@ -366,6 +366,8 @@
 
                 NSFileManager *fileManager = [NSFileManager defaultManager];
 
+                NSData *thumbData = nil;
+
                 if ([fileManager fileExistsAtPath:pngFilePath]) {
                     CLS_LOG(@"Speaker has cached thumbnail %@", speaker.thumbnailUrl);
 
@@ -377,50 +379,67 @@
                         CLS_LOG(@"Got a file error reading file attributes for file %@", pngFilePath);
                     } else {
                         if ([fileAttributes fileSize] > 0) {
+                            thumbData = [NSData dataWithContentsOfFile:pngFilePath];
+
                             [result appendString:[NSString stringWithFormat:@"<img src='file://%@' width='50px' style='float: left; margin-right: 3px; margin-bottom: 3px'/>", pngFilePath]];
                         } else {
                             CLS_LOG(@"Empty bioPic %@", pngFilePath);
                         }
                     }
-                } else {
-                    CLS_LOG(@"Speaker needs to fetch thumbnail %@", speaker.thumbnailUrl);
+                }
 
-                    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
-                    [[EMSAppDelegate sharedAppDelegate] startNetwork];
+                CLS_LOG(@"Checking for updated thumbnail %@", speaker.thumbnailUrl);
 
-                    dispatch_async(queue, ^{
-                        NSError *thumbnailError = nil;
+                dispatch_queue_t queue = dispatch_queue_create("thumbnail_queue", DISPATCH_QUEUE_CONCURRENT);
+
+                [[EMSAppDelegate sharedAppDelegate] startNetwork];
+
+                dispatch_async(queue, ^{
+                    NSError *thumbnailError = nil;
                         
-                        NSURL *url = [NSURL URLWithString:speaker.thumbnailUrl];
+                    NSURL *url = [NSURL URLWithString:speaker.thumbnailUrl];
                         
-                        NSData* data = [NSData dataWithContentsOfURL:url
-                                        options:NSDataReadingMappedIfSafe
-                                        error:&thumbnailError];
+                    NSData* data = [NSData dataWithContentsOfURL:url
+                                    options:NSDataReadingMappedIfSafe
+                                    error:&thumbnailError];
 
-                        if (data == nil) {
-                            CLS_LOG(@"Failed to retrieve thumbnail %@ - %@ - %@", url, thumbnailError, [thumbnailError userInfo]);
+                    if (data == nil) {
+                        CLS_LOG(@"Failed to retrieve thumbnail %@ - %@ - %@", url, thumbnailError, [thumbnailError userInfo]);
 
-                            [[EMSAppDelegate sharedAppDelegate] stopNetwork];
-                        } else {
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                UIImage *image = [UIImage imageWithData:data];
+                        [[EMSAppDelegate sharedAppDelegate] stopNetwork];
+                    } else {
+                        UIImage *image = [UIImage imageWithData:data];
 
-                                CLS_LOG(@"Saving image file");
+                        NSData *newThumbData = [NSData dataWithData:UIImagePNGRepresentation(image)];
 
-                                [[NSData dataWithData:UIImagePNGRepresentation(image)] writeToFile:pngFilePath atomically:YES];
+                        __block BOOL needToSave = NO;
 
-                                [[EMSAppDelegate sharedAppDelegate] stopNetwork];
-
-                                [[GAI sharedInstance] dispatch];
-
-                                [self buildPage];
-                            });
+                        if (thumbData == nil) {
+                            CLS_LOG(@"No existing bioPic - need to save");
+                            needToSave = YES;
+                        } else if (![thumbData isEqualToData:newThumbData]) {
+                            CLS_LOG(@"Thumbnail data didn't match - update");
+                            needToSave = YES;
                         }
-                    });
 
-                    
-               }
+                        if (needToSave == YES) {
+                            CLS_LOG(@"Saving image file");
+
+                            [newThumbData writeToFile:pngFilePath atomically:YES];
+                        }
+
+                        [[EMSAppDelegate sharedAppDelegate] stopNetwork];
+
+                        [[GAI sharedInstance] dispatch];
+
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            if (needToSave == YES) {
+                                [self buildPage];
+                            }
+                        });
+                    }
+                });
             }
 
             NSString *bio = [self.cachedSpeakerBios objectForKey:speaker.name];

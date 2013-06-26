@@ -120,7 +120,7 @@
 		836331341770EF78000F8D95 /* 298-circlex@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "298-circlex@2x.png"; sourceTree = "<group>"; };
 		836331371770F01C000F8D95 /* 258-checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "258-checkmark.png"; sourceTree = "<group>"; };
 		836331381770F01C000F8D95 /* 258-checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "258-checkmark@2x.png"; sourceTree = "<group>"; };
-		8363313B1770F06C000F8D95 /* EMSSearchViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EMSSearchViewDelegate.h; sourceTree = "<group>"; };
+		8363313B1770F06C000F8D95 /* EMSSearchViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EMSSearchViewDelegate.h; path = ../View/EMSSearchViewDelegate.h; sourceTree = "<group>"; };
 		839BD638176F9BD400900712 /* EMS-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Config.plist"; sourceTree = "<group>"; };
 		839BD639176F9BD400900712 /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
 		839BD63B176F9BD400900712 /* EMSConference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConference.h; sourceTree = "<group>"; };
@@ -295,6 +295,7 @@
 				839BD63E176F9BD400900712 /* EMSConferencesRetriever.m */,
 				839BD63F176F9BD400900712 /* EMSDateConverter.h */,
 				839BD640176F9BD400900712 /* EMSDateConverter.m */,
+				8363313B1770F06C000F8D95 /* EMSSearchViewDelegate.h */,
 				839BD641176F9BD400900712 /* EMSRetriever.h */,
 				839BD642176F9BD400900712 /* EMSRetriever.m */,
 				839BD643176F9BD400900712 /* EMSRetrieverDelegate.h */,
@@ -375,7 +376,6 @@
 				F31862411770501800292371 /* EMSSessionCell.m */,
 				836331301770DD2B000F8D95 /* EMSSearchViewController.h */,
 				836331311770DD2B000F8D95 /* EMSSearchViewController.m */,
-				8363313B1770F06C000F8D95 /* EMSSearchViewDelegate.h */,
 				83AF91AF1771E7E100FAE20F /* EMSAdminViewController.h */,
 				83AF91B01771E7E100FAE20F /* EMSAdminViewController.m */,
 			);
