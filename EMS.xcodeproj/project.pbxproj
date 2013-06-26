@@ -798,6 +798,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				"OTHER_CFLAGS[arch=*]" = "-DUSE_TEST_DATE=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
