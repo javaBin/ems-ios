@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ems-config-url</key>
-	<string>https://dl.dropboxusercontent.com/u/102984/EMS-Config.plist</string>
+	<string>http://dav.java.no/resources/iOS/EMS-Config.plist</string>
 	<key>features</key>
 	<dict>
 		<key>speaker-thumbnails</key>
