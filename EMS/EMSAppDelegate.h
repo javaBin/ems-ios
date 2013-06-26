@@ -17,6 +17,7 @@
 @property (nonatomic, strong) EMSModel *model;
 
 - (NSURL *)applicationDocumentsDirectory;
+- (NSURL *)applicationCacheDirectory;
 - (void)saveContext;
 
 + (EMSAppDelegate *)sharedAppDelegate;

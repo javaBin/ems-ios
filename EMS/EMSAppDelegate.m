@@ -32,6 +32,8 @@ int networkCount = 0;
     [GAI sharedInstance].debug = YES;
 #endif
 
+    [self cleanup];
+
     id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:[prefs objectForKey:@"google-analytics-tracking-id"]];
 
     if ([EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
@@ -97,6 +99,25 @@ int networkCount = 0;
 
         [self activateWithNotification:notification];
     }
+}
+
+- (void)remove:(NSString *)path {
+    NSError *error = nil;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        CLS_LOG(@"Deleting %@", path);
+        
+        if (![[NSFileManager defaultManager] removeItemAtPath:path error:&error]) {
+            CLS_LOG("Failed to delete %@ - %@ - %@", path, error, [error userInfo]);
+        }
+    }
+}
+
+- (void)cleanup {
+    [self remove:[[[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"incogito.sqlite"] path]];
+    [self remove:[[[self applicationCacheDirectory] URLByAppendingPathComponent:@"bioIcons"] path]];
+    [self remove:[[[self applicationCacheDirectory] URLByAppendingPathComponent:@"labelIcons"] path]];
+    [self remove:[[[self applicationCacheDirectory] URLByAppendingPathComponent:@"levelIcons"] path]];
+    [self remove:[[[self applicationCacheDirectory] URLByAppendingPathComponent:@"SHK"] path]];
 }
 
 - (void)activateWithNotification:(UILocalNotification *)notification {
@@ -236,9 +257,6 @@ int networkCount = 0;
         return __persistentStoreCoordinator;
     }
 
-    NSURL *oldStoreURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"incogito.sqlite"];
-    [[NSFileManager defaultManager] removeItemAtPath:oldStoreURL.path error:nil]; // Not interested in error - just removing old cruft
-
     CLS_LOG(@"No persistent store - initializing");
 
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"EMSCoreDataModel.sqlite"];
@@ -276,6 +294,10 @@ int networkCount = 0;
 
 - (NSURL *)applicationDocumentsDirectory {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+- (NSURL *)applicationCacheDirectory {
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
 - (void)saveContext{

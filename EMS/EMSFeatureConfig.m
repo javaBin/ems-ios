@@ -8,10 +8,7 @@
 @implementation EMSFeatureConfig
 
 + (NSString *)workingFile {
-    NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *dataFilePath = [NSString stringWithFormat:@"%@/%@",docDir,@"EMS-Config.plist"];
-
-    return dataFilePath;
+    return [[[[EMSAppDelegate sharedAppDelegate] applicationCacheDirectory] URLByAppendingPathComponent:@"EMS-Config.plist"] path];
 }
 
 + (NSDictionary *)defaultDictionary {
@@ -79,11 +76,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 CLS_LOG(@"Storing config file");
 
-                NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-
-                NSString *dataFilePath = [NSString stringWithFormat:@"%@/%@",docDir,@"EMS-Config.plist"];
-
-                [data writeToFile:dataFilePath atomically:YES];
+                [data writeToFile:[EMSFeatureConfig workingFile] atomically:YES];
 
                 [[EMSAppDelegate sharedAppDelegate] stopNetwork];
             });

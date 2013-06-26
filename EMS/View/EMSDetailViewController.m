@@ -459,9 +459,7 @@
 - (NSString *)pathForCachedThumbnail:(Speaker *)speaker {
     NSString *safeFilename = [self md5:speaker.thumbnailUrl];
 
-    NSString *cacheDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-
-    return [NSString stringWithFormat:@"%@/%@.png",cacheDir,safeFilename];
+    return [[[[EMSAppDelegate sharedAppDelegate] applicationCacheDirectory] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",safeFilename]] path];
 }
 
 - (NSString *) md5:(NSString *) input
