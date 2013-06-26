@@ -15,6 +15,23 @@
     [super viewDidLoad];
 
     self.search.text = [self.advancedSearch search];
+
+    for (UIView *searchBarSubview in [self.search subviews]) {
+
+        if ([searchBarSubview conformsToProtocol:@protocol(UITextInputTraits)]) {
+
+            @try {
+
+                [(UITextField *)searchBarSubview setReturnKeyType:UIReturnKeyDone];
+                [(UITextField *)searchBarSubview setKeyboardAppearance:UIKeyboardAppearanceAlert];
+            }
+            @catch (NSException * e) {
+
+                // ignore exception
+            }
+        }
+    }
+
 }
 
 - (void) viewDidAppear:(BOOL)animated {
