@@ -11,6 +11,7 @@
 @property (strong, nonatomic) UIWindow *window;
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) NSManagedObjectContext *uiManagedObjectContext;
 @property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
@@ -18,7 +19,6 @@
 
 - (NSURL *)applicationDocumentsDirectory;
 - (NSURL *)applicationCacheDirectory;
-- (void)saveContext;
 
 + (EMSAppDelegate *)sharedAppDelegate;
 
@@ -28,7 +28,7 @@
 + (void) storeCurrentConference:(NSURL *)href;
 + (NSURL *) currentConference;
 
-- (EMSModel *)modelForBackground;
-- (void)backgroundModelDone:(EMSModel *)model;
+- (EMSModel *) modelForBackground;
+- (void) syncManagedObjectContext;
 
 @end

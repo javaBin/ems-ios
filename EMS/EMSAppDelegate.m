@@ -15,6 +15,7 @@
 int networkCount = 0;
 
 @synthesize managedObjectContext=__managedObjectContext;
+@synthesize uiManagedObjectContext=__uiManagedObjectContext;
 @synthesize managedObjectModel=__managedObjectModel;
 @synthesize persistentStoreCoordinator=__persistentStoreCoordinator;
 @synthesize model=__model;
@@ -80,13 +81,9 @@ int networkCount = 0;
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    NSError *error = nil;
-    if (__managedObjectContext != nil) {
-        if ([__managedObjectContext hasChanges] && ![__managedObjectContext save:&error]) {
-            CLS_LOG(@"Failed to save data at shutdown %@, %@", error, [error userInfo]);
-        } 
-    }
+    [self syncManagedObjectContext];
 }
+
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     if ([EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
@@ -164,7 +161,7 @@ int networkCount = 0;
     
     CLS_LOG(@"No model - initializing");
     
-    __model = [[EMSModel alloc] initWithManagedObjectContext:[self managedObjectContext]];
+    __model = [[EMSModel alloc] initWithManagedObjectContext:[self uiManagedObjectContext]];
     
     return __model;
 }
@@ -182,13 +179,32 @@ int networkCount = 0;
     
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
-        __managedObjectContext = [[NSManagedObjectContext alloc] init];
+        __managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
         [__managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
     
     CLS_LOG(@"No moc - initialized");
     
     return __managedObjectContext;
+}
+
+- (NSManagedObjectContext *)uiManagedObjectContext {
+    if (__uiManagedObjectContext != nil) {
+        return __uiManagedObjectContext;
+    }
+    
+    CLS_LOG(@"No UI moc - initializing");
+    
+    NSManagedObjectContext *parent = [self managedObjectContext];
+    if (parent != nil) {
+        __uiManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+        [__uiManagedObjectContext setUndoManager:nil];
+        [__uiManagedObjectContext setParentContext:parent];
+    }
+    
+    CLS_LOG(@"No moc - initialized");
+    
+    return __uiManagedObjectContext;
 }
 
 - (NSManagedObjectModel *)managedObjectModel {
@@ -209,47 +225,28 @@ int networkCount = 0;
 - (EMSModel *)modelForBackground {
     CLS_LOG(@"Creating background model");
 
-    NSManagedObjectContext *backgroundContext = [[NSManagedObjectContext alloc] init];
-    [backgroundContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
-    EMSModel *backgroundModel = [[EMSModel alloc] initWithManagedObjectContext:backgroundContext];
+    NSManagedObjectContext *backgroundContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
+    [backgroundContext setUndoManager:nil];
+    [backgroundContext setParentContext:self.uiManagedObjectContext];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(backgroundContextDidSave:)
-                                                 name:NSManagedObjectContextDidSaveNotification
-                                               object:backgroundContext];
+    EMSModel *backgroundModel = [[EMSModel alloc] initWithManagedObjectContext:backgroundContext];
 
     return backgroundModel;
 }
 
-- (void)backgroundModelDone:(EMSModel *)model {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:NSManagedObjectContextDidSaveNotification
-                                                  object:[model managedObjectContext]];
-
-    CLS_LOG(@"Background model done");
-}
-
-- (void)backgroundContextDidSave:(NSNotification *)notification {
-    CLS_LOG(@"Background context saved");
-
-    if (![NSThread isMainThread]) {
-        
-        CLS_LOG(@"Background context saved - not on main thread - pushing to main thread");
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            [self backgroundContextDidSave:notification];
-        });
-
-        return;
+- (void) syncManagedObjectContext {
+    NSError *error = nil;
+    if (__uiManagedObjectContext != nil) {
+        if ([__uiManagedObjectContext hasChanges] && ![__uiManagedObjectContext save:&error]) {
+            CLS_LOG(@"Failed to save ui data at shutdown %@, %@", error, [error userInfo]);
+        }
     }
-
-    NSDictionary *userInfo = [notification userInfo];
-
-    CLS_LOG(@"Background context saved - on main thread - merging %d added %d updated %d deleted",
-            [[userInfo objectForKey:NSInsertedObjectsKey] count],
-            [[userInfo objectForKey:NSUpdatedObjectsKey] count],
-            [[userInfo objectForKey:NSDeletedObjectsKey] count]);
-
-    [self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+    error = nil;
+    if (__managedObjectContext != nil) {
+        if ([__managedObjectContext hasChanges] && ![__managedObjectContext save:&error]) {
+            CLS_LOG(@"Failed to save data at shutdown %@, %@", error, [error userInfo]);
+        }
+    }
 }
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
@@ -298,19 +295,6 @@ int networkCount = 0;
 
 - (NSURL *)applicationCacheDirectory {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject];
-}
-
-- (void)saveContext{
-    NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-            CLS_LOG(@"Failed to save data %@, %@", error, [error userInfo]);
-
-            [self showErrorAlertWithTitle:@"Database error" andMessage:@"We failed to save data to the database. If this happens again after an application restart please delete and re-install."];
-        }
-    }
 }
 
 - (void)showErrorAlertWithTitle:(NSString *)title andMessage:(NSString *)message {

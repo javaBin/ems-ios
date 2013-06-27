@@ -86,7 +86,7 @@
         return _fetchedResultsController;
     }
 
-    NSManagedObjectContext *managedObjectContext = [[EMSAppDelegate sharedAppDelegate] managedObjectContext];
+    NSManagedObjectContext *managedObjectContext = [[EMSAppDelegate sharedAppDelegate] uiManagedObjectContext];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
@@ -219,9 +219,9 @@
         CLS_LOG(@"Failed to store conferences %@ - %@", error, [error userInfo]);
     }
 
-    [[EMSAppDelegate sharedAppDelegate] backgroundModelDone:backgroundModel];
-
     dispatch_sync(dispatch_get_main_queue(), ^{
+        [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
+
         [self.refreshControl endRefreshing];
     });
 }

@@ -123,9 +123,9 @@
         CLS_LOG(@"Failed to store speakers %@ - %@", error, [error userInfo]);
     }
 
-    [[EMSAppDelegate sharedAppDelegate] backgroundModelDone:backgroundModel];
-
     dispatch_sync(dispatch_get_main_queue(), ^{
+        [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
+
         __block BOOL newBios = NO;
 
         NSMutableDictionary *speakerBios = [NSMutableDictionary dictionaryWithDictionary:self.cachedSpeakerBios];
