@@ -119,13 +119,13 @@
     
     retriever.delegate = self;
     
-    CLS_LOG(@"Retrieving speakers");
+    CLS_LOG(@"Retrieving speakers for href %@", self.session.speakerCollection);
 
     [retriever refreshSpeakers:[NSURL URLWithString:self.session.speakerCollection]];
 }
 
 - (void) finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href {
-    CLS_LOG(@"Storing speakers %d", [speakers count]);
+    CLS_LOG(@"Storing speakers %d for href %@", [speakers count], href);
     
     NSError *error = nil;
 
