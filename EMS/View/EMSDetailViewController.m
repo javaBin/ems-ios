@@ -138,32 +138,35 @@
     dispatch_sync(dispatch_get_main_queue(), ^{
         [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
 
-        __block BOOL newBios = NO;
+        // Check we haven't navigated to a new session
+        if ([[href absoluteString] isEqualToString:self.session.speakerCollection]) {
+            __block BOOL newBios = NO;
 
-        NSMutableDictionary *speakerBios = [NSMutableDictionary dictionaryWithDictionary:self.cachedSpeakerBios];
+            NSMutableDictionary *speakerBios = [NSMutableDictionary dictionaryWithDictionary:self.cachedSpeakerBios];
 
-        [self.cachedSpeakerBios enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            NSString *name = (NSString *)key;
-            NSString *bio = (NSString *)obj;
+            [self.cachedSpeakerBios enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+                NSString *name = (NSString *)key;
+                NSString *bio = (NSString *)obj;
 
-            [self.session.speakers enumerateObjectsUsingBlock:^(id speakerObj, BOOL *stop) {
-                Speaker *speaker = (Speaker *)speakerObj;
+                [self.session.speakers enumerateObjectsUsingBlock:^(id speakerObj, BOOL *stop) {
+                    Speaker *speaker = (Speaker *)speakerObj;
 
-                if ([speaker.name isEqualToString:name]) {
-                    if (![speaker.bio isEqualToString:bio]) {
-                        if (speaker.bio != nil) {
-                            [speakerBios setObject:speaker.bio forKey:speaker.name];
-                            newBios = YES;
+                    if ([speaker.name isEqualToString:name]) {
+                        if (![speaker.bio isEqualToString:bio]) {
+                            if (speaker.bio != nil) {
+                                [speakerBios setObject:speaker.bio forKey:speaker.name];
+                                newBios = YES;
+                            }
                         }
                     }
-                }
+                }];
             }];
-        }];
 
-        if (newBios == YES) {
-             CLS_LOG(@"Saw updated bios - updating screen");
-             self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
-             [self buildPage];
+            if (newBios == YES) {
+                CLS_LOG(@"Saw updated bios - updating screen");
+                self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
+                [self buildPage];
+            }
         }
     });
 }
@@ -401,7 +404,7 @@
                         }
                     }
 
-                    [self checkForNewThumbnailForSpeaker:speaker compareWith:thumbData withFilename:pngFilePath];
+                    [self checkForNewThumbnailForSpeaker:speaker compareWith:thumbData withFilename:pngFilePath withSessionHref:self.session.href];
                 }
             }
 
@@ -416,7 +419,7 @@
 	return [NSString stringWithString:result];
 }
 
-- (void) checkForNewThumbnailForSpeaker:(Speaker *)speaker compareWith:(NSData *)thumbData withFilename:(NSString *) pngFilePath{
+- (void) checkForNewThumbnailForSpeaker:(Speaker *)speaker compareWith:(NSData *)thumbData withFilename:(NSString *) pngFilePath withSessionHref:(NSString *)href {
     CLS_LOG(@"Checking for updated thumbnail %@", speaker.thumbnailUrl);
 
     dispatch_queue_t queue = dispatch_queue_create("thumbnail_queue", DISPATCH_QUEUE_CONCURRENT);
@@ -463,7 +466,9 @@
 
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (needToSave == YES) {
-                    [self buildPage];
+                    if ([self.session.href isEqualToString:href]) {
+                        [self buildPage];
+                    }
                 }
             });
         }
