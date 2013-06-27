@@ -1031,10 +1031,12 @@
     }
 
     NSError *error;
-    if (![[session managedObjectContext] save:&error]) {
+    if (![[self managedObjectContext] save:&error]) {
         CLS_LOG(@"Failed to toggle favourite for %@, %@, %@", session, error, [error userInfo]);
     }
-    
+
+    [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
+
     return session;
 }
 

@@ -151,18 +151,20 @@
 
                 if ([speaker.name isEqualToString:name]) {
                     if (![speaker.bio isEqualToString:bio]) {
-                        [speakerBios setObject:speaker.bio forKey:speaker.name];
-                        newBios = YES;
+                        if (speaker.bio != nil) {
+                            [speakerBios setObject:speaker.bio forKey:speaker.name];
+                            newBios = YES;
+                        }
                     }
                 }
             }];
         }];
 
-         if (newBios == YES) {
+        if (newBios == YES) {
              CLS_LOG(@"Saw updated bios - updating screen");
              self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
              [self buildPage];
-         }
+        }
     });
 }
 
