@@ -35,6 +35,14 @@
 		839BD66C176F9BD400900712 /* EMSSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD659176F9BD400900712 /* EMSSettingsViewController.m */; };
 		839BD66D176F9BD400900712 /* EMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD65B176F9BD400900712 /* EMSViewController.m */; };
 		839BD670176FA67000900712 /* EMSSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD66F176FA67000900712 /* EMSSpeaker.m */; };
+		83AC9463177CBF2E00E06345 /* 02-arrow-east.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC945B177CBF2E00E06345 /* 02-arrow-east.png */; };
+		83AC9464177CBF2E00E06345 /* 02-arrow-east@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC945C177CBF2E00E06345 /* 02-arrow-east@2x.png */; };
+		83AC9465177CBF2E00E06345 /* 03-arrow-north.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC945D177CBF2E00E06345 /* 03-arrow-north.png */; };
+		83AC9466177CBF2E00E06345 /* 03-arrow-north@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC945E177CBF2E00E06345 /* 03-arrow-north@2x.png */; };
+		83AC9467177CBF2E00E06345 /* 06-arrow-south.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC945F177CBF2E00E06345 /* 06-arrow-south.png */; };
+		83AC9468177CBF2E00E06345 /* 06-arrow-south@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC9460177CBF2E00E06345 /* 06-arrow-south@2x.png */; };
+		83AC9469177CBF2E00E06345 /* 09-arrow-west.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC9461177CBF2E00E06345 /* 09-arrow-west.png */; };
+		83AC946A177CBF2E00E06345 /* 09-arrow-west@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC9462177CBF2E00E06345 /* 09-arrow-west@2x.png */; };
 		83AF91B11771E7E100FAE20F /* EMSAdminViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91B01771E7E100FAE20F /* EMSAdminViewController.m */; };
 		83D5CBA417749EEA00527620 /* EMSFeatureConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */; };
 		F30FCBD317745F91003EEC3A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = F30FCBD217745F91003EEC3A /* Default.png */; };
@@ -153,6 +161,14 @@
 		839BD65B176F9BD400900712 /* EMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSViewController.m; sourceTree = "<group>"; };
 		839BD66E176FA67000900712 /* EMSSpeaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSpeaker.h; sourceTree = "<group>"; };
 		839BD66F176FA67000900712 /* EMSSpeaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSpeaker.m; sourceTree = "<group>"; };
+		83AC945B177CBF2E00E06345 /* 02-arrow-east.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "02-arrow-east.png"; sourceTree = "<group>"; };
+		83AC945C177CBF2E00E06345 /* 02-arrow-east@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "02-arrow-east@2x.png"; sourceTree = "<group>"; };
+		83AC945D177CBF2E00E06345 /* 03-arrow-north.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "03-arrow-north.png"; sourceTree = "<group>"; };
+		83AC945E177CBF2E00E06345 /* 03-arrow-north@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "03-arrow-north@2x.png"; sourceTree = "<group>"; };
+		83AC945F177CBF2E00E06345 /* 06-arrow-south.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-arrow-south.png"; sourceTree = "<group>"; };
+		83AC9460177CBF2E00E06345 /* 06-arrow-south@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-arrow-south@2x.png"; sourceTree = "<group>"; };
+		83AC9461177CBF2E00E06345 /* 09-arrow-west.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "09-arrow-west.png"; sourceTree = "<group>"; };
+		83AC9462177CBF2E00E06345 /* 09-arrow-west@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "09-arrow-west@2x.png"; sourceTree = "<group>"; };
 		83AF91AF1771E7E100FAE20F /* EMSAdminViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSAdminViewController.h; sourceTree = "<group>"; };
 		83AF91B01771E7E100FAE20F /* EMSAdminViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSAdminViewController.m; sourceTree = "<group>"; };
 		83D5CBA217749EEA00527620 /* EMSFeatureConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSFeatureConfig.h; sourceTree = "<group>"; };
@@ -331,6 +347,14 @@
 				F30FCBD617745FA4003EEC3A /* Default-568h@2x.png */,
 				F30FCBD417745F9C003EEC3A /* Default@2x.png */,
 				F30FCBD217745F91003EEC3A /* Default.png */,
+				83AC945B177CBF2E00E06345 /* 02-arrow-east.png */,
+				83AC945C177CBF2E00E06345 /* 02-arrow-east@2x.png */,
+				83AC945D177CBF2E00E06345 /* 03-arrow-north.png */,
+				83AC945E177CBF2E00E06345 /* 03-arrow-north@2x.png */,
+				83AC945F177CBF2E00E06345 /* 06-arrow-south.png */,
+				83AC9460177CBF2E00E06345 /* 06-arrow-south@2x.png */,
+				83AC9461177CBF2E00E06345 /* 09-arrow-west.png */,
+				83AC9462177CBF2E00E06345 /* 09-arrow-west@2x.png */,
 				83172C1F1770FE67000135E6 /* 11-clock.png */,
 				83172C201770FE67000135E6 /* 11-clock@2x.png */,
 				83172C211770FE67000135E6 /* 259-list.png */,
@@ -626,6 +650,14 @@
 				F3EC96AD1774783E004A5F25 /* beginner-intermediate.png in Resources */,
 				F3EC96AE1774783E004A5F25 /* intermediate-advanced.png in Resources */,
 				F350599017747D6A007E7FE4 /* hardcore.png in Resources */,
+				83AC9463177CBF2E00E06345 /* 02-arrow-east.png in Resources */,
+				83AC9464177CBF2E00E06345 /* 02-arrow-east@2x.png in Resources */,
+				83AC9465177CBF2E00E06345 /* 03-arrow-north.png in Resources */,
+				83AC9466177CBF2E00E06345 /* 03-arrow-north@2x.png in Resources */,
+				83AC9467177CBF2E00E06345 /* 06-arrow-south.png in Resources */,
+				83AC9468177CBF2E00E06345 /* 06-arrow-south@2x.png in Resources */,
+				83AC9469177CBF2E00E06345 /* 09-arrow-west.png in Resources */,
+				83AC946A177CBF2E00E06345 /* 09-arrow-west@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
