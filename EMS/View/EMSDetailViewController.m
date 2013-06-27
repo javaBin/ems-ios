@@ -28,46 +28,45 @@
 
 @implementation EMSDetailViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+- (void)setupViewWithSession:(Session *)session {
+    self.session = session;
 
     NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
-    
+
     [dateFormatterTime setDateFormat:@"HH:mm"];
-    
+
     NSMutableString *title = [[NSMutableString alloc] init];
     [title appendString:[NSString stringWithFormat:@"%@ - %@",
-                         [dateFormatterTime stringFromDate:self.session.slot.start],
-                         [dateFormatterTime stringFromDate:self.session.slot.end]]];
+                         [dateFormatterTime stringFromDate:session.slot.start],
+                         [dateFormatterTime stringFromDate:session.slot.end]]];
 
-    if (self.session.roomName != nil) {
-        [title appendString:[NSString stringWithFormat:@" : %@", self.session.roomName]];
+    if (session.roomName != nil) {
+        [title appendString:[NSString stringWithFormat:@" : %@", session.roomName]];
     }
-    
+
     self.title = [NSString stringWithString:title];
-    
+
     UIImage *normalImage = [UIImage imageNamed:@"28-star-grey"];
     UIImage *selectedImage = [UIImage imageNamed:@"28-star-yellow"];
     UIImage *highlightedImage = [UIImage imageNamed:@"28-star"];
-    
-    if ([self.session.format isEqualToString:@"lightning-talk"]) {
+
+    if ([session.format isEqualToString:@"lightning-talk"]) {
         normalImage = [UIImage imageNamed:@"64-zap-grey"];
         selectedImage = [UIImage imageNamed:@"64-zap-yellow"];
         highlightedImage = [UIImage imageNamed:@"64-zap"];
     }
-    
+
     [self.button setImage:normalImage forState:UIControlStateNormal];
     [self.button setImage:selectedImage forState:UIControlStateSelected];
     [self.button setImage:highlightedImage forState:UIControlStateHighlighted];
-    
-    [self.button setSelected:[self.session.favourite boolValue]];
-    
-    self.titleLabel.text = self.session.title;
+
+    [self.button setSelected:[session.favourite boolValue]];
+
+    self.titleLabel.text = session.title;
 
     NSMutableDictionary *speakerBios = [[NSMutableDictionary alloc] init];
 
-    [self.session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+    [session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         Speaker *speaker = (Speaker *)obj;
 
         if (speaker.bio != nil) {
@@ -79,9 +78,22 @@
 
     self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
 
+    self.previousSessionButton.enabled = ([self getSessionForDirection:-1] != nil);
+    self.nextSessionButton.enabled = ([self getSessionForDirection:1] != nil);
+    self.previousSectionButton.enabled = ([self getSectionForDirection:-1] != nil);
+    self.nextSectionButton.enabled = ([self getSectionForDirection:1] != nil);
+
     [self buildPage];
-    
+
     [self retrieve];
+
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    [self setupViewWithSession:self.session];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -542,6 +554,79 @@
     }
 
     return NO;
+}
+
+- (NSIndexPath *)getSectionForDirection:(int)direction {
+    NSArray *sections = [self.fetchedResultsController sections];
+
+   return [self indexPathForSection:self.indexPath moving:direction fromSections:sections];
+}
+
+- (NSIndexPath *)getSessionForDirection:(int)direction {
+    NSArray *sections = [self.fetchedResultsController sections];
+
+    int rowCount = [[sections objectAtIndex:self.indexPath.section] numberOfObjects];
+
+    return [self indexPathForRow:self.indexPath moving:direction withRows:rowCount];
+}
+
+- (void)updateWithIndexPath:(NSIndexPath *)path {
+    if (path != nil) {
+        self.indexPath = path;
+        [self setupViewWithSession:[self.fetchedResultsController objectAtIndexPath:self.indexPath]];
+    }
+}
+
+- (IBAction)movePreviousSection:(id)sender {
+    [self updateWithIndexPath:[self getSectionForDirection:-1]];
+}
+
+- (IBAction)moveNextSection:(id)sender {
+    [self updateWithIndexPath:[self getSectionForDirection:1]];
+}
+
+- (IBAction)movePreviousSession:(id)sender {
+    [self updateWithIndexPath:[self getSessionForDirection:-1]];
+}
+
+- (IBAction)moveNextSession:(id)sender {
+    [self updateWithIndexPath:[self getSessionForDirection:1]];
+}
+
+- (NSIndexPath *)indexPathForSection:(NSIndexPath *)current moving:(int)direction fromSections:(NSArray *)sections {
+    int section = current.section + (1 * direction);
+
+    if (section < 0) {
+        return nil;
+    }
+    if (section >= sections.count) {
+        return nil;
+    }
+
+    int row = current.row;
+
+    int rowMax = ([[sections objectAtIndex:section] numberOfObjects] - 1);
+
+    if (rowMax < row) {
+        row = rowMax;
+    }
+
+    return [NSIndexPath indexPathForRow:row inSection:section];
+}
+
+- (NSIndexPath *)indexPathForRow:(NSIndexPath *)current moving:(int)direction withRows:(int)rows {
+    int section = current.section;
+
+    int row = current.row + (1 * direction);
+
+    if (row < 0) {
+        return nil;
+    }
+    if (row >= rows) {
+        return nil;
+    }
+
+    return [NSIndexPath indexPathForRow:row inSection:section];
 }
 
 @end

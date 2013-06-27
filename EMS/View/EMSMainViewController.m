@@ -61,7 +61,6 @@
     
     return nil;
 }
-
 - (void)initializeFetchedResultsController {
     [self.fetchedResultsController.fetchRequest setPredicate:[self currentConferencePredicate]];
 
@@ -149,7 +148,6 @@
     } else {
         [self.advancedSearchButton setStyle:UIBarButtonItemStyleBordered];
     }
-
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -207,7 +205,11 @@
                                   withLabel:session.href
                                   withValue:nil];
         }
+
+        destination.fetchedResultsController = self.fetchedResultsController;
+        destination.indexPath = [[self tableView] indexPathForSelectedRow];
     }
+    
     if ([[segue identifier] isEqualToString:@"showSearchView"]) {
         EMSSearchViewController *destination = (EMSSearchViewController *)[segue destinationViewController];
 
@@ -779,6 +781,13 @@
     }
 
     [self initializeFetchedResultsController];
+}
+
+- (IBAction)back:(UIStoryboardSegue *)segue {
+    if ([segue.identifier isEqualToString:@"popDetailSegue"]) {
+        EMSDetailViewController *detail = (EMSDetailViewController *)segue.sourceViewController;
+        [self.tableView scrollToRowAtIndexPath:detail.indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    }
 }
 
 @end

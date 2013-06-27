@@ -34,5 +34,6 @@
 - (IBAction)segmentChanged:(id)sender;
 
 - (void)pushDetailViewForHref:(NSString *)href;
+- (IBAction)back:(UIStoryboardSegue *)segue;
 
 @end

@@ -122,7 +122,7 @@
                         </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchCell" textLabel="akV-4R-bpH" style="IBUITableViewCellStyleDefault" id="Aq2-SF-Zc4">
-                                <rect key="frame" x="0.0" y="78" width="768" height="46"/>
+                                <rect key="frame" x="0.0" y="78" width="768" height="45"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="45" y="1" width="678" height="43"/>
@@ -366,22 +366,56 @@
                                     <action selector="toggleFavourite:" destination="ynZ-6T-4n5" eventType="touchUpInside" id="ip5-eL-bUI"/>
                                 </connections>
                             </button>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2QG-xG-aAy">
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="6ce-tw-5q8"/>
+                                    <barButtonItem image="09-arrow-west.png" id="DsT-sT-X5N">
+                                        <connections>
+                                            <action selector="movePreviousSession:" destination="ynZ-6T-4n5" id="Te5-b9-7rG"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem image="03-arrow-north.png" id="lhD-uV-MwN">
+                                        <connections>
+                                            <action selector="movePreviousSection:" destination="ynZ-6T-4n5" id="kVW-ad-lj5"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem image="06-arrow-south.png" id="yM9-J6-P6W">
+                                        <connections>
+                                            <action selector="moveNextSection:" destination="ynZ-6T-4n5" id="aCa-He-Qmu"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem image="02-arrow-east.png" id="7lP-Lf-d6l">
+                                        <connections>
+                                            <action selector="moveNextSession:" destination="ynZ-6T-4n5" id="VHf-Ue-SZy"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Ar1-Nj-5sf"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="2QG-xG-aAy" firstAttribute="leading" secondItem="IHP-Ct-bdQ" secondAttribute="leading" type="default" id="1bA-52-475"/>
                             <constraint firstItem="aP0-PP-i6z" firstAttribute="trailing" secondItem="IHP-Ct-bdQ" secondAttribute="trailing" type="user" id="3ZD-4I-lNy"/>
+                            <constraint firstItem="2QG-xG-aAy" firstAttribute="top" secondItem="thv-Nv-DUc" secondAttribute="bottom" type="default" id="8jK-00-V9i"/>
                             <constraint firstItem="thv-Nv-DUc" firstAttribute="trailing" secondItem="IHP-Ct-bdQ" secondAttribute="trailing" type="default" id="9Ff-ka-Cqd"/>
                             <constraint firstItem="aP0-PP-i6z" firstAttribute="top" secondItem="IHP-Ct-bdQ" secondAttribute="top" type="user" id="AbJ-Xa-7JW"/>
                             <constraint firstItem="EZz-Q4-iHl" firstAttribute="top" secondItem="IHP-Ct-bdQ" secondAttribute="top" type="default" id="O5T-cx-GCn"/>
+                            <constraint firstItem="2QG-xG-aAy" firstAttribute="bottom" secondItem="IHP-Ct-bdQ" secondAttribute="bottom" type="default" id="Tf3-yG-grZ"/>
                             <constraint firstAttribute="trailing" secondItem="EZz-Q4-iHl" secondAttribute="trailing" constant="58" type="user" id="VyL-N9-njZ"/>
                             <constraint firstItem="EZz-Q4-iHl" firstAttribute="leading" secondItem="IHP-Ct-bdQ" secondAttribute="leading" constant="10" type="user" id="WM5-Ip-oWi"/>
-                            <constraint firstItem="thv-Nv-DUc" firstAttribute="bottom" secondItem="IHP-Ct-bdQ" secondAttribute="bottom" type="default" id="dBD-aH-5AX"/>
+                            <constraint firstItem="2QG-xG-aAy" firstAttribute="trailing" secondItem="IHP-Ct-bdQ" secondAttribute="trailing" type="default" id="alM-GK-o83"/>
                             <constraint firstItem="thv-Nv-DUc" firstAttribute="top" secondItem="IHP-Ct-bdQ" secondAttribute="top" constant="43" type="user" id="iyT-d0-uQS"/>
                             <constraint firstItem="thv-Nv-DUc" firstAttribute="leading" secondItem="IHP-Ct-bdQ" secondAttribute="leading" type="default" id="joT-gj-82X"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="3MP-RJ-J85">
                         <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" image="259-list.png" id="uug-lm-x0o">
+                            <connections>
+                                <segue destination="mfU-Rq-QhD" kind="unwind" identifier="popDetailSegue" unwindAction="back:" id="Fjf-bR-94N"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="EKq-sd-auT">
                             <connections>
                                 <action selector="share:" destination="ynZ-6T-4n5" id="1fi-ij-AAG"/>
@@ -391,11 +425,16 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
                     <connections>
                         <outlet property="button" destination="aP0-PP-i6z" id="D4b-cg-msi"/>
+                        <outlet property="nextSectionButton" destination="yM9-J6-P6W" id="SKS-t8-6YB"/>
+                        <outlet property="nextSessionButton" destination="7lP-Lf-d6l" id="s37-Bu-K30"/>
+                        <outlet property="previousSectionButton" destination="lhD-uV-MwN" id="T28-3c-uZ1"/>
+                        <outlet property="previousSessionButton" destination="DsT-sT-X5N" id="zjH-zF-96S"/>
                         <outlet property="titleLabel" destination="EZz-Q4-iHl" id="eqO-et-YfC"/>
                         <outlet property="webView" destination="thv-Nv-DUc" id="cXy-QG-6ta"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J0b-XW-WHi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="mfU-Rq-QhD" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer numberOfTapsRequired="3" numberOfTouchesRequired="3" id="MmW-fc-sId">
                     <connections>
                         <action selector="clearImageCache:" destination="ynZ-6T-4n5" id="UfA-CR-zeM"/>
@@ -422,7 +461,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="02-arrow-east.png" width="16" height="16"/>
+        <image name="03-arrow-north.png" width="16" height="16"/>
+        <image name="06-arrow-south.png" width="16" height="16"/>
         <image name="06-magnify.png" width="24" height="24"/>
+        <image name="09-arrow-west.png" width="16" height="16"/>
         <image name="11-clock.png" width="24" height="24"/>
         <image name="19-gear.png" width="26" height="26"/>
         <image name="258-checkmark.png" width="19" height="18"/>

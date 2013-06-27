@@ -14,7 +14,7 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ConferenceCell" textLabel="aZM-X2-agk" detailTextLabel="5qT-UM-TbQ" style="IBUITableViewCellStyleSubtitle" id="GGz-Ev-QTH">
-                                <rect key="frame" x="0.0" y="46" width="320" height="45"/>
+                                <rect key="frame" x="0.0" y="46" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -160,7 +160,6 @@
         <!--Main View Controller-->
         <scene sceneID="C5v-Jb-6FW">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dcc-le-TER" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="bNB-PM-Jcs" customClass="EMSMainViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" sectionIndexMinimumDisplayRowCount="500" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gDK-VA-ggF">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
@@ -291,6 +290,7 @@
                         <outlet property="search" destination="Zif-KH-RXK" id="tq7-GP-YRY"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dcc-le-TER" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1006" y="138"/>
         </scene>
@@ -334,22 +334,56 @@
                                     <action selector="toggleFavourite:" destination="3lg-Sh-FWj" eventType="touchUpInside" id="BbZ-bu-q5g"/>
                                 </connections>
                             </button>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fVC-sK-Tsh">
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="VlK-rx-Te1"/>
+                                    <barButtonItem image="09-arrow-west.png" id="gkC-bR-M4P">
+                                        <connections>
+                                            <action selector="movePreviousSession:" destination="3lg-Sh-FWj" id="f0q-1Q-okh"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem image="03-arrow-north.png" id="p6R-Mj-zuA">
+                                        <connections>
+                                            <action selector="movePreviousSection:" destination="3lg-Sh-FWj" id="B1O-V4-e6O"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem image="06-arrow-south.png" id="t30-4M-Cp2">
+                                        <connections>
+                                            <action selector="moveNextSection:" destination="3lg-Sh-FWj" id="5rh-3B-6sl"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem image="02-arrow-east.png" id="VOc-Q9-Wuo">
+                                        <connections>
+                                            <action selector="moveNextSession:" destination="3lg-Sh-FWj" id="n3x-PK-WiL"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="i9W-7D-hHt"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="q35-VC-8on" firstAttribute="top" secondItem="LLw-3H-w5Y" secondAttribute="top" type="default" id="3lB-Gp-5bl"/>
+                            <constraint firstItem="fVC-sK-Tsh" firstAttribute="trailing" secondItem="LLw-3H-w5Y" secondAttribute="trailing" type="default" id="5BA-dy-rfz"/>
                             <constraint firstItem="SyP-yk-NN6" firstAttribute="trailing" secondItem="LLw-3H-w5Y" secondAttribute="trailing" type="default" id="B02-R3-bJX"/>
+                            <constraint firstItem="fVC-sK-Tsh" firstAttribute="bottom" secondItem="LLw-3H-w5Y" secondAttribute="bottom" type="default" id="FSt-6X-V3z"/>
                             <constraint firstAttribute="trailing" secondItem="q35-VC-8on" secondAttribute="trailing" constant="58" type="user" id="GKP-8v-ixi"/>
-                            <constraint firstItem="SyP-yk-NN6" firstAttribute="top" secondItem="LLw-3H-w5Y" secondAttribute="top" constant="43" type="user" id="Okj-BL-u9A"/>
+                            <constraint firstItem="SyP-yk-NN6" firstAttribute="top" secondItem="LLw-3H-w5Y" secondAttribute="top" constant="42" type="user" id="WiP-Rx-3yU"/>
                             <constraint firstItem="SyP-yk-NN6" firstAttribute="leading" secondItem="LLw-3H-w5Y" secondAttribute="leading" type="default" id="bVH-Hk-F9g"/>
-                            <constraint firstItem="SyP-yk-NN6" firstAttribute="bottom" secondItem="LLw-3H-w5Y" secondAttribute="bottom" type="default" id="hdW-go-uhU"/>
+                            <constraint firstItem="fVC-sK-Tsh" firstAttribute="leading" secondItem="LLw-3H-w5Y" secondAttribute="leading" type="default" id="kKD-xF-tQk"/>
                             <constraint firstItem="2Ru-D1-L9h" firstAttribute="trailing" secondItem="LLw-3H-w5Y" secondAttribute="trailing" type="user" id="lAe-Es-G8w"/>
                             <constraint firstItem="q35-VC-8on" firstAttribute="leading" secondItem="LLw-3H-w5Y" secondAttribute="leading" constant="10" type="user" id="n2J-W5-TkD"/>
                             <constraint firstItem="2Ru-D1-L9h" firstAttribute="top" secondItem="LLw-3H-w5Y" secondAttribute="top" type="user" id="q2v-AK-pbJ"/>
+                            <constraint firstItem="fVC-sK-Tsh" firstAttribute="top" secondItem="SyP-yk-NN6" secondAttribute="bottom" type="default" id="qko-fP-eY9"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ib1-cg-KjS">
                         <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" image="259-list.png" id="Vpw-uY-a6p">
+                            <connections>
+                                <segue destination="wo0-D4-DdC" kind="unwind" identifier="popDetailSegue" unwindAction="back:" id="7Fc-dR-BrS"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="0JI-IR-TXE">
                             <connections>
                                 <action selector="share:" destination="3lg-Sh-FWj" id="tB6-oI-VzT"/>
@@ -358,11 +392,16 @@
                     </navigationItem>
                     <connections>
                         <outlet property="button" destination="2Ru-D1-L9h" id="1Ls-Kb-aJP"/>
+                        <outlet property="nextSectionButton" destination="t30-4M-Cp2" id="1Yy-cd-bIq"/>
+                        <outlet property="nextSessionButton" destination="VOc-Q9-Wuo" id="6t1-wY-zsC"/>
+                        <outlet property="previousSectionButton" destination="p6R-Mj-zuA" id="iQh-al-YfC"/>
+                        <outlet property="previousSessionButton" destination="gkC-bR-M4P" id="Avt-He-AZf"/>
                         <outlet property="titleLabel" destination="q35-VC-8on" id="LZC-i3-v7C"/>
                         <outlet property="webView" destination="SyP-yk-NN6" id="UdN-bD-DWP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rlf-zs-OLZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="wo0-D4-DdC" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer numberOfTapsRequired="3" numberOfTouchesRequired="3" id="vOx-jJ-27o">
                     <connections>
                         <action selector="clearImageCache:" destination="3lg-Sh-FWj" id="tdj-xS-PD0"/>
@@ -388,7 +427,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="02-arrow-east.png" width="16" height="16"/>
+        <image name="03-arrow-north.png" width="16" height="16"/>
+        <image name="06-arrow-south.png" width="16" height="16"/>
         <image name="06-magnify.png" width="24" height="24"/>
+        <image name="09-arrow-west.png" width="16" height="16"/>
         <image name="11-clock.png" width="24" height="24"/>
         <image name="19-gear.png" width="26" height="26"/>
         <image name="258-checkmark.png" width="19" height="18"/>
@@ -397,57 +440,6 @@
         <image name="28-star.png" width="26" height="26"/>
         <image name="298-circlex.png" width="22" height="22"/>
     </resources>
-    <classes>
-        <class className="EMSAdminViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSAdminViewController.h"/>
-        </class>
-        <class className="EMSDetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSDetailViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="clearImageCache:"/>
-                <relationship kind="action" name="share:"/>
-                <relationship kind="action" name="toggleFavourite:"/>
-                <relationship kind="outlet" name="button" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="EMSMainViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSMainViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="segmentChanged:"/>
-                <relationship kind="action" name="toggleFavourite:"/>
-                <relationship kind="outlet" name="advancedSearchButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="search" candidateClass="UISearchBar"/>
-            </relationships>
-        </class>
-        <class className="EMSSearchViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSSearchViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="apply:"/>
-                <relationship kind="action" name="clear:"/>
-                <relationship kind="outlet" name="search" candidateClass="UISearchBar"/>
-            </relationships>
-        </class>
-        <class className="EMSSessionCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSSessionCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="icon" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="keywords" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="level" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="room" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="speaker" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="summary" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="title" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="EMSSettingsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSSettingsViewController.h"/>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
