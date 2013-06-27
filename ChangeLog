@@ -1,0 +1,40 @@
+2013-06-26  Chris Searle  <chris@chrissearle.org>
+
+        * 3.0b6
+        * iPad support - summary and keywords added
+        * Speaker update only refreshes page on change
+        * Feature toggle for speaker thumbnail download
+        * Issues fixed: #23 #37 #41 #42
+
+2013-06-25  Chris Searle  <chris@chrissearle.org>
+
+        * 3.0b5
+        * Core data updates moved to background thread
+        * Issues fixed: #39 #40
+
+2013-06-25  Chris Searle  <chris@chrissearle.org>
+
+        * 3.0b4
+        * Add room list to advanced search
+        * Issues fixed: #36
+
+2013-06-24  Chris Searle  <chris@chrissearle.org>
+
+        * 3.0b3
+        * Save current search in user prefs
+        * Mark search button blue if advanced search is active
+        * Issues fixed: #33 #34
+
+2013-06-22  Chris Searle  <chris@chrissearle.org>
+
+        * 3.0b2
+        * Initial 3.x test release
+        * iPhone only
+        * Pull to refresh
+        * List conferences
+        * List sessions
+        * Detail page
+        * Initial core data model
+        * Crash reporting
+        * Analytics
+        * Issues fixed: #1 #4 #8 #9 #11 #14 #17 #20 #22 #24 #25 #26 #28 #29 #30 #31 #32
