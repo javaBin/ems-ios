@@ -1,9 +1,5 @@
 //
 //  EMSAboutViewController.m
-//  EMS
-//
-//  Created by Chris Searle on 6/28/13.
-//  Copyright (c) 2013 Chris Searle. All rights reserved.
 //
 
 #import "EMSAboutViewController.h"
@@ -23,7 +19,36 @@
 
     NSURL *docURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"about" ofType:@"html"]];
 
-    [self.web loadData:[NSData dataWithContentsOfURL:docURL] MIMEType:@"text/html" textEncodingName:@"UTF-8" baseURL:baseURL];
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    NSString *build = [infoDictionary objectForKey:@"CFBundleVersion"];
+    
+    NSError *error = nil;
+    
+    NSString *content = [NSString stringWithContentsOfURL:docURL encoding:NSUTF8StringEncoding error:&error];
+    
+    if (!content) {
+        CLS_LOG(@"Unable to get about content %@ %@", error, [error userInfo]);
+        
+        return;
+    }
+
+    content = [content stringByReplacingOccurrencesOfString:@"VERSION" withString:version];
+    content = [content stringByReplacingOccurrencesOfString:@"BUILD" withString:build];
+
+    [self.web loadHTMLString:content baseURL:baseURL];
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    if (navigationType == UIWebViewNavigationTypeLinkClicked) {
+        // http:// -> safari, rest (file:// etc) opens in webview
+        if ([[request.URL scheme] hasPrefix:@"http"]) {
+            [[UIApplication sharedApplication] openURL:request.URL];
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning

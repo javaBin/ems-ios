@@ -14,7 +14,7 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ConferenceCell" textLabel="Gf3-cq-Y9H" detailTextLabel="kTq-VJ-F0L" style="IBUITableViewCellStyleSubtitle" id="xbz-WH-aJW">
-                                <rect key="frame" x="0.0" y="54" width="768" height="45"/>
+                                <rect key="frame" x="0.0" y="54" width="768" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="45" y="1" width="678" height="43"/>
@@ -68,6 +68,9 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="960" id="fZa-4l-tM1"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="8wA-7M-7aZ" id="mOj-VN-X19"/>
+                                </connections>
                             </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -108,7 +111,7 @@
                         </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchCell" textLabel="akV-4R-bpH" style="IBUITableViewCellStyleDefault" id="Aq2-SF-Zc4">
-                                <rect key="frame" x="0.0" y="78" width="768" height="45"/>
+                                <rect key="frame" x="0.0" y="78" width="768" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="45" y="1" width="678" height="43"/>
