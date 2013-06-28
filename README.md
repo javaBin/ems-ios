@@ -18,3 +18,11 @@ The current keys it provides are:
 * google-analytics-tracking-id
 
 See EMS/EMS-Keys.sample.plist.
+
+## Testers
+
+Want to help us make the app better and more stable by being a beta tester?
+
+Sign up at http://tflig.ht/dMc3DB
+
+Note that we can't let everyone test - we have a limited number of slots available for device IDs but if you're interested - register your devices and we'll let you in if we can :)
