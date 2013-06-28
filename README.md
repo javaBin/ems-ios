@@ -17,4 +17,4 @@ The current keys it provides are:
 * crashlytics-api-key
 * google-analytics-tracking-id
 
-
+See EMS/EMS-Keys.sample.plist.
