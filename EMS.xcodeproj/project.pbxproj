@@ -43,8 +43,9 @@
 		83AC9468177CBF2E00E06345 /* 06-arrow-south@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC9460177CBF2E00E06345 /* 06-arrow-south@2x.png */; };
 		83AC9469177CBF2E00E06345 /* 09-arrow-west.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC9461177CBF2E00E06345 /* 09-arrow-west.png */; };
 		83AC946A177CBF2E00E06345 /* 09-arrow-west@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC9462177CBF2E00E06345 /* 09-arrow-west@2x.png */; };
-		83AF91B11771E7E100FAE20F /* EMSAdminViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91B01771E7E100FAE20F /* EMSAdminViewController.m */; };
 		83D5CBA417749EEA00527620 /* EMSFeatureConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */; };
+		83F455A1177D5B5C00BC79A1 /* EMSAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */; };
+		83F455A3177D5C0C00BC79A1 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 83F455A2177D5C0C00BC79A1 /* about.html */; };
 		F30FCBD317745F91003EEC3A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = F30FCBD217745F91003EEC3A /* Default.png */; };
 		F30FCBD517745F9C003EEC3A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F30FCBD417745F9C003EEC3A /* Default@2x.png */; };
 		F30FCBD717745FA4003EEC3A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F30FCBD617745FA4003EEC3A /* Default-568h@2x.png */; };
@@ -169,10 +170,11 @@
 		83AC9460177CBF2E00E06345 /* 06-arrow-south@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-arrow-south@2x.png"; sourceTree = "<group>"; };
 		83AC9461177CBF2E00E06345 /* 09-arrow-west.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "09-arrow-west.png"; sourceTree = "<group>"; };
 		83AC9462177CBF2E00E06345 /* 09-arrow-west@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "09-arrow-west@2x.png"; sourceTree = "<group>"; };
-		83AF91AF1771E7E100FAE20F /* EMSAdminViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSAdminViewController.h; sourceTree = "<group>"; };
-		83AF91B01771E7E100FAE20F /* EMSAdminViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSAdminViewController.m; sourceTree = "<group>"; };
 		83D5CBA217749EEA00527620 /* EMSFeatureConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSFeatureConfig.h; sourceTree = "<group>"; };
 		83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSFeatureConfig.m; sourceTree = "<group>"; };
+		83F4559F177D5B5C00BC79A1 /* EMSAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSAboutViewController.h; sourceTree = "<group>"; };
+		83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSAboutViewController.m; sourceTree = "<group>"; };
+		83F455A2177D5C0C00BC79A1 /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
 		F30FCBD217745F91003EEC3A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../../Default.png; sourceTree = "<group>"; };
 		F30FCBD417745F9C003EEC3A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../../Default@2x.png"; sourceTree = "<group>"; };
 		F30FCBD617745FA4003EEC3A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -400,8 +402,8 @@
 				F31862411770501800292371 /* EMSSessionCell.m */,
 				836331301770DD2B000F8D95 /* EMSSearchViewController.h */,
 				836331311770DD2B000F8D95 /* EMSSearchViewController.m */,
-				83AF91AF1771E7E100FAE20F /* EMSAdminViewController.h */,
-				83AF91B01771E7E100FAE20F /* EMSAdminViewController.m */,
+				83F4559F177D5B5C00BC79A1 /* EMSAboutViewController.h */,
+				83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */,
 			);
 			name = View;
 			path = EMS/View;
@@ -497,6 +499,7 @@
 				F35BB6D117685885009077D3 /* main.m */,
 				F35BB6D317685885009077D3 /* EMS-Prefix.pch */,
 				F3D5E2C31770946100888A7E /* style.css */,
+				83F455A2177D5C0C00BC79A1 /* about.html */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -658,6 +661,7 @@
 				83AC9468177CBF2E00E06345 /* 06-arrow-south@2x.png in Resources */,
 				83AC9469177CBF2E00E06345 /* 09-arrow-west.png in Resources */,
 				83AC946A177CBF2E00E06345 /* 09-arrow-west@2x.png in Resources */,
+				83F455A3177D5C0C00BC79A1 /* about.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -709,7 +713,6 @@
 				F31862421770501800292371 /* EMSSessionCell.m in Sources */,
 				F3D5E2C717709CD100888A7E /* EMSSpeakersRetriever.m in Sources */,
 				836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */,
-				83AF91B11771E7E100FAE20F /* EMSAdminViewController.m in Sources */,
 				F3AE33C71772EA93000EE4A9 /* Speaker.m in Sources */,
 				F3AE33CA1772EA93000EE4A9 /* Conference.m in Sources */,
 				F3AE33CD1772EA93000EE4A9 /* Keyword.m in Sources */,
@@ -723,6 +726,7 @@
 				F3E601DF1772F6BB000673AE /* NHCalendarEvent.m in Sources */,
 				83D5CBA417749EEA00527620 /* EMSFeatureConfig.m in Sources */,
 				F37953CB17797E41000B7CDD /* EMSAdvancedSearch.m in Sources */,
+				83F455A1177D5B5C00BC79A1 /* EMSAboutViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -42,16 +42,6 @@
     
     [self setUpRefreshControl];
 
-#ifndef DEBUG
-    self.navigationItem.rightBarButtonItem = nil;
-    self.navigationItem.rightBarButtonItem.enabled = NO;
-#else
-    if (![EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
-        self.navigationItem.rightBarButtonItem = nil;
-        self.navigationItem.rightBarButtonItem.enabled = NO;
-    }
-#endif
-
     NSError *error;
 
 	if (![[self fetchedResultsController] performFetch:&error]) {
