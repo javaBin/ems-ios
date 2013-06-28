@@ -170,10 +170,24 @@
                                 <outlet property="delegate" destination="Tnw-1T-TNg" id="uyl-ct-28G"/>
                             </connections>
                         </searchBar>
-                        <imageView key="tableFooterView" userInteractionEnabled="NO" contentMode="scaleToFill" id="pRp-6l-SFI">
+                        <view key="tableFooterView" contentMode="scaleToFill" id="gdR-6L-bQe">
                             <rect key="frame" x="0.0" y="960" width="768" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </imageView>
+                            <subviews>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Footer" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="748" translatesAutoresizingMaskIntoConstraints="NO" id="UEs-dd-Koj">
+                                    <fontDescription key="fontDescription" type="italicSystem" pointSize="12"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="UEs-dd-Koj" firstAttribute="top" secondItem="gdR-6L-bQe" secondAttribute="top" type="user" id="822-yp-C2o"/>
+                                <constraint firstAttribute="bottom" secondItem="UEs-dd-Koj" secondAttribute="bottom" type="user" id="8RY-97-x3u"/>
+                                <constraint firstAttribute="trailing" secondItem="UEs-dd-Koj" secondAttribute="trailing" constant="10" type="user" id="Zsh-bG-ogb"/>
+                                <constraint firstItem="UEs-dd-Koj" firstAttribute="leading" secondItem="gdR-6L-bQe" secondAttribute="leading" constant="10" type="user" id="vzX-So-wi8"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SessionCell" rowHeight="66" id="rTe-ES-WSG" customClass="EMSSessionCell">
                                 <rect key="frame" x="0.0" y="66" width="768" height="66"/>
@@ -308,6 +322,8 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
                     <connections>
                         <outlet property="advancedSearchButton" destination="XjE-3B-Jx5" id="zg9-Yf-J0i"/>
+                        <outlet property="footer" destination="gdR-6L-bQe" id="X8M-pm-DUk"/>
+                        <outlet property="footerLabel" destination="UEs-dd-Koj" id="Xl2-gL-D5v"/>
                         <outlet property="search" destination="Do0-h2-Su0" id="e4P-L7-j41"/>
                     </connections>
                 </tableViewController>
@@ -498,6 +514,8 @@
                 <relationship kind="action" name="segmentChanged:"/>
                 <relationship kind="action" name="toggleFavourite:"/>
                 <relationship kind="outlet" name="advancedSearchButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="footer" candidateClass="UIView"/>
+                <relationship kind="outlet" name="footerLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="search" candidateClass="UISearchBar"/>
             </relationships>
         </class>

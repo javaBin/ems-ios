@@ -61,6 +61,37 @@
     
     return nil;
 }
+
+- (void)initializeFooter {
+    if ([[self.fetchedResultsController sections] count] == 0) {
+        NSMutableString *labelText = [[NSMutableString alloc] init];
+        
+        [labelText appendString:@"No rows found."];
+        
+        if ([[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:[[self activeConference] href]]) {
+            [labelText appendString:@" Try"];
+            
+            if ([self.advancedSearch hasAdvancedSearch] || ![self.search.text isEqualToString:@""]) {
+                [labelText appendString:@" a less restrictive search,"];
+            }
+            
+            if (self.filterFavourites == YES || self.filterTime == YES) {
+                [labelText appendString:@" switching back to the full list,"];
+            }
+            
+            [labelText appendString:@" or you can refresh the session list with pull to refresh."];
+        } else {
+            [labelText appendString:@" Refreshing session list."];
+        }
+        
+        self.footerLabel.text = [NSString stringWithString:labelText];
+        
+        self.footer.hidden = NO;
+    } else {
+        self.footer.hidden = YES;
+    }
+}
+
 - (void)initializeFetchedResultsController {
     [self.fetchedResultsController.fetchRequest setPredicate:[self currentConferencePredicate]];
 
@@ -77,6 +108,8 @@
         
         CLS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
     }
+
+    [self initializeFooter];
     
     [self.tableView reloadData];
 
