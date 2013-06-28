@@ -20,6 +20,7 @@ li {
 h1 {
   font-size: 17px;
   font-weight: bold;
+  text-align: center;
 }
 h2 {
   font-size: 15px;
@@ -31,6 +32,13 @@ h3 {
   font-size: 15px;
   font-weight: normal;
 }
+h3.about {
+  color: #5E8DFF;
+}
 p img {
   margin-right: 5px;
+}
+a {
+  color: #5E8DFF;
+  text-decoration: none;
 }
