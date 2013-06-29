@@ -1,3 +1,12 @@
+2013-06-29  Chris Searle  <chris@klondyke-tp.home.chrissearle.org>
+
+	* 3.0b7
+	* Change to using parent/child managedObjectContexts instead of listeners
+	* Detail page navigation buttons
+	* About page
+	* Empty table footers to prompt user
+	* Issues fixed: #18, #43, #44
+
 2013-06-26  Chris Searle  <chris@chrissearle.org>
 
         * 3.0b6
