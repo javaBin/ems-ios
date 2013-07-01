@@ -817,9 +817,11 @@
 }
 
 - (IBAction)back:(UIStoryboardSegue *)segue {
-    if ([segue.identifier isEqualToString:@"popDetailSegue"]) {
-        EMSDetailViewController *detail = (EMSDetailViewController *)segue.sourceViewController;
-        [self.tableView scrollToRowAtIndexPath:detail.indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    if ([[self.fetchedResultsController sections] count] > 0) {
+        if ([segue.identifier isEqualToString:@"popDetailSegue"]) {
+            EMSDetailViewController *detail = (EMSDetailViewController *)segue.sourceViewController;
+            [self.tableView scrollToRowAtIndexPath:detail.indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+        }
     }
 }
 
