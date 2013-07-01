@@ -108,6 +108,10 @@
 		F3EC96AA1774780B004A5F25 /* beginner.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EC96A81774780B004A5F25 /* beginner.png */; };
 		F3EC96AD1774783E004A5F25 /* beginner-intermediate.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EC96AB1774783E004A5F25 /* beginner-intermediate.png */; };
 		F3EC96AE1774783E004A5F25 /* intermediate-advanced.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EC96AC1774783E004A5F25 /* intermediate-advanced.png */; };
+		F3EE4F1317818AC90008C1B2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EE4F1217818AC90008C1B2 /* Icon@2x.png */; };
+		F3EE4F1517818ADB0008C1B2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EE4F1417818ADB0008C1B2 /* Icon.png */; };
+		F3EE4F1817818B590008C1B2 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EE4F1617818B590008C1B2 /* Icon-72.png */; };
+		F3EE4F1917818B590008C1B2 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EE4F1717818B590008C1B2 /* Icon-72@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -260,6 +264,10 @@
 		F3EC96A81774780B004A5F25 /* beginner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beginner.png; sourceTree = "<group>"; };
 		F3EC96AB1774783E004A5F25 /* beginner-intermediate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beginner-intermediate.png"; sourceTree = "<group>"; };
 		F3EC96AC1774783E004A5F25 /* intermediate-advanced.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "intermediate-advanced.png"; sourceTree = "<group>"; };
+		F3EE4F1217818AC90008C1B2 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		F3EE4F1417818ADB0008C1B2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		F3EE4F1617818B590008C1B2 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		F3EE4F1717818B590008C1B2 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -437,6 +445,10 @@
 		F35BB6B917685885009077D3 = {
 			isa = PBXGroup;
 			children = (
+				F3EE4F1617818B590008C1B2 /* Icon-72.png */,
+				F3EE4F1717818B590008C1B2 /* Icon-72@2x.png */,
+				F3EE4F1417818ADB0008C1B2 /* Icon.png */,
+				F3EE4F1217818AC90008C1B2 /* Icon@2x.png */,
 				839BD650176F9BD400900712 /* Images */,
 				839BD637176F9BD400900712 /* Config */,
 				F3E601D61772F6A2000673AE /* externals */,
@@ -662,6 +674,10 @@
 				83AC9469177CBF2E00E06345 /* 09-arrow-west.png in Resources */,
 				83AC946A177CBF2E00E06345 /* 09-arrow-west@2x.png in Resources */,
 				83F455A3177D5C0C00BC79A1 /* about.html in Resources */,
+				F3EE4F1317818AC90008C1B2 /* Icon@2x.png in Resources */,
+				F3EE4F1517818ADB0008C1B2 /* Icon.png in Resources */,
+				F3EE4F1817818B590008C1B2 /* Icon-72.png in Resources */,
+				F3EE4F1917818B590008C1B2 /* Icon-72@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
