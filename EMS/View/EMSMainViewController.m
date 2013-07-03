@@ -643,6 +643,7 @@
     dispatch_sync(dispatch_get_main_queue(), ^{
         [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
         [self.refreshControl endRefreshing];
+        [self initializeFooter];
     });
 }
 
