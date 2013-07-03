@@ -36,9 +36,14 @@
     [dateFormatterTime setDateFormat:@"HH:mm"];
 
     NSMutableString *title = [[NSMutableString alloc] init];
-    [title appendString:[NSString stringWithFormat:@"%@ - %@",
-                         [dateFormatterTime stringFromDate:session.slot.start],
-                         [dateFormatterTime stringFromDate:session.slot.end]]];
+    
+    if (session.slot) {
+        [title appendString:[NSString stringWithFormat:@"%@ - %@",
+                             [dateFormatterTime stringFromDate:session.slot.start],
+                             [dateFormatterTime stringFromDate:session.slot.end]]];
+    } else {
+        [title appendString:session.slotName];
+    }
 
     if (session.roomName != nil) {
         [title appendString:[NSString stringWithFormat:@" : %@", session.roomName]];

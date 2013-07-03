@@ -382,6 +382,8 @@
         } else {
             session.slotName = [self getSlotNameForSlot:slot forConference:conference];
         }
+    } else {
+        session.slotName = @"Time slot not yet allocated";
     }
 
     if (ems.speakers != nil) {

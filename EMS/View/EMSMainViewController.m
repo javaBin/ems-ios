@@ -409,14 +409,16 @@
                                    entityForName:@"Session" inManagedObjectContext:managedObjectContext];
     [fetchRequest setEntity:entity];
     
-    NSSortDescriptor *sortSlot = [[NSSortDescriptor alloc]
-                                  initWithKey:@"slotName" ascending:YES];
-    NSSortDescriptor *sortRoom = [[NSSortDescriptor alloc]
-                                  initWithKey:@"room.name" ascending:YES];
-    NSSortDescriptor *sortTime = [[NSSortDescriptor alloc]
-                                  initWithKey:@"slot.start" ascending:YES];
+    NSSortDescriptor *sortSlot  = [[NSSortDescriptor alloc]
+                                   initWithKey:@"slotName" ascending:YES];
+    NSSortDescriptor *sortRoom  = [[NSSortDescriptor alloc]
+                                   initWithKey:@"room.name" ascending:YES];
+    NSSortDescriptor *sortTime  = [[NSSortDescriptor alloc]
+                                   initWithKey:@"slot.start" ascending:YES];
+    NSSortDescriptor *sortTitle = [[NSSortDescriptor alloc]
+                                   initWithKey:@"title" ascending:YES];
 
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortSlot, sortRoom, sortTime, nil]];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortSlot, sortRoom, sortTime, sortTitle, nil]];
     [fetchRequest setFetchBatchSize:20];
     
     NSPredicate *conferencePredicate = [self currentConferencePredicate];
@@ -503,7 +505,11 @@
     [level setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png", session.level]]];
     
     sessionCell.title.text = session.title;
-    sessionCell.room.text = session.room.name;
+    if (session.room) {
+        sessionCell.room.text = session.room.name;
+    } else {
+        sessionCell.room.text = @"";
+    }
 
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         sessionCell.summary.text = session.summary;
