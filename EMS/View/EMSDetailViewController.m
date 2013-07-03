@@ -256,21 +256,29 @@
 - (void)share:(id)sender {
     [Crashlytics setObjectValue:self.session.href forKey:@"lastSharedSession"];
     
-    // More info - http://blogs.captechconsulting.com/blog/steven-beyers/cocoaconf-dc-recap-sharing-uiactivityviewcontroller
-
     NSString *shareString = [NSString stringWithFormat:@"%@ - %@", self.session.conference.name, self.session.title];
     
     CLS_LOG(@"About to share for %@", shareString);
-    
+
     // TODO - web URL?
     // NSURL *shareUrl = [NSURL URLWithString:@"http://www.java.no"];
     
-    NSArray *activityItems = [NSArray arrayWithObjects:shareString, /*shareUrl, */ [self createCalendarEvent], nil];
+    NSMutableArray *shareItems = [[NSMutableArray alloc] init];
+    NSMutableArray *shareActivities = [[NSMutableArray alloc] init];
     
-    NSArray *activities = @[[[NHCalendarActivity alloc] init]];
+    [shareItems addObject:shareString];
+    
+    if (self.session.slot) {
+        [shareItems addObject:[self createCalendarEvent]];
+        [shareActivities addObject:[[NHCalendarActivity alloc] init]];
+    }
+    
+    NSArray *activityItems = [NSArray arrayWithArray:shareItems];
+    NSArray *activities = [NSArray arrayWithArray:shareActivities];
 
-    __block UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems
-                                                                                         applicationActivities:activities];
+    __block UIActivityViewController *activityViewController = [[UIActivityViewController alloc]
+                                                                initWithActivityItems:activityItems
+                                                                applicationActivities:activities];
     
     activityViewController.excludedActivityTypes = @[UIActivityTypePrint,
                                                      UIActivityTypeCopyToPasteboard,
