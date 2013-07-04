@@ -22,6 +22,8 @@
 #import "NHCalendarActivity.h"
 #import "NHCalendarEvent.h"
 
+#import "MMMarkdown.h"
+
 @interface EMSDetailViewController ()
 
 @end
@@ -326,9 +328,23 @@
 }
 
 - (NSString *)paraContent:(NSString *)text {
-    NSArray *lines = [text componentsSeparatedByString:@"\n"];
+    if ([EMSFeatureConfig isFeatureEnabled:fMarkdown]) {
+        NSError  *error = nil;
+        
+        NSString *htmlString = [MMMarkdown HTMLStringWithMarkdown:text error:&error];
+        
+        if (!htmlString) {
+            CLS_LOG(@"Unable to convert markdown %@ - %@", error, [error userInfo]);
+            
+            return text;
+        }
+        
+        return htmlString;
+    } else {
+        NSArray *lines = [text componentsSeparatedByString:@"\n"];
     
-    return [NSString stringWithFormat:@"<p>%@</p>", [lines componentsJoinedByString:@"</p><p>"]];
+        return [NSString stringWithFormat:@"<p>%@</p>", [lines componentsJoinedByString:@"</p><p>"]];
+    }
 }
 
 - (NSString *)levelContent:(NSString *)level {
@@ -647,6 +663,18 @@
     }
 
     return [NSIndexPath indexPathForRow:row inSection:section];
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    if (navigationType == UIWebViewNavigationTypeLinkClicked) {
+        // http:// -> safari, rest (file:// etc) opens in webview
+        if ([[request.URL scheme] hasPrefix:@"http"]) {
+            [[UIApplication sharedApplication] openURL:request.URL];
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 @end

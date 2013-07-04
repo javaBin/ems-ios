@@ -43,6 +43,10 @@
     if (feature == fBioPics) {
         return [[features objectForKey:@"speaker-thumbnails"] boolValue];
     }
+    
+    if (feature == fMarkdown) {
+        return [[features objectForKey:@"markdown"] boolValue];
+    }
 
     return NO;
 }

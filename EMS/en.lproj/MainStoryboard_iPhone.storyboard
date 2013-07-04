@@ -106,7 +106,7 @@
                         </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchCell" textLabel="SdI-BN-OgO" style="IBUITableViewCellStyleDefault" id="zFU-A1-fQ5">
-                                <rect key="frame" x="0.0" y="80" width="320" height="45"/>
+                                <rect key="frame" x="0.0" y="80" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -312,6 +312,7 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
                                 <connections>
+                                    <outlet property="delegate" destination="3lg-Sh-FWj" id="g7x-ce-bAf"/>
                                     <outletCollection property="gestureRecognizers" destination="vOx-jJ-27o" appends="YES" id="t2u-id-JhJ"/>
                                 </connections>
                             </webView>
@@ -446,6 +447,74 @@
         <image name="28-star.png" width="26" height="26"/>
         <image name="298-circlex.png" width="22" height="22"/>
     </resources>
+    <classes>
+        <class className="EMSAboutViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSAboutViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="web" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+        <class className="EMSDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSDetailViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="clearImageCache:"/>
+                <relationship kind="action" name="moveNextSection:"/>
+                <relationship kind="action" name="moveNextSession:"/>
+                <relationship kind="action" name="movePreviousSection:"/>
+                <relationship kind="action" name="movePreviousSession:"/>
+                <relationship kind="action" name="share:"/>
+                <relationship kind="action" name="toggleFavourite:"/>
+                <relationship kind="outlet" name="button" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="nextSectionButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="nextSessionButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="previousSectionButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="previousSessionButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+        <class className="EMSMainViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSMainViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="back:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="action" name="segmentChanged:"/>
+                <relationship kind="action" name="toggleFavourite:"/>
+                <relationship kind="outlet" name="advancedSearchButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="footer" candidateClass="UIView"/>
+                <relationship kind="outlet" name="footerLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="search" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="EMSSearchViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSSearchViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="apply:"/>
+                <relationship kind="action" name="clear:"/>
+                <relationship kind="outlet" name="search" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="EMSSessionCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSSessionCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="icon" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="keywords" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="level" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="room" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="speaker" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="summary" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="title" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="EMSSettingsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSSettingsViewController.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="UIStoryboardSegue" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

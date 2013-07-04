@@ -91,6 +91,7 @@
 		F3939E50176887090078C709 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3939E4F176887090078C709 /* CoreData.framework */; };
 		F3939E531768879C0078C709 /* EMSCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */; };
 		F3939E611769C3CE0078C709 /* EMSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E601769C3CD0078C709 /* EMSModel.m */; };
+		F399F0831785576500FB9976 /* libMMMarkdown-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F399F0811785576500FB9976 /* libMMMarkdown-iOS.a */; };
 		F3AE33C71772EA93000EE4A9 /* Speaker.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C61772EA93000EE4A9 /* Speaker.m */; };
 		F3AE33CA1772EA93000EE4A9 /* Conference.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C91772EA93000EE4A9 /* Conference.m */; };
 		F3AE33CD1772EA93000EE4A9 /* Keyword.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33CC1772EA93000EE4A9 /* Keyword.m */; };
@@ -239,6 +240,8 @@
 		F3939E521768879C0078C709 /* EMSCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EMSCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		F3939E5F1769C3CD0078C709 /* EMSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSModel.h; sourceTree = "<group>"; };
 		F3939E601769C3CD0078C709 /* EMSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSModel.m; sourceTree = "<group>"; };
+		F399F0811785576500FB9976 /* libMMMarkdown-iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libMMMarkdown-iOS.a"; path = "EMS/externals/MMMarkdown/libMMMarkdown-iOS.a"; sourceTree = "<group>"; };
+		F399F0821785576500FB9976 /* MMMarkdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMMarkdown.h; path = EMS/externals/MMMarkdown/MMMarkdown.h; sourceTree = "<group>"; };
 		F3AE33C51772EA93000EE4A9 /* Speaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Speaker.h; path = EMS/EMSMO/Speaker.h; sourceTree = "<group>"; };
 		F3AE33C61772EA93000EE4A9 /* Speaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Speaker.m; path = EMS/EMSMO/Speaker.m; sourceTree = "<group>"; };
 		F3AE33C81772EA93000EE4A9 /* Conference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Conference.h; path = EMS/EMSMO/Conference.h; sourceTree = "<group>"; };
@@ -290,6 +293,7 @@
 				F35BB6CA17685885009077D3 /* CoreGraphics.framework in Frameworks */,
 				830C7D79176F8B4900D38B46 /* Crashlytics.framework in Frameworks */,
 				833EF2D91774E475005E24A3 /* libGoogleAnalytics.a in Frameworks */,
+				F399F0831785576500FB9976 /* libMMMarkdown-iOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,9 +546,19 @@
 			path = EMS/CollectionJSON;
 			sourceTree = "<group>";
 		};
+		F399F0801785574F00FB9976 /* MMMarkdown */ = {
+			isa = PBXGroup;
+			children = (
+				F399F0811785576500FB9976 /* libMMMarkdown-iOS.a */,
+				F399F0821785576500FB9976 /* MMMarkdown.h */,
+			);
+			name = MMMarkdown;
+			sourceTree = "<group>";
+		};
 		F3E601D61772F6A2000673AE /* externals */ = {
 			isa = PBXGroup;
 			children = (
+				F399F0801785574F00FB9976 /* MMMarkdown */,
 				833EF2D21774E45D005E24A3 /* GoogleAnalytics */,
 				F35BB6EE17686478009077D3 /* CollectionJSON */,
 				F3E601D71772F6BB000673AE /* NHCalendarActivity */,
@@ -863,6 +877,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/EMS/externals/MMMarkdown\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
@@ -888,6 +903,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/EMS/externals/MMMarkdown\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
