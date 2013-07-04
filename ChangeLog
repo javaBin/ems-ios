@@ -1,11 +1,34 @@
-2013-06-29  Chris Searle  <chris@klondyke-tp.home.chrissearle.org>
+2013-07-03  Chris Searle  <chris@chrissearle.org>
 
-	* 3.0b7
-	* Change to using parent/child managedObjectContexts instead of listeners
-	* Detail page navigation buttons
-	* About page
-	* Empty table footers to prompt user
-	* Issues fixed: #18, #43, #44
+        * 3.3b11
+        * Don't add calendar share option if session has no time slot
+        * Submitted to Apple
+
+2013-07-03  Chris Searle  <chris@chrissearle.org>
+
+        * 3.2b10
+        * Update footer after refresh
+
+2013-07-03  Chris Searle  <chris@chrissearle.org>
+
+        * 3.2b9
+        * Handle sessions without room or time slot
+        * Fix crash on returning to favourites list from detail view after removing last favourite (#46)
+
+2013-07-01  Chris Searle  <chris@chrissearle.org>
+
+        * 3.1b8
+        * Branding
+        * Submitted to Apple
+
+2013-06-29  Chris Searle  <chris@chrissearle.org>
+
+        * 3.0b7
+        * Change to using parent/child managedObjectContexts instead of listeners
+        * Detail page navigation buttons
+        * About page
+        * Empty table footers to prompt user
+        * Issues fixed: #18, #43, #44
 
 2013-06-26  Chris Searle  <chris@chrissearle.org>
 
