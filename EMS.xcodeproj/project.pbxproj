@@ -12,7 +12,6 @@
 		83172C241770FE67000135E6 /* 11-clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C201770FE67000135E6 /* 11-clock@2x.png */; };
 		83172C251770FE67000135E6 /* 259-list.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C211770FE67000135E6 /* 259-list.png */; };
 		83172C261770FE67000135E6 /* 259-list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C221770FE67000135E6 /* 259-list@2x.png */; };
-		833EF2D91774E475005E24A3 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 833EF2D81774E475005E24A3 /* libGoogleAnalytics.a */; };
 		833EF2DB1774E49F005E24A3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */; };
 		836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836331311770DD2B000F8D95 /* EMSSearchViewController.m */; };
 		836331351770EF78000F8D95 /* 298-circlex.png in Resources */ = {isa = PBXBuildFile; fileRef = 836331331770EF78000F8D95 /* 298-circlex.png */; };
@@ -46,6 +45,7 @@
 		83D5CBA417749EEA00527620 /* EMSFeatureConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */; };
 		83F455A1177D5B5C00BC79A1 /* EMSAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */; };
 		83F455A3177D5C0C00BC79A1 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 83F455A2177D5C0C00BC79A1 /* about.html */; };
+		85E86E298BD74799AE57514E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C5F2910AEBD4413B205CE89 /* libPods.a */; };
 		F30FCBD317745F91003EEC3A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = F30FCBD217745F91003EEC3A /* Default.png */; };
 		F30FCBD517745F9C003EEC3A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F30FCBD417745F9C003EEC3A /* Default@2x.png */; };
 		F30FCBD717745FA4003EEC3A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F30FCBD617745FA4003EEC3A /* Default-568h@2x.png */; };
@@ -82,12 +82,7 @@
 		F35BB6D617685885009077D3 /* EMSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6D517685885009077D3 /* EMSAppDelegate.m */; };
 		F35BB6DF17685885009077D3 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6DD17685885009077D3 /* MainStoryboard_iPhone.storyboard */; };
 		F35BB6E217685885009077D3 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6E017685885009077D3 /* MainStoryboard_iPad.storyboard */; };
-		F35BB6FD17686478009077D3 /* CJCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6F017686478009077D3 /* CJCollection.m */; };
-		F35BB6FE17686478009077D3 /* CJItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6F217686478009077D3 /* CJItem.m */; };
-		F35BB6FF17686478009077D3 /* CJLink.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6F417686478009077D3 /* CJLink.m */; };
-		F35BB70017686478009077D3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6F517686478009077D3 /* README.md */; };
 		F37953CB17797E41000B7CDD /* EMSAdvancedSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = F37953CA17797E41000B7CDD /* EMSAdvancedSearch.m */; };
-		F38ABF161782C01B003BDFC2 /* CJQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = F38ABF151782C01B003BDFC2 /* CJQuery.m */; };
 		F3939E50176887090078C709 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3939E4F176887090078C709 /* CoreData.framework */; };
 		F3939E531768879C0078C709 /* EMSCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */; };
 		F3939E611769C3CE0078C709 /* EMSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E601769C3CD0078C709 /* EMSModel.m */; };
@@ -103,9 +98,6 @@
 		F3AE33DF1772EA94000EE4A9 /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33DE1772EA94000EE4A9 /* Session.m */; };
 		F3D5E2C41770946100888A7E /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = F3D5E2C31770946100888A7E /* style.css */; };
 		F3D5E2C717709CD100888A7E /* EMSSpeakersRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = F3D5E2C617709CD000888A7E /* EMSSpeakersRetriever.m */; };
-		F3E601DD1772F6BB000673AE /* NHCalendarActivity.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F3E601D81772F6BB000673AE /* NHCalendarActivity.bundle */; };
-		F3E601DE1772F6BB000673AE /* NHCalendarActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = F3E601DA1772F6BB000673AE /* NHCalendarActivity.m */; };
-		F3E601DF1772F6BB000673AE /* NHCalendarEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F3E601DC1772F6BB000673AE /* NHCalendarEvent.m */; };
 		F3E601E11772F7EC000673AE /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3E601E01772F7EC000673AE /* EventKit.framework */; };
 		F3EC96A217747625004A5F25 /* advanced.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EC969D17747625004A5F25 /* advanced.png */; };
 		F3EC96A317747625004A5F25 /* intermediate.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EC969E17747625004A5F25 /* intermediate.png */; };
@@ -119,17 +111,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C5F2910AEBD4413B205CE89 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		830C7D78176F8B4900D38B46 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		83172C1F1770FE67000135E6 /* 11-clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-clock.png"; sourceTree = "<group>"; };
 		83172C201770FE67000135E6 /* 11-clock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-clock@2x.png"; sourceTree = "<group>"; };
 		83172C211770FE67000135E6 /* 259-list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "259-list.png"; sourceTree = "<group>"; };
 		83172C221770FE67000135E6 /* 259-list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "259-list@2x.png"; sourceTree = "<group>"; };
-		833EF2D31774E475005E24A3 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
-		833EF2D41774E475005E24A3 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
-		833EF2D51774E475005E24A3 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
-		833EF2D61774E475005E24A3 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransaction.h; sourceTree = "<group>"; };
-		833EF2D71774E475005E24A3 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransactionItem.h; sourceTree = "<group>"; };
-		833EF2D81774E475005E24A3 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
 		833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		836331301770DD2B000F8D95 /* EMSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSearchViewController.h; sourceTree = "<group>"; };
 		836331311770DD2B000F8D95 /* EMSSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSearchViewController.m; sourceTree = "<group>"; };
@@ -183,6 +170,7 @@
 		83F4559F177D5B5C00BC79A1 /* EMSAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSAboutViewController.h; sourceTree = "<group>"; };
 		83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSAboutViewController.m; sourceTree = "<group>"; };
 		83F455A2177D5C0C00BC79A1 /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
+		CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		F30FCBD217745F91003EEC3A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../../Default.png; sourceTree = "<group>"; };
 		F30FCBD417745F9C003EEC3A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../../Default@2x.png"; sourceTree = "<group>"; };
 		F30FCBD617745FA4003EEC3A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -225,17 +213,8 @@
 		F35BB6D517685885009077D3 /* EMSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EMSAppDelegate.m; sourceTree = "<group>"; };
 		F35BB6DE17685885009077D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		F35BB6E117685885009077D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		F35BB6EF17686478009077D3 /* CJCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJCollection.h; sourceTree = "<group>"; };
-		F35BB6F017686478009077D3 /* CJCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJCollection.m; sourceTree = "<group>"; };
-		F35BB6F117686478009077D3 /* CJItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJItem.h; sourceTree = "<group>"; };
-		F35BB6F217686478009077D3 /* CJItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJItem.m; sourceTree = "<group>"; };
-		F35BB6F317686478009077D3 /* CJLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJLink.h; sourceTree = "<group>"; };
-		F35BB6F417686478009077D3 /* CJLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJLink.m; sourceTree = "<group>"; };
-		F35BB6F517686478009077D3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		F37953C917797E41000B7CDD /* EMSAdvancedSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSAdvancedSearch.h; sourceTree = "<group>"; };
 		F37953CA17797E41000B7CDD /* EMSAdvancedSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSAdvancedSearch.m; sourceTree = "<group>"; };
-		F38ABF141782C01B003BDFC2 /* CJQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJQuery.h; sourceTree = "<group>"; };
-		F38ABF151782C01B003BDFC2 /* CJQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJQuery.m; sourceTree = "<group>"; };
 		F3939E4F176887090078C709 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		F3939E521768879C0078C709 /* EMSCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EMSCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		F3939E5F1769C3CD0078C709 /* EMSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSModel.h; sourceTree = "<group>"; };
@@ -263,11 +242,6 @@
 		F3D5E2C31770946100888A7E /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		F3D5E2C517709CD000888A7E /* EMSSpeakersRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSpeakersRetriever.h; sourceTree = "<group>"; };
 		F3D5E2C617709CD000888A7E /* EMSSpeakersRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSpeakersRetriever.m; sourceTree = "<group>"; };
-		F3E601D81772F6BB000673AE /* NHCalendarActivity.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = NHCalendarActivity.bundle; sourceTree = "<group>"; };
-		F3E601D91772F6BB000673AE /* NHCalendarActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NHCalendarActivity.h; sourceTree = "<group>"; };
-		F3E601DA1772F6BB000673AE /* NHCalendarActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NHCalendarActivity.m; sourceTree = "<group>"; };
-		F3E601DB1772F6BB000673AE /* NHCalendarEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NHCalendarEvent.h; sourceTree = "<group>"; };
-		F3E601DC1772F6BB000673AE /* NHCalendarEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NHCalendarEvent.m; sourceTree = "<group>"; };
 		F3E601E01772F7EC000673AE /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		F3EC969D17747625004A5F25 /* advanced.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = advanced.png; sourceTree = "<group>"; };
 		F3EC969E17747625004A5F25 /* intermediate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intermediate.png; sourceTree = "<group>"; };
@@ -292,27 +266,14 @@
 				F35BB6C817685885009077D3 /* Foundation.framework in Frameworks */,
 				F35BB6CA17685885009077D3 /* CoreGraphics.framework in Frameworks */,
 				830C7D79176F8B4900D38B46 /* Crashlytics.framework in Frameworks */,
-				833EF2D91774E475005E24A3 /* libGoogleAnalytics.a in Frameworks */,
 				F399F0831785576500FB9976 /* libMMMarkdown-iOS.a in Frameworks */,
+				85E86E298BD74799AE57514E /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		833EF2D21774E45D005E24A3 /* GoogleAnalytics */ = {
-			isa = PBXGroup;
-			children = (
-				833EF2D31774E475005E24A3 /* GAI.h */,
-				833EF2D41774E475005E24A3 /* GAITrackedViewController.h */,
-				833EF2D51774E475005E24A3 /* GAITracker.h */,
-				833EF2D61774E475005E24A3 /* GAITransaction.h */,
-				833EF2D71774E475005E24A3 /* GAITransactionItem.h */,
-				833EF2D81774E475005E24A3 /* libGoogleAnalytics.a */,
-			);
-			name = GoogleAnalytics;
-			sourceTree = "<group>";
-		};
 		839BD637176F9BD400900712 /* Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -471,6 +432,7 @@
 				F35BB6CB17685885009077D3 /* App */,
 				F35BB6C417685885009077D3 /* Frameworks */,
 				F35BB6C317685885009077D3 /* Products */,
+				CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -492,6 +454,7 @@
 				F35BB6C517685885009077D3 /* UIKit.framework */,
 				F35BB6C717685885009077D3 /* Foundation.framework */,
 				F35BB6C917685885009077D3 /* CoreGraphics.framework */,
+				0C5F2910AEBD4413B205CE89 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -529,23 +492,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		F35BB6EE17686478009077D3 /* CollectionJSON */ = {
-			isa = PBXGroup;
-			children = (
-				F35BB6EF17686478009077D3 /* CJCollection.h */,
-				F35BB6F017686478009077D3 /* CJCollection.m */,
-				F35BB6F117686478009077D3 /* CJItem.h */,
-				F35BB6F217686478009077D3 /* CJItem.m */,
-				F35BB6F317686478009077D3 /* CJLink.h */,
-				F35BB6F417686478009077D3 /* CJLink.m */,
-				F38ABF141782C01B003BDFC2 /* CJQuery.h */,
-				F38ABF151782C01B003BDFC2 /* CJQuery.m */,
-				F35BB6F517686478009077D3 /* README.md */,
-			);
-			name = CollectionJSON;
-			path = EMS/CollectionJSON;
-			sourceTree = "<group>";
-		};
 		F399F0801785574F00FB9976 /* MMMarkdown */ = {
 			isa = PBXGroup;
 			children = (
@@ -559,24 +505,8 @@
 			isa = PBXGroup;
 			children = (
 				F399F0801785574F00FB9976 /* MMMarkdown */,
-				833EF2D21774E45D005E24A3 /* GoogleAnalytics */,
-				F35BB6EE17686478009077D3 /* CollectionJSON */,
-				F3E601D71772F6BB000673AE /* NHCalendarActivity */,
 			);
 			name = externals;
-			sourceTree = "<group>";
-		};
-		F3E601D71772F6BB000673AE /* NHCalendarActivity */ = {
-			isa = PBXGroup;
-			children = (
-				F3E601D81772F6BB000673AE /* NHCalendarActivity.bundle */,
-				F3E601D91772F6BB000673AE /* NHCalendarActivity.h */,
-				F3E601DA1772F6BB000673AE /* NHCalendarActivity.m */,
-				F3E601DB1772F6BB000673AE /* NHCalendarEvent.h */,
-				F3E601DC1772F6BB000673AE /* NHCalendarEvent.m */,
-			);
-			name = NHCalendarActivity;
-			path = EMS/externals/NHCalendarActivity;
 			sourceTree = "<group>";
 		};
 		F3EC969C17747625004A5F25 /* levels */ = {
@@ -599,10 +529,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F35BB6E817685885009077D3 /* Build configuration list for PBXNativeTarget "EMS" */;
 			buildPhases = (
+				F15340BFC7864A9580FD3334 /* Check Pods Manifest.lock */,
 				F35BB6BE17685885009077D3 /* Sources */,
 				F35BB6BF17685885009077D3 /* Frameworks */,
 				F35BB6C017685885009077D3 /* Resources */,
 				830C7D77176F8AB200D38B46 /* ShellScript */,
+				4A77BC0944B9460287F79FE8 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -648,7 +580,6 @@
 				F35BB6D017685885009077D3 /* InfoPlist.strings in Resources */,
 				F35BB6DF17685885009077D3 /* MainStoryboard_iPhone.storyboard in Resources */,
 				F35BB6E217685885009077D3 /* MainStoryboard_iPad.storyboard in Resources */,
-				F35BB70017686478009077D3 /* README.md in Resources */,
 				839BD65C176F9BD400900712 /* EMS-Config.plist in Resources */,
 				839BD65D176F9BD400900712 /* EMS-Keys.plist in Resources */,
 				F3513B47177074200042D07A /* 19-gear.png in Resources */,
@@ -676,7 +607,6 @@
 				83172C241770FE67000135E6 /* 11-clock@2x.png in Resources */,
 				83172C251770FE67000135E6 /* 259-list.png in Resources */,
 				83172C261770FE67000135E6 /* 259-list@2x.png in Resources */,
-				F3E601DD1772F6BB000673AE /* NHCalendarActivity.bundle in Resources */,
 				F30FCBD317745F91003EEC3A /* Default.png in Resources */,
 				F30FCBD517745F9C003EEC3A /* Default@2x.png in Resources */,
 				F30FCBD717745FA4003EEC3A /* Default-568h@2x.png in Resources */,
@@ -711,6 +641,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4A77BC0944B9460287F79FE8 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		830C7D77176F8AB200D38B46 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -724,6 +669,21 @@
 			shellPath = /bin/sh;
 			shellScript = "./Crashlytics.framework/run 76243485dba0d4938b2917f78d8106a6ff1d0d0b";
 		};
+		F15340BFC7864A9580FD3334 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -733,9 +693,6 @@
 			files = (
 				F35BB6D217685885009077D3 /* main.m in Sources */,
 				F35BB6D617685885009077D3 /* EMSAppDelegate.m in Sources */,
-				F35BB6FD17686478009077D3 /* CJCollection.m in Sources */,
-				F35BB6FE17686478009077D3 /* CJItem.m in Sources */,
-				F35BB6FF17686478009077D3 /* CJLink.m in Sources */,
 				F3939E531768879C0078C709 /* EMSCoreDataModel.xcdatamodeld in Sources */,
 				F3939E611769C3CE0078C709 /* EMSModel.m in Sources */,
 				839BD65E176F9BD400900712 /* EMSConference.m in Sources */,
@@ -765,12 +722,9 @@
 				F3AE33D91772EA94000EE4A9 /* ConferenceKeyword.m in Sources */,
 				F3AE33DC1772EA94000EE4A9 /* ConferenceType.m in Sources */,
 				F3AE33DF1772EA94000EE4A9 /* Session.m in Sources */,
-				F3E601DE1772F6BB000673AE /* NHCalendarActivity.m in Sources */,
-				F3E601DF1772F6BB000673AE /* NHCalendarEvent.m in Sources */,
 				83D5CBA417749EEA00527620 /* EMSFeatureConfig.m in Sources */,
 				F37953CB17797E41000B7CDD /* EMSAdvancedSearch.m in Sources */,
 				83F455A1177D5B5C00BC79A1 /* EMSAboutViewController.m in Sources */,
-				F38ABF161782C01B003BDFC2 /* CJQuery.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -864,6 +818,7 @@
 		};
 		F35BB6E917685885009077D3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 11;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -890,6 +845,7 @@
 		};
 		F35BB6EA17685885009077D3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 11;
 				FRAMEWORK_SEARCH_PATHS = (

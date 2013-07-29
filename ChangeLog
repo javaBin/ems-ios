@@ -1,3 +1,7 @@
+2013-07-29  Chris Searle  <chris@chrissearle.org>
+
+        * Migrate most externals to cocoapods
+
 2013-07-03  Chris Searle  <chris@chrissearle.org>
 
         * 3.3b11
