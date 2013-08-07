@@ -6,6 +6,8 @@
 	<string>http://dav.java.no/resources/iOS/EMS-Config.plist</string>
 	<key>features</key>
 	<dict>
+		<key>links</key>
+		<true/>
 		<key>markdown</key>
 		<true/>
 		<key>speaker-thumbnails</key>

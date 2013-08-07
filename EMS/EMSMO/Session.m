@@ -36,5 +36,6 @@
 @dynamic room;
 @dynamic slot;
 @dynamic speakers;
+@dynamic videoLink;
 
 @end

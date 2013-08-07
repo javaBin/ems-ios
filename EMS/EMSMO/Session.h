@@ -28,6 +28,7 @@
 @property (nonatomic, retain) NSString * state;
 @property (nonatomic, retain) NSString * summary;
 @property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSString * videoLink;
 @property (nonatomic, retain) Conference *conference;
 @property (nonatomic, retain) NSSet *keywords;
 @property (nonatomic, retain) Room *room;

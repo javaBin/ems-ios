@@ -286,6 +286,7 @@
     session.language = ems.language;
     session.summary = ems.summary;
     session.level = ems.level;
+    session.videoLink = [ems.videoLink absoluteString];
 
     NSSet *foundLevels = [conference.conferenceLevels objectsPassingTest:^BOOL(id obj, BOOL *stop) {
         ConferenceLevel *conferenceLevel = (ConferenceLevel *)obj;

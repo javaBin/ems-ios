@@ -81,6 +81,9 @@ NSDate *timer;
         [item.links enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             CJLink *link = (CJLink *)obj;
             
+            if ([@"alternate video" isEqualToString:link.rel]) {
+                session.videoLink = link.href;
+            }
             if ([@"attachment collection" isEqualToString:link.rel]) {
                 session.attachmentCollection = link.href;
             }

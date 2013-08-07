@@ -48,6 +48,10 @@
         return [[features objectForKey:@"markdown"] boolValue];
     }
 
+    if (feature == fLinks) {
+        return [[features objectForKey:@"links"] boolValue];
+    }
+
     return NO;
 }
 

@@ -315,16 +315,33 @@
 					  "<body>"
 					  "%@"
                       "%@"
+                      "%@"
 					  "%@"
 					  "%@"
 					  "</body>"
 					  "</html>",
 					  [self paraContent:session.body],
+                      [self linkContent:session],
                       [self levelContent:session.level],
 					  [self keywordContent:session.keywords],
 					  [self speakerContent:session.speakers]];
 
 	return page;
+}
+
+- (NSString *)linkContent:(Session *)session {
+    NSMutableString *linkContent = [[NSMutableString alloc] init];
+    
+    if ([EMSFeatureConfig isFeatureEnabled:fLinks]) {
+        if (session.videoLink) {
+            [linkContent appendString:@"<h2>Links</h2>"];
+            [linkContent appendString:@"<ul>"];
+            [linkContent appendFormat:@"<li><a href='%@'>Video</a></li>", session.videoLink];
+            [linkContent appendString:@"</ul>"];
+        }
+    }
+    
+    return [NSString stringWithString:linkContent];
 }
 
 - (NSString *)paraContent:(NSString *)text {
