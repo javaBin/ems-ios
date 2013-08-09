@@ -504,6 +504,14 @@
     
     [level setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png", session.level]]];
     
+    UIImageView *video = sessionCell.video;
+    
+    if (session.videoLink) {
+        [video setImage:[UIImage imageNamed:@"70-tv"]];
+    } else {
+        [video setImage:nil];
+    }
+    
     sessionCell.title.text = session.title;
     if (session.room) {
         sessionCell.room.text = session.room.name;

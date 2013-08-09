@@ -14,7 +14,7 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ConferenceCell" textLabel="aZM-X2-agk" detailTextLabel="5qT-UM-TbQ" style="IBUITableViewCellStyleSubtitle" id="GGz-Ev-QTH">
-                                <rect key="frame" x="0.0" y="46" width="320" height="45"/>
+                                <rect key="frame" x="0.0" y="46" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -234,24 +234,31 @@
                                                 <constraint firstAttribute="height" constant="9" id="djy-bU-cJ8"/>
                                             </constraints>
                                         </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Phl-mS-cy1">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="8" id="8Iq-WS-lbI"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
+                                    <constraint firstItem="YNX-Sn-TQr" firstAttribute="leading" secondItem="B78-nb-RfB" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="0yd-lc-Jm3"/>
                                     <constraint firstItem="gYM-vI-9Vp" firstAttribute="leading" secondItem="PYN-Ut-rdj" secondAttribute="leading" type="default" id="3gG-V6-RZZ"/>
-                                    <constraint firstItem="YNX-Sn-TQr" firstAttribute="baseline" secondItem="B78-nb-RfB" secondAttribute="baseline" type="user" id="8zg-JU-kvJ"/>
                                     <constraint firstItem="yJo-EW-r4i" firstAttribute="top" secondItem="PYN-Ut-rdj" secondAttribute="top" constant="2" id="E0t-5z-Ydv"/>
+                                    <constraint firstItem="YNX-Sn-TQr" firstAttribute="centerY" secondItem="Phl-mS-cy1" secondAttribute="centerY" type="default" id="GGI-BH-oY1"/>
                                     <constraint firstItem="YNX-Sn-TQr" firstAttribute="bottom" secondItem="PYN-Ut-rdj" secondAttribute="bottom" type="default" id="IcA-3a-aul"/>
-                                    <constraint firstItem="2Yf-Of-ufN" firstAttribute="centerY" secondItem="B78-nb-RfB" secondAttribute="centerY" type="default" id="bGD-9L-5eN"/>
+                                    <constraint firstItem="Phl-mS-cy1" firstAttribute="bottom" secondItem="2Yf-Of-ufN" secondAttribute="bottom" type="default" id="Wo0-qP-GPh"/>
+                                    <constraint firstItem="Phl-mS-cy1" firstAttribute="top" secondItem="2Yf-Of-ufN" secondAttribute="top" type="default" id="Y1t-bh-VRu"/>
+                                    <constraint firstItem="B78-nb-RfB" firstAttribute="leading" secondItem="Phl-mS-cy1" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="apI-Pp-f30"/>
                                     <constraint firstItem="2Yf-Of-ufN" firstAttribute="leading" secondItem="yJo-EW-r4i" secondAttribute="leading" type="default" id="cYr-eA-T1a"/>
                                     <constraint firstAttribute="trailing" secondItem="yJo-EW-r4i" secondAttribute="trailing" constant="26" type="user" id="dYo-Ur-2K4"/>
-                                    <constraint firstItem="B78-nb-RfB" firstAttribute="leading" secondItem="2Yf-Of-ufN" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="fdf-CY-DsX"/>
                                     <constraint firstItem="gYM-vI-9Vp" firstAttribute="bottom" secondItem="PYN-Ut-rdj" secondAttribute="bottom" type="default" id="ilb-TO-s6f"/>
                                     <constraint firstItem="gYM-vI-9Vp" firstAttribute="top" secondItem="PYN-Ut-rdj" secondAttribute="top" type="default" id="jcz-Nc-U3O"/>
-                                    <constraint firstItem="YNX-Sn-TQr" firstAttribute="leading" secondItem="B78-nb-RfB" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="jol-Q3-GHN"/>
-                                    <constraint firstItem="YNX-Sn-TQr" firstAttribute="top" secondItem="B78-nb-RfB" secondAttribute="top" type="user" id="keA-WM-ams"/>
                                     <constraint firstItem="yJo-EW-r4i" firstAttribute="leading" secondItem="PYN-Ut-rdj" secondAttribute="leading" constant="40" type="user" id="pCO-1d-zrC"/>
                                     <constraint firstAttribute="trailing" secondItem="YNX-Sn-TQr" secondAttribute="trailing" constant="26" type="user" id="pSa-i8-nWu"/>
+                                    <constraint firstAttribute="bottom" secondItem="B78-nb-RfB" secondAttribute="bottom" constant="1" id="pne-hY-uQC"/>
+                                    <constraint firstItem="Phl-mS-cy1" firstAttribute="leading" secondItem="2Yf-Of-ufN" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="q5i-wE-VKG"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="icon" destination="gYM-vI-9Vp" id="w2f-D6-2La"/>
@@ -259,6 +266,7 @@
                                     <outlet property="room" destination="B78-nb-RfB" id="gDB-Qw-HcP"/>
                                     <outlet property="speaker" destination="YNX-Sn-TQr" id="Jbw-uY-eUr"/>
                                     <outlet property="title" destination="yJo-EW-r4i" id="Aa3-cR-s9w"/>
+                                    <outlet property="video" destination="Phl-mS-cy1" id="i5g-nd-lDo"/>
                                     <segue destination="3lg-Sh-FWj" kind="push" identifier="showDetailsView" id="fsq-ZM-Vjd"/>
                                 </connections>
                             </tableViewCell>
@@ -503,6 +511,7 @@
                 <relationship kind="outlet" name="speaker" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="summary" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="title" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="video" candidateClass="UIImageView"/>
             </relationships>
         </class>
         <class className="EMSSettingsViewController" superclassName="UITableViewController">

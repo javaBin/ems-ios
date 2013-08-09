@@ -14,7 +14,7 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ConferenceCell" textLabel="Gf3-cq-Y9H" detailTextLabel="kTq-VJ-F0L" style="IBUITableViewCellStyleSubtitle" id="xbz-WH-aJW">
-                                <rect key="frame" x="0.0" y="54" width="768" height="45"/>
+                                <rect key="frame" x="0.0" y="54" width="768" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="45" y="1" width="678" height="43"/>
@@ -216,7 +216,7 @@
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="300" contentMode="left" text="Speakers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Br0-eZ-qxk">
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" type="user" id="3tV-I4-StX"/>
-                                                <constraint firstAttribute="width" constant="419" type="user" id="tlV-R2-yec"/>
+                                                <constraint firstAttribute="width" constant="403" id="SsU-Yy-T2g"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -250,6 +250,11 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zhb-2V-qt2">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="8" type="user" id="5TP-fj-ldT"/>
+                                            </constraints>
+                                        </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Keywords" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="204" translatesAutoresizingMaskIntoConstraints="NO" id="v3F-dj-Jes">
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="204" type="user" id="nxf-QY-GYj"/>
@@ -263,23 +268,25 @@
                                 </view>
                                 <constraints>
                                     <constraint firstItem="v3F-dj-Jes" firstAttribute="leading" secondItem="Br0-eZ-qxk" secondAttribute="trailing" constant="8" symbolic="YES" type="user" id="3pd-re-HcD"/>
-                                    <constraint firstItem="qGj-eY-TMe" firstAttribute="leading" secondItem="zYT-pg-a87" secondAttribute="trailing" constant="8" symbolic="YES" type="user" id="CNh-1z-yPc"/>
+                                    <constraint firstItem="Zhb-2V-qt2" firstAttribute="leading" secondItem="zYT-pg-a87" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="79E-i6-5Wa"/>
+                                    <constraint firstItem="yMp-AZ-u9v" firstAttribute="leading" secondItem="rTe-ES-WSG" secondAttribute="leading" constant="40" id="7k9-st-H9n"/>
+                                    <constraint firstItem="yMp-AZ-u9v" firstAttribute="leading" secondItem="dpn-DR-pqc" secondAttribute="leading" type="default" id="9rf-2h-dCi"/>
+                                    <constraint firstItem="zYT-pg-a87" firstAttribute="leading" secondItem="dpn-DR-pqc" secondAttribute="leading" type="default" id="BM5-Ba-a7w"/>
                                     <constraint firstItem="8RU-Cy-nO3" firstAttribute="top" secondItem="rTe-ES-WSG" secondAttribute="top" constant="10" id="GOM-jX-bCI"/>
                                     <constraint firstItem="v3F-dj-Jes" firstAttribute="top" secondItem="yMp-AZ-u9v" secondAttribute="top" type="default" id="KV8-gn-ZwJ"/>
-                                    <constraint firstItem="zYT-pg-a87" firstAttribute="bottom" secondItem="v3F-dj-Jes" secondAttribute="bottom" type="default" id="LOL-le-yfh"/>
-                                    <constraint firstItem="yMp-AZ-u9v" firstAttribute="leading" secondItem="rTe-ES-WSG" secondAttribute="leading" constant="40" type="user" id="Lwm-al-Tqn"/>
                                     <constraint firstItem="v3F-dj-Jes" firstAttribute="leading" secondItem="dpn-DR-pqc" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="NcC-an-cQ1"/>
+                                    <constraint firstItem="Zhb-2V-qt2" firstAttribute="centerY" secondItem="qGj-eY-TMe" secondAttribute="centerY" type="default" id="Npb-Ac-sS4"/>
                                     <constraint firstItem="8RU-Cy-nO3" firstAttribute="leading" secondItem="rTe-ES-WSG" secondAttribute="leading" type="default" id="PXb-QO-I2J"/>
-                                    <constraint firstItem="Br0-eZ-qxk" firstAttribute="leading" secondItem="qGj-eY-TMe" secondAttribute="trailing" constant="8" symbolic="YES" type="user" id="Uy7-dq-nD1"/>
+                                    <constraint firstItem="Zhb-2V-qt2" firstAttribute="top" secondItem="zYT-pg-a87" secondAttribute="top" type="default" id="VOk-VV-KKm"/>
                                     <constraint firstItem="dpn-DR-pqc" firstAttribute="top" secondItem="rTe-ES-WSG" secondAttribute="top" constant="22" id="Vau-fi-R40"/>
+                                    <constraint firstItem="Zhb-2V-qt2" firstAttribute="bottom" secondItem="zYT-pg-a87" secondAttribute="bottom" type="default" id="agk-Jz-m22"/>
+                                    <constraint firstItem="qGj-eY-TMe" firstAttribute="leading" secondItem="Zhb-2V-qt2" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="cGl-YD-ARj"/>
                                     <constraint firstItem="yMp-AZ-u9v" firstAttribute="top" secondItem="rTe-ES-WSG" secondAttribute="top" constant="4" type="user" id="dHs-15-a1T"/>
                                     <constraint firstItem="Br0-eZ-qxk" firstAttribute="baseline" secondItem="qGj-eY-TMe" secondAttribute="baseline" type="default" id="dRS-Vg-EKr"/>
-                                    <constraint firstItem="dpn-DR-pqc" firstAttribute="leading" secondItem="zYT-pg-a87" secondAttribute="leading" type="user" id="lJ2-TY-fDc"/>
+                                    <constraint firstItem="Br0-eZ-qxk" firstAttribute="leading" secondItem="qGj-eY-TMe" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="rTb-GL-mXE"/>
+                                    <constraint firstItem="Zhb-2V-qt2" firstAttribute="bottom" secondItem="v3F-dj-Jes" secondAttribute="bottom" type="default" id="rbg-Qf-e7H"/>
                                     <constraint firstItem="v3F-dj-Jes" firstAttribute="leading" secondItem="yMp-AZ-u9v" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="snY-6b-Oyr"/>
-                                    <constraint firstAttribute="trailing" secondItem="v3F-dj-Jes" secondAttribute="trailing" constant="32" type="user" id="tiO-mc-pvn"/>
                                     <constraint firstItem="v3F-dj-Jes" firstAttribute="centerY" secondItem="rTe-ES-WSG" secondAttribute="centerY" type="default" id="yLo-FP-PSo"/>
-                                    <constraint firstItem="dpn-DR-pqc" firstAttribute="leading" secondItem="yMp-AZ-u9v" secondAttribute="leading" type="user" id="yzf-0f-seG"/>
-                                    <constraint firstItem="zYT-pg-a87" firstAttribute="centerY" secondItem="qGj-eY-TMe" secondAttribute="centerY" type="default" id="zT7-zn-Enz"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="icon" destination="8RU-Cy-nO3" id="ssU-pl-S3F"/>
@@ -289,6 +296,7 @@
                                     <outlet property="speaker" destination="Br0-eZ-qxk" id="hC0-IS-K1I"/>
                                     <outlet property="summary" destination="dpn-DR-pqc" id="9n6-hv-tvk"/>
                                     <outlet property="title" destination="yMp-AZ-u9v" id="jvd-PH-R3s"/>
+                                    <outlet property="video" destination="Zhb-2V-qt2" id="BpV-Jw-9uR"/>
                                     <segue destination="ynZ-6T-4n5" kind="push" identifier="showDetailsView" id="VBx-I3-AKS"/>
                                 </connections>
                             </tableViewCell>
@@ -493,10 +501,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EMSDetailViewController.h"/>
             <relationships>
                 <relationship kind="action" name="clearImageCache:"/>
-                <relationship kind="action" name="moveNextSection:"/>
-                <relationship kind="action" name="moveNextSession:"/>
-                <relationship kind="action" name="movePreviousSection:"/>
-                <relationship kind="action" name="movePreviousSession:"/>
                 <relationship kind="action" name="share:"/>
                 <relationship kind="action" name="toggleFavourite:"/>
                 <relationship kind="outlet" name="button" candidateClass="UIButton"/>
@@ -538,6 +542,7 @@
                 <relationship kind="outlet" name="speaker" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="summary" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="title" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="video" candidateClass="UIImageView"/>
             </relationships>
         </class>
         <class className="EMSSettingsViewController" superclassName="UITableViewController">

@@ -1,3 +1,7 @@
+2013-08-09  Chris Searle  <chris@chrissearle.org>
+
+        * Add video link where present
+
 2013-07-29  Chris Searle  <chris@chrissearle.org>
 
         * Migrate most externals to cocoapods

@@ -275,6 +275,10 @@
         [shareActivities addObject:[[NHCalendarActivity alloc] init]];
     }
     
+    if (self.session.videoLink) {
+        [shareItems addObject:self.session.videoLink];
+    }
+    
     NSArray *activityItems = [NSArray arrayWithArray:shareItems];
     NSArray *activities = [NSArray arrayWithArray:shareActivities];
 
@@ -686,6 +690,14 @@
     if (navigationType == UIWebViewNavigationTypeLinkClicked) {
         // http:// -> safari, rest (file:// etc) opens in webview
         if ([[request.URL scheme] hasPrefix:@"http"]) {
+            
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            
+            [tracker trackEventWithCategory:@"Web"
+                                 withAction:@"Open Link"
+                                  withLabel:request.URL.absoluteString
+                                  withValue:nil];
+            
             [[UIApplication sharedApplication] openURL:request.URL];
             return NO;
         }

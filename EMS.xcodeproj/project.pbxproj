@@ -109,6 +109,8 @@
 		F3EE4F1517818ADB0008C1B2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EE4F1417818ADB0008C1B2 /* Icon.png */; };
 		F3EE4F1817818B590008C1B2 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EE4F1617818B590008C1B2 /* Icon-72.png */; };
 		F3EE4F1917818B590008C1B2 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EE4F1717818B590008C1B2 /* Icon-72@2x.png */; };
+		F3F9139117B4C43200299424 /* 70-tv.png in Resources */ = {isa = PBXBuildFile; fileRef = F3F9138F17B4C43200299424 /* 70-tv.png */; };
+		F3F9139217B4C43200299424 /* 70-tv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F3F9139017B4C43200299424 /* 70-tv@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -255,6 +257,8 @@
 		F3EE4F1417818ADB0008C1B2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		F3EE4F1617818B590008C1B2 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		F3EE4F1717818B590008C1B2 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
+		F3F9138F17B4C43200299424 /* 70-tv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "70-tv.png"; sourceTree = "<group>"; };
+		F3F9139017B4C43200299424 /* 70-tv@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "70-tv@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,6 +356,8 @@
 				F3513B5F177079A50042D07A /* 28-star-yellow@2x.png */,
 				F3513B60177079A50042D07A /* 64-zap-yellow.png */,
 				F3513B61177079A50042D07A /* 64-zap-yellow@2x.png */,
+				F3F9138F17B4C43200299424 /* 70-tv.png */,
+				F3F9139017B4C43200299424 /* 70-tv@2x.png */,
 				F3513B561770792A0042D07A /* 28-star.png */,
 				F3513B571770792A0042D07A /* 28-star@2x.png */,
 				F3513B581770792A0042D07A /* 64-zap.png */,
@@ -639,6 +645,8 @@
 				F3EE4F1917818B590008C1B2 /* Icon-72@2x.png in Resources */,
 				F354B0BA1781AA1D007F7B01 /* iTunesArtwork.png in Resources */,
 				F354B0BB1781AA1D007F7B01 /* iTunesArtwork@2x.png in Resources */,
+				F3F9139117B4C43200299424 /* 70-tv.png in Resources */,
+				F3F9139217B4C43200299424 /* 70-tv@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
