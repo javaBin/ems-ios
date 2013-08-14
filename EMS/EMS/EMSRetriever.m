@@ -21,7 +21,11 @@
     NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     
 #ifdef DEBUG
+#ifdef TEST_PROD
+    [retriever fetch:[NSURL URLWithString:[prefs objectForKey:@"ems-root-url-prod"]]];
+#else
     [retriever fetch:[NSURL URLWithString:[prefs objectForKey:@"ems-root-url"]]];
+#endif
 #else
     [retriever fetch:[NSURL URLWithString:[prefs objectForKey:@"ems-root-url-prod"]]];
 #endif
