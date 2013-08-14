@@ -925,8 +925,21 @@
 
     NSArray *slots = [self slotsForPredicate:predicate andSort:nil];
 
-    if (slots != nil && [slots count] > 0) {
-        return [self getSlotNameForSlot:[slots objectAtIndex:0] forConference:conference];
+    __block Slot *found = nil;
+
+    [slots enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        Slot *s = (Slot *)obj;
+
+        if (s.sessions.count > 0) {
+            if (![s.sessions containsObject:slot]) {
+                found = s;
+                *stop = YES;
+            }
+        }
+    }];
+
+    if (found) {
+        return [self getSlotNameForSlot:found forConference:conference];
     }
 
     // Default to our own name
