@@ -1,3 +1,8 @@
+2013-08-15  Chris Searle  <chris@chrissearle.org>
+
+        * 3.4b12
+        * Submitted to Apple
+
 2013-08-14  Chris Searle  <chris@chrissearle.org>
 
         * Try to make logic allocating lightning talk to containing hour more resilient
