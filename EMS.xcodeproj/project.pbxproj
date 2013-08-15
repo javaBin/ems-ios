@@ -833,7 +833,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */;
 			buildSettings = {
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -860,7 +860,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */;
 			buildSettings = {
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
