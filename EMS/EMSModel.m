@@ -379,7 +379,9 @@
         session.slot = slot;
 
         if ([ems.format isEqualToString:@"lightning-talk"]) {
-            session.slotName = [self getSlotNameForLightningSlot:slot forConference:conference];
+            // Generate lightning slot names on first fetch - so that calculation is based on more correct data
+            session.slotName = nil;
+//            session.slotName = [self getSlotNameForLightningSlot:slot forConference:conference];
         } else {
             session.slotName = [self getSlotNameForSlot:slot forConference:conference];
         }
@@ -893,6 +895,18 @@
         }
     }];
     
+    // Fixup lightning sessions
+    CLS_LOG(@"Setting slotName for lightning sessions");
+    NSArray *lightning = [self
+                          sessionsForPredicate:[NSPredicate predicateWithFormat: @"(format == %@ AND conference == %@ AND slotName = nil)", @"lightning-talk", conference]
+                          andSort:nil];
+    
+    [lightning enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        Session *session = (Session *)obj;
+        
+        [session setSlotName:[self getSlotNameForLightningSlot:session.slot forConference:conference]];
+    }];
+    
     CLS_LOG(@"Need to delete conference metafields where none on session");
  
     // TODO - delete metafields
@@ -923,15 +937,23 @@
                               slot,
                               conference];
 
+    CLS_LOG(@"GSNFLS: Getting slot name for %@ - %@", slot.start, slot.end);
+    
     NSArray *slots = [self slotsForPredicate:predicate andSort:nil];
 
     __block Slot *found = nil;
 
+    CLS_LOG(@"GSNFLS: Found %d possible slots for %@ - %@", slots.count, slot.start, slot.end);
+    
     [slots enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Slot *s = (Slot *)obj;
 
+        CLS_LOG(@"GSNFLS: Checking %@ - %@ with %d possible slots for %@ - %@", s.start, s.end, s.sessions.count, slot.start, slot.end);
+        
         if (s.sessions.count > 0) {
             if (![s.sessions containsObject:slot]) {
+                CLS_LOG(@"GSNFLS: Found %@ - %@ for %@ - %@", s.start, s.end, slot.start, slot.end);
+                
                 found = s;
                 *stop = YES;
             }
@@ -939,8 +961,12 @@
     }];
 
     if (found) {
+        CLS_LOG(@"GSNFLS: Returning %@ - %@ for %@ - %@", found.start, found.end, slot.start, slot.end);
+
         return [self getSlotNameForSlot:found forConference:conference];
     }
+
+    CLS_LOG(@"GSNFLS: Returning self for %@ - %@", slot.start, slot.end);
 
     // Default to our own name
     return [self getSlotNameForSlot:slot forConference:conference];
