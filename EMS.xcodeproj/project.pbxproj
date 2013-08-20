@@ -851,7 +851,10 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
-				"OTHER_CFLAGS[arch=*]" = "-DUSE_TEST_DATE=1";
+				"OTHER_CFLAGS[arch=*]" = (
+					"-DUSE_TEST_DATE=1",
+					"-DTEST_PROD=1",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
