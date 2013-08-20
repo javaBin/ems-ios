@@ -381,7 +381,6 @@
         if ([ems.format isEqualToString:@"lightning-talk"]) {
             // Generate lightning slot names on first fetch - so that calculation is based on more correct data
             session.slotName = nil;
-//            session.slotName = [self getSlotNameForLightningSlot:slot forConference:conference];
         } else {
             session.slotName = [self getSlotNameForSlot:slot forConference:conference];
         }
