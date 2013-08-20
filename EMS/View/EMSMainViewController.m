@@ -465,17 +465,27 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[_fetchedResultsController sections] count];
+    NSUInteger count = [[_fetchedResultsController sections] count];
+    
+    CLS_LOG(@"numberOfSectionsInTableView: Found %d sections", count);
+    
+    return count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     id sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
+
+    NSUInteger count = [sectionInfo numberOfObjects];
+
+    CLS_LOG(@"tableView:numberOfRowsInSection: %d: Found %d rows", section, count);
     
-    return [sectionInfo numberOfObjects];
+    return count;
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    CLS_LOG(@"configureCell:atIndexPath: asking for section %d and row %d", indexPath.section, indexPath.row);
+    
     Session *session = [_fetchedResultsController objectAtIndexPath:indexPath];
 
     EMSSessionCell *sessionCell = (EMSSessionCell *)cell;
@@ -562,6 +572,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    CLS_LOG(@"tableView:cellForRowAtIndexPath: asking for section %d and row %d", indexPath.section, indexPath.row);
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SessionCell"];
     
     if (cell == nil) {
