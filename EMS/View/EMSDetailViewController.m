@@ -44,7 +44,9 @@
                              [dateFormatterTime stringFromDate:session.slot.start],
                              [dateFormatterTime stringFromDate:session.slot.end]]];
     } else {
-        [title appendString:session.slotName];
+        if (session.slotName != nil) {
+            [title appendString:session.slotName];
+        }
     }
 
     if (session.roomName != nil) {
