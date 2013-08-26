@@ -59,23 +59,23 @@
 }
 
 - (NSArray *)conferencesForPredicate:(NSPredicate *)predicate andSort:(NSArray *)sort {
-    return [self objectsForPredicate:predicate andSort:sort withType:@"Conference"];
+    return [self objectsForPredicate:predicate andSort:sort withType:NSStringFromClass([Conference class])];
 }
 
 - (NSArray *)slotsForPredicate:(NSPredicate *)predicate andSort:(NSArray *)sort {
-    return [self objectsForPredicate:predicate andSort:sort withType:@"Slot"];
+    return [self objectsForPredicate:predicate andSort:sort withType:NSStringFromClass([Slot class])];
 }
 
 - (NSArray *)sessionsForPredicate:(NSPredicate *)predicate andSort:(NSArray *)sort {
-    return [self objectsForPredicate:predicate andSort:sort withType:@"Session"];
+    return [self objectsForPredicate:predicate andSort:sort withType:NSStringFromClass([Session class])];
 }
 
 - (NSArray *)roomsForPredicate:(NSPredicate *)predicate andSort:(NSArray *)sort {
-    return [self objectsForPredicate:predicate andSort:sort withType:@"Room"];
+    return [self objectsForPredicate:predicate andSort:sort withType:NSStringFromClass([Room class])];
 }
 
 - (NSArray *)speakersForPredicate:(NSPredicate *)predicate andSort:(NSArray *)sort {
-    return [self objectsForPredicate:predicate andSort:sort withType:@"Speaker"];
+    return [self objectsForPredicate:predicate andSort:sort withType:NSStringFromClass([Speaker class])];
 }
 
 #pragma mark - get single object
@@ -295,7 +295,7 @@
     }];
 
     if ([foundLevels count] == 0) {
-        ConferenceLevel *conferenceLevel = [NSEntityDescription insertNewObjectForEntityForName:@"ConferenceLevel" inManagedObjectContext:[self managedObjectContext]];
+        ConferenceLevel *conferenceLevel = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([ConferenceLevel class]) inManagedObjectContext:[self managedObjectContext]];
 
         conferenceLevel.name = ems.level;
         conferenceLevel.conference = conference;
@@ -308,7 +308,7 @@
     }];
     
     if ([foundTypes count] == 0) {
-        ConferenceType *conferenceType = [NSEntityDescription insertNewObjectForEntityForName:@"ConferenceType" inManagedObjectContext:[self managedObjectContext]];
+        ConferenceType *conferenceType = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([ConferenceType class]) inManagedObjectContext:[self managedObjectContext]];
         
         conferenceType.name = ems.format;
         conferenceType.conference = conference;
@@ -325,7 +325,7 @@
             }];
             
             if ([foundKeywords count] == 0) {
-                Keyword *newKeyword = [NSEntityDescription insertNewObjectForEntityForName:@"Keyword" inManagedObjectContext:[self managedObjectContext]];
+                Keyword *newKeyword = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Keyword class]) inManagedObjectContext:[self managedObjectContext]];
 
                 newKeyword.name = keyword;
                 newKeyword.session = session;
@@ -338,7 +338,7 @@
             }];
 
             if ([foundConferenceKeywords count] == 0) {
-                ConferenceKeyword *conferenceKeyword = [NSEntityDescription insertNewObjectForEntityForName:@"ConferenceKeyword" inManagedObjectContext:[self managedObjectContext]];
+                ConferenceKeyword *conferenceKeyword = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([ConferenceKeyword class]) inManagedObjectContext:[self managedObjectContext]];
 
                 conferenceKeyword.name = keyword;
                 conferenceKeyword.conference = conference;
@@ -350,7 +350,7 @@
         [self deleteAllObjectForPredicate:[NSPredicate predicateWithFormat:@"(session = %@) AND (NOT(name IN %@))",
                                            session,
                                            ems.keywords]
-                                  andType:@"Keyword"];
+                                  andType:NSStringFromClass([Keyword class])];
     } else {
         if (session.keywords != nil) {
             [session.keywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
@@ -395,7 +395,7 @@
             Speaker *speaker = [self speakerForHref:[emsSpeaker.href absoluteString]];
             
             if (speaker == nil) {
-                speaker = [NSEntityDescription insertNewObjectForEntityForName:@"Speaker"
+                speaker = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Speaker class])
                                                         inManagedObjectContext:[self managedObjectContext]];
             }
             
@@ -494,7 +494,7 @@
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
             Conference *conference = [NSEntityDescription
-                                      insertNewObjectForEntityForName:@"Conference"
+                                      insertNewObjectForEntityForName:NSStringFromClass([Conference class])
                                       inManagedObjectContext:[self managedObjectContext]];
             
             EMSConference *ems = (EMSConference *)obj;
@@ -590,7 +590,7 @@
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
             Slot *slot = [NSEntityDescription
-                          insertNewObjectForEntityForName:@"Slot"
+                          insertNewObjectForEntityForName:NSStringFromClass([Slot class])
                           inManagedObjectContext:[self managedObjectContext]];
             
             EMSSlot *ems = (EMSSlot *)obj;
@@ -688,7 +688,7 @@
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
             Room *room = [NSEntityDescription
-                          insertNewObjectForEntityForName:@"Room"
+                          insertNewObjectForEntityForName:NSStringFromClass([Room class])
                           inManagedObjectContext:[self managedObjectContext]];
             
             EMSRoom *ems = (EMSRoom *)obj;
@@ -785,7 +785,7 @@
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
             Speaker *speaker = [NSEntityDescription
-                                insertNewObjectForEntityForName:@"Speaker"
+                                insertNewObjectForEntityForName:NSStringFromClass([Speaker class])
                                 inManagedObjectContext:[self managedObjectContext]];
             
             EMSSpeaker *ems = (EMSSpeaker *)obj;
@@ -882,7 +882,7 @@
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
             Session *session = [NSEntityDescription
-                                insertNewObjectForEntityForName:@"Session"
+                                insertNewObjectForEntityForName:NSStringFromClass([Session class])
                                 inManagedObjectContext:[self managedObjectContext]];
 
             // New sessions are not favourites by default.
