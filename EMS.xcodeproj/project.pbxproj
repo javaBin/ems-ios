@@ -86,6 +86,11 @@
 		F3939E50176887090078C709 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3939E4F176887090078C709 /* CoreData.framework */; };
 		F3939E531768879C0078C709 /* EMSCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */; };
 		F3939E611769C3CE0078C709 /* EMSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E601769C3CD0078C709 /* EMSModel.m */; };
+		F399B73117CF3E3E004DE2EC /* 258-checkmark-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = F399B72F17CF3E3E004DE2EC /* 258-checkmark-grey.png */; };
+		F399B73217CF3E3E004DE2EC /* 258-checkmark-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F399B73017CF3E3E004DE2EC /* 258-checkmark-grey@2x.png */; };
+		F399B73517CF3FA2004DE2EC /* blank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F399B73317CF3FA2004DE2EC /* blank@2x.png */; };
+		F399B73617CF3FA2004DE2EC /* blank.png in Resources */ = {isa = PBXBuildFile; fileRef = F399B73417CF3FA2004DE2EC /* blank.png */; };
+		F399B73917CF42CC004DE2EC /* EMSConferenceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F399B73817CF42CC004DE2EC /* EMSConferenceDetailViewController.m */; };
 		F399F0831785576500FB9976 /* libMMMarkdown-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F399F0811785576500FB9976 /* libMMMarkdown-iOS.a */; };
 		F3AE33C71772EA93000EE4A9 /* Speaker.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C61772EA93000EE4A9 /* Speaker.m */; };
 		F3AE33CA1772EA93000EE4A9 /* Conference.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C91772EA93000EE4A9 /* Conference.m */; };
@@ -223,6 +228,12 @@
 		F3939E521768879C0078C709 /* EMSCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EMSCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		F3939E5F1769C3CD0078C709 /* EMSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSModel.h; sourceTree = "<group>"; };
 		F3939E601769C3CD0078C709 /* EMSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSModel.m; sourceTree = "<group>"; };
+		F399B72F17CF3E3E004DE2EC /* 258-checkmark-grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "258-checkmark-grey.png"; sourceTree = "<group>"; };
+		F399B73017CF3E3E004DE2EC /* 258-checkmark-grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "258-checkmark-grey@2x.png"; sourceTree = "<group>"; };
+		F399B73317CF3FA2004DE2EC /* blank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blank@2x.png"; sourceTree = "<group>"; };
+		F399B73417CF3FA2004DE2EC /* blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blank.png; sourceTree = "<group>"; };
+		F399B73717CF42CC004DE2EC /* EMSConferenceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConferenceDetailViewController.h; sourceTree = "<group>"; };
+		F399B73817CF42CC004DE2EC /* EMSConferenceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConferenceDetailViewController.m; sourceTree = "<group>"; };
 		F399F0811785576500FB9976 /* libMMMarkdown-iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libMMMarkdown-iOS.a"; path = "EMS/externals/MMMarkdown/libMMMarkdown-iOS.a"; sourceTree = "<group>"; };
 		F399F0821785576500FB9976 /* MMMarkdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMMarkdown.h; path = EMS/externals/MMMarkdown/MMMarkdown.h; sourceTree = "<group>"; };
 		F3AE33C51772EA93000EE4A9 /* Speaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Speaker.h; path = EMS/EMSMO/Speaker.h; sourceTree = "<group>"; };
@@ -328,6 +339,8 @@
 		839BD650176F9BD400900712 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F399B73317CF3FA2004DE2EC /* blank@2x.png */,
+				F399B73417CF3FA2004DE2EC /* blank.png */,
 				F3EC969C17747625004A5F25 /* levels */,
 				F30FCBDE17746057003EEC3A /* Default-Landscape~ipad.png */,
 				F30FCBDC17746052003EEC3A /* Default-Landscape@2x~ipad.png */,
@@ -348,6 +361,8 @@
 				83172C201770FE67000135E6 /* 11-clock@2x.png */,
 				83172C211770FE67000135E6 /* 259-list.png */,
 				83172C221770FE67000135E6 /* 259-list@2x.png */,
+				F399B72F17CF3E3E004DE2EC /* 258-checkmark-grey.png */,
+				F399B73017CF3E3E004DE2EC /* 258-checkmark-grey@2x.png */,
 				836331371770F01C000F8D95 /* 258-checkmark.png */,
 				836331381770F01C000F8D95 /* 258-checkmark@2x.png */,
 				836331331770EF78000F8D95 /* 298-circlex.png */,
@@ -393,6 +408,8 @@
 				836331311770DD2B000F8D95 /* EMSSearchViewController.m */,
 				83F4559F177D5B5C00BC79A1 /* EMSAboutViewController.h */,
 				83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */,
+				F399B73717CF42CC004DE2EC /* EMSConferenceDetailViewController.h */,
+				F399B73817CF42CC004DE2EC /* EMSConferenceDetailViewController.m */,
 			);
 			name = View;
 			path = EMS/View;
@@ -647,6 +664,10 @@
 				F354B0BB1781AA1D007F7B01 /* iTunesArtwork@2x.png in Resources */,
 				F3F9139117B4C43200299424 /* 70-tv.png in Resources */,
 				F3F9139217B4C43200299424 /* 70-tv@2x.png in Resources */,
+				F399B73117CF3E3E004DE2EC /* 258-checkmark-grey.png in Resources */,
+				F399B73217CF3E3E004DE2EC /* 258-checkmark-grey@2x.png in Resources */,
+				F399B73517CF3FA2004DE2EC /* blank@2x.png in Resources */,
+				F399B73617CF3FA2004DE2EC /* blank.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -738,6 +759,7 @@
 				F37953CB17797E41000B7CDD /* EMSAdvancedSearch.m in Sources */,
 				83F455A1177D5B5C00BC79A1 /* EMSAboutViewController.m in Sources */,
 				F3CEA3CF17B224170092776F /* AddVideoLinkMapping.xcmappingmodel in Sources */,
+				F399B73917CF42CC004DE2EC /* EMSConferenceDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -835,7 +857,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */;
 			buildSettings = {
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -866,7 +888,7 @@
 			baseConfigurationReference = CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chris Searle";
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",

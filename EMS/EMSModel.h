@@ -33,4 +33,6 @@
 
 - (Session *)toggleFavourite:(Session *)session;
 
+- (void)clearConference:(Conference *)conference;
+
 @end

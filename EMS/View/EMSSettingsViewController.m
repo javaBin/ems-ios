@@ -13,6 +13,7 @@
 #import "EMSFeatureConfig.h"
 
 #import "EMSMainViewController.h"
+#import "EMSConferenceDetailViewController.h"
 
 #import "EMSModel.h"
 
@@ -158,9 +159,9 @@
     NSString *activeConference = [[EMSAppDelegate currentConference] absoluteString];
 
     if ([conference.href isEqualToString:activeConference]) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        cell.imageView.image = [UIImage imageNamed:@"258-checkmark-grey"];
     } else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.imageView.image = [UIImage imageNamed:@"blank"];
     }
 }
 
@@ -283,5 +284,21 @@
         [self selectConference:conference];
     }
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"showConferenceDetailsView"]) {
+        
+        EMSConferenceDetailViewController *destination = (EMSConferenceDetailViewController *)[segue destinationViewController];
+        
+        CLS_LOG(@"Preparing conference detail view");
+        
+        Conference *conference = [_fetchedResultsController objectAtIndexPath:[self.tableView indexPathForCell:sender]];
+        
+        destination.conference = conference;
+    }
+}
+
+
 
 @end

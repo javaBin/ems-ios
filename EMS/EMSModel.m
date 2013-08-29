@@ -1230,4 +1230,50 @@
 
 }
 
+- (void)clearConference:(Conference *)conference {
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    
+    [tracker trackEventWithCategory:@"clearing"
+                         withAction:@"deleting"
+                          withLabel:conference.href
+                          withValue:nil];
+    
+    [conference.sessions enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        NSManagedObject *dbObj = (NSManagedObject *)obj;
+        
+        [self.managedObjectContext deleteObject:dbObj];
+    }];
+    [conference.slots enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        NSManagedObject *dbObj = (NSManagedObject *)obj;
+        
+        [self.managedObjectContext deleteObject:dbObj];
+    }];
+    [conference.rooms enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        NSManagedObject *dbObj = (NSManagedObject *)obj;
+        
+        [self.managedObjectContext deleteObject:dbObj];
+    }];
+    [conference.conferenceKeywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        NSManagedObject *dbObj = (NSManagedObject *)obj;
+        
+        [self.managedObjectContext deleteObject:dbObj];
+    }];
+    [conference.conferenceLevels enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        NSManagedObject *dbObj = (NSManagedObject *)obj;
+        
+        [self.managedObjectContext deleteObject:dbObj];
+    }];
+    [conference.conferenceTypes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        NSManagedObject *dbObj = (NSManagedObject *)obj;
+        
+        [self.managedObjectContext deleteObject:dbObj];
+    }];
+
+    NSError *saveError = nil;
+    
+    if (![[self managedObjectContext] save:&saveError]) {
+        CLS_LOG(@"Failed to save conference after clearing %@ - %@", saveError, [saveError userInfo]);
+    }
+}
+
 @end

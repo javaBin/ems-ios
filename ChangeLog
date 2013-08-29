@@ -1,3 +1,8 @@
+2013-08-29  Chris Searle  <chris@chrissearle.org>
+
+        * 3.5b13
+        * Conference Detail View from settings (#49, #50)
+
 2013-08-22  Chris Searle  <chris@chrissearle.org>
 
         * Crashlytics issue 34 - nil append of string (#52)
