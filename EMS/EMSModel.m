@@ -246,8 +246,12 @@
     conference.slug  = ems.slug;
     conference.venue = ems.venue;
     conference.href  = [ems.href absoluteString];
-    conference.start = ems.start;
-    conference.end   = ems.end;
+    if (ems.start != nil) {
+        conference.start = ems.start;
+    }
+    if (ems.end != nil) {
+        conference.end   = ems.end;
+    }
 
     conference.roomCollection    = [ems.roomCollection absoluteString];
     conference.sessionCollection = [ems.sessionCollection absoluteString];
@@ -905,6 +909,24 @@
         
         [session setSlotName:[self getSlotNameForLightningSlot:session.slot forConference:conference]];
     }];
+    
+    if ((conference.start == nil || conference.end == nil) && conference.sessions.count > 0) {
+        CLS_LOG(@"Setting conference dates from session dates for href %@", conference.href);
+        
+        NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"slot.start" ascending:YES];
+        NSArray *sorted = [conference.sessions sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateDescriptor]];
+        
+        if (conference.start == nil) {
+            Session *first = [sorted objectAtIndex:0];
+            CLS_LOG(@"Setting conference start date from session for href %@ to %@", conference.href, first.slot.start);
+            conference.start = first.slot.start;
+        }
+        if (conference.end == nil) {
+            Session *last = [sorted lastObject];
+            CLS_LOG(@"Setting conference end date from session for href %@ to %@", conference.href, last.slot.end);
+            conference.end = last.slot.end;
+        }
+    }
     
     CLS_LOG(@"Need to delete conference metafields where none on session");
  
