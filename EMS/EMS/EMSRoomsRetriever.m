@@ -69,6 +69,12 @@ NSDate *timer;
 
 
 - (void) fetch:(NSURL *)url {
+    if (url == nil) {
+        CLS_LOG(@"Asked to fetch nil rooms url");
+
+        return;
+    }
+    
     dispatch_queue_t queue = dispatch_queue_create("ems_room_queue", DISPATCH_QUEUE_CONCURRENT);
     
     [[EMSAppDelegate sharedAppDelegate] startNetwork];

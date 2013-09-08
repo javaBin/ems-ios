@@ -461,7 +461,7 @@
             }
 
             NSString *bio = [self.cachedSpeakerBios objectForKey:speaker.name];
-            if (![bio isEqualToString:@""]) {
+            if (bio && ![bio isEqualToString:@""]) {
                 [result appendString:[self paraContent:bio]];
             }
         }];
