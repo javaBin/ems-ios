@@ -36,8 +36,10 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated {
+#ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker sendView:@"Conference Detail Screen"];
+#endif
 }
 
 #pragma mark - Table view data source

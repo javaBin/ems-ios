@@ -67,8 +67,10 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated {
+#ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker sendView:@"Settings Screen"];
+#endif
 }
 
 - (NSFetchedResultsController *)fetchedResultsController {
@@ -189,13 +191,15 @@
     
     [self.delegate conferenceChanged:self];
 
+#ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     
     [tracker trackEventWithCategory:@"settingsView"
                          withAction:@"selectConference"
                           withLabel:conference.href
                           withValue:nil];
-
+#endif
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

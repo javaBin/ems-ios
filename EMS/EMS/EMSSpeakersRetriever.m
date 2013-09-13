@@ -68,6 +68,7 @@ NSDate *timer;
     
     [[EMSAppDelegate sharedAppDelegate] stopNetwork];
 
+#ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker sendTimingWithCategory:@"retrieval"
                           withValue:[[NSDate date] timeIntervalSinceDate:timer]
@@ -75,7 +76,8 @@ NSDate *timer;
                           withLabel:nil];
 
     [[GAI sharedInstance] dispatch];
-
+#endif
+    
     [self.delegate finishedSpeakers:collection forHref:href];
 }
 

@@ -106,8 +106,10 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated {
+#ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker sendView:@"Detail Screen"];
+#endif
 }
 
 
@@ -297,11 +299,13 @@
         CLS_LOG(@"Sharing of %@ via %@ - completed %d", shareString, activityType, completed);
 
         if (completed) {
+#ifndef DO_NOT_USE_GA
             id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
 
             [tracker sendSocial:activityType
                      withAction:@"Share"
                      withTarget:[NSURL URLWithString:self.session.href]];
+#endif
         }
     }];
     
@@ -514,8 +518,9 @@
 
             [[EMSAppDelegate sharedAppDelegate] stopNetwork];
 
+#ifndef DO_NOT_USE_GA
             [[GAI sharedInstance] dispatch];
-
+#endif
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (needToSave == YES) {
                     if ([self.session.href isEqualToString:href]) {
@@ -693,12 +698,14 @@
         // http:// -> safari, rest (file:// etc) opens in webview
         if ([[request.URL scheme] hasPrefix:@"http"]) {
             
+#ifndef DO_NOT_USE_GA
             id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
             
             [tracker trackEventWithCategory:@"Web"
                                  withAction:@"Open Link"
                                   withLabel:request.URL.absoluteString
                                   withValue:nil];
+#endif
             
             [[UIApplication sharedApplication] openURL:request.URL];
             return NO;

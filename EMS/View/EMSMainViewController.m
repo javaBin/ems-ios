@@ -184,8 +184,10 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated {
+#ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker sendView:@"Main Screen"];
+#endif
 }
 
 - (void)pushDetailViewForHref:(NSString *)href {
@@ -197,8 +199,10 @@
     [self.search setShowsCancelButton:NO animated:YES];
     [self.search resignFirstResponder];
 
+#ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-
+#endif
+    
     if ([[segue identifier] isEqualToString:@"showSettingsView"]) {
         EMSSettingsViewController *destination = (EMSSettingsViewController *)[segue destinationViewController];
 
@@ -218,11 +222,12 @@
             
             [Crashlytics setObjectValue:session.href forKey:@"lastDetailSessionFromNotification"];
 
+#ifndef DO_NOT_USE_GA
             [tracker trackEventWithCategory:@"listView"
                                  withAction:@"detailFromNotification"
                                   withLabel:session.href
                                   withValue:nil];
-
+#endif
         } else {
             Session *session = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
 
@@ -232,11 +237,12 @@
 
             [Crashlytics setObjectValue:session.href forKey:@"lastDetailSession"];
 
-
+#ifndef DO_NOT_USE_GA
             [tracker trackEventWithCategory:@"listView"
                                  withAction:@"detail"
                                   withLabel:session.href
                                   withValue:nil];
+#endif
         }
 
         destination.fetchedResultsController = self.fetchedResultsController;
@@ -310,10 +316,12 @@
 
         destination.delegate = self;
 
+#ifndef DO_NOT_USE_GA
         [tracker trackEventWithCategory:@"listView"
                              withAction:@"search"
                               withLabel:nil
                               withValue:nil];
+#endif
     }
 }
 
@@ -794,13 +802,14 @@
 }
 
 - (void) segmentChanged:(id)sender {
-    UISegmentedControl *segment = (UISegmentedControl *)sender;
-
     self.filterFavourites = NO;
     self.filterTime = NO;
 
-    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+#ifndef DO_NOT_USE_GA
+    UISegmentedControl *segment = (UISegmentedControl *)sender;
 
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    
     switch ([segment selectedSegmentIndex]) {
         case 0:
         {
@@ -809,7 +818,6 @@
                                  withAction:@"all"
                                   withLabel:nil
                                   withValue:nil];
-
             break;
         }
         case 1:
@@ -839,7 +847,8 @@
         default:
             break;
     }
-
+#endif
+    
     [self initializeFetchedResultsController];
 }
 

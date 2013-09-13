@@ -1071,26 +1071,32 @@
     
     BOOL isFavourite = [session.favourite boolValue];
 
+#ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-
+#endif
+    
     if (isFavourite == YES) {
         session.favourite = [NSNumber numberWithBool:NO];
 
         [self removeNotification:session];
 
+#ifndef DO_NOT_USE_GA
         [tracker trackEventWithCategory:@"favourite"
                              withAction:@"remove"
                               withLabel:session.href
                               withValue:nil];
+#endif
     } else {
         session.favourite = [NSNumber numberWithBool:YES];
 
         [self addNotification:session];
 
+#ifndef DO_NOT_USE_GA
         [tracker trackEventWithCategory:@"favourite"
                              withAction:@"add"
                               withLabel:session.href
                               withValue:nil];
+#endif
     }
 
     NSError *error;
@@ -1243,22 +1249,26 @@
 }
 
 - (void) analyticsWarningForType:(NSString *)type andHref:(NSString *)href withCount:(NSNumber *)count {
+    
+#ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
 
     [tracker trackEventWithCategory:@"warning"
                          withAction:type
                           withLabel:href
                           withValue:count];
-
+#endif
 }
 
 - (void)clearConference:(Conference *)conference {
+#ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     
     [tracker trackEventWithCategory:@"clearing"
                          withAction:@"deleting"
                           withLabel:conference.href
                           withValue:nil];
+#endif
     
     [conference.sessions enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         NSManagedObject *dbObj = (NSManagedObject *)obj;

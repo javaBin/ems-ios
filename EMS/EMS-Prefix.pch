@@ -13,7 +13,9 @@
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
     #import <Crashlytics/Crashlytics.h>
+#ifndef DO_NOT_USE_GA
     #import "GAI.h"
     #import "GAITracker.h"
+#endif
 #endif
 

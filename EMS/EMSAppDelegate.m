@@ -28,20 +28,26 @@ int networkCount = 0;
     
     [Crashlytics startWithAPIKey:[prefs objectForKey:@"crashlytics-api-key"]];
 
+#ifndef DO_NOT_USE_GA
     [GAI sharedInstance].trackUncaughtExceptions = YES;
 #ifdef DEBUG
     [GAI sharedInstance].debug = YES;
 #endif
-
+#endif
+    
     [self cleanup];
 
+#ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:[prefs objectForKey:@"google-analytics-tracking-id"]];
-
+#endif
+    
     if ([EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
+#ifndef DO_NOT_USE_GA
         [tracker trackEventWithCategory:@"system"
                              withAction:@"notification"
                               withLabel:@"initialize"
                               withValue:nil];
+#endif
 
         UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     
@@ -87,6 +93,7 @@ int networkCount = 0;
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     if ([EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
+#ifndef DO_NOT_USE_GA
         id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
 
         [tracker trackEventWithCategory:@"system"
@@ -94,6 +101,8 @@ int networkCount = 0;
                               withLabel:@"receive"
                               withValue:nil];
 
+        [[GAI sharedInstance] dispatch];
+#endif
         [self activateWithNotification:notification];
     }
 }

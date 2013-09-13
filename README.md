@@ -19,6 +19,18 @@ The current keys it provides are:
 
 See EMS/EMS-Keys.sample.plist.
 
+### CFLAGS
+
+The following CFLAGS are available
+
+* USE_TEST_DATE - will use the current time but the first day of the selected conference when calculating Now & Next view
+* TEST_PROD - will use the production server for debug builds
+* DO_NOT_USE_GA - removes google analytics (and therefore the need for google-analytics-tracking-id in the EMS-Keys.plist)
+
+None of these are to be used on production builds.
+
+DO_NOT_USE_GA is provided only as a convenience for other developers to avoid having to have a google analytics key. It should not be present in the CFLAGS setting when files are committed to git.
+
 ## Testers
 
 Want to help us make the app better and more stable by being a beta tester?
