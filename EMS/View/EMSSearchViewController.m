@@ -269,6 +269,8 @@
 }
 
 - (void)apply:(id)sender {
+    [self.advancedSearch setSearch:self.search.text];
+    
     [self.delegate advancedSearchUpdated];
 
     [self.navigationController popViewControllerAnimated:YES];
