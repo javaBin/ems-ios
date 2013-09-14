@@ -952,6 +952,12 @@
 #pragma mark - utility
 
 - (NSString *) getSlotNameForLightningSlot:(Slot *)slot forConference:(Conference *)conference {
+    if (slot == nil || slot.start == nil || slot.end == nil) {
+        CLS_LOG(@"GSNFLS: Slot data looks strange, %@, %@, %@", slot, slot.start, slot.end);
+        
+        return nil;
+    }
+    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(((start <= %@) AND (end >= %@)) AND SELF != %@ AND conference == %@)",
                               slot.start,
                               slot.end,
@@ -994,6 +1000,12 @@
 }
 
 - (NSString *) getSlotNameForSlot:(Slot *)slot forConference:(Conference *)conference {
+    if (slot == nil || slot.start == nil || slot.end == nil) {
+        CLS_LOG(@"GSNFS: Slot data looks strange, %@, %@, %@", slot, slot.start, slot.end);
+        
+        return nil;
+    }
+
     NSDateFormatter *dateFormatterDate = [[NSDateFormatter alloc] init];
     NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
 
