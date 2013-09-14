@@ -1,5 +1,6 @@
 2013-09-14  Chris Searle  <chris@chrissearle.org>
 
+        * Protect against a background update removing sessions and then user hitting move. Crashlytics 40. (#62)
         * Protect against null times for a slot when getting name. Crashlytics 39. (#58)
         * Search text in advanced search actually get's saved (#59)
         * Add language to advanced search (#57)

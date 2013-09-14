@@ -29,6 +29,13 @@
 
 @implementation EMSDetailViewController
 
+- (void)setupMovement {
+    self.previousSessionButton.enabled = ([self getSessionForDirection:-1] != nil);
+    self.nextSessionButton.enabled = ([self getSessionForDirection:1] != nil);
+    self.previousSectionButton.enabled = ([self getSectionForDirection:-1] != nil);
+    self.nextSectionButton.enabled = ([self getSectionForDirection:1] != nil);
+}
+
 - (void)setupViewWithSession:(Session *)session {
     self.session = session;
 
@@ -86,10 +93,7 @@
 
     self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
 
-    self.previousSessionButton.enabled = ([self getSessionForDirection:-1] != nil);
-    self.nextSessionButton.enabled = ([self getSessionForDirection:1] != nil);
-    self.previousSectionButton.enabled = ([self getSectionForDirection:-1] != nil);
-    self.nextSectionButton.enabled = ([self getSectionForDirection:1] != nil);
+    [self setupMovement];
 
     [self buildPage];
 
@@ -630,6 +634,10 @@
 - (NSIndexPath *)getSessionForDirection:(int)direction {
     NSArray *sections = [self.fetchedResultsController sections];
 
+    if (sections == nil) {
+        return nil;
+    }
+    
     int rowCount = [[sections objectAtIndex:self.indexPath.section] numberOfObjects];
 
     return [self indexPathForRow:self.indexPath moving:direction withRows:rowCount];
@@ -642,20 +650,28 @@
     }
 }
 
+- (void)updateWithIndexPathIfNotNil:(NSIndexPath *)path {
+    if (path != nil) {
+        [self updateWithIndexPath:path];
+    } else {
+        [self setupMovement];
+    }
+}
+
 - (IBAction)movePreviousSection:(id)sender {
-    [self updateWithIndexPath:[self getSectionForDirection:-1]];
+    [self updateWithIndexPathIfNotNil:[self getSectionForDirection:-1]];
 }
 
 - (IBAction)moveNextSection:(id)sender {
-    [self updateWithIndexPath:[self getSectionForDirection:1]];
+    [self updateWithIndexPathIfNotNil:[self getSectionForDirection:1]];
 }
 
 - (IBAction)movePreviousSession:(id)sender {
-    [self updateWithIndexPath:[self getSessionForDirection:-1]];
+    [self updateWithIndexPathIfNotNil:[self getSessionForDirection:-1]];
 }
 
 - (IBAction)moveNextSession:(id)sender {
-    [self updateWithIndexPath:[self getSessionForDirection:1]];
+    [self updateWithIndexPathIfNotNil:[self getSessionForDirection:1]];
 }
 
 - (NSIndexPath *)indexPathForSection:(NSIndexPath *)current moving:(int)direction fromSections:(NSArray *)sections {
