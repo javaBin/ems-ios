@@ -227,10 +227,12 @@
         [self.session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
             Speaker *speaker = (Speaker *)obj;
             
-            [result appendString:speaker.name];
+            if (speaker.name != nil) {
+                [result appendString:speaker.name];
+            }
 
             NSString *bio = [self.cachedSpeakerBios objectForKey:speaker.name];
-            if (![bio isEqualToString:@""]) {
+            if (bio && ![bio isEqualToString:@""]) {
                 [result appendString:@"\n\n"];
                 [result appendString:bio];
             }
