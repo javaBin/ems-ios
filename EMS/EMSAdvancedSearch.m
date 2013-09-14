@@ -69,7 +69,7 @@ NSString *const PrefsSearchField = @"searchFields";
 
     NSMutableDictionary *fieldsAsArrays = [[NSMutableDictionary alloc] init];
 
-    for (int i = emsKeyword; i <= emsRoom; i++) {
+    for (int i = emsKeyword; i <= emsLang; i++) {
         NSNumber *key = [NSNumber numberWithInt:i];
         
         if ([[self.fields allKeys] containsObject:key]) {
@@ -95,7 +95,7 @@ NSString *const PrefsSearchField = @"searchFields";
     NSDictionary *storedSearchFields = [defaults objectForKey:PrefsSearchField];
     
     if (storedSearchFields != nil) {
-        for (int i = emsKeyword; i <= emsRoom; i++) {
+        for (int i = emsKeyword; i <= emsLang; i++) {
             NSString *key = [[NSNumber numberWithInt:i] stringValue];
             
             if ([[storedSearchFields allKeys] containsObject:key]) {
@@ -114,7 +114,8 @@ NSString *const PrefsSearchField = @"searchFields";
     return ([[self fieldValuesForKey:emsKeyword] count] > 0 ||
             [[self fieldValuesForKey:emsLevel] count] > 0 ||
             [[self fieldValuesForKey:emsType] count] > 0 ||
-            [[self fieldValuesForKey:emsRoom] count] > 0);
+            [[self fieldValuesForKey:emsRoom] count] > 0 ||
+            [[self fieldValuesForKey:emsLang] count] > 0);
 }
 
 - (void) clear {

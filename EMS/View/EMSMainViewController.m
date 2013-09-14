@@ -383,6 +383,28 @@
              addObject:[NSCompoundPredicate orPredicateWithSubpredicates:keywordPredicates]];
         }
 
+        if ([[self.advancedSearch fieldValuesForKey:emsLang] count] > 0) {
+            NSSet *languages = [self.advancedSearch fieldValuesForKey:emsLang];
+            
+            NSMutableSet *langs = [[NSMutableSet alloc] init];
+            
+            [languages enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+                NSString *language = (NSString *)obj;
+                
+                if ([language isEqualToString:@"English"]) {
+                    [langs addObject:@"en"];
+                }
+
+                if ([language isEqualToString:@"Norwegian"]) {
+                    [langs addObject:@"no"];
+                }
+            }];
+            
+            [predicates
+             addObject:[NSPredicate predicateWithFormat:@"(language IN %@)",
+                        [NSSet setWithSet:langs]]];
+        }
+
         if (self.filterFavourites == YES) {
             [predicates
              addObject:[NSPredicate predicateWithFormat:@"favourite = %@", [NSNumber numberWithBool:YES]]];

@@ -10,7 +10,8 @@ typedef enum EMSSearchField : NSUInteger {
     emsKeyword,
     emsLevel,
     emsType,
-    emsRoom
+    emsRoom,
+    emsLang
 } EMSSearchField;
 
 - (NSString *)search;

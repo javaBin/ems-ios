@@ -51,7 +51,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    return 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -72,7 +72,11 @@
         case 3:
             return self.rooms.count;
             break;
-            
+
+        case 4:
+            return 2;
+            break;
+
         default:
             return 0;
             break;
@@ -142,6 +146,11 @@
             break;
         }
             
+        case 4:
+        {
+            [self configureCell:cell forIndexPath:indexPath fromList:@[@"English", @"Norwegian"] andCurrentList:[self.advancedSearch fieldValuesForKey:emsLang] capitalized:YES cleaned:NO withImage:YES];
+        }
+            
         default:
             break;
     }
@@ -163,6 +172,9 @@
             break;
         case 3:
             return @"Rooms";
+            break;
+        case 4:
+            return @"Language";
             break;
 
         default:
@@ -215,6 +227,12 @@
             break;
         }
             
+        case 4:
+        {
+            [self selectRowForIndexPath:indexPath forList:@[@"English", @"Norwegian"] andKey:emsLang];
+            break;
+        }
+            
         default:
             break;
     }
@@ -251,22 +269,6 @@
 }
 
 - (void)apply:(id)sender {
-    NSMutableSet *lowerCasedLevels = [[NSMutableSet alloc] init];
-    
-    [[self.advancedSearch fieldValuesForKey:emsLevel] enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-        NSString *level = (NSString *)obj;
-        
-        [lowerCasedLevels addObject:[level lowercaseString]];
-    }];
-
-    NSMutableSet *lowerCasedTypes = [[NSMutableSet alloc] init];
-    
-    [[self.advancedSearch fieldValuesForKey:emsType] enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-        NSString *type = (NSString *)obj;
-        
-        [lowerCasedTypes addObject:[type lowercaseString]];
-    }];
-    
     [self.delegate advancedSearchUpdated];
 
     [self.navigationController popViewControllerAnimated:YES];
