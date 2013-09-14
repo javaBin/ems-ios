@@ -80,8 +80,10 @@ NSString *const PrefsSearchField = @"searchFields";
     
     [defaults synchronize];
     
+#ifndef DO_NOT_USE_CRASHLYTICS
     [Crashlytics setObjectValue:self.searchText forKey:@"lastStoredSearchText"];
     [Crashlytics setObjectValue:self.fields forKey:@"lastStoredSearchFields"];
+#endif
 }
 
 - (void) retrieve {
@@ -106,8 +108,10 @@ NSString *const PrefsSearchField = @"searchFields";
         }
     }
 
+#ifndef DO_NOT_USE_CRASHLYTICS
     [Crashlytics setObjectValue:self.searchText forKey:@"lastRetrievedSearchText"];
     [Crashlytics setObjectValue:self.fields forKey:@"lastRetrievedSearchFields"];
+#endif
 }
 
 - (BOOL)hasAdvancedSearch {

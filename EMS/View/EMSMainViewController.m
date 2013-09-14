@@ -2,8 +2,6 @@
 //  EMSMainViewController.m
 //
 
-#import <Crashlytics/Crashlytics.h>
-
 #import "EMSMainViewController.h"
 #import "EMSModel.h"
 
@@ -220,8 +218,10 @@
             
             destination.session = session;
             
+#ifndef DO_NOT_USE_CRASHLYTICS
             [Crashlytics setObjectValue:session.href forKey:@"lastDetailSessionFromNotification"];
-
+#endif
+            
 #ifndef DO_NOT_USE_GA
             [tracker trackEventWithCategory:@"listView"
                                  withAction:@"detailFromNotification"
@@ -235,8 +235,10 @@
 
             destination.session = session;
 
+#ifndef DO_NOT_USE_CRASHLYTICS
             [Crashlytics setObjectValue:session.href forKey:@"lastDetailSession"];
-
+#endif
+            
 #ifndef DO_NOT_USE_GA
             [tracker trackEventWithCategory:@"listView"
                                  withAction:@"detail"
@@ -419,7 +421,9 @@
 
         NSPredicate *resultPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
         
+#ifndef DO_NOT_USE_CRASHLYTICS
         [Crashlytics setObjectValue:resultPredicate forKey:@"activePredicate"];
+#endif
         
         return resultPredicate;
     }

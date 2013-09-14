@@ -4,7 +4,6 @@
 
 #import <CommonCrypto/CommonDigest.h>
 #import <EventKit/EventKit.h>
-#import <Crashlytics/Crashlytics.h>
 
 #import "EMSDetailViewController.h"
 
@@ -260,7 +259,9 @@
 }
 
 - (void)share:(id)sender {
+#ifndef DO_NOT_USE_CRASHLYTICS
     [Crashlytics setObjectValue:self.session.href forKey:@"lastSharedSession"];
+#endif
     
     NSString *shareString = [NSString stringWithFormat:@"%@ - %@", self.session.conference.name, self.session.title];
     

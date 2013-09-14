@@ -26,8 +26,10 @@ int networkCount = 0;
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"EMS-Keys" ofType:@"plist"];
     NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     
+#ifndef DO_NOT_USE_CRASHLYTICS
     [Crashlytics startWithAPIKey:[prefs objectForKey:@"crashlytics-api-key"]];
-
+#endif
+    
 #ifndef DO_NOT_USE_GA
     [GAI sharedInstance].trackUncaughtExceptions = YES;
 #ifdef DEBUG
@@ -350,8 +352,10 @@ int networkCount = 0;
     [defaults setURL:href forKey:@"activeConference"];
 
     [defaults synchronize];
-    
+
+#ifndef DO_NOT_USE_CRASHLYTICS
     [Crashlytics setObjectValue:href forKey:@"lastStoredConference"];
+#endif
 }
 
 + (NSURL *) currentConference {
@@ -359,8 +363,10 @@ int networkCount = 0;
     
     NSURL *href = [defaults URLForKey:@"activeConference"];
     
+#ifndef DO_NOT_USE_CRASHLYTICS
     [Crashlytics setObjectValue:href forKey:@"lastRetrievedConference"];
-
+#endif
+    
     return href;
 }
 
