@@ -26,10 +26,14 @@ The following CFLAGS are available
 * USE_TEST_DATE - will use the current time but the first day of the selected conference when calculating Now & Next view
 * TEST_PROD - will use the production server for debug builds
 * DO_NOT_USE_GA - removes google analytics (and therefore the need for google-analytics-tracking-id in the EMS-Keys.plist)
+* DO_NOT_USE_CRASHLYTICS - removes crashlytics (and therefore the need for crashlytics-api-key in the EMS-Keys.plist)
 
 None of these are to be used on production builds.
 
-DO_NOT_USE_GA is provided only as a convenience for other developers to avoid having to have a google analytics key. It should not be present in the CFLAGS setting when files are committed to git.
+DO_NOT_USE_GA is provided only as a convenience for other developers to avoid having to have a google analytics key.
+DO_NOT_USE_CRASHLYTICS is provided only as a convenience for other developers to avoid having to have a crashlytics api key (and read the next section about the run script too).
+
+Neither should not be present in the CFLAGS setting when files are committed to git.
 
 ## But I don't have the keys or accounts?
 
