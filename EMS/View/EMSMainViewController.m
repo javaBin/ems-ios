@@ -162,6 +162,8 @@
 
         [self initializeFetchedResultsController];
     }
+    
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -252,7 +254,8 @@
     }
     
     if ([[segue identifier] isEqualToString:@"showSearchView"]) {
-        EMSSearchViewController *destination = (EMSSearchViewController *)[segue destinationViewController];
+        UINavigationController *navigationController = [segue destinationViewController];
+        EMSSearchViewController *destination = (EMSSearchViewController *) navigationController.childViewControllers[0];
 
         CLS_LOG(@"Preparing search view with %@ and conference %@", self.search.text, [self activeConference]);
 
@@ -825,6 +828,8 @@
     self.search.text = [self.advancedSearch search];
 
     [self initializeFetchedResultsController];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void) segmentChanged:(id)sender {
@@ -884,6 +889,10 @@
             EMSDetailViewController *detail = (EMSDetailViewController *)segue.sourceViewController;
             [self.tableView scrollToRowAtIndexPath:detail.indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
         }
+    }
+    
+    if ([segue.identifier isEqualToString:@"unwindSettingsSegue"]) {
+        [self initializeFetchedResultsController];
     }
 }
 

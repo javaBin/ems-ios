@@ -128,11 +128,23 @@
 }
 
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    id sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
-
-    return [sectionInfo numberOfObjects];
+    NSInteger rows = 0;
+    if (section == 0) {
+        id sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
+        
+        rows = [sectionInfo numberOfObjects];
+    } else if (section == 1) {
+        rows = 1;
+    }
+    
+    return rows;
+   
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -168,19 +180,31 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ConferenceCell"];
+    UITableViewCell *cell = nil;
 
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ConferenceCell"];
+    
+    if (indexPath.section == 0) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"ConferenceCell"];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ConferenceCell"];
+        }
+        
+        [self configureCell:cell atIndexPath:indexPath];
+    } else if (indexPath.section == 1) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"AboutCell"];
     }
-
-    [self configureCell:cell atIndexPath:indexPath];
+    
     
     return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"Available Conferences";
+    NSString *title = @"";
+    if (section == 0) {
+        title = @"Available Conferences";
+    } 
+    return title;
+    
 }
 
 
@@ -189,7 +213,7 @@
     
     [self.tableView reloadData];
     
-    [self.delegate conferenceChanged:self];
+    
 
 #ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
@@ -200,7 +224,7 @@
                           withValue:nil];
 #endif
     
-    [self.navigationController popViewControllerAnimated:YES];
+   
 }
 
 - (void)finishedConferences:(NSArray *)conferenceList forHref:(NSURL *)href {
@@ -222,7 +246,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self selectConference:[_fetchedResultsController objectAtIndexPath:indexPath]];
+    if (indexPath.section == 0) {
+        [self selectConference:[_fetchedResultsController objectAtIndexPath:indexPath]];
+    }
 }
 
 

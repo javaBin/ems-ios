@@ -273,7 +273,7 @@
     
     [self.delegate advancedSearchUpdated];
 
-    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 - (void)clear:(id)sender {
