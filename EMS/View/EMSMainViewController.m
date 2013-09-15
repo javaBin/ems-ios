@@ -122,12 +122,6 @@
     }
 }
 
-- (void) conferenceChanged:(id)sender {
-    CLS_LOG(@"Conference changed");
-    
-    [self initializeFetchedResultsController];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -175,12 +169,6 @@
             }
         }
     }
-
-    if ([self.advancedSearch hasAdvancedSearch]) {
-        [self.advancedSearchButton setStyle:UIBarButtonItemStyleDone];
-    } else {
-        [self.advancedSearchButton setStyle:UIBarButtonItemStyleBordered];
-    }
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -202,16 +190,14 @@
 #ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
 #endif
-    
-    if ([[segue identifier] isEqualToString:@"showSettingsView"]) {
-        EMSSettingsViewController *destination = (EMSSettingsViewController *)[segue destinationViewController];
-
-        CLS_LOG(@"Preparing settings view");
         
-        destination.delegate = self;
-    }
     if ([[segue identifier] isEqualToString:@"showDetailsView"]) {
-        EMSDetailViewController *destination = (EMSDetailViewController *)[segue destinationViewController];
+        UIViewController *tmpDestination = [segue destinationViewController];
+        if ([tmpDestination isKindOfClass:[UINavigationController class]]) {
+            tmpDestination = tmpDestination.childViewControllers[0];
+        }
+        
+        EMSDetailViewController *destination = (EMSDetailViewController *)tmpDestination;
 
         if ([sender isKindOfClass:[NSString class]]) {
             Session *session = [[[EMSAppDelegate sharedAppDelegate] model] sessionForHref:(NSString *)sender];
@@ -893,6 +879,7 @@
     
     if ([segue.identifier isEqualToString:@"unwindSettingsSegue"]) {
         [self initializeFetchedResultsController];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 

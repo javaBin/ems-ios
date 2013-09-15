@@ -5,7 +5,6 @@
 #import <UIKit/UIKit.h>
 
 #import "EMSRetrieverDelegate.h"
-#import "EMSConferenceChangedDelegate.h"
 #import "EMSSearchViewDelegate.h"
 #import "EMSRetriever.h"
 
@@ -14,7 +13,7 @@
 
 #import "EMSModel.h"
 
-@interface EMSMainViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, EMSConferenceChangedDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate>
+@interface EMSMainViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) EMSRetriever *retriever;
