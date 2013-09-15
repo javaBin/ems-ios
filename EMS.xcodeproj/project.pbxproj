@@ -213,7 +213,7 @@
 		F3513B61177079A50042D07A /* 64-zap-yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-zap-yellow@2x.png"; sourceTree = "<group>"; };
 		F354B0B81781AA1D007F7B01 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
 		F354B0B91781AA1D007F7B01 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
-		F35BB6C217685885009077D3 /* EMS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EMS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F35BB6C217685885009077D3 /* EMS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = EMS.app; path = "/Users/ronnie/Documents/Prosjekter/Javazone/ems-ios/build/Debug_No_Analytics-iphoneos/EMS.app"; sourceTree = "<absolute>"; };
 		F35BB6C517685885009077D3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F35BB6C717685885009077D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F35BB6C917685885009077D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -463,17 +463,8 @@
 				839BD63A176F9BD400900712 /* EMS */,
 				F35BB6CB17685885009077D3 /* App */,
 				F35BB6C417685885009077D3 /* Frameworks */,
-				F35BB6C317685885009077D3 /* Products */,
 				CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */,
 			);
-			sourceTree = "<group>";
-		};
-		F35BB6C317685885009077D3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F35BB6C217685885009077D3 /* EMS.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		F35BB6C417685885009077D3 /* Frameworks */ = {
@@ -596,7 +587,7 @@
 				en,
 			);
 			mainGroup = F35BB6B917685885009077D3;
-			productRefGroup = F35BB6C317685885009077D3 /* Products */;
+			productRefGroup = F35BB6B917685885009077D3;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
