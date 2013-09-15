@@ -19,6 +19,8 @@ The current keys it provides are:
 
 See EMS/EMS-Keys.sample.plist.
 
+The build uses cocoapods - so you will need to run the pod command and make sure you open EMS.xcworkspace and not EMS.xcodeproj.
+
 ### CFLAGS
 
 The following CFLAGS are available
