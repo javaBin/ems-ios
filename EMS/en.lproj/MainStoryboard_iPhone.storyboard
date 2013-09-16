@@ -205,7 +205,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Search/Filter" id="qan-0d-j9g">
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="ryV-ZF-vLS">
+                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="done" id="ryV-ZF-vLS">
                             <connections>
                                 <action selector="apply:" destination="cM7-wC-1Xm" id="Egj-Bb-NTt"/>
                             </connections>
@@ -584,7 +584,6 @@
         <image name="09-arrow-west.png" width="19" height="16"/>
         <image name="19-gear.png" width="26" height="26"/>
         <image name="258-checkmark-grey.png" width="19" height="18"/>
-        <image name="28-star-grey.png" width="26" height="26"/>
         <image name="28-star-grey.png" width="26" height="26"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
