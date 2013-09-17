@@ -36,6 +36,7 @@
     
     refreshControl.tintColor = [UIColor grayColor];
     refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refresh available sessions"];
+    refreshControl.backgroundColor = self.tableView.backgroundColor;
     
     [refreshControl addTarget:self action:@selector(retrieve) forControlEvents:UIControlEventValueChanged];
     
@@ -116,7 +117,7 @@
     if (![[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:activeConference.href]) {
         CLS_LOG(@"Checking for existing data found no data - forced refresh");
 
-        [self.tableView setContentOffset:CGPointMake(0, -100) animated:YES];
+        [self.tableView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:YES];
         [self.refreshControl beginRefreshing];
         [self retrieve];
     }
@@ -124,6 +125,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.title = @"Sessions";
     
     self.retrievingSlots = NO;
     self.retrievingRooms = NO;
@@ -162,13 +165,13 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (!self.refreshControl.refreshing) {
+   /* if (!self.refreshControl.refreshing) {
         if ([self.search.text isEqualToString:@""]) {
             if (self.tableView.contentOffset.y < 44) {
                 [self.tableView setContentOffset:CGPointMake(0, 44)];
             }
         }
-    }
+    }*/
 }
 
 - (void) viewDidAppear:(BOOL)animated {

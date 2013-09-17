@@ -115,7 +115,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    //We do not do fullscreen layout on iOS 7+ right now.
+    if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
     [self setupViewWithSession:self.session];
 }
 

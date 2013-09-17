@@ -28,7 +28,7 @@
     
     refreshControl.tintColor = [UIColor grayColor];
     refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refresh available conferences"];
-    
+    refreshControl.backgroundColor = self.tableView.backgroundColor;
     [refreshControl addTarget:self action:@selector(retrieve) forControlEvents:UIControlEventValueChanged];
     
     self.refreshControl = refreshControl;
@@ -37,6 +37,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.title = @"S";
 
     self.justRetrieved = NO;
     self.emptyInitial = NO;
@@ -60,7 +62,7 @@
     if (![[[EMSAppDelegate sharedAppDelegate] model] conferencesWithDataAvailable]) {
         self.emptyInitial = YES;
 
-        [self.tableView setContentOffset:CGPointMake(0, -100) animated:YES];
+        [self.tableView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:YES];
         [self.refreshControl beginRefreshing];
         [self retrieve];
     }
@@ -112,6 +114,7 @@
 }
 
 - (void) retrieve {
+    
     EMSRetriever *retriever = [[EMSRetriever alloc] init];
     
     retriever.delegate = self;
