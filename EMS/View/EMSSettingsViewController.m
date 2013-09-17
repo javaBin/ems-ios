@@ -37,8 +37,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.title = @"S";
 
     self.justRetrieved = NO;
     self.emptyInitial = NO;
