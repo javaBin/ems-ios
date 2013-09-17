@@ -515,21 +515,26 @@
     
     UIButton *icon = sessionCell.icon;
     
-    UIImage *normalImage = [UIImage imageNamed:@"28-star-grey"];
-    UIImage *selectedImage = [UIImage imageNamed:@"28-star-yellow"];
-    UIImage *highlightedImage = [UIImage imageNamed:@"28-star"];
+    [icon setSelected:[session.favourite boolValue]];
+    
+    NSString *imageBaseName = [session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star";
+    NSString *imageNameFormat = @"%@-%@";
+    
+    UIImage *normalImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"grey"]];
+    UIImage *selectedImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"yellow"]];
 
-    if ([session.format isEqualToString:@"lightning-talk"]) {
-        normalImage = [UIImage imageNamed:@"64-zap-grey"];
-        selectedImage = [UIImage imageNamed:@"64-zap-yellow"];
-        highlightedImage = [UIImage imageNamed:@"64-zap"];
+    if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
+        normalImage = [normalImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        if (icon.selected) {
+            icon.tintColor = nil;
+        } else {
+            icon.tintColor = [UIColor lightGrayColor];  
+        }
     }
-
+    
     [icon setImage:normalImage forState:UIControlStateNormal];
     [icon setImage:selectedImage forState:UIControlStateSelected];
-    [icon setImage:highlightedImage forState:UIControlStateHighlighted];
-
-    [icon setSelected:[session.favourite boolValue]];
     
     [sessionCell.icon addTarget:self action:@selector(toggleFavourite:) forControlEvents:UIControlEventTouchUpInside];
 

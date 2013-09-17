@@ -61,21 +61,32 @@
 
     self.title = [NSString stringWithString:title];
 
-    UIImage *normalImage = [UIImage imageNamed:@"28-star-grey"];
-    UIImage *selectedImage = [UIImage imageNamed:@"28-star-yellow"];
-    UIImage *highlightedImage = [UIImage imageNamed:@"28-star"];
-
-    if ([session.format isEqualToString:@"lightning-talk"]) {
-        normalImage = [UIImage imageNamed:@"64-zap-grey"];
-        selectedImage = [UIImage imageNamed:@"64-zap-yellow"];
-        highlightedImage = [UIImage imageNamed:@"64-zap"];
+    
+    [self.button setSelected:[session.favourite boolValue]];
+    
+    NSString *imageBaseName = [session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star";
+    NSString *imageNameFormat = @"%@-%@";
+    
+    UIImage *normalImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"grey"]];
+    UIImage *selectedImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"yellow"]];
+    
+    if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
+        normalImage = [normalImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        
+        if (self.button.selected) {
+            self.button.tintColor = nil;
+        } else {
+            self.button.tintColor = [UIColor lightGrayColor];
+        }
     }
-
+    
     [self.button setImage:normalImage forState:UIControlStateNormal];
     [self.button setImage:selectedImage forState:UIControlStateSelected];
-    [self.button setImage:highlightedImage forState:UIControlStateHighlighted];
-
-    [self.button setSelected:[session.favourite boolValue]];
+    
+    
+    
+   
 
     self.titleLabel.text = session.title;
 
@@ -120,6 +131,14 @@
     self.session = [[[EMSAppDelegate sharedAppDelegate] model] toggleFavourite:self.session];
     
     [self.button setSelected:[self.session.favourite boolValue]];
+    
+    if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
+        if (self.button.selected) {
+            self.button.tintColor = nil;
+        } else {
+            self.button.tintColor = [UIColor lightGrayColor];
+        }
+    }
 }
 
 - (void) buildPage {
