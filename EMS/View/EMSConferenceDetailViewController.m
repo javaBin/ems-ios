@@ -81,19 +81,19 @@
     switch (indexPath.row) {
         case 0:
         {
-            cell.textLabel.text = @"Name:";
+            cell.textLabel.text = @"Name";
             cell.detailTextLabel.text = conference.name;
             break;
         }
         case 1:
         {
-            cell.textLabel.text = @"Venue:";
+            cell.textLabel.text = @"Venue";
             cell.detailTextLabel.text = conference.venue;
             break;
         }
         case 2:
         {
-            cell.textLabel.text = @"# Sessions:";
+            cell.textLabel.text = @"# Sessions";
             if (conference.sessions.count > 0) {
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", conference.sessions.count];
             } else {
@@ -117,7 +117,7 @@
                 [dates addObject:[dateFormatter stringFromDate:conference.end]];
             }
             
-            cell.textLabel.text = @"Dates:";
+            cell.textLabel.text = @"Dates";
             cell.detailTextLabel.text = [dates componentsJoinedByString:@" - "];
             
             break;
