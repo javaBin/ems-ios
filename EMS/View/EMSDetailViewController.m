@@ -23,9 +23,11 @@
 
 #import "MMMarkdown.h"
 
-@interface EMSDetailViewController ()
-
+@interface EMSDetailViewController ()<UIPopoverControllerDelegate>
+@property(nonatomic) UIPopoverController *sharePopoverController;
 @end
+
+
 
 @implementation EMSDetailViewController
 
@@ -344,9 +346,21 @@
         }
     }];
     
+    
     activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     
-    [self presentViewController:activityViewController animated:YES completion:^{ activityViewController.excludedActivityTypes = nil; activityViewController = nil; }];
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        UIPopoverController *popup = [[UIPopoverController alloc] initWithContentViewController:activityViewController];
+        
+        popup.delegate = self;
+        [popup presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        
+        self.sharePopoverController = popup;
+    } else {
+        [self presentViewController:activityViewController animated:YES completion:^{ activityViewController.excludedActivityTypes = nil; activityViewController = nil; }];
+    }
+    
 }
 
 - (NSString *)buildPage:(Session *)session {
@@ -760,6 +774,18 @@
     }
     
     return YES;
+}
+
+#pragma mark - UIPopoverControllerDelegate
+
+- (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController {
+    return YES;
+}
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
+    if (popoverController == self.sharePopoverController) {
+        self.sharePopoverController = nil;
+    }
 }
 
 @end
