@@ -105,7 +105,8 @@
         {
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             
-            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+            dateFormatter.dateStyle = NSDateFormatterShortStyle;
+            dateFormatter.timeStyle = NSDateFormatterNoStyle;
             
             NSMutableArray *dates = [[NSMutableArray alloc] init];
             
