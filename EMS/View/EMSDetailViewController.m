@@ -122,7 +122,10 @@
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
-    [self setupViewWithSession:self.session];
+    if (self.session) {
+        [self setupViewWithSession:self.session];
+    }
+    
 }
 
 - (void) viewDidAppear:(BOOL)animated {

@@ -25,7 +25,7 @@
 #import "Room.h"
 #import "Keyword.h"
 
-@interface EMSMainViewController ()
+@interface EMSMainViewController ()<UISplitViewControllerDelegate>
 
 @end
 
@@ -160,6 +160,10 @@
         [self initializeFetchedResultsController];
     }
     
+    
+    if (self.splitViewController) {
+        self.splitViewController.delegate = self;
+    }
     
 }
 
@@ -889,6 +893,13 @@
         [self initializeFetchedResultsController];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
+}
+
+
+#pragma mark - UISplitViewControllerDelegate
+
+- (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation {
+    return NO;
 }
 
 @end
