@@ -38,7 +38,8 @@
 - (void) viewDidAppear:(BOOL)animated {
 #ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker sendView:@"Conference Detail Screen"];
+    [tracker set:kGAIScreenName value:@"Conference Detail Screen"];
+    [tracker send:[[GAIDictionaryBuilder createAppView]  build]];
 #endif
 }
 

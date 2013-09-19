@@ -1093,10 +1093,10 @@
         [self removeNotification:session];
 
 #ifndef DO_NOT_USE_GA
-        [tracker trackEventWithCategory:@"favourite"
-                             withAction:@"remove"
-                              withLabel:session.href
-                              withValue:nil];
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"favourite"
+                                                              action:@"remove"
+                                                               label:session.href
+                                                               value:nil] build]];
 #endif
     } else {
         session.favourite = [NSNumber numberWithBool:YES];
@@ -1104,10 +1104,10 @@
         [self addNotification:session];
 
 #ifndef DO_NOT_USE_GA
-        [tracker trackEventWithCategory:@"favourite"
-                             withAction:@"add"
-                              withLabel:session.href
-                              withValue:nil];
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"favourite"
+                                                              action:@"add"
+                                                               label:session.href
+                                                               value:nil] build]];
 #endif
     }
 
@@ -1265,10 +1265,10 @@
 #ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
 
-    [tracker trackEventWithCategory:@"warning"
-                         withAction:type
-                          withLabel:href
-                          withValue:count];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"warning"
+                                                          action:type
+                                                           label:href
+                                                           value:count] build]];
 #endif
 }
 
@@ -1276,10 +1276,10 @@
 #ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     
-    [tracker trackEventWithCategory:@"clearing"
-                         withAction:@"deleting"
-                          withLabel:conference.href
-                          withValue:nil];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"clearing"
+                                                          action:@"deleting"
+                                                           label:conference.href
+                                                           value:nil] build]];
 #endif
     
     [conference.sessions enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {

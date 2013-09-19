@@ -1,16 +1,16 @@
 PODS:
   - Collection-JSON-ObjC (1.0.1)
-  - GoogleAnalytics-iOS-SDK (2.0beta4)
+  - GoogleAnalytics-iOS-SDK (3.0)
   - NHCalendarActivity (0.0.1)
 
 DEPENDENCIES:
   - Collection-JSON-ObjC (= 1.0.1)
-  - GoogleAnalytics-iOS-SDK (= 2.0beta4)
+  - GoogleAnalytics-iOS-SDK (= 3.0)
   - NHCalendarActivity (= 0.0.1)
 
 SPEC CHECKSUMS:
   Collection-JSON-ObjC: 87d7ac9d33a25fc6e1302d55b9c9a222154b4caa
-  GoogleAnalytics-iOS-SDK: acf0f1ac4dcac408d17e7766454918b7e9e2b03a
+  GoogleAnalytics-iOS-SDK: f8d5faf4862b679667be0c270531a189572275d1
   NHCalendarActivity: f879e1aa3e57bb8d110a1907860453b7a4fd5fce
 
 COCOAPODS: 0.24.0

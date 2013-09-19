@@ -33,7 +33,7 @@ int networkCount = 0;
 #ifndef DO_NOT_USE_GA
     [GAI sharedInstance].trackUncaughtExceptions = YES;
 #ifdef DEBUG
-    [GAI sharedInstance].debug = YES;
+    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
 #endif
 #endif
     
@@ -45,10 +45,10 @@ int networkCount = 0;
     
     if ([EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
 #ifndef DO_NOT_USE_GA
-        [tracker trackEventWithCategory:@"system"
-                             withAction:@"notification"
-                              withLabel:@"initialize"
-                              withValue:nil];
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
+                                                              action:@"notification"
+                                                               label:@"initialize"
+                                                               value:nil] build]];
 #endif
 
         UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
@@ -98,10 +98,10 @@ int networkCount = 0;
 #ifndef DO_NOT_USE_GA
         id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
 
-        [tracker trackEventWithCategory:@"system"
-                             withAction:@"notification"
-                              withLabel:@"receive"
-                              withValue:nil];
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
+                                                              action:@"notification"
+                                                               label:@"receive"
+                                                               value:nil] build]];
 
         [[GAI sharedInstance] dispatch];
 #endif

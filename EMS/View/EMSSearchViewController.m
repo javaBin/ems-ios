@@ -37,7 +37,8 @@
 - (void) viewDidAppear:(BOOL)animated {
 #ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker sendView:@"Search Screen"];
+    [tracker set:kGAIScreenName value:@"Search Screen"];
+    [tracker send:[[GAIDictionaryBuilder createAppView]  build]];
 #endif
 }
 
