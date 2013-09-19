@@ -156,8 +156,8 @@
                            conference.venue];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    dateFormatter.dateStyle = NSDateFormatterMediumStyle;
+    dateFormatter.timeStyle = NSDateFormatterNoStyle;
     
     NSMutableArray *dates = [[NSMutableArray alloc] init];
 

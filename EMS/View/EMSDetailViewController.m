@@ -41,8 +41,9 @@
 
     NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
 
-    [dateFormatterTime setDateFormat:@"HH:mm"];
-
+    [dateFormatterTime setDateStyle:NSDateFormatterNoStyle];
+    [dateFormatterTime setTimeStyle:NSDateFormatterShortStyle];
+    
     NSMutableString *title = [[NSMutableString alloc] init];
     
     if (session.slot) {
