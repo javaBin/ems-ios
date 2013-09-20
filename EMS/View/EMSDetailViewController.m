@@ -133,7 +133,8 @@
 - (void) viewDidAppear:(BOOL)animated {
 #ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker sendView:@"Detail Screen"];
+    [tracker set:kGAIScreenName value:@"Detail Screen"];
+    [tracker send:[[GAIDictionaryBuilder createAppView]  build]];
 #endif
 }
 
@@ -339,9 +340,9 @@
 #ifndef DO_NOT_USE_GA
             id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
 
-            [tracker sendSocial:activityType
-                     withAction:@"Share"
-                     withTarget:[NSURL URLWithString:self.session.href]];
+            [tracker send:[[GAIDictionaryBuilder createSocialWithNetwork:activityType
+                                                                  action:@"Share"
+                                                                  target:[NSURL URLWithString:self.session.href]] build]];
 #endif
         }
     }];
@@ -762,10 +763,10 @@
 #ifndef DO_NOT_USE_GA
             id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
             
-            [tracker trackEventWithCategory:@"Web"
-                                 withAction:@"Open Link"
-                                  withLabel:request.URL.absoluteString
-                                  withValue:nil];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"web"
+                                                                  action:@"open link"
+                                                                   label:request.URL.absoluteString
+                                                                   value:nil] build]];
 #endif
             
             [[UIApplication sharedApplication] openURL:request.URL];

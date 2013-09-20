@@ -189,7 +189,8 @@
 - (void) viewDidAppear:(BOOL)animated {
 #ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker sendView:@"Main Screen"];
+    [tracker set:kGAIScreenName value:@"Main Screen"];
+    [tracker send:[[GAIDictionaryBuilder createAppView]  build]];
 #endif
 }
 
@@ -226,10 +227,10 @@
 #endif
             
 #ifndef DO_NOT_USE_GA
-            [tracker trackEventWithCategory:@"listView"
-                                 withAction:@"detailFromNotification"
-                                  withLabel:session.href
-                                  withValue:nil];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
+                                                                  action:@"detailFromNotification"
+                                                                   label:session.href
+                                                                   value:nil] build]];
 #endif
         } else {
             Session *session = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
@@ -243,10 +244,10 @@
 #endif
             
 #ifndef DO_NOT_USE_GA
-            [tracker trackEventWithCategory:@"listView"
-                                 withAction:@"detail"
-                                  withLabel:session.href
-                                  withValue:nil];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
+                                                                  action:@"detail"
+                                                                   label:session.href
+                                                                   value:nil] build]];
 #endif
         }
 
@@ -323,10 +324,10 @@
         destination.delegate = self;
 
 #ifndef DO_NOT_USE_GA
-        [tracker trackEventWithCategory:@"listView"
-                             withAction:@"search"
-                              withLabel:nil
-                              withValue:nil];
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
+                                                              action:@"search"
+                                                               label:nil
+                                                               value:nil] build]];
 #endif
     }
 }
@@ -851,32 +852,29 @@
         case 0:
         {
             // All
-            [tracker trackEventWithCategory:@"listView"
-                                 withAction:@"all"
-                                  withLabel:nil
-                                  withValue:nil];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
+                                                                  action:@"all"
+                                                                   label:nil
+                                                                   value:nil] build]];
             break;
         }
         case 1:
         {
             // My
-            [tracker trackEventWithCategory:@"listView"
-                                 withAction:@"favourites"
-                                  withLabel:nil
-                                  withValue:nil];
-
-
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
+                                                                  action:@"favourites"
+                                                                   label:nil
+                                                                   value:nil] build]];
             self.filterFavourites = YES;
             break;
         }
         case 2:
         {
             // Now / Next
-            [tracker trackEventWithCategory:@"listView"
-                                 withAction:@"now/next"
-                                  withLabel:nil
-                                  withValue:nil];
-
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
+                                                                  action:@"now/next"
+                                                                   label:nil
+                                                                   value:nil] build]];
             self.filterTime = YES;
             break;
         }

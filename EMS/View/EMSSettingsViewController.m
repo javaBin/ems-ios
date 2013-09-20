@@ -69,7 +69,8 @@
 - (void) viewDidAppear:(BOOL)animated {
 #ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker sendView:@"Settings Screen"];
+    [tracker set:kGAIScreenName value:@"Settings Screen"];
+    [tracker send:[[GAIDictionaryBuilder createAppView]  build]];
 #endif
 }
 
@@ -219,10 +220,10 @@
 #ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     
-    [tracker trackEventWithCategory:@"settingsView"
-                         withAction:@"selectConference"
-                          withLabel:conference.href
-                          withValue:nil];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"settingsView"
+                                                          action:@"selectConference"
+                                                           label:@"conference.href"
+                                                           value:nil] build]];
 #endif
     
    

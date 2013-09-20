@@ -121,10 +121,11 @@ NSDate *timer;
 
 #ifndef DO_NOT_USE_GA
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker sendTimingWithCategory:@"retrieval"
-                          withValue:[[NSDate date] timeIntervalSinceDate:timer]
-                           withName:@"sessions"
-                          withLabel:nil];
+    NSNumber *interval = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSinceDate:timer]];
+    [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"retrieval"
+                                                         interval:interval
+                                                             name:@"sessions"
+                                                            label:nil] build]];
 
     [[GAI sharedInstance] dispatch];
 #endif

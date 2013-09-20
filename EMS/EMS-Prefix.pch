@@ -20,6 +20,8 @@
 #ifndef DO_NOT_USE_GA
     #import "GAI.h"
     #import "GAITracker.h"
+    #import "GAIDictionaryBuilder.h"
+    #import "GAIFields.h"
 #endif
 #endif
 
