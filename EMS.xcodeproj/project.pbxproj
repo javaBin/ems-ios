@@ -44,6 +44,7 @@
 		83AC9468177CBF2E00E06345 /* 06-arrow-south@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC9460177CBF2E00E06345 /* 06-arrow-south@2x.png */; };
 		83AC9469177CBF2E00E06345 /* 09-arrow-west.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC9461177CBF2E00E06345 /* 09-arrow-west.png */; };
 		83AC946A177CBF2E00E06345 /* 09-arrow-west@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC9462177CBF2E00E06345 /* 09-arrow-west@2x.png */; };
+		83BF8B6A17ECDA4D0093242C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83BF8B6917ECDA4D0093242C /* Images.xcassets */; };
 		83D5CBA417749EEA00527620 /* EMSFeatureConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */; };
 		83F455A1177D5B5C00BC79A1 /* EMSAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */; };
 		83F455A3177D5C0C00BC79A1 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 83F455A2177D5C0C00BC79A1 /* about.html */; };
@@ -112,10 +113,6 @@
 		F3EC96AA1774780B004A5F25 /* beginner.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EC96A81774780B004A5F25 /* beginner.png */; };
 		F3EC96AD1774783E004A5F25 /* beginner-intermediate.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EC96AB1774783E004A5F25 /* beginner-intermediate.png */; };
 		F3EC96AE1774783E004A5F25 /* intermediate-advanced.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EC96AC1774783E004A5F25 /* intermediate-advanced.png */; };
-		F3EE4F1317818AC90008C1B2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EE4F1217818AC90008C1B2 /* Icon@2x.png */; };
-		F3EE4F1517818ADB0008C1B2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EE4F1417818ADB0008C1B2 /* Icon.png */; };
-		F3EE4F1817818B590008C1B2 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EE4F1617818B590008C1B2 /* Icon-72.png */; };
-		F3EE4F1917818B590008C1B2 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EE4F1717818B590008C1B2 /* Icon-72@2x.png */; };
 		F3F9139117B4C43200299424 /* 70-tv.png in Resources */ = {isa = PBXBuildFile; fileRef = F3F9138F17B4C43200299424 /* 70-tv.png */; };
 		F3F9139217B4C43200299424 /* 70-tv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F3F9139017B4C43200299424 /* 70-tv@2x.png */; };
 /* End PBXBuildFile section */
@@ -177,6 +174,7 @@
 		83AC9460177CBF2E00E06345 /* 06-arrow-south@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-arrow-south@2x.png"; sourceTree = "<group>"; };
 		83AC9461177CBF2E00E06345 /* 09-arrow-west.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "09-arrow-west.png"; sourceTree = "<group>"; };
 		83AC9462177CBF2E00E06345 /* 09-arrow-west@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "09-arrow-west@2x.png"; sourceTree = "<group>"; };
+		83BF8B6917ECDA4D0093242C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = EMS/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		83D5CBA217749EEA00527620 /* EMSFeatureConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSFeatureConfig.h; sourceTree = "<group>"; };
 		83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSFeatureConfig.m; sourceTree = "<group>"; };
 		83F4559F177D5B5C00BC79A1 /* EMSAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSAboutViewController.h; sourceTree = "<group>"; };
@@ -268,10 +266,6 @@
 		F3EC96A81774780B004A5F25 /* beginner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beginner.png; sourceTree = "<group>"; };
 		F3EC96AB1774783E004A5F25 /* beginner-intermediate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beginner-intermediate.png"; sourceTree = "<group>"; };
 		F3EC96AC1774783E004A5F25 /* intermediate-advanced.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "intermediate-advanced.png"; sourceTree = "<group>"; };
-		F3EE4F1217818AC90008C1B2 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		F3EE4F1417818ADB0008C1B2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		F3EE4F1617818B590008C1B2 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
-		F3EE4F1717818B590008C1B2 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		F3F9138F17B4C43200299424 /* 70-tv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "70-tv.png"; sourceTree = "<group>"; };
 		F3F9139017B4C43200299424 /* 70-tv@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "70-tv@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -335,6 +329,7 @@
 				839BD66F176FA67000900712 /* EMSSpeaker.m */,
 				F3D5E2C517709CD000888A7E /* EMSSpeakersRetriever.h */,
 				F3D5E2C617709CD000888A7E /* EMSSpeakersRetriever.m */,
+				83BF8B6917ECDA4D0093242C /* Images.xcassets */,
 			);
 			name = EMS;
 			path = EMS/EMS;
@@ -451,10 +446,6 @@
 			children = (
 				F354B0B81781AA1D007F7B01 /* iTunesArtwork.png */,
 				F354B0B91781AA1D007F7B01 /* iTunesArtwork@2x.png */,
-				F3EE4F1617818B590008C1B2 /* Icon-72.png */,
-				F3EE4F1717818B590008C1B2 /* Icon-72@2x.png */,
-				F3EE4F1417818ADB0008C1B2 /* Icon.png */,
-				F3EE4F1217818AC90008C1B2 /* Icon@2x.png */,
 				839BD650176F9BD400900712 /* Images */,
 				839BD637176F9BD400900712 /* Config */,
 				F3E601D61772F6A2000673AE /* externals */,
@@ -649,15 +640,12 @@
 				83AC9464177CBF2E00E06345 /* 02-arrow-east@2x.png in Resources */,
 				83AC9465177CBF2E00E06345 /* 03-arrow-north.png in Resources */,
 				83AC9466177CBF2E00E06345 /* 03-arrow-north@2x.png in Resources */,
+				83BF8B6A17ECDA4D0093242C /* Images.xcassets in Resources */,
 				83AC9467177CBF2E00E06345 /* 06-arrow-south.png in Resources */,
 				83AC9468177CBF2E00E06345 /* 06-arrow-south@2x.png in Resources */,
 				83AC9469177CBF2E00E06345 /* 09-arrow-west.png in Resources */,
 				83AC946A177CBF2E00E06345 /* 09-arrow-west@2x.png in Resources */,
 				83F455A3177D5C0C00BC79A1 /* about.html in Resources */,
-				F3EE4F1317818AC90008C1B2 /* Icon@2x.png in Resources */,
-				F3EE4F1517818ADB0008C1B2 /* Icon.png in Resources */,
-				F3EE4F1817818B590008C1B2 /* Icon-72.png in Resources */,
-				F3EE4F1917818B590008C1B2 /* Icon-72@2x.png in Resources */,
 				F354B0BA1781AA1D007F7B01 /* iTunesArtwork.png in Resources */,
 				F354B0BB1781AA1D007F7B01 /* iTunesArtwork@2x.png in Resources */,
 				F3F9139117B4C43200299424 /* 70-tv.png in Resources */,
@@ -830,6 +818,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 15;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -922,6 +912,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 15;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -952,6 +944,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chris Searle";
 				CURRENT_PROJECT_VERSION = 15;
 				FRAMEWORK_SEARCH_PATHS = (
