@@ -22,6 +22,7 @@
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *nextSectionButton;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *previousSessionButton;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *nextSessionButton;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *shareButton;
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSIndexPath *indexPath;

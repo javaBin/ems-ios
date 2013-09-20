@@ -27,8 +27,6 @@
 @property(nonatomic) UIPopoverController *sharePopoverController;
 @end
 
-
-
 @implementation EMSDetailViewController
 
 - (void)setupMovement {
@@ -39,6 +37,8 @@
 }
 
 - (void)setupViewWithSession:(Session *)session {
+    self.shareButton.enabled = YES;
+
     self.session = session;
 
     NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
@@ -296,6 +296,8 @@
 }
 
 - (void)share:(id)sender {
+    self.shareButton.enabled = NO;
+    
 #ifndef DO_NOT_USE_CRASHLYTICS
     [Crashlytics setObjectValue:self.session.href forKey:@"lastSharedSession"];
 #endif
@@ -787,6 +789,8 @@
     if (popoverController == self.sharePopoverController) {
         self.sharePopoverController = nil;
     }
+
+    self.shareButton.enabled = YES;
 }
 
 @end

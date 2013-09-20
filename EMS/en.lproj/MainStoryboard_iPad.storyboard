@@ -634,7 +634,7 @@
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="3MP-RJ-J85">
                         <nil key="title"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="EKq-sd-auT">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="action" id="EKq-sd-auT">
                             <connections>
                                 <action selector="share:" destination="ynZ-6T-4n5" id="1fi-ij-AAG"/>
                             </connections>
@@ -647,6 +647,7 @@
                         <outlet property="nextSessionButton" destination="7lP-Lf-d6l" id="s37-Bu-K30"/>
                         <outlet property="previousSectionButton" destination="lhD-uV-MwN" id="T28-3c-uZ1"/>
                         <outlet property="previousSessionButton" destination="DsT-sT-X5N" id="zjH-zF-96S"/>
+                        <outlet property="shareButton" destination="EKq-sd-auT" id="uof-ep-W0X"/>
                         <outlet property="titleLabel" destination="EZz-Q4-iHl" id="eqO-et-YfC"/>
                         <outlet property="webView" destination="thv-Nv-DUc" id="cXy-QG-6ta"/>
                     </connections>

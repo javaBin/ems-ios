@@ -510,7 +510,7 @@
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="ib1-cg-KjS">
                         <nil key="title"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="0JI-IR-TXE">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="action" id="0JI-IR-TXE">
                             <connections>
                                 <action selector="share:" destination="3lg-Sh-FWj" id="tB6-oI-VzT"/>
                             </connections>
@@ -522,6 +522,7 @@
                         <outlet property="nextSessionButton" destination="VOc-Q9-Wuo" id="6t1-wY-zsC"/>
                         <outlet property="previousSectionButton" destination="p6R-Mj-zuA" id="iQh-al-YfC"/>
                         <outlet property="previousSessionButton" destination="gkC-bR-M4P" id="Avt-He-AZf"/>
+                        <outlet property="shareButton" destination="0JI-IR-TXE" id="JCu-mw-jqw"/>
                         <outlet property="titleLabel" destination="q35-VC-8on" id="LZC-i3-v7C"/>
                         <outlet property="webView" destination="SyP-yk-NN6" id="UdN-bD-DWP"/>
                     </connections>
@@ -599,6 +600,7 @@
         <image name="09-arrow-west.png" width="19" height="16"/>
         <image name="19-gear.png" width="26" height="26"/>
         <image name="258-checkmark-grey.png" width="19" height="18"/>
+        <image name="28-star-grey.png" width="26" height="26"/>
         <image name="28-star-grey.png" width="26" height="26"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
