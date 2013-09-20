@@ -125,7 +125,7 @@ NSString *const PrefsSearchField = @"searchFields";
 - (void) clear {
     [self setSearch:@""];
     
-    for (int i = emsKeyword; i <= emsRoom; i++) {
+    for (int i = emsKeyword; i <= emsLang; i++) {
         [self setFieldValues:[NSSet set] forKey:i];
     }
 }
