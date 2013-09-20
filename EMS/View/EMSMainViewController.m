@@ -26,7 +26,7 @@
 #import "Keyword.h"
 
 @interface EMSMainViewController ()<UISplitViewControllerDelegate>
-
+    @property (nonatomic, strong) EMSDetailViewController *detailViewController;
 @end
 
 @implementation EMSMainViewController
@@ -214,6 +214,8 @@
         }
         
         EMSDetailViewController *destination = (EMSDetailViewController *)tmpDestination;
+        
+        self.detailViewController = destination;
 
         if ([sender isKindOfClass:[NSString class]]) {
             Session *session = [[[EMSAppDelegate sharedAppDelegate] model] sessionForHref:(NSString *)sender];
@@ -497,6 +499,10 @@
 		view = [view superview];
     }
     
+    if (self.detailViewController != nil) {
+        [self.detailViewController refreshFavourite];
+    }
+    
     [self.tableView reloadData];
 }
 
@@ -571,33 +577,6 @@
         sessionCell.room.text = session.room.name;
     } else {
         sessionCell.room.text = @"";
-    }
-
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        sessionCell.summary.text = session.summary;
-
-        NSMutableArray *keywordNames = [[NSMutableArray alloc] init];
-
-        [session.keywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            Keyword *keyword = (Keyword *)obj;
-
-            [keywordNames addObject:keyword.name];
-        }];
-
-        NSArray *sortedKeywords = [keywordNames sortedArrayUsingSelector:@selector(compare:)];
-
-        if (sortedKeywords.count > 4) {
-            NSMutableArray *temp = [NSMutableArray arrayWithArray:[sortedKeywords subarrayWithRange:NSMakeRange(0, 3)]];
-
-            [temp addObject:[NSString stringWithFormat:@"and %d more", sortedKeywords.count - 3]];
-
-            sortedKeywords = [NSArray arrayWithArray:temp];
-        }
-        if (sortedKeywords.count > 0) {
-            sessionCell.keywords.text = [NSString stringWithFormat:@"\u2022 %@\n", [sortedKeywords componentsJoinedByString:@"\n\u2022 "]];
-        } else {
-            sessionCell.keywords.text = @"";
-        }
     }
 
     NSMutableArray *speakerNames = [[NSMutableArray alloc] init];

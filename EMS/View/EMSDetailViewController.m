@@ -64,9 +64,6 @@
 
     self.title = [NSString stringWithString:title];
 
-    
-    [self.button setSelected:[session.favourite boolValue]];
-    
     NSString *imageBaseName = [session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star";
     NSString *imageNameFormat = @"%@-%@";
     
@@ -76,21 +73,13 @@
     if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
         normalImage = [normalImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        
-        if (self.button.selected) {
-            self.button.tintColor = nil;
-        } else {
-            self.button.tintColor = [UIColor lightGrayColor];
-        }
     }
     
     [self.button setImage:normalImage forState:UIControlStateNormal];
     [self.button setImage:selectedImage forState:UIControlStateSelected];
-    
-    
-    
-   
 
+    [self refreshFavourite];
+    
     self.titleLabel.text = session.title;
 
     NSMutableDictionary *speakerBios = [[NSMutableDictionary alloc] init];
@@ -791,6 +780,18 @@
     }
 
     self.shareButton.enabled = YES;
+}
+
+
+- (void)refreshFavourite {
+    [self.button setSelected:[self.session.favourite boolValue]];
+
+    if (self.button.selected) {
+        self.button.tintColor = nil;
+    } else {
+        self.button.tintColor = [UIColor lightGrayColor];
+    }
+
 }
 
 @end

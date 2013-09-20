@@ -8,7 +8,6 @@
 #import "EMSSearchViewDelegate.h"
 #import "EMSRetriever.h"
 
-
 #import "EMSAdvancedSearch.h"
 
 #import "EMSModel.h"
@@ -31,7 +30,6 @@
 
 @property (nonatomic, strong) IBOutlet UIView *footer;
 @property (nonatomic, strong) IBOutlet UILabel *footerLabel;
-
 
 - (IBAction)toggleFavourite:(id)sender;
 - (IBAction)segmentChanged:(id)sender;

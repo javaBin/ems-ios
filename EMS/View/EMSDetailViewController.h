@@ -31,4 +31,6 @@
 - (IBAction)toggleFavourite:(id)sender;
 - (IBAction)clearImageCache:(id)sender;
 
+- (void)refreshFavourite;
+
 @end
