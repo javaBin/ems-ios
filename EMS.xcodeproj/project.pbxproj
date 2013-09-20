@@ -830,7 +830,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */;
 			buildSettings = {
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -922,7 +922,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */;
 			buildSettings = {
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -953,7 +953,7 @@
 			baseConfigurationReference = CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chris Searle";
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
