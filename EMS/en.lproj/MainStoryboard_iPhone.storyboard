@@ -392,7 +392,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="All"/>
-                                <segment title="Favorites"/>
+                                <segment title="Favourites"/>
                                 <segment title="Now"/>
                             </segments>
                             <connections>

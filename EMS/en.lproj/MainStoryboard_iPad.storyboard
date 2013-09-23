@@ -508,11 +508,11 @@
                     <navigationItem key="navigationItem" id="GVJ-Sj-som">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="xIm-NT-rXZ">
-                            <rect key="frame" x="54" y="7" width="212" height="31"/>
+                            <rect key="frame" x="44" y="7" width="233" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="All"/>
-                                <segment title="Favorites"/>
+                                <segment title="Favourites"/>
                                 <segment title="Now"/>
                             </segments>
                             <connections>
@@ -762,6 +762,8 @@
         <image name="09-arrow-west.png" width="19" height="16"/>
         <image name="19-gear.png" width="26" height="26"/>
         <image name="258-checkmark-grey.png" width="19" height="18"/>
+        <image name="28-star-grey.png" width="26" height="26"/>
+        <image name="28-star-grey.png" width="26" height="26"/>
         <image name="28-star-grey.png" width="26" height="26"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
