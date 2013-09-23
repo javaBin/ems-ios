@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ems-config-url</key>
+	<string>http://dav.java.no/resources/iOS/EMS-Config.plist</string>
+	<key>features</key>
+	<dict>
+		<key>links</key>
+		<true/>
+		<key>markdown</key>
+		<true/>
+		<key>speaker-thumbnails</key>
+		<true/>
+		<key>local-notifications</key>
+		<false/>
+	</dict>
+	<key>ems-root-url-prod</key>
+	<string>http://javazone.no/ems/server/</string>
+	<key>ems-root-url</key>
+	<string>http://test.java.no/ems-redux/server/</string>
+	<key>level-sort</key>
+	<dict>
+		<key>beginner</key>
+		<integer>1</integer>
+		<key>beginner-intermediate</key>
+		<integer>2</integer>
+		<key>intermediate</key>
+		<integer>3</integer>
+		<key>intermediate-advanced</key>
+		<integer>4</integer>
+		<key>advanced</key>
+		<integer>5</integer>
+		<key>hardcore</key>
+		<integer>6</integer>
+	</dict>
+</dict>
+</plist>

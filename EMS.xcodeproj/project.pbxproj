@@ -18,7 +18,6 @@
 		836331361770EF78000F8D95 /* 298-circlex@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836331341770EF78000F8D95 /* 298-circlex@2x.png */; };
 		836331391770F01C000F8D95 /* 258-checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 836331371770F01C000F8D95 /* 258-checkmark.png */; };
 		8363313A1770F01C000F8D95 /* 258-checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836331381770F01C000F8D95 /* 258-checkmark@2x.png */; };
-		839BD65C176F9BD400900712 /* EMS-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 839BD638176F9BD400900712 /* EMS-Config.plist */; };
 		839BD65D176F9BD400900712 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 839BD639176F9BD400900712 /* EMS-Keys.plist */; };
 		839BD65E176F9BD400900712 /* EMSConference.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD63C176F9BD400900712 /* EMSConference.m */; };
 		839BD65F176F9BD400900712 /* EMSConferencesRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD63E176F9BD400900712 /* EMSConferencesRetriever.m */; };
@@ -82,6 +81,108 @@
 		F3939E50176887090078C709 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3939E4F176887090078C709 /* CoreData.framework */; };
 		F3939E531768879C0078C709 /* EMSCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */; };
 		F3939E611769C3CE0078C709 /* EMSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E601769C3CD0078C709 /* EMSModel.m */; };
+		F394C97117F0173900FAFBD4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6D117685885009077D3 /* main.m */; };
+		F394C97217F0173900FAFBD4 /* EMSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6D517685885009077D3 /* EMSAppDelegate.m */; };
+		F394C97317F0173900FAFBD4 /* EMSCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */; };
+		F394C97417F0173900FAFBD4 /* EMSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E601769C3CD0078C709 /* EMSModel.m */; };
+		F394C97517F0173900FAFBD4 /* EMSConference.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD63C176F9BD400900712 /* EMSConference.m */; };
+		F394C97617F0173900FAFBD4 /* EMSConferencesRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD63E176F9BD400900712 /* EMSConferencesRetriever.m */; };
+		F394C97717F0173900FAFBD4 /* EMSDateConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD640176F9BD400900712 /* EMSDateConverter.m */; };
+		F394C97817F0173900FAFBD4 /* EMSRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD642176F9BD400900712 /* EMSRetriever.m */; };
+		F394C97917F0173900FAFBD4 /* EMSRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD645176F9BD400900712 /* EMSRoom.m */; };
+		F394C97A17F0173900FAFBD4 /* EMSRoomsRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD647176F9BD400900712 /* EMSRoomsRetriever.m */; };
+		F394C97B17F0173900FAFBD4 /* EMSSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD649176F9BD400900712 /* EMSSession.m */; };
+		F394C97C17F0173900FAFBD4 /* EMSSessionsRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD64B176F9BD400900712 /* EMSSessionsRetriever.m */; };
+		F394C97D17F0173900FAFBD4 /* EMSSlot.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD64D176F9BD400900712 /* EMSSlot.m */; };
+		F394C97E17F0173900FAFBD4 /* EMSSlotsRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD64F176F9BD400900712 /* EMSSlotsRetriever.m */; };
+		F394C97F17F0173900FAFBD4 /* EMSMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD657176F9BD400900712 /* EMSMainViewController.m */; };
+		F394C98017F0173900FAFBD4 /* EMSSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD659176F9BD400900712 /* EMSSettingsViewController.m */; };
+		F394C98117F0173900FAFBD4 /* EMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD65B176F9BD400900712 /* EMSViewController.m */; };
+		F394C98217F0173900FAFBD4 /* EMSSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD66F176FA67000900712 /* EMSSpeaker.m */; };
+		F394C98317F0173900FAFBD4 /* EMSDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F31862361770340200292371 /* EMSDetailViewController.m */; };
+		F394C98417F0173900FAFBD4 /* EMSSessionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F31862411770501800292371 /* EMSSessionCell.m */; };
+		F394C98517F0173900FAFBD4 /* EMSSpeakersRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = F3D5E2C617709CD000888A7E /* EMSSpeakersRetriever.m */; };
+		F394C98617F0173900FAFBD4 /* EMSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836331311770DD2B000F8D95 /* EMSSearchViewController.m */; };
+		F394C98717F0173900FAFBD4 /* Speaker.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C61772EA93000EE4A9 /* Speaker.m */; };
+		F394C98817F0173900FAFBD4 /* Conference.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C91772EA93000EE4A9 /* Conference.m */; };
+		F394C98917F0173900FAFBD4 /* Keyword.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33CC1772EA93000EE4A9 /* Keyword.m */; };
+		F394C98A17F0173900FAFBD4 /* ConferenceLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33CF1772EA94000EE4A9 /* ConferenceLevel.m */; };
+		F394C98B17F0173900FAFBD4 /* Room.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33D21772EA94000EE4A9 /* Room.m */; };
+		F394C98C17F0173900FAFBD4 /* Slot.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33D51772EA94000EE4A9 /* Slot.m */; };
+		F394C98D17F0173900FAFBD4 /* ConferenceKeyword.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33D81772EA94000EE4A9 /* ConferenceKeyword.m */; };
+		F394C98E17F0173900FAFBD4 /* ConferenceType.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33DB1772EA94000EE4A9 /* ConferenceType.m */; };
+		F394C98F17F0173900FAFBD4 /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33DE1772EA94000EE4A9 /* Session.m */; };
+		F394C99017F0173900FAFBD4 /* EMSFeatureConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */; };
+		F394C99117F0173900FAFBD4 /* EMSAdvancedSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = F37953CA17797E41000B7CDD /* EMSAdvancedSearch.m */; };
+		F394C99217F0173900FAFBD4 /* EMSAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */; };
+		F394C99317F0173900FAFBD4 /* AddVideoLinkMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F3CEA3CE17B224170092776F /* AddVideoLinkMapping.xcmappingmodel */; };
+		F394C99417F0173900FAFBD4 /* EMSConferenceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F399B73817CF42CC004DE2EC /* EMSConferenceDetailViewController.m */; };
+		F394C99617F0173900FAFBD4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */; };
+		F394C99717F0173900FAFBD4 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3E601E01772F7EC000673AE /* EventKit.framework */; };
+		F394C99817F0173900FAFBD4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3939E4F176887090078C709 /* CoreData.framework */; };
+		F394C99917F0173900FAFBD4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB6C517685885009077D3 /* UIKit.framework */; };
+		F394C99A17F0173900FAFBD4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB6C717685885009077D3 /* Foundation.framework */; };
+		F394C99B17F0173900FAFBD4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB6C917685885009077D3 /* CoreGraphics.framework */; };
+		F394C99C17F0173900FAFBD4 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830C7D78176F8B4900D38B46 /* Crashlytics.framework */; };
+		F394C99D17F0173900FAFBD4 /* libMMMarkdown-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F399F0811785576500FB9976 /* libMMMarkdown-iOS.a */; };
+		F394C99E17F0173900FAFBD4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C5F2910AEBD4413B205CE89 /* libPods.a */; };
+		F394C9A017F0173900FAFBD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6CE17685885009077D3 /* InfoPlist.strings */; };
+		F394C9A117F0173900FAFBD4 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6DD17685885009077D3 /* MainStoryboard_iPhone.storyboard */; };
+		F394C9A217F0173900FAFBD4 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6E017685885009077D3 /* MainStoryboard_iPad.storyboard */; };
+		F394C9A517F0173900FAFBD4 /* 19-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B46177074200042D07A /* 19-gear.png */; };
+		F394C9A617F0173900FAFBD4 /* 19-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B48177076A80042D07A /* 19-gear@2x.png */; };
+		F394C9A717F0173900FAFBD4 /* 06-magnify.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B4A1770776C0042D07A /* 06-magnify.png */; };
+		F394C9A817F0173900FAFBD4 /* 06-magnify@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B4B1770776C0042D07A /* 06-magnify@2x.png */; };
+		F394C9A917F0173900FAFBD4 /* 28-star-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B4E177078A80042D07A /* 28-star-grey.png */; };
+		F394C9AA17F0173900FAFBD4 /* 28-star-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B4F177078A80042D07A /* 28-star-grey@2x.png */; };
+		F394C9AB17F0173900FAFBD4 /* 64-zap-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B50177078A80042D07A /* 64-zap-grey.png */; };
+		F394C9AC17F0173900FAFBD4 /* 64-zap-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B51177078A80042D07A /* 64-zap-grey@2x.png */; };
+		F394C9AD17F0173900FAFBD4 /* 28-star.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B561770792A0042D07A /* 28-star.png */; };
+		F394C9AE17F0173900FAFBD4 /* 28-star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B571770792A0042D07A /* 28-star@2x.png */; };
+		F394C9AF17F0173900FAFBD4 /* 64-zap.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B581770792A0042D07A /* 64-zap.png */; };
+		F394C9B017F0173900FAFBD4 /* 64-zap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B591770792A0042D07A /* 64-zap@2x.png */; };
+		F394C9B117F0173900FAFBD4 /* 28-star-yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B5E177079A50042D07A /* 28-star-yellow.png */; };
+		F394C9B217F0173900FAFBD4 /* 28-star-yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B5F177079A50042D07A /* 28-star-yellow@2x.png */; };
+		F394C9B317F0173900FAFBD4 /* 64-zap-yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B60177079A50042D07A /* 64-zap-yellow.png */; };
+		F394C9B417F0173900FAFBD4 /* 64-zap-yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F3513B61177079A50042D07A /* 64-zap-yellow@2x.png */; };
+		F394C9B517F0173900FAFBD4 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = F3D5E2C31770946100888A7E /* style.css */; };
+		F394C9B617F0173900FAFBD4 /* 298-circlex.png in Resources */ = {isa = PBXBuildFile; fileRef = 836331331770EF78000F8D95 /* 298-circlex.png */; };
+		F394C9B717F0173900FAFBD4 /* 298-circlex@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836331341770EF78000F8D95 /* 298-circlex@2x.png */; };
+		F394C9B817F0173900FAFBD4 /* 258-checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 836331371770F01C000F8D95 /* 258-checkmark.png */; };
+		F394C9B917F0173900FAFBD4 /* 258-checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836331381770F01C000F8D95 /* 258-checkmark@2x.png */; };
+		F394C9BA17F0173900FAFBD4 /* 11-clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C1F1770FE67000135E6 /* 11-clock.png */; };
+		F394C9BB17F0173900FAFBD4 /* 11-clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C201770FE67000135E6 /* 11-clock@2x.png */; };
+		F394C9BC17F0173900FAFBD4 /* 259-list.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C211770FE67000135E6 /* 259-list.png */; };
+		F394C9BD17F0173900FAFBD4 /* 259-list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C221770FE67000135E6 /* 259-list@2x.png */; };
+		F394C9BE17F0173900FAFBD4 /* advanced.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EC969D17747625004A5F25 /* advanced.png */; };
+		F394C9BF17F0173900FAFBD4 /* intermediate.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EC969E17747625004A5F25 /* intermediate.png */; };
+		F394C9C017F0173900FAFBD4 /* beginner.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EC96A81774780B004A5F25 /* beginner.png */; };
+		F394C9C117F0173900FAFBD4 /* beginner-intermediate.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EC96AB1774783E004A5F25 /* beginner-intermediate.png */; };
+		F394C9C217F0173900FAFBD4 /* intermediate-advanced.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EC96AC1774783E004A5F25 /* intermediate-advanced.png */; };
+		F394C9C317F0173900FAFBD4 /* hardcore.png in Resources */ = {isa = PBXBuildFile; fileRef = F350598F17747D6A007E7FE4 /* hardcore.png */; };
+		F394C9C417F0173900FAFBD4 /* 02-arrow-east.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC945B177CBF2E00E06345 /* 02-arrow-east.png */; };
+		F394C9C517F0173900FAFBD4 /* 02-arrow-east@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC945C177CBF2E00E06345 /* 02-arrow-east@2x.png */; };
+		F394C9C617F0173900FAFBD4 /* 03-arrow-north.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC945D177CBF2E00E06345 /* 03-arrow-north.png */; };
+		F394C9C717F0173900FAFBD4 /* 03-arrow-north@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC945E177CBF2E00E06345 /* 03-arrow-north@2x.png */; };
+		F394C9C817F0173900FAFBD4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83BF8B6917ECDA4D0093242C /* Images.xcassets */; };
+		F394C9C917F0173900FAFBD4 /* 06-arrow-south.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC945F177CBF2E00E06345 /* 06-arrow-south.png */; };
+		F394C9CA17F0173900FAFBD4 /* 06-arrow-south@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC9460177CBF2E00E06345 /* 06-arrow-south@2x.png */; };
+		F394C9CB17F0173900FAFBD4 /* 09-arrow-west.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC9461177CBF2E00E06345 /* 09-arrow-west.png */; };
+		F394C9CC17F0173900FAFBD4 /* 09-arrow-west@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AC9462177CBF2E00E06345 /* 09-arrow-west@2x.png */; };
+		F394C9CD17F0173900FAFBD4 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 83F455A2177D5C0C00BC79A1 /* about.html */; };
+		F394C9CE17F0173900FAFBD4 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = F354B0B81781AA1D007F7B01 /* iTunesArtwork.png */; };
+		F394C9CF17F0173900FAFBD4 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F354B0B91781AA1D007F7B01 /* iTunesArtwork@2x.png */; };
+		F394C9D017F0173900FAFBD4 /* 70-tv.png in Resources */ = {isa = PBXBuildFile; fileRef = F3F9138F17B4C43200299424 /* 70-tv.png */; };
+		F394C9D117F0173900FAFBD4 /* 70-tv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F3F9139017B4C43200299424 /* 70-tv@2x.png */; };
+		F394C9D217F0173900FAFBD4 /* 258-checkmark-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = F399B72F17CF3E3E004DE2EC /* 258-checkmark-grey.png */; };
+		F394C9D317F0173900FAFBD4 /* 258-checkmark-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F399B73017CF3E3E004DE2EC /* 258-checkmark-grey@2x.png */; };
+		F394C9D417F0173900FAFBD4 /* blank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F399B73317CF3FA2004DE2EC /* blank@2x.png */; };
+		F394C9D517F0173900FAFBD4 /* blank.png in Resources */ = {isa = PBXBuildFile; fileRef = F399B73417CF3FA2004DE2EC /* blank.png */; };
+		F394C9D617F0173900FAFBD4 /* English.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A58F7117E4500900182B6E /* English.png */; };
+		F394C9D717F0173900FAFBD4 /* Norwegian.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A58F7217E4500900182B6E /* Norwegian.png */; };
+		F394C9E317F01ABF00FAFBD4 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F394C9E217F01ABF00FAFBD4 /* EMS-Keys.plist */; };
+		F394C9E517F01BC900FAFBD4 /* EMS-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = F394C9E417F01BC900FAFBD4 /* EMS-Config.plist */; };
+		F394C9E717F01C0300FAFBD4 /* EMS-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = F394C9E617F01C0300FAFBD4 /* EMS-Config.plist */; };
 		F399B73117CF3E3E004DE2EC /* 258-checkmark-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = F399B72F17CF3E3E004DE2EC /* 258-checkmark-grey.png */; };
 		F399B73217CF3E3E004DE2EC /* 258-checkmark-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F399B73017CF3E3E004DE2EC /* 258-checkmark-grey@2x.png */; };
 		F399B73517CF3FA2004DE2EC /* blank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F399B73317CF3FA2004DE2EC /* blank@2x.png */; };
@@ -125,7 +226,6 @@
 		836331371770F01C000F8D95 /* 258-checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "258-checkmark.png"; sourceTree = "<group>"; };
 		836331381770F01C000F8D95 /* 258-checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "258-checkmark@2x.png"; sourceTree = "<group>"; };
 		8363313B1770F06C000F8D95 /* EMSSearchViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EMSSearchViewDelegate.h; path = ../View/EMSSearchViewDelegate.h; sourceTree = "<group>"; };
-		839BD638176F9BD400900712 /* EMS-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Config.plist"; sourceTree = "<group>"; };
 		839BD639176F9BD400900712 /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
 		839BD63B176F9BD400900712 /* EMSConference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConference.h; sourceTree = "<group>"; };
 		839BD63C176F9BD400900712 /* EMSConference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConference.m; sourceTree = "<group>"; };
@@ -174,7 +274,7 @@
 		83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSAboutViewController.m; sourceTree = "<group>"; };
 		83F455A2177D5C0C00BC79A1 /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
 		CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
-		EA1E8F6317E782E8000F2DB7 /* EMS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EMS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA1E8F6317E782E8000F2DB7 /* JavaZone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JavaZone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F31862351770340200292371 /* EMSDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSDetailViewController.h; sourceTree = "<group>"; };
 		F31862361770340200292371 /* EMSDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDetailViewController.m; sourceTree = "<group>"; };
 		F31862401770501800292371 /* EMSSessionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSessionCell.h; sourceTree = "<group>"; };
@@ -201,7 +301,7 @@
 		F35BB6C517685885009077D3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F35BB6C717685885009077D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F35BB6C917685885009077D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		F35BB6CD17685885009077D3 /* EMS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EMS-Info.plist"; sourceTree = "<group>"; };
+		F35BB6CD17685885009077D3 /* JavaZone-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JavaZone-Info.plist"; sourceTree = "<group>"; };
 		F35BB6CF17685885009077D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F35BB6D117685885009077D3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F35BB6D317685885009077D3 /* EMS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EMS-Prefix.pch"; sourceTree = "<group>"; };
@@ -216,6 +316,11 @@
 		F3939E521768879C0078C709 /* EMSCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EMSCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		F3939E5F1769C3CD0078C709 /* EMSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSModel.h; sourceTree = "<group>"; };
 		F3939E601769C3CD0078C709 /* EMSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSModel.m; sourceTree = "<group>"; };
+		F394C9DE17F0173900FAFBD4 /* flatMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = flatMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F394C9DF17F0173900FAFBD4 /* flatMap-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "flatMap-Info.plist"; path = "/Users/chrsearl/src/ios/EMS/EMS/flatMap-Info.plist"; sourceTree = "<absolute>"; };
+		F394C9E217F01ABF00FAFBD4 /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
+		F394C9E417F01BC900FAFBD4 /* EMS-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Config.plist"; sourceTree = "<group>"; };
+		F394C9E617F01C0300FAFBD4 /* EMS-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Config.plist"; sourceTree = "<group>"; };
 		F399B72F17CF3E3E004DE2EC /* 258-checkmark-grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "258-checkmark-grey.png"; sourceTree = "<group>"; };
 		F399B73017CF3E3E004DE2EC /* 258-checkmark-grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "258-checkmark-grey@2x.png"; sourceTree = "<group>"; };
 		F399B73317CF3FA2004DE2EC /* blank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blank@2x.png"; sourceTree = "<group>"; };
@@ -273,14 +378,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F394C99517F0173900FAFBD4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F394C99617F0173900FAFBD4 /* SystemConfiguration.framework in Frameworks */,
+				F394C99717F0173900FAFBD4 /* EventKit.framework in Frameworks */,
+				F394C99817F0173900FAFBD4 /* CoreData.framework in Frameworks */,
+				F394C99917F0173900FAFBD4 /* UIKit.framework in Frameworks */,
+				F394C99A17F0173900FAFBD4 /* Foundation.framework in Frameworks */,
+				F394C99B17F0173900FAFBD4 /* CoreGraphics.framework in Frameworks */,
+				F394C99C17F0173900FAFBD4 /* Crashlytics.framework in Frameworks */,
+				F394C99D17F0173900FAFBD4 /* libMMMarkdown-iOS.a in Frameworks */,
+				F394C99E17F0173900FAFBD4 /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		839BD637176F9BD400900712 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				839BD638176F9BD400900712 /* EMS-Config.plist */,
-				839BD639176F9BD400900712 /* EMS-Keys.plist */,
 			);
 			name = Config;
 			path = EMS/Config;
@@ -315,7 +434,6 @@
 				839BD66F176FA67000900712 /* EMSSpeaker.m */,
 				F3D5E2C517709CD000888A7E /* EMSSpeakersRetriever.h */,
 				F3D5E2C617709CD000888A7E /* EMSSpeakersRetriever.m */,
-				83BF8B6917ECDA4D0093242C /* Images.xcassets */,
 			);
 			name = EMS;
 			path = EMS/EMS;
@@ -324,6 +442,7 @@
 		839BD650176F9BD400900712 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				83BF8B6917ECDA4D0093242C /* Images.xcassets */,
 				83A58F7117E4500900182B6E /* English.png */,
 				83A58F7217E4500900182B6E /* Norwegian.png */,
 				F399B73317CF3FA2004DE2EC /* blank@2x.png */,
@@ -423,8 +542,8 @@
 		F35BB6B917685885009077D3 = {
 			isa = PBXGroup;
 			children = (
-				F354B0B81781AA1D007F7B01 /* iTunesArtwork.png */,
-				F354B0B91781AA1D007F7B01 /* iTunesArtwork@2x.png */,
+				F394C9E117F019F600FAFBD4 /* flatMap */,
+				F394C9E017F019E400FAFBD4 /* JavaZone */,
 				839BD650176F9BD400900712 /* Images */,
 				839BD637176F9BD400900712 /* Config */,
 				F3E601D61772F6A2000673AE /* externals */,
@@ -434,7 +553,8 @@
 				F35BB6CB17685885009077D3 /* App */,
 				F35BB6C417685885009077D3 /* Frameworks */,
 				CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */,
-				EA1E8F6317E782E8000F2DB7 /* EMS.app */,
+				EA1E8F6317E782E8000F2DB7 /* JavaZone.app */,
+				F394C9DE17F0173900FAFBD4 /* flatMap.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -477,7 +597,8 @@
 		F35BB6CC17685885009077D3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F35BB6CD17685885009077D3 /* EMS-Info.plist */,
+				F35BB6CD17685885009077D3 /* JavaZone-Info.plist */,
+				F394C9DF17F0173900FAFBD4 /* flatMap-Info.plist */,
 				F35BB6CE17685885009077D3 /* InfoPlist.strings */,
 				F35BB6D117685885009077D3 /* main.m */,
 				F35BB6D317685885009077D3 /* EMS-Prefix.pch */,
@@ -485,6 +606,26 @@
 				83F455A2177D5C0C00BC79A1 /* about.html */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F394C9E017F019E400FAFBD4 /* JavaZone */ = {
+			isa = PBXGroup;
+			children = (
+				F394C9E417F01BC900FAFBD4 /* EMS-Config.plist */,
+				839BD639176F9BD400900712 /* EMS-Keys.plist */,
+				F354B0B81781AA1D007F7B01 /* iTunesArtwork.png */,
+				F354B0B91781AA1D007F7B01 /* iTunesArtwork@2x.png */,
+			);
+			path = JavaZone;
+			sourceTree = "<group>";
+		};
+		F394C9E117F019F600FAFBD4 /* flatMap */ = {
+			isa = PBXGroup;
+			children = (
+				F394C9E617F01C0300FAFBD4 /* EMS-Config.plist */,
+				F394C9E217F01ABF00FAFBD4 /* EMS-Keys.plist */,
+			);
+			path = flatMap;
 			sourceTree = "<group>";
 		};
 		F399F0801785574F00FB9976 /* MMMarkdown */ = {
@@ -520,9 +661,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F35BB6C117685885009077D3 /* EMS */ = {
+		F35BB6C117685885009077D3 /* JavaZone */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F35BB6E817685885009077D3 /* Build configuration list for PBXNativeTarget "EMS" */;
+			buildConfigurationList = F35BB6E817685885009077D3 /* Build configuration list for PBXNativeTarget "JavaZone" */;
 			buildPhases = (
 				F15340BFC7864A9580FD3334 /* Check Pods Manifest.lock */,
 				F35BB6BE17685885009077D3 /* Sources */,
@@ -535,9 +676,29 @@
 			);
 			dependencies = (
 			);
-			name = EMS;
+			name = JavaZone;
 			productName = EMS;
-			productReference = EA1E8F6317E782E8000F2DB7 /* EMS.app */;
+			productReference = EA1E8F6317E782E8000F2DB7 /* JavaZone.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F394C96E17F0173900FAFBD4 /* flatMap */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F394C9DA17F0173900FAFBD4 /* Build configuration list for PBXNativeTarget "flatMap" */;
+			buildPhases = (
+				F394C96F17F0173900FAFBD4 /* Check Pods Manifest.lock */,
+				F394C97017F0173900FAFBD4 /* Sources */,
+				F394C99517F0173900FAFBD4 /* Frameworks */,
+				F394C99F17F0173900FAFBD4 /* Resources */,
+				F394C9D817F0173900FAFBD4 /* ShellScript */,
+				F394C9D917F0173900FAFBD4 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = flatMap;
+			productName = EMS;
+			productReference = F394C9DE17F0173900FAFBD4 /* flatMap.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -562,7 +723,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F35BB6C117685885009077D3 /* EMS */,
+				F35BB6C117685885009077D3 /* JavaZone */,
+				F394C96E17F0173900FAFBD4 /* flatMap */,
 			);
 		};
 /* End PBXProject section */
@@ -575,7 +737,6 @@
 				F35BB6D017685885009077D3 /* InfoPlist.strings in Resources */,
 				F35BB6DF17685885009077D3 /* MainStoryboard_iPhone.storyboard in Resources */,
 				F35BB6E217685885009077D3 /* MainStoryboard_iPad.storyboard in Resources */,
-				839BD65C176F9BD400900712 /* EMS-Config.plist in Resources */,
 				839BD65D176F9BD400900712 /* EMS-Keys.plist in Resources */,
 				F3513B47177074200042D07A /* 19-gear.png in Resources */,
 				F3513B49177076A80042D07A /* 19-gear@2x.png in Resources */,
@@ -607,6 +768,7 @@
 				F3EC96AA1774780B004A5F25 /* beginner.png in Resources */,
 				F3EC96AD1774783E004A5F25 /* beginner-intermediate.png in Resources */,
 				F3EC96AE1774783E004A5F25 /* intermediate-advanced.png in Resources */,
+				F394C9E517F01BC900FAFBD4 /* EMS-Config.plist in Resources */,
 				F350599017747D6A007E7FE4 /* hardcore.png in Resources */,
 				83AC9463177CBF2E00E06345 /* 02-arrow-east.png in Resources */,
 				83AC9464177CBF2E00E06345 /* 02-arrow-east@2x.png in Resources */,
@@ -628,6 +790,69 @@
 				F399B73617CF3FA2004DE2EC /* blank.png in Resources */,
 				83A58F7317E4500900182B6E /* English.png in Resources */,
 				83A58F7417E4500900182B6E /* Norwegian.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F394C99F17F0173900FAFBD4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F394C9A017F0173900FAFBD4 /* InfoPlist.strings in Resources */,
+				F394C9A117F0173900FAFBD4 /* MainStoryboard_iPhone.storyboard in Resources */,
+				F394C9A217F0173900FAFBD4 /* MainStoryboard_iPad.storyboard in Resources */,
+				F394C9A517F0173900FAFBD4 /* 19-gear.png in Resources */,
+				F394C9A617F0173900FAFBD4 /* 19-gear@2x.png in Resources */,
+				F394C9A717F0173900FAFBD4 /* 06-magnify.png in Resources */,
+				F394C9A817F0173900FAFBD4 /* 06-magnify@2x.png in Resources */,
+				F394C9A917F0173900FAFBD4 /* 28-star-grey.png in Resources */,
+				F394C9AA17F0173900FAFBD4 /* 28-star-grey@2x.png in Resources */,
+				F394C9AB17F0173900FAFBD4 /* 64-zap-grey.png in Resources */,
+				F394C9AC17F0173900FAFBD4 /* 64-zap-grey@2x.png in Resources */,
+				F394C9AD17F0173900FAFBD4 /* 28-star.png in Resources */,
+				F394C9AE17F0173900FAFBD4 /* 28-star@2x.png in Resources */,
+				F394C9AF17F0173900FAFBD4 /* 64-zap.png in Resources */,
+				F394C9B017F0173900FAFBD4 /* 64-zap@2x.png in Resources */,
+				F394C9B117F0173900FAFBD4 /* 28-star-yellow.png in Resources */,
+				F394C9B217F0173900FAFBD4 /* 28-star-yellow@2x.png in Resources */,
+				F394C9B317F0173900FAFBD4 /* 64-zap-yellow.png in Resources */,
+				F394C9B417F0173900FAFBD4 /* 64-zap-yellow@2x.png in Resources */,
+				F394C9B517F0173900FAFBD4 /* style.css in Resources */,
+				F394C9B617F0173900FAFBD4 /* 298-circlex.png in Resources */,
+				F394C9B717F0173900FAFBD4 /* 298-circlex@2x.png in Resources */,
+				F394C9B817F0173900FAFBD4 /* 258-checkmark.png in Resources */,
+				F394C9B917F0173900FAFBD4 /* 258-checkmark@2x.png in Resources */,
+				F394C9BA17F0173900FAFBD4 /* 11-clock.png in Resources */,
+				F394C9BB17F0173900FAFBD4 /* 11-clock@2x.png in Resources */,
+				F394C9BC17F0173900FAFBD4 /* 259-list.png in Resources */,
+				F394C9BD17F0173900FAFBD4 /* 259-list@2x.png in Resources */,
+				F394C9BE17F0173900FAFBD4 /* advanced.png in Resources */,
+				F394C9BF17F0173900FAFBD4 /* intermediate.png in Resources */,
+				F394C9C017F0173900FAFBD4 /* beginner.png in Resources */,
+				F394C9C117F0173900FAFBD4 /* beginner-intermediate.png in Resources */,
+				F394C9E717F01C0300FAFBD4 /* EMS-Config.plist in Resources */,
+				F394C9C217F0173900FAFBD4 /* intermediate-advanced.png in Resources */,
+				F394C9C317F0173900FAFBD4 /* hardcore.png in Resources */,
+				F394C9C417F0173900FAFBD4 /* 02-arrow-east.png in Resources */,
+				F394C9C517F0173900FAFBD4 /* 02-arrow-east@2x.png in Resources */,
+				F394C9C617F0173900FAFBD4 /* 03-arrow-north.png in Resources */,
+				F394C9C717F0173900FAFBD4 /* 03-arrow-north@2x.png in Resources */,
+				F394C9C817F0173900FAFBD4 /* Images.xcassets in Resources */,
+				F394C9C917F0173900FAFBD4 /* 06-arrow-south.png in Resources */,
+				F394C9CA17F0173900FAFBD4 /* 06-arrow-south@2x.png in Resources */,
+				F394C9CB17F0173900FAFBD4 /* 09-arrow-west.png in Resources */,
+				F394C9CC17F0173900FAFBD4 /* 09-arrow-west@2x.png in Resources */,
+				F394C9CD17F0173900FAFBD4 /* about.html in Resources */,
+				F394C9CE17F0173900FAFBD4 /* iTunesArtwork.png in Resources */,
+				F394C9CF17F0173900FAFBD4 /* iTunesArtwork@2x.png in Resources */,
+				F394C9D017F0173900FAFBD4 /* 70-tv.png in Resources */,
+				F394C9D117F0173900FAFBD4 /* 70-tv@2x.png in Resources */,
+				F394C9D217F0173900FAFBD4 /* 258-checkmark-grey.png in Resources */,
+				F394C9D317F0173900FAFBD4 /* 258-checkmark-grey@2x.png in Resources */,
+				F394C9D417F0173900FAFBD4 /* blank@2x.png in Resources */,
+				F394C9D517F0173900FAFBD4 /* blank.png in Resources */,
+				F394C9E317F01ABF00FAFBD4 /* EMS-Keys.plist in Resources */,
+				F394C9D617F0173900FAFBD4 /* English.png in Resources */,
+				F394C9D717F0173900FAFBD4 /* Norwegian.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -677,6 +902,49 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		F394C96F17F0173900FAFBD4 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F394C9D817F0173900FAFBD4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"${EMS_NO_ANALYTICS}\" == \"0\" ]\nthen\n    ./Crashlytics.framework/run 76243485dba0d4938b2917f78d8106a6ff1d0d0b\nfi";
+		};
+		F394C9D917F0173900FAFBD4 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -720,6 +988,49 @@
 				83F455A1177D5B5C00BC79A1 /* EMSAboutViewController.m in Sources */,
 				F3CEA3CF17B224170092776F /* AddVideoLinkMapping.xcmappingmodel in Sources */,
 				F399B73917CF42CC004DE2EC /* EMSConferenceDetailViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F394C97017F0173900FAFBD4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F394C97117F0173900FAFBD4 /* main.m in Sources */,
+				F394C97217F0173900FAFBD4 /* EMSAppDelegate.m in Sources */,
+				F394C97317F0173900FAFBD4 /* EMSCoreDataModel.xcdatamodeld in Sources */,
+				F394C97417F0173900FAFBD4 /* EMSModel.m in Sources */,
+				F394C97517F0173900FAFBD4 /* EMSConference.m in Sources */,
+				F394C97617F0173900FAFBD4 /* EMSConferencesRetriever.m in Sources */,
+				F394C97717F0173900FAFBD4 /* EMSDateConverter.m in Sources */,
+				F394C97817F0173900FAFBD4 /* EMSRetriever.m in Sources */,
+				F394C97917F0173900FAFBD4 /* EMSRoom.m in Sources */,
+				F394C97A17F0173900FAFBD4 /* EMSRoomsRetriever.m in Sources */,
+				F394C97B17F0173900FAFBD4 /* EMSSession.m in Sources */,
+				F394C97C17F0173900FAFBD4 /* EMSSessionsRetriever.m in Sources */,
+				F394C97D17F0173900FAFBD4 /* EMSSlot.m in Sources */,
+				F394C97E17F0173900FAFBD4 /* EMSSlotsRetriever.m in Sources */,
+				F394C97F17F0173900FAFBD4 /* EMSMainViewController.m in Sources */,
+				F394C98017F0173900FAFBD4 /* EMSSettingsViewController.m in Sources */,
+				F394C98117F0173900FAFBD4 /* EMSViewController.m in Sources */,
+				F394C98217F0173900FAFBD4 /* EMSSpeaker.m in Sources */,
+				F394C98317F0173900FAFBD4 /* EMSDetailViewController.m in Sources */,
+				F394C98417F0173900FAFBD4 /* EMSSessionCell.m in Sources */,
+				F394C98517F0173900FAFBD4 /* EMSSpeakersRetriever.m in Sources */,
+				F394C98617F0173900FAFBD4 /* EMSSearchViewController.m in Sources */,
+				F394C98717F0173900FAFBD4 /* Speaker.m in Sources */,
+				F394C98817F0173900FAFBD4 /* Conference.m in Sources */,
+				F394C98917F0173900FAFBD4 /* Keyword.m in Sources */,
+				F394C98A17F0173900FAFBD4 /* ConferenceLevel.m in Sources */,
+				F394C98B17F0173900FAFBD4 /* Room.m in Sources */,
+				F394C98C17F0173900FAFBD4 /* Slot.m in Sources */,
+				F394C98D17F0173900FAFBD4 /* ConferenceKeyword.m in Sources */,
+				F394C98E17F0173900FAFBD4 /* ConferenceType.m in Sources */,
+				F394C98F17F0173900FAFBD4 /* Session.m in Sources */,
+				F394C99017F0173900FAFBD4 /* EMSFeatureConfig.m in Sources */,
+				F394C99117F0173900FAFBD4 /* EMSAdvancedSearch.m in Sources */,
+				F394C99217F0173900FAFBD4 /* EMSAboutViewController.m in Sources */,
+				F394C99317F0173900FAFBD4 /* AddVideoLinkMapping.xcmappingmodel in Sources */,
+				F394C99417F0173900FAFBD4 /* EMSConferenceDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -790,7 +1101,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "JavaZone - AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 17;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -799,7 +1110,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
-				INFOPLIST_FILE = "EMS/EMS-Info.plist";
+				INFOPLIST_FILE = "EMS/JavaZone-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -884,7 +1195,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "JavaZone - AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 17;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -893,7 +1204,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
-				INFOPLIST_FILE = "EMS/EMS-Info.plist";
+				INFOPLIST_FILE = "EMS/JavaZone-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -916,7 +1227,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "JavaZone - AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chris Searle";
 				CURRENT_PROJECT_VERSION = 17;
@@ -926,7 +1237,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
-				INFOPLIST_FILE = "EMS/EMS-Info.plist";
+				INFOPLIST_FILE = "EMS/JavaZone-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -934,6 +1245,99 @@
 					"\"$(SRCROOT)/EMS/externals/MMMarkdown\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "D9882EFE-347C-4291-A316-75A214C600F0";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0C88122F-AAA1-4104-952D-FFAA4290D539";
+				VERSIONING_SYSTEM = "apple-generic";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		F394C9DB17F0173900FAFBD4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "flatMap - AppIcon";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CURRENT_PROJECT_VERSION = 17;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
+				INFOPLIST_FILE = "flatMap-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/EMS/externals/MMMarkdown\"",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "";
+				"OTHER_CFLAGS[arch=*]" = (
+					"-DUSE_TEST_DATE=1",
+					"-DTEST_PROD=1",
+				);
+				PRODUCT_NAME = flatMap;
+				VERSIONING_SYSTEM = "apple-generic";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		F394C9DC17F0173900FAFBD4 /* Debug_No_Analytics */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "flatMap - AppIcon";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CURRENT_PROJECT_VERSION = 17;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
+				INFOPLIST_FILE = "flatMap-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/EMS/externals/MMMarkdown\"",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "";
+				"OTHER_CFLAGS[arch=*]" = (
+					"-DUSE_TEST_DATE=1",
+					"-DTEST_PROD=1",
+				);
+				PRODUCT_NAME = flatMap;
+				VERSIONING_SYSTEM = "apple-generic";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug_No_Analytics;
+		};
+		F394C9DD17F0173900FAFBD4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "flatMap - AppIcon";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chris Searle";
+				CURRENT_PROJECT_VERSION = 17;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
+				INFOPLIST_FILE = "flatMap-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/EMS/externals/MMMarkdown\"",
+				);
+				PRODUCT_NAME = flatMap;
 				PROVISIONING_PROFILE = "D9882EFE-347C-4291-A316-75A214C600F0";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0C88122F-AAA1-4104-952D-FFAA4290D539";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -954,12 +1358,22 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F35BB6E817685885009077D3 /* Build configuration list for PBXNativeTarget "EMS" */ = {
+		F35BB6E817685885009077D3 /* Build configuration list for PBXNativeTarget "JavaZone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F35BB6E917685885009077D3 /* Debug */,
 				EA8FE9DE17E60CA200C71CDD /* Debug_No_Analytics */,
 				F35BB6EA17685885009077D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F394C9DA17F0173900FAFBD4 /* Build configuration list for PBXNativeTarget "flatMap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F394C9DB17F0173900FAFBD4 /* Debug */,
+				F394C9DC17F0173900FAFBD4 /* Debug_No_Analytics */,
+				F394C9DD17F0173900FAFBD4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
