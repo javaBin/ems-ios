@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ems-config-url</key>
-	<string>http://dav.java.no/resources/iOS/EMS-Config.plist</string>
+	<string>http://flatmap-ems.herokuapp.com/static/EMS-Config.plist</string>
 	<key>features</key>
 	<dict>
 		<key>links</key>
@@ -16,9 +16,9 @@
 		<false/>
 	</dict>
 	<key>ems-root-url-prod</key>
-	<string>http://javazone.no/ems/server/</string>
+	<string>http://flatmap-ems.herokuapp.com/</string>
 	<key>ems-root-url</key>
-	<string>http://test.java.no/ems-redux/server/</string>
+	<string>http://flatmap-ems.herokuapp.com/</string>
 	<key>level-sort</key>
 	<dict>
 		<key>beginner</key>
