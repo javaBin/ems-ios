@@ -37,71 +37,78 @@
 }
 
 - (void)setupViewWithSession:(Session *)session {
-    self.shareButton.enabled = YES;
-
-    self.session = session;
-
-    NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
-
-    [dateFormatterTime setDateStyle:NSDateFormatterNoStyle];
-    [dateFormatterTime setTimeStyle:NSDateFormatterShortStyle];
-    
-    NSMutableString *title = [[NSMutableString alloc] init];
-    
-    if (session.slot) {
-        [title appendString:[NSString stringWithFormat:@"%@ - %@",
-                             [dateFormatterTime stringFromDate:session.slot.start],
-                             [dateFormatterTime stringFromDate:session.slot.end]]];
-    } else {
-        if (session.slotName != nil) {
-            [title appendString:session.slotName];
-        }
-    }
-
-    if (session.roomName != nil) {
-        [title appendString:[NSString stringWithFormat:@" : %@", session.roomName]];
-    }
-
-    self.title = [NSString stringWithString:title];
-
-    NSString *imageBaseName = [session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star";
-    NSString *imageNameFormat = @"%@-%@";
-    
-    UIImage *normalImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"grey"]];
-    UIImage *selectedImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"yellow"]];
-    
-    if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
-        normalImage = [normalImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    }
-    
-    [self.button setImage:normalImage forState:UIControlStateNormal];
-    [self.button setImage:selectedImage forState:UIControlStateSelected];
-
-    [self refreshFavourite];
-    
-    self.titleLabel.text = session.title;
-
-    NSMutableDictionary *speakerBios = [[NSMutableDictionary alloc] init];
-
-    [session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-        Speaker *speaker = (Speaker *)obj;
-
-        if (speaker.bio != nil) {
-            [speakerBios setObject:speaker.bio forKey:speaker.name];
+    if (session) {
+        self.shareButton.enabled = YES;
+        
+        self.session = session;
+        
+        NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
+        
+        [dateFormatterTime setDateStyle:NSDateFormatterNoStyle];
+        [dateFormatterTime setTimeStyle:NSDateFormatterShortStyle];
+        
+        NSMutableString *title = [[NSMutableString alloc] init];
+        
+        if (session.slot) {
+            [title appendString:[NSString stringWithFormat:@"%@ - %@",
+                                 [dateFormatterTime stringFromDate:session.slot.start],
+                                 [dateFormatterTime stringFromDate:session.slot.end]]];
         } else {
-            [speakerBios setObject:@"" forKey:speaker.name];
+            if (session.slotName != nil) {
+                [title appendString:session.slotName];
+            }
         }
-    }];
+        
+        if (session.roomName != nil) {
+            [title appendString:[NSString stringWithFormat:@" : %@", session.roomName]];
+        }
+        
+        self.title = [NSString stringWithString:title];
+        
+        NSString *imageBaseName = [session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star";
+        NSString *imageNameFormat = @"%@-%@";
+        
+        UIImage *normalImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"grey"]];
+        UIImage *selectedImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"yellow"]];
+        
+        if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
+            normalImage = [normalImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        }
+        
+        [self.button setImage:normalImage forState:UIControlStateNormal];
+        [self.button setImage:selectedImage forState:UIControlStateSelected];
+        
+        [self refreshFavourite];
+        
+        self.titleLabel.text = session.title;
+        
+        NSMutableDictionary *speakerBios = [[NSMutableDictionary alloc] init];
+        
+        [session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+            Speaker *speaker = (Speaker *)obj;
+            
+            if (speaker.bio != nil) {
+                [speakerBios setObject:speaker.bio forKey:speaker.name];
+            } else {
+                [speakerBios setObject:@"" forKey:speaker.name];
+            }
+        }];
+        
+        self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
+        
+        [self setupMovement];
+        
+        [self buildPage];
+        
+        [self retrieve];
 
-    self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
-
-    [self setupMovement];
-
-    [self buildPage];
-
-    [self retrieve];
-
+    } else {
+        self.title = @"";
+        self.titleLabel.text = @"";
+        self.button.hidden = YES;
+    }
+    
 }
 
 - (void)viewDidLoad
@@ -113,10 +120,7 @@
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
-    if (self.session) {
-        [self setupViewWithSession:self.session];
-    }
-    
+    [self setupViewWithSession:self.session];
 }
 
 - (void) viewDidAppear:(BOOL)animated {

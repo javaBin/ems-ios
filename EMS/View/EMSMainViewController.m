@@ -177,13 +177,7 @@
         }
     }*/
     
-    if (self.splitViewController) {
-        if ([self.tableView indexPathForSelectedRow] == nil) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-            [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionTop];
-            [self performSegueWithIdentifier:@"showDetailsView" sender:self];
-        }
-    }
+    
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -192,6 +186,14 @@
     [tracker set:kGAIScreenName value:@"Main Screen"];
     [tracker send:[[GAIDictionaryBuilder createAppView]  build]];
 #endif
+    
+    if (self.splitViewController) {
+        if ([self.tableView indexPathForSelectedRow] == nil) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionTop];
+            [self performSegueWithIdentifier:@"showDetailsView" sender:self];
+        }
+    }
 }
 
 - (void)pushDetailViewForHref:(NSString *)href {
