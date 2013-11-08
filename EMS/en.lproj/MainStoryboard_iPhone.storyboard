@@ -388,7 +388,7 @@
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="iZo-Hp-orM">
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="47E-mD-yuA">
-                            <rect key="frame" x="54" y="7" width="212" height="30"/>
+                            <rect key="frame" x="44" y="7" width="233" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="All"/>

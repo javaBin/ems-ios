@@ -400,6 +400,9 @@
 }
 
 - (NSString *)paraContent:(NSString *)text {
+    if ([text isEqualToString:@""])
+        return @"";
+
     if ([EMSFeatureConfig isFeatureEnabled:fMarkdown]) {
         NSError  *error = nil;
         
