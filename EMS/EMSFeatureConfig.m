@@ -29,10 +29,10 @@
         prefs = [EMSFeatureConfig defaultDictionary];
     }
 
-    return prefs;   
+    return prefs;
 }
 
-+ (BOOL) isFeatureEnabled:(EMSFeature)feature {
++ (BOOL)isFeatureEnabled:(EMSFeature)feature {
     NSDictionary *prefs = [EMSFeatureConfig workingDictionary];
     NSDictionary *features = [prefs objectForKey:@"features"];
 
@@ -43,7 +43,7 @@
     if (feature == fBioPics) {
         return [[features objectForKey:@"speaker-thumbnails"] boolValue];
     }
-    
+
     if (feature == fMarkdown) {
         return [[features objectForKey:@"markdown"] boolValue];
     }
@@ -55,7 +55,7 @@
     return NO;
 }
 
-- (void) refreshConfigFile {
+- (void)refreshConfigFile {
     NSDictionary *prefs = [EMSFeatureConfig defaultDictionary];
 
     if (![[prefs allKeys] containsObject:@"ems-config-url"]) {
@@ -74,7 +74,7 @@
 
         CLS_LOG(@"Checking for config file");
 
-        NSData* data = [NSData dataWithContentsOfURL:onlineConfig options:NSDataReadingMappedIfSafe error:&error];
+        NSData *data = [NSData dataWithContentsOfURL:onlineConfig options:NSDataReadingMappedIfSafe error:&error];
 
         if (data == nil) {
             CLS_LOG(@"Retrieved nil config %@ - %@ - %@", onlineConfig, error, [error userInfo]);

@@ -10,8 +10,7 @@
 
 @implementation EMSAboutViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
     NSString *path = [[NSBundle mainBundle] bundlePath];
@@ -22,14 +21,14 @@
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     NSString *build = [infoDictionary objectForKey:@"CFBundleVersion"];
-    
+
     NSError *error = nil;
-    
+
     NSString *content = [NSString stringWithContentsOfURL:docURL encoding:NSUTF8StringEncoding error:&error];
-    
+
     if (!content) {
         CLS_LOG(@"Unable to get about content %@ %@", error, [error userInfo]);
-        
+
         return;
     }
 
@@ -47,12 +46,11 @@
             return NO;
         }
     }
-    
+
     return YES;
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

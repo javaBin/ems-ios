@@ -9,9 +9,9 @@
 
 @interface EMSSettingsViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property(nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
-@property (nonatomic, assign) BOOL justRetrieved;
-@property (nonatomic, assign) BOOL emptyInitial;
+@property(nonatomic, assign) BOOL justRetrieved;
+@property(nonatomic, assign) BOOL emptyInitial;
 
 @end

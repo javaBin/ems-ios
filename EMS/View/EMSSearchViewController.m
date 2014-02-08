@@ -10,8 +10,7 @@
 
 @implementation EMSSearchViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
     self.search.text = [self.advancedSearch search];
@@ -22,10 +21,10 @@
 
             @try {
 
-                [(UITextField *)searchBarSubview setReturnKeyType:UIReturnKeyDone];
-                [(UITextField *)searchBarSubview setKeyboardAppearance:UIKeyboardAppearanceAlert];
+                [(UITextField *) searchBarSubview setReturnKeyType:UIReturnKeyDone];
+                [(UITextField *) searchBarSubview setKeyboardAppearance:UIKeyboardAppearanceAlert];
             }
-            @catch (NSException * e) {
+            @catch (NSException *e) {
 
                 // ignore exception
             }
@@ -34,53 +33,44 @@
 
 }
 
-- (void) viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
 #ifndef DO_NOT_USE_GA
-    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Search Screen"];
-    [tracker send:[[GAIDictionaryBuilder createAppView]  build]];
+    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 #endif
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 5;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
             return self.keywords.count;
-            break;
 
         case 1:
             return self.levels.count;
-            break;
 
         case 2:
             return self.types.count;
-            break;
-            
+
         case 3:
             return self.rooms.count;
-            break;
 
         case 4:
             return 2;
-            break;
 
         default:
             return 0;
-            break;
     }
 }
 
@@ -90,7 +80,7 @@
               cleaned:(BOOL)cleaned
             withImage:(BOOL)imageFlag {
     NSString *value = [list objectAtIndex:indexPath.row];
-    
+
     if (capitalized) {
         value = [value capitalizedString];
     }
@@ -98,9 +88,9 @@
     if (cleaned) {
         value = [value stringByReplacingOccurrencesOfString:@"-" withString:@" "];
     }
-    
+
     cell.textLabel.text = value;
-    
+
     if ([currentList containsObject:[list objectAtIndex:indexPath.row]]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
@@ -114,8 +104,7 @@
     }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SearchCell" forIndexPath:indexPath];
 
     if (cell == nil) {
@@ -123,35 +112,30 @@
     }
 
     switch (indexPath.section) {
-        case 0:
-        {
+        case 0: {
             [self configureCell:cell forIndexPath:indexPath fromList:self.keywords andCurrentList:[self.advancedSearch fieldValuesForKey:emsKeyword] capitalized:NO cleaned:NO withImage:NO];
             break;
         }
 
-        case 1:
-        {
+        case 1: {
             [self configureCell:cell forIndexPath:indexPath fromList:self.levels andCurrentList:[self.advancedSearch fieldValuesForKey:emsLevel] capitalized:YES cleaned:NO withImage:YES];
             break;
         }
-            
-        case 2:
-        {
+
+        case 2: {
             [self configureCell:cell forIndexPath:indexPath fromList:self.types andCurrentList:[self.advancedSearch fieldValuesForKey:emsType] capitalized:YES cleaned:YES withImage:NO];
             break;
         }
-            
-        case 3:
-        {
+
+        case 3: {
             [self configureCell:cell forIndexPath:indexPath fromList:self.rooms andCurrentList:[self.advancedSearch fieldValuesForKey:emsRoom] capitalized:NO cleaned:NO withImage:NO];
             break;
         }
-            
-        case 4:
-        {
+
+        case 4: {
             [self configureCell:cell forIndexPath:indexPath fromList:@[@"English", @"Norwegian"] andCurrentList:[self.advancedSearch fieldValuesForKey:emsLang] capitalized:YES cleaned:NO withImage:YES];
         }
-            
+
         default:
             break;
     }
@@ -164,19 +148,14 @@
     switch (section) {
         case 0:
             return @"Keywords";
-            break;
         case 1:
             return @"Levels";
-            break;
         case 2:
             return @"Types";
-            break;
         case 3:
             return @"Rooms";
-            break;
         case 4:
             return @"Language";
-            break;
 
         default:
             break;
@@ -185,7 +164,7 @@
     return nil;
 }
 
-- (void) selectRowForIndexPath:(NSIndexPath *)indexPath forList:(NSArray *)list andKey:(EMSSearchField)key {
+- (void)selectRowForIndexPath:(NSIndexPath *)indexPath forList:(NSArray *)list andKey:(EMSSearchField)key {
     NSString *value = [list objectAtIndex:indexPath.row];
 
     NSMutableSet *values = [NSMutableSet setWithSet:[self.advancedSearch fieldValuesForKey:key]];
@@ -195,45 +174,39 @@
     } else {
         [values addObject:value];
     }
-    
+
     [self.advancedSearch setFieldValues:[NSSet setWithSet:values] forKey:key];
 }
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
-        case 0:
-        {
+        case 0: {
             [self selectRowForIndexPath:indexPath forList:self.keywords andKey:emsKeyword];
             break;
         }
 
-        case 1:
-        {
+        case 1: {
             [self selectRowForIndexPath:indexPath forList:self.levels andKey:emsLevel];
             break;
         }
-            
-        case 2:
-        {
+
+        case 2: {
             [self selectRowForIndexPath:indexPath forList:self.types andKey:emsType];
             break;
         }
-            
-        case 3:
-        {
+
+        case 3: {
             [self selectRowForIndexPath:indexPath forList:self.rooms andKey:emsRoom];
             break;
         }
-            
-        case 4:
-        {
+
+        case 4: {
             [self selectRowForIndexPath:indexPath forList:@[@"English", @"Norwegian"] andKey:emsLang];
             break;
         }
-            
+
         default:
             break;
     }
@@ -242,13 +215,12 @@
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-	if ([searchText length] == 0) {
+    if ([searchText length] == 0) {
         [self performSelector:@selector(hideKeyboardWithSearchBar:) withObject:searchBar afterDelay:0];
-	}
+    }
 }
 
-- (void)hideKeyboardWithSearchBar:(UISearchBar *)searchBar
-{
+- (void)hideKeyboardWithSearchBar:(UISearchBar *)searchBar {
     [searchBar setShowsCancelButton:NO animated:YES];
     [searchBar resignFirstResponder];
 }
@@ -271,17 +243,17 @@
 
 - (void)apply:(id)sender {
     [self.advancedSearch setSearch:self.search.text];
-    
+
     [self.delegate advancedSearchUpdated];
 
-    
+
 }
 
 - (void)clear:(id)sender {
     [self.advancedSearch clear];
 
     self.search.text = [self.advancedSearch search];
-    
+
     [self apply:sender];
 }
 

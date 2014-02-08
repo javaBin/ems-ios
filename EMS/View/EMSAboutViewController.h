@@ -6,6 +6,6 @@
 
 @interface EMSAboutViewController : UIViewController <UIWebViewDelegate>
 
-@property (nonatomic, strong) IBOutlet UIWebView *web;
+@property(nonatomic, strong) IBOutlet UIWebView *web;
 
 @end

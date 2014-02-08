@@ -33,7 +33,6 @@
 		839BD667176F9BD400900712 /* EMSSlotsRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD64F176F9BD400900712 /* EMSSlotsRetriever.m */; };
 		839BD66B176F9BD400900712 /* EMSMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD657176F9BD400900712 /* EMSMainViewController.m */; };
 		839BD66C176F9BD400900712 /* EMSSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD659176F9BD400900712 /* EMSSettingsViewController.m */; };
-		839BD66D176F9BD400900712 /* EMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD65B176F9BD400900712 /* EMSViewController.m */; };
 		839BD670176FA67000900712 /* EMSSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD66F176FA67000900712 /* EMSSpeaker.m */; };
 		83A58F7317E4500900182B6E /* English.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A58F7117E4500900182B6E /* English.png */; };
 		83A58F7417E4500900182B6E /* Norwegian.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A58F7217E4500900182B6E /* Norwegian.png */; };
@@ -98,7 +97,6 @@
 		F394C97E17F0173900FAFBD4 /* EMSSlotsRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD64F176F9BD400900712 /* EMSSlotsRetriever.m */; };
 		F394C97F17F0173900FAFBD4 /* EMSMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD657176F9BD400900712 /* EMSMainViewController.m */; };
 		F394C98017F0173900FAFBD4 /* EMSSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD659176F9BD400900712 /* EMSSettingsViewController.m */; };
-		F394C98117F0173900FAFBD4 /* EMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD65B176F9BD400900712 /* EMSViewController.m */; };
 		F394C98217F0173900FAFBD4 /* EMSSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD66F176FA67000900712 /* EMSSpeaker.m */; };
 		F394C98317F0173900FAFBD4 /* EMSDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F31862361770340200292371 /* EMSDetailViewController.m */; };
 		F394C98417F0173900FAFBD4 /* EMSSessionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F31862411770501800292371 /* EMSSessionCell.m */; };
@@ -250,13 +248,10 @@
 		839BD64D176F9BD400900712 /* EMSSlot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSlot.m; sourceTree = "<group>"; };
 		839BD64E176F9BD400900712 /* EMSSlotsRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSlotsRetriever.h; sourceTree = "<group>"; };
 		839BD64F176F9BD400900712 /* EMSSlotsRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSlotsRetriever.m; sourceTree = "<group>"; };
-		839BD655176F9BD400900712 /* EMSConferenceChangedDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConferenceChangedDelegate.h; sourceTree = "<group>"; };
 		839BD656176F9BD400900712 /* EMSMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSMainViewController.h; sourceTree = "<group>"; };
 		839BD657176F9BD400900712 /* EMSMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSMainViewController.m; sourceTree = "<group>"; };
 		839BD658176F9BD400900712 /* EMSSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSettingsViewController.h; sourceTree = "<group>"; };
 		839BD659176F9BD400900712 /* EMSSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSettingsViewController.m; sourceTree = "<group>"; };
-		839BD65A176F9BD400900712 /* EMSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSViewController.h; sourceTree = "<group>"; };
-		839BD65B176F9BD400900712 /* EMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSViewController.m; sourceTree = "<group>"; };
 		839BD66E176FA67000900712 /* EMSSpeaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSpeaker.h; sourceTree = "<group>"; };
 		839BD66F176FA67000900712 /* EMSSpeaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSpeaker.m; sourceTree = "<group>"; };
 		83A58F7117E4500900182B6E /* English.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = English.png; sourceTree = "<group>"; };
@@ -493,13 +488,10 @@
 		839BD654176F9BD400900712 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				839BD655176F9BD400900712 /* EMSConferenceChangedDelegate.h */,
 				839BD656176F9BD400900712 /* EMSMainViewController.h */,
 				839BD657176F9BD400900712 /* EMSMainViewController.m */,
 				839BD658176F9BD400900712 /* EMSSettingsViewController.h */,
 				839BD659176F9BD400900712 /* EMSSettingsViewController.m */,
-				839BD65A176F9BD400900712 /* EMSViewController.h */,
-				839BD65B176F9BD400900712 /* EMSViewController.m */,
 				F31862351770340200292371 /* EMSDetailViewController.h */,
 				F31862361770340200292371 /* EMSDetailViewController.m */,
 				F31862401770501800292371 /* EMSSessionCell.h */,
@@ -970,7 +962,6 @@
 				839BD667176F9BD400900712 /* EMSSlotsRetriever.m in Sources */,
 				839BD66B176F9BD400900712 /* EMSMainViewController.m in Sources */,
 				839BD66C176F9BD400900712 /* EMSSettingsViewController.m in Sources */,
-				839BD66D176F9BD400900712 /* EMSViewController.m in Sources */,
 				839BD670176FA67000900712 /* EMSSpeaker.m in Sources */,
 				F31862371770340200292371 /* EMSDetailViewController.m in Sources */,
 				F31862421770501800292371 /* EMSSessionCell.m in Sources */,
@@ -1013,7 +1004,6 @@
 				F394C97E17F0173900FAFBD4 /* EMSSlotsRetriever.m in Sources */,
 				F394C97F17F0173900FAFBD4 /* EMSMainViewController.m in Sources */,
 				F394C98017F0173900FAFBD4 /* EMSSettingsViewController.m in Sources */,
-				F394C98117F0173900FAFBD4 /* EMSViewController.m in Sources */,
 				F394C98217F0173900FAFBD4 /* EMSSpeaker.m in Sources */,
 				F394C98317F0173900FAFBD4 /* EMSDetailViewController.m in Sources */,
 				F394C98417F0173900FAFBD4 /* EMSSessionCell.m in Sources */,
@@ -1092,7 +1082,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1113,7 +1103,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
 				INFOPLIST_FILE = "EMS/JavaZone-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1157,7 +1147,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1184,7 +1174,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "0C88122F-AAA1-4104-952D-FFAA4290D539";
 				SDKROOT = iphoneos;
@@ -1207,7 +1197,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
 				INFOPLIST_FILE = "EMS/JavaZone-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1240,7 +1230,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
 				INFOPLIST_FILE = "EMS/JavaZone-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1268,7 +1258,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
 				INFOPLIST_FILE = "flatMap-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1300,7 +1290,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
 				INFOPLIST_FILE = "flatMap-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1333,7 +1323,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
 				INFOPLIST_FILE = "flatMap-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",

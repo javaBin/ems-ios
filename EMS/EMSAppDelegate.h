@@ -8,27 +8,31 @@
 
 @interface EMSAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property(strong, nonatomic) UIWindow *window;
 
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, strong) NSManagedObjectContext *uiManagedObjectContext;
-@property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
-@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property(nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property(nonatomic, strong) NSManagedObjectContext *uiManagedObjectContext;
+@property(nonatomic, strong) NSManagedObjectModel *managedObjectModel;
+@property(nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-@property (nonatomic, strong) EMSModel *model;
+@property(nonatomic, strong) EMSModel *model;
 
 - (NSURL *)applicationDocumentsDirectory;
+
 - (NSURL *)applicationCacheDirectory;
 
 + (EMSAppDelegate *)sharedAppDelegate;
 
-- (void) startNetwork;
-- (void) stopNetwork;
+- (void)startNetwork;
 
-+ (void) storeCurrentConference:(NSURL *)href;
-+ (NSURL *) currentConference;
+- (void)stopNetwork;
 
-- (EMSModel *) modelForBackground;
-- (void) syncManagedObjectContext;
++ (void)storeCurrentConference:(NSURL *)href;
+
++ (NSURL *)currentConference;
+
+- (EMSModel *)modelForBackground;
+
+- (void)syncManagedObjectContext;
 
 @end

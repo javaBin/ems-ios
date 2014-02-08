@@ -15,9 +15,11 @@ typedef enum EMSSearchField : NSUInteger {
 } EMSSearchField;
 
 - (NSString *)search;
+
 - (void)setSearch:(NSString *)search;
 
 - (NSSet *)fieldValuesForKey:(EMSSearchField)key;
+
 - (void)setFieldValues:(NSSet *)values forKey:(EMSSearchField)key;
 
 - (BOOL)hasAdvancedSearch;

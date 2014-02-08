@@ -6,27 +6,26 @@
 
 @interface EMSAdvancedSearch ()
 
-@property (nonatomic, strong) NSString* searchText;
-@property (nonatomic, strong) NSMutableDictionary *fields;
+@property(nonatomic, strong) NSString *searchText;
+@property(nonatomic, strong) NSMutableDictionary *fields;
 
 @end
 
 @implementation EMSAdvancedSearch
 
-NSString *const PrefsSearchText  = @"searchText";
+NSString *const PrefsSearchText = @"searchText";
 NSString *const PrefsSearchField = @"searchFields";
 
--(id)init
-{
+- (id)init {
     self = [super init];
 
-    if(self) {
+    if (self) {
         self.searchText = @"";
         self.fields = [[NSMutableDictionary alloc] init];
     }
-    
+
     [self retrieve];
-    
+
     return self;
 }
 
@@ -36,17 +35,17 @@ NSString *const PrefsSearchField = @"searchFields";
 
 - (void)setSearch:(NSString *)search {
     self.searchText = [NSString stringWithString:search];
-    
+
     [self persist];
 }
 
 - (NSSet *)fieldValuesForKey:(EMSSearchField)key {
     NSNumber *k = [NSNumber numberWithInt:key];
-    
+
     if ([self.fields.allKeys containsObject:k]) {
         return [NSSet setWithSet:[self.fields objectForKey:k]];
     }
-    
+
     return [NSSet set];
 }
 
@@ -58,48 +57,48 @@ NSString *const PrefsSearchField = @"searchFields";
     } else {
         [self.fields setObject:[NSSet set] forKey:k];
     }
-    
+
     [self persist];
 }
 
-- (void) persist {
+- (void)persist {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
+
     [defaults setObject:self.searchText forKey:PrefsSearchText];
 
     NSMutableDictionary *fieldsAsArrays = [[NSMutableDictionary alloc] init];
 
     for (int i = emsKeyword; i <= emsLang; i++) {
         NSNumber *key = [NSNumber numberWithInt:i];
-        
+
         if ([[self.fields allKeys] containsObject:key]) {
             [fieldsAsArrays setObject:[[self.fields objectForKey:key] allObjects] forKey:[key stringValue]];
         }
     }
     [defaults setObject:[NSDictionary dictionaryWithDictionary:fieldsAsArrays] forKey:PrefsSearchField];
-    
+
     [defaults synchronize];
-    
+
 #ifndef DO_NOT_USE_CRASHLYTICS
     [Crashlytics setObjectValue:self.searchText forKey:@"lastStoredSearchText"];
     [Crashlytics setObjectValue:self.fields forKey:@"lastStoredSearchFields"];
 #endif
 }
 
-- (void) retrieve {
+- (void)retrieve {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
+
     NSString *storedSearchText = [defaults objectForKey:PrefsSearchText];
     if (storedSearchText != nil) {
         self.searchText = [NSString stringWithString:storedSearchText];
     }
 
     NSDictionary *storedSearchFields = [defaults objectForKey:PrefsSearchField];
-    
+
     if (storedSearchFields != nil) {
         for (int i = emsKeyword; i <= emsLang; i++) {
             NSString *key = [[NSNumber numberWithInt:i] stringValue];
-            
+
             if ([[storedSearchFields allKeys] containsObject:key]) {
                 [self setFieldValues:[NSSet setWithArray:[storedSearchFields objectForKey:key]] forKey:i];
             } else {
@@ -122,9 +121,9 @@ NSString *const PrefsSearchField = @"searchFields";
             [[self fieldValuesForKey:emsLang] count] > 0);
 }
 
-- (void) clear {
+- (void)clear {
     [self setSearch:@""];
-    
+
     for (int i = emsKeyword; i <= emsLang; i++) {
         [self setFieldValues:[NSSet set] forKey:i];
     }

@@ -10,8 +10,8 @@ typedef enum EMSFeature : NSUInteger {
     fLocalNotifications, fBioPics, fMarkdown, fLinks
 } EMSFeature;
 
-+ (BOOL)isFeatureEnabled:(EMSFeature) feature;
++ (BOOL)isFeatureEnabled:(EMSFeature)feature;
 
-- (void) refreshConfigFile;
+- (void)refreshConfigFile;
 
 @end

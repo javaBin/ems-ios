@@ -13,17 +13,15 @@
 
 #import "EMSFeatureConfig.h"
 
-#import "Session.h"
 #import "Speaker.h"
 #import "Keyword.h"
 #import "Room.h"
 
 #import "NHCalendarActivity.h"
-#import "NHCalendarEvent.h"
 
 #import "MMMarkdown.h"
 
-@interface EMSDetailViewController ()<UIPopoverControllerDelegate>
+@interface EMSDetailViewController () <UIPopoverControllerDelegate>
 @property(nonatomic) UIPopoverController *sharePopoverController;
 @end
 
@@ -39,68 +37,68 @@
 - (void)setupViewWithSession:(Session *)session {
     if (session) {
         self.shareButton.enabled = YES;
-        
+
         self.session = session;
-        
+
         NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
-        
+
         [dateFormatterTime setDateStyle:NSDateFormatterNoStyle];
         [dateFormatterTime setTimeStyle:NSDateFormatterShortStyle];
-        
+
         NSMutableString *title = [[NSMutableString alloc] init];
-        
+
         if (session.slot) {
             [title appendString:[NSString stringWithFormat:@"%@ - %@",
-                                 [dateFormatterTime stringFromDate:session.slot.start],
-                                 [dateFormatterTime stringFromDate:session.slot.end]]];
+                                                           [dateFormatterTime stringFromDate:session.slot.start],
+                                                           [dateFormatterTime stringFromDate:session.slot.end]]];
         } else {
             if (session.slotName != nil) {
                 [title appendString:session.slotName];
             }
         }
-        
+
         if (session.roomName != nil) {
             [title appendString:[NSString stringWithFormat:@" : %@", session.roomName]];
         }
-        
+
         self.title = [NSString stringWithString:title];
-        
+
         NSString *imageBaseName = [session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star";
         NSString *imageNameFormat = @"%@-%@";
-        
+
         UIImage *normalImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"grey"]];
         UIImage *selectedImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"yellow"]];
-        
+
         if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
             normalImage = [normalImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
             selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         }
-        
+
         [self.button setImage:normalImage forState:UIControlStateNormal];
         [self.button setImage:selectedImage forState:UIControlStateSelected];
-        
+
         [self refreshFavourite];
-        
+
         self.titleLabel.text = session.title;
-        
+
         NSMutableDictionary *speakerBios = [[NSMutableDictionary alloc] init];
-        
+
         [session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            Speaker *speaker = (Speaker *)obj;
-            
+            Speaker *speaker = (Speaker *) obj;
+
             if (speaker.bio != nil) {
                 [speakerBios setObject:speaker.bio forKey:speaker.name];
             } else {
                 [speakerBios setObject:@"" forKey:speaker.name];
             }
         }];
-        
+
         self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
-        
+
         [self setupMovement];
-        
+
         [self buildPage];
-        
+
         [self retrieve];
 
     } else {
@@ -108,35 +106,34 @@
         self.titleLabel.text = @"";
         self.button.hidden = YES;
     }
-    
+
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     //We do not do fullscreen layout on iOS 7+ right now.
     if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    
+
     [self setupViewWithSession:self.session];
 }
 
-- (void) viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
 #ifndef DO_NOT_USE_GA
-    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Detail Screen"];
-    [tracker send:[[GAIDictionaryBuilder createAppView]  build]];
+    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 #endif
 }
 
 
 - (IBAction)toggleFavourite:(id)sender {
     self.session = [[[EMSAppDelegate sharedAppDelegate] model] toggleFavourite:self.session];
-    
+
     [self.button setSelected:[self.session.favourite boolValue]];
-    
+
     if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
         if (self.button.selected) {
             self.button.tintColor = nil;
@@ -146,25 +143,25 @@
     }
 }
 
-- (void) buildPage {
+- (void)buildPage {
     NSString *path = [[NSBundle mainBundle] bundlePath];
-	NSURL *baseURL = [NSURL fileURLWithPath:path];
+    NSURL *baseURL = [NSURL fileURLWithPath:path];
     [self.webView loadHTMLString:[self buildPage:self.session] baseURL:baseURL];
 }
 
-- (void) retrieve {
+- (void)retrieve {
     EMSRetriever *retriever = [[EMSRetriever alloc] init];
-    
+
     retriever.delegate = self;
-    
+
     CLS_LOG(@"Retrieving speakers for href %@", self.session.speakerCollection);
 
     [retriever refreshSpeakers:[NSURL URLWithString:self.session.speakerCollection]];
 }
 
-- (void) finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href {
+- (void)finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href {
     CLS_LOG(@"Storing speakers %d for href %@", [speakers count], href);
-    
+
     NSError *error = nil;
 
     EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
@@ -182,12 +179,12 @@
 
             NSMutableDictionary *speakerBios = [NSMutableDictionary dictionaryWithDictionary:self.cachedSpeakerBios];
 
-            [self.cachedSpeakerBios enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-                NSString *name = (NSString *)key;
-                NSString *bio = (NSString *)obj;
+            [self.cachedSpeakerBios enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stopCached) {
+                NSString *name = (NSString *) key;
+                NSString *bio = (NSString *) obj;
 
-                [self.session.speakers enumerateObjectsUsingBlock:^(id speakerObj, BOOL *stop) {
-                    Speaker *speaker = (Speaker *)speakerObj;
+                [self.session.speakers enumerateObjectsUsingBlock:^(id speakerObj, BOOL *stopSpeakers) {
+                    Speaker *speaker = (Speaker *) speakerObj;
 
                     if ([speaker.name isEqualToString:name]) {
                         if (![speaker.bio isEqualToString:bio]) {
@@ -200,7 +197,7 @@
                 }];
             }];
 
-            if (newBios == YES) {
+            if (newBios) {
                 CLS_LOG(@"Saw updated bios - updating screen");
                 self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
                 [self buildPage];
@@ -209,8 +206,7 @@
     });
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -224,33 +220,33 @@
 
 - (NSString *)buildCalendarNotes {
     NSMutableString *result = [[NSMutableString alloc] init];
-    
+
     [result appendString:@"Details\n\n"];
     [result appendString:self.session.body];
-    
+
     [result appendString:@"\n\nInformation\n\n"];
     [result appendFormat:@"* %@\n\n", [[@[[self cleanString:self.session.level]] sortedArrayUsingSelector:@selector(compare:)] componentsJoinedByString:@"\n* "]];
-    
+
     if (self.session.keywords != nil && [self.session.keywords count] > 0) {
         [result appendString:@"\n\nKeywords\n\n"];
-        
+
         NSMutableArray *listItems = [[NSMutableArray alloc] init];
-            
+
         [self.session.keywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            Keyword *keyword = (Keyword *)obj;
-                
+            Keyword *keyword = (Keyword *) obj;
+
             [listItems addObject:keyword.name];
         }];
-            
+
         [result appendFormat:@"* %@\n\n", [[listItems sortedArrayUsingSelector:@selector(compare:)] componentsJoinedByString:@"\n* "]];
     }
-    
+
     if ([self.session.speakers count] > 0) {
         [result appendString:@"\n\nSpeakers\n\n"];
-        
+
         [self.session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            Speaker *speaker = (Speaker *)obj;
-            
+            Speaker *speaker = (Speaker *) obj;
+
             if (speaker.name != nil) {
                 [result appendString:speaker.name];
             }
@@ -263,77 +259,76 @@
             [result appendString:@"\n\n"];
         }];
     }
-    
+
     return [NSString stringWithString:result];
 }
 
-- (NHCalendarEvent *)createCalendarEvent
-{
+- (NHCalendarEvent *)createCalendarEvent {
     NHCalendarEvent *calendarEvent = [[NHCalendarEvent alloc] init];
-    
+
     calendarEvent.title = [NSString stringWithFormat:@"%@ - %@", self.session.conference.name, self.session.title];
     calendarEvent.location = self.session.room.name;
     calendarEvent.notes = [self buildCalendarNotes];
     calendarEvent.startDate = [self dateForDate:self.session.slot.start];
     calendarEvent.endDate = [self dateForDate:self.session.slot.end];
     calendarEvent.allDay = NO;
-    
+
     // Add alarm
-    NSArray *alarms = @[[EKAlarm alarmWithRelativeOffset:- 60.0f * 5.0f]];
-    
+    NSArray *alarms = @[[EKAlarm alarmWithRelativeOffset:-60.0f * 5.0f]];
+
     calendarEvent.alarms = alarms;
-    
+
     CLS_LOG(@"Created calendar event %@", calendarEvent);
-    
+
     return calendarEvent;
 }
 
 - (void)share:(id)sender {
     self.shareButton.enabled = NO;
-    
+
 #ifndef DO_NOT_USE_CRASHLYTICS
     [Crashlytics setObjectValue:self.session.href forKey:@"lastSharedSession"];
 #endif
-    
+
     NSString *shareString = [NSString stringWithFormat:@"%@ - %@", self.session.conference.name, self.session.title];
-    
+
     CLS_LOG(@"About to share for %@", shareString);
 
     // TODO - web URL?
     // NSURL *shareUrl = [NSURL URLWithString:@"http://www.java.no"];
-    
+
     NSMutableArray *shareItems = [[NSMutableArray alloc] init];
     NSMutableArray *shareActivities = [[NSMutableArray alloc] init];
-    
+
     [shareItems addObject:shareString];
-    
+
     if (self.session.slot) {
         [shareItems addObject:[self createCalendarEvent]];
         [shareActivities addObject:[[NHCalendarActivity alloc] init]];
     }
-    
+
     if (self.session.videoLink) {
         [shareItems addObject:self.session.videoLink];
     }
-    
+
     NSArray *activityItems = [NSArray arrayWithArray:shareItems];
     NSArray *activities = [NSArray arrayWithArray:shareActivities];
 
     __block UIActivityViewController *activityViewController = [[UIActivityViewController alloc]
-                                                                initWithActivityItems:activityItems
-                                                                applicationActivities:activities];
-    
+            initWithActivityItems:activityItems
+            applicationActivities:activities];
+
     activityViewController.excludedActivityTypes = @[UIActivityTypePrint,
-                                                     UIActivityTypeCopyToPasteboard,
-                                                     UIActivityTypeAssignToContact,
-                                                     UIActivityTypeSaveToCameraRoll];
-    
+            UIActivityTypeCopyToPasteboard,
+            UIActivityTypeAssignToContact,
+            UIActivityTypeSaveToCameraRoll];
+
     [activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
         CLS_LOG(@"Sharing of %@ via %@ - completed %d", shareString, activityType, completed);
 
         if (completed) {
 #ifndef DO_NOT_USE_GA
-            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
 
             [tracker send:[[GAIDictionaryBuilder createSocialWithNetwork:activityType
                                                                   action:@"Share"
@@ -341,52 +336,55 @@
 #endif
         }
     }];
-    
-    
+
+
     activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    
-    
+
+
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIPopoverController *popup = [[UIPopoverController alloc] initWithContentViewController:activityViewController];
-        
+
         popup.delegate = self;
         [popup presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-        
+
         self.sharePopoverController = popup;
     } else {
-        [self presentViewController:activityViewController animated:YES completion:^{ activityViewController.excludedActivityTypes = nil; activityViewController = nil; }];
+        [self presentViewController:activityViewController animated:YES completion:^{
+            activityViewController.excludedActivityTypes = nil;
+            activityViewController = nil;
+        }];
     }
-    
+
 }
 
 - (NSString *)buildPage:(Session *)session {
-    
-	NSString *page = [NSString stringWithFormat:@""
-					  "<html>"
-					  "<head>"
-					  "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"/>"
-                      "<meta name='viewport' content='width=device-width; initial-scale=1.0; maximum-scale=1.0;'>"
-					  "</head>"
-					  "<body>"
-					  "%@"
-                      "%@"
-                      "%@"
-					  "%@"
-					  "%@"
-					  "</body>"
-					  "</html>",
-					  [self paraContent:session.body],
-                      [self linkContent:session],
-                      [self levelContent:session.level],
-					  [self keywordContent:session.keywords],
-					  [self speakerContent:session.speakers]];
 
-	return page;
+    NSString *page = [NSString stringWithFormat:@""
+                                                        "<html>"
+                                                        "<head>"
+                                                        "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"/>"
+                                                        "<meta name='viewport' content='width=device-width; initial-scale=1.0; maximum-scale=1.0;'>"
+                                                        "</head>"
+                                                        "<body>"
+                                                        "%@"
+                                                        "%@"
+                                                        "%@"
+                                                        "%@"
+                                                        "%@"
+                                                        "</body>"
+                                                        "</html>",
+                                                [self paraContent:session.body],
+                                                [self linkContent:session],
+                                                [self levelContent:session.level],
+                                                [self keywordContent:session.keywords],
+                                                [self speakerContent:session.speakers]];
+
+    return page;
 }
 
 - (NSString *)linkContent:(Session *)session {
     NSMutableString *linkContent = [[NSMutableString alloc] init];
-    
+
     if ([EMSFeatureConfig isFeatureEnabled:fLinks]) {
         if (session.videoLink) {
             [linkContent appendString:@"<h2>Links</h2>"];
@@ -395,7 +393,7 @@
             [linkContent appendString:@"</ul>"];
         }
     }
-    
+
     return [NSString stringWithString:linkContent];
 }
 
@@ -404,45 +402,45 @@
         return @"";
 
     if ([EMSFeatureConfig isFeatureEnabled:fMarkdown]) {
-        NSError  *error = nil;
-        
+        NSError *error = nil;
+
         NSString *htmlString = [MMMarkdown HTMLStringWithMarkdown:text error:&error];
-        
+
         if (!htmlString) {
             CLS_LOG(@"Unable to convert markdown %@ - %@", error, [error userInfo]);
-            
+
             return text;
         }
-        
+
         return htmlString;
     } else {
         NSArray *lines = [text componentsSeparatedByString:@"\n"];
-    
+
         return [NSString stringWithFormat:@"<p>%@</p>", [lines componentsJoinedByString:@"</p><p>"]];
     }
 }
 
 - (NSString *)levelContent:(NSString *)level {
-	NSMutableString *result = [[NSMutableString alloc] init];
-    
+    NSMutableString *result = [[NSMutableString alloc] init];
+
     if (level != nil) {
         [result appendString:@"<h2>Level</h2>"];
-        
+
         [result appendString:@"<p>"];
 
         NSString *levelPath = [[NSBundle mainBundle] pathForResource:level ofType:@"png"];
         NSURL *levelUrl = [NSURL fileURLWithPath:levelPath];
 
         [result appendFormat:@"<img src='%@' /> %@", levelUrl, [self cleanString:level]];
-        
+
         [result appendString:@"</p>"];
     }
-    
+
     return [NSString stringWithString:result];
 }
 
 - (NSString *)keywordContent:(NSSet *)keywords {
-	NSMutableString *result = [[NSMutableString alloc] init];
+    NSMutableString *result = [[NSMutableString alloc] init];
 
     if (keywords != nil && [keywords count] > 0) {
         [result appendString:@"<h2>Keywords</h2>"];
@@ -452,7 +450,7 @@
         NSMutableArray *listItems = [[NSMutableArray alloc] init];
 
         [keywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            Keyword *keyword = (Keyword *)obj;
+            Keyword *keyword = (Keyword *) obj;
 
             [listItems addObject:keyword.name];
         }];
@@ -466,14 +464,14 @@
 }
 
 - (NSString *)speakerContent:(NSSet *)speakers {
-	NSMutableString *result = [[NSMutableString alloc] init];
+    NSMutableString *result = [[NSMutableString alloc] init];
 
     if (speakers != nil && [speakers count] > 0) {
         [result appendString:@"<h2>Speakers</h2>"];
 
         [speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            Speaker *speaker = (Speaker *)obj;
-            
+            Speaker *speaker = (Speaker *) obj;
+
             if (speaker.name != nil) {
                 [result appendString:[NSString stringWithFormat:@"<h3>%@</h3>", speaker.name]];
             }
@@ -492,9 +490,9 @@
                         CLS_LOG(@"Speaker has cached thumbnail %@", speaker.thumbnailUrl);
 
                         NSError *fileError = nil;
-                
+
                         NSDictionary *fileAttributes = [fileManager attributesOfItemAtPath:pngFilePath error:&fileError];
-                
+
                         if (fileError != nil) {
                             CLS_LOG(@"Got a file error reading file attributes for file %@", pngFilePath);
                         } else {
@@ -517,13 +515,13 @@
                 [result appendString:[self paraContent:bio]];
             }
         }];
-        
-	}
-    
-	return [NSString stringWithString:result];
+
+    }
+
+    return [NSString stringWithString:result];
 }
 
-- (void) checkForNewThumbnailForSpeaker:(Speaker *)speaker compareWith:(NSData *)thumbData withFilename:(NSString *) pngFilePath withSessionHref:(NSString *)href {
+- (void)checkForNewThumbnailForSpeaker:(Speaker *)speaker compareWith:(NSData *)thumbData withFilename:(NSString *)pngFilePath withSessionHref:(NSString *)href {
     CLS_LOG(@"Checking for updated thumbnail %@", speaker.thumbnailUrl);
 
     dispatch_queue_t queue = dispatch_queue_create("thumbnail_queue", DISPATCH_QUEUE_CONCURRENT);
@@ -535,7 +533,7 @@
 
         NSURL *url = [NSURL URLWithString:speaker.thumbnailUrl];
 
-        NSData* data = [NSData dataWithContentsOfURL:url
+        NSData *data = [NSData dataWithContentsOfURL:url
                                              options:NSDataReadingMappedIfSafe
                                                error:&thumbnailError];
 
@@ -558,7 +556,7 @@
                 needToSave = YES;
             }
 
-            if (needToSave == YES) {
+            if (needToSave) {
                 CLS_LOG(@"Saving image file");
 
                 [newThumbData writeToFile:pngFilePath atomically:YES];
@@ -570,7 +568,7 @@
             [[GAI sharedInstance] dispatch];
 #endif
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (needToSave == YES) {
+                if (needToSave) {
                     if ([self.session.href isEqualToString:href]) {
                         [self buildPage];
                     }
@@ -583,38 +581,37 @@
 - (NSString *)pathForCachedThumbnail:(Speaker *)speaker {
     NSString *safeFilename = [self md5:speaker.thumbnailUrl];
 
-    return [[[[EMSAppDelegate sharedAppDelegate] applicationCacheDirectory] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",safeFilename]] path];
+    return [[[[EMSAppDelegate sharedAppDelegate] applicationCacheDirectory] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.png", safeFilename]] path];
 }
 
-- (NSString *) md5:(NSString *) input
-{
+- (NSString *)md5:(NSString *)input {
     const char *cStr = [input UTF8String];
     unsigned char digest[16];
-    CC_MD5( cStr, strlen(cStr), digest ); // This is the md5 call
+    CC_MD5(cStr, strlen(cStr), digest); // This is the md5 call
 
     NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
 
-    for(int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
+    for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
         [output appendFormat:@"%02x", digest[i]];
-    
-    return  output;
+
+    return output;
 }
 
 - (NSDate *)dateForDate:(NSDate *)date {
 #ifdef USE_TEST_DATE
     CLS_LOG(@"WARNING - RUNNING IN USE_TEST_DATE mode");
-    
-	// In debug mode we will use the current day but always the start time of the slot. Otherwise we couldn't test until JZ started ;)
-	NSCalendar *calendar = [NSCalendar currentCalendar];
-    
-	NSDateComponents *timeComp = [calendar components:NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:date];
-	NSDateComponents *dateComp = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:[[NSDate alloc] init]];
-    
+
+    // In debug mode we will use the current day but always the start time of the slot. Otherwise we couldn't test until JZ started ;)
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+
+    NSDateComponents *timeComp = [calendar components:NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:date];
+    NSDateComponents *dateComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:[[NSDate alloc] init]];
+
     NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
     [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
     [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-    
-	return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04d-%02d-%02d %02d:%02d:00 +0200", [dateComp year], [dateComp month], [dateComp day], [timeComp hour], [timeComp minute]]];
+
+    return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04d-%02d-%02d %02d:%02d:00 +0200", [dateComp year], [dateComp month], [dateComp day], [timeComp hour], [timeComp minute]]];
 #else
     return date;
 #endif
@@ -630,7 +627,7 @@
     __block BOOL removedAFile = NO;
 
     [self.session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-        Speaker *speaker = (Speaker *)obj;
+        Speaker *speaker = (Speaker *) obj;
 
         if (speaker.thumbnailUrl != nil) {
             CLS_LOG(@"Speaker has available thumbnail %@", speaker.thumbnailUrl);
@@ -639,7 +636,7 @@
         }
     }];
 
-    if (removedAFile == YES) {
+    if (removedAFile) {
         [self buildPage];
     }
 }
@@ -671,7 +668,7 @@
 - (NSIndexPath *)getSectionForDirection:(int)direction {
     NSArray *sections = [self.fetchedResultsController sections];
 
-   return [self indexPathForSection:self.indexPath moving:direction fromSections:sections];
+    return [self indexPathForSection:self.indexPath moving:direction fromSections:sections];
 }
 
 - (NSIndexPath *)getSessionForDirection:(int)direction {
@@ -680,7 +677,7 @@
     if (sections == nil) {
         return nil;
     }
-    
+
     int rowCount = [[sections objectAtIndex:self.indexPath.section] numberOfObjects];
 
     return [self indexPathForRow:self.indexPath moving:direction withRows:rowCount];
@@ -757,21 +754,21 @@
     if (navigationType == UIWebViewNavigationTypeLinkClicked) {
         // http:// -> safari, rest (file:// etc) opens in webview
         if ([[request.URL scheme] hasPrefix:@"http"]) {
-            
+
 #ifndef DO_NOT_USE_GA
-            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-            
+            id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"web"
                                                                   action:@"open link"
                                                                    label:request.URL.absoluteString
                                                                    value:nil] build]];
 #endif
-            
+
             [[UIApplication sharedApplication] openURL:request.URL];
             return NO;
         }
     }
-    
+
     return YES;
 }
 
