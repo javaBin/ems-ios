@@ -180,10 +180,12 @@
 #endif
 
     if (self.splitViewController) {
-        if ([self.tableView indexPathForSelectedRow] == nil) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-            [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionTop];
-            [self performSegueWithIdentifier:@"showDetailsView" sender:self];
+        if (self.tableView.numberOfSections > 0 && [self.tableView numberOfRowsInSection:0] > 0) {
+            if ([self.tableView indexPathForSelectedRow] == nil) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionTop];
+                [self performSegueWithIdentifier:@"showDetailsView" sender:self];
+            }
         }
     }
 }
@@ -742,8 +744,10 @@
         case NSFetchedResultsChangeDelete:
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
-        case NSFetchedResultsChangeMove:break;
-        case NSFetchedResultsChangeUpdate:break;
+        case NSFetchedResultsChangeMove:
+            break;
+        case NSFetchedResultsChangeUpdate:
+            break;
     }
 }
 
