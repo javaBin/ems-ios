@@ -12,13 +12,19 @@
 		<true/>
 		<key>speaker-thumbnails</key>
 		<true/>
-		<key>local-notifications</key>
-		<false/>
+        <key>local-notifications</key>
+        <false/>
+        <key>remote-notifications</key>
+        <true/>
 	</dict>
 	<key>ems-root-url-prod</key>
 	<string>http://flatmap-ems.herokuapp.com/</string>
 	<key>ems-root-url</key>
 	<string>http://flatmap-ems.herokuapp.com/</string>
+    <key>ems-notification-url-prod</key>
+    <string>http://flatmap-ems.herokuapp.com/</string>
+    <key>ems-notification-url</key>
+    <string>http://flatmap-ems.herokuapp.com/</string>
 	<key>level-sort</key>
 	<dict>
 		<key>beginner</key>

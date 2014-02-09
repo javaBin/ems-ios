@@ -3,12 +3,9 @@
 //
 
 #import "EMSAppDelegate.h"
-#import "EMSModel.h"
 #import "EMSMainViewController.h"
 
 #import "EMSFeatureConfig.h"
-
-#import "Conference.h"
 
 @implementation EMSAppDelegate
 
@@ -20,6 +17,14 @@ int networkCount = 0;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize model = __model;
 
+
+- (void)handleIncomingRemoteNotification:(NSDictionary *)dictionary {
+    if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
+        CLS_LOG(@"Incoming remote notification: %@", dictionary);
+
+        [PFPush handlePush:dictionary];
+    }
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"EMS-Keys" ofType:@"plist"];
@@ -35,6 +40,21 @@ int networkCount = 0;
     [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
 #endif
 #endif
+
+    if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
+#ifdef DEBUG
+#ifdef TEST_PROD_NOTIFICATIONS
+        [Parse setApplicationId:[prefs objectForKey:@"parse-app-id-prod"]
+                      clientKey:[prefs objectForKey:@"parse-client-key-prod"]];
+#else
+        [Parse setApplicationId:[prefs objectForKey:@"parse-app-id"]
+                      clientKey:[prefs objectForKey:@"parse-client-key"]];
+#endif
+#else
+    [Parse setApplicationId:[prefs objectForKey:@"parse-app-id-prod"]
+                  clientKey:[prefs objectForKey:@"parse-client-key-prod"]];
+#endif
+    }
 
     [self cleanup];
 
@@ -55,10 +75,81 @@ int networkCount = 0;
         [self activateWithNotification:notification];
     }
 
+    if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
+#ifndef DO_NOT_USE_GA
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
+                                                              action:@"remotenotification"
+                                                               label:@"initialize"
+                                                               value:nil] build]];
+#endif
+        [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert];
+
+        if (launchOptions != nil) {
+            NSDictionary *dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+            if (dictionary != nil) {
+#ifndef DO_NOT_USE_GA
+                [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
+                                                                      action:@"remotenotification"
+                                                                       label:@"init-receive"
+                                                                       value:nil] build]];
+#endif
+
+                CLS_LOG(@"Launched from push notification: %@", dictionary);
+                [self handleIncomingRemoteNotification:dictionary];
+            }
+        }
+    }
+
     [[self window] rootViewController];
 
     return YES;
 }
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
+#ifndef DO_NOT_USE_GA
+        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
+                                                              action:@"remotenotification"
+                                                               label:@"receive"
+                                                               value:nil] build]];
+
+        [[GAI sharedInstance] dispatch];
+#endif
+
+        [self handleIncomingRemoteNotification:userInfo];
+    }
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
+#ifndef DO_NOT_USE_GA
+        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
+                                                              action:@"remotenotification"
+                                                               label:@"register"
+                                                               value:nil] build]];
+#endif
+
+        [[GAI sharedInstance] dispatch];
+
+        CLS_LOG(@"My token is: %@", deviceToken);
+
+        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+        [currentInstallation setDeviceTokenFromData:deviceToken];
+        [currentInstallation addUniqueObject:@"Conference" forKey:@"channels"];
+        [currentInstallation saveInBackground];
+    }
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
+        CLS_LOG(@"Failed to get token, error: %@ [%@]", error, [error userInfo]);
+    }
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     networkCount = 0;
@@ -364,6 +455,5 @@ int networkCount = 0;
 
     return href;
 }
-
 
 @end

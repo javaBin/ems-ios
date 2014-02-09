@@ -52,6 +52,10 @@
         return [[features objectForKey:@"links"] boolValue];
     }
 
+    if (feature == fRemoteNotifications) {
+        return [[features objectForKey:@"remote-notifications"] boolValue];
+    }
+
     return NO;
 }
 

@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>parse-client-key</key>
+    <string>YOUR_DEV_PARSE_CLIENT_KEY_HERE</string>
+    <key>parse-app-id</key>
+    <string>YOUR_DEV_PARSE_APP_ID_HERE</string>
+    <key>parse-client-key-prod</key>
+    <string>YOUR_PROD_PARSE_CLIENT_KEY_HERE</string>
+    <key>parse-app-id-prod</key>
+    <string>YOUR_PROD_PARSE_APP_ID_HERE</string>
 	<key>google-analytics-tracking-id</key>
 	<string>UA-YOUR_TRACKING_ID_HERE</string>
 	<key>crashlytics-api-key</key>

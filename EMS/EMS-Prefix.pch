@@ -23,5 +23,6 @@
     #import "GAIDictionaryBuilder.h"
     #import "GAIFields.h"
 #endif
+#import <Parse/Parse.h>
 #endif
 

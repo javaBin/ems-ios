@@ -1,17 +1,8 @@
 //
 //  Session.m
-//  EMS
-//
-//  Created by Chris Searle on 20.06.13.
-//  Copyright (c) 2013 Chris Searle. All rights reserved.
 //
 
 #import "Session.h"
-#import "Conference.h"
-#import "Keyword.h"
-#import "Room.h"
-#import "Slot.h"
-#import "Speaker.h"
 
 
 @implementation Session
@@ -37,5 +28,11 @@
 @dynamic slot;
 @dynamic speakers;
 @dynamic videoLink;
+
+
+- (NSString *)sanitizedTitle {
+    NSCharacterSet *notAllowedChars = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyz"] invertedSet];
+    return [[[self.title lowercaseString] componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""];
+}
 
 @end

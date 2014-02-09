@@ -1087,7 +1087,7 @@
     id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
 #endif
 
-    if (isFavourite == YES) {
+    if (isFavourite) {
         session.favourite = [NSNumber numberWithBool:NO];
 
         [self removeNotification:session];
@@ -1098,6 +1098,16 @@
                                                                label:session.href
                                                                value:nil] build]];
 #endif
+        if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
+            PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+            CLS_LOG(@"Current channels %@", [currentInstallation channels]);
+            NSString *channelName = [session sanitizedTitle];
+            if ([[currentInstallation channels] containsObject:channelName]) {
+                [currentInstallation removeObject:channelName forKey:@"channels"];
+                CLS_LOG(@"Updated channels %@", [currentInstallation channels]);
+            }
+            [currentInstallation saveInBackground];
+        }
     } else {
         session.favourite = [NSNumber numberWithBool:YES];
 
@@ -1109,6 +1119,14 @@
                                                                label:session.href
                                                                value:nil] build]];
 #endif
+        if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
+            PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+            CLS_LOG(@"Current channels %@", [currentInstallation channels]);
+            NSString *channelName = [session sanitizedTitle];
+            [currentInstallation addUniqueObject:channelName forKey:@"channels"];
+            CLS_LOG(@"Updated channels %@", [currentInstallation channels]);
+            [currentInstallation saveInBackground];
+        }
     }
 
     NSError *error;

@@ -1,17 +1,8 @@
 //
 //  Conference.m
-//  EMS
-//
-//  Created by Chris Searle on 20.06.13.
-//  Copyright (c) 2013 Chris Searle. All rights reserved.
 //
 
 #import "Conference.h"
-#import "ConferenceKeyword.h"
-#import "ConferenceLevel.h"
-#import "Room.h"
-#import "Session.h"
-#import "Slot.h"
 
 
 @implementation Conference
