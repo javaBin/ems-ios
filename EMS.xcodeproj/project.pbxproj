@@ -1269,6 +1269,7 @@
 				"OTHER_CFLAGS[arch=*]" = (
 					"-DUSE_TEST_DATE=1",
 					"-DTEST_PROD=1",
+					"-DSKIP_CONFIG_REFRESH",
 				);
 				PRODUCT_NAME = flatMap;
 				VERSIONING_SYSTEM = "apple-generic";
