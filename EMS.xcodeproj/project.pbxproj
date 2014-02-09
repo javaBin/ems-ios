@@ -211,6 +211,8 @@
 
 /* Begin PBXFileReference section */
 		0C5F2910AEBD4413B205CE89 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E1AD00D04FA079A848CDAE5 /* JavaZone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "JavaZone-Info.plist"; sourceTree = "<group>"; };
+		4E1AD0E07B70D148B519768B /* flatMap-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "flatMap-Info.plist"; sourceTree = "<group>"; };
 		830C7D78176F8B4900D38B46 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		83172C1F1770FE67000135E6 /* 11-clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-clock.png"; sourceTree = "<group>"; };
 		83172C201770FE67000135E6 /* 11-clock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-clock@2x.png"; sourceTree = "<group>"; };
@@ -297,7 +299,6 @@
 		F35BB6C517685885009077D3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F35BB6C717685885009077D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F35BB6C917685885009077D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		F35BB6CD17685885009077D3 /* JavaZone-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JavaZone-Info.plist"; sourceTree = "<group>"; };
 		F35BB6CF17685885009077D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F35BB6D117685885009077D3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F35BB6D317685885009077D3 /* EMS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EMS-Prefix.pch"; sourceTree = "<group>"; };
@@ -313,7 +314,6 @@
 		F3939E5F1769C3CD0078C709 /* EMSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSModel.h; sourceTree = "<group>"; };
 		F3939E601769C3CD0078C709 /* EMSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSModel.m; sourceTree = "<group>"; };
 		F394C9DE17F0173900FAFBD4 /* flatMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = flatMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F394C9DF17F0173900FAFBD4 /* flatMap-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "flatMap-Info.plist"; path = "/Users/chrsearl/src/ios/EMS/EMS/flatMap-Info.plist"; sourceTree = "<absolute>"; };
 		F394C9E217F01ABF00FAFBD4 /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
 		F394C9E417F01BC900FAFBD4 /* EMS-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Config.plist"; sourceTree = "<group>"; };
 		F394C9E617F01C0300FAFBD4 /* EMS-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Config.plist"; sourceTree = "<group>"; };
@@ -590,8 +590,6 @@
 		F35BB6CC17685885009077D3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F35BB6CD17685885009077D3 /* JavaZone-Info.plist */,
-				F394C9DF17F0173900FAFBD4 /* flatMap-Info.plist */,
 				F35BB6CE17685885009077D3 /* InfoPlist.strings */,
 				F35BB6D117685885009077D3 /* main.m */,
 				F35BB6D317685885009077D3 /* EMS-Prefix.pch */,
@@ -608,6 +606,7 @@
 				839BD639176F9BD400900712 /* EMS-Keys.plist */,
 				F354B0B81781AA1D007F7B01 /* iTunesArtwork.png */,
 				F354B0B91781AA1D007F7B01 /* iTunesArtwork@2x.png */,
+				4E1AD00D04FA079A848CDAE5 /* JavaZone-Info.plist */,
 			);
 			path = JavaZone;
 			sourceTree = "<group>";
@@ -618,6 +617,7 @@
 				8394836B17F0D4BD002DA2A1 /* about.html */,
 				F394C9E617F01C0300FAFBD4 /* EMS-Config.plist */,
 				F394C9E217F01ABF00FAFBD4 /* EMS-Keys.plist */,
+				4E1AD0E07B70D148B519768B /* flatMap-Info.plist */,
 			);
 			path = flatMap;
 			sourceTree = "<group>";
@@ -1102,7 +1102,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
-				INFOPLIST_FILE = "EMS/JavaZone-Info.plist";
+				INFOPLIST_FILE = "JavaZone/JavaZone-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1196,7 +1196,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
-				INFOPLIST_FILE = "EMS/JavaZone-Info.plist";
+				INFOPLIST_FILE = "JavaZone/JavaZone-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1229,7 +1229,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
-				INFOPLIST_FILE = "EMS/JavaZone-Info.plist";
+				INFOPLIST_FILE = "JavaZone/JavaZone-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1257,7 +1257,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
-				INFOPLIST_FILE = "flatMap-Info.plist";
+				INFOPLIST_FILE = "flatMap/flatMap-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1290,7 +1290,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
-				INFOPLIST_FILE = "flatMap-Info.plist";
+				INFOPLIST_FILE = "flatMap/flatMap-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1323,7 +1323,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
-				INFOPLIST_FILE = "flatMap-Info.plist";
+				INFOPLIST_FILE = "flatMap/flatMap-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

@@ -78,8 +78,8 @@ int networkCount = 0;
     networkCount = 0;
     [self stopNetwork];
 
-    EMSFeatureConfig *featureConfig = [[EMSFeatureConfig alloc] init];
 #ifndef SKIP_CONFIG_REFRESH
+    EMSFeatureConfig *featureConfig = [[EMSFeatureConfig alloc] init];
     [featureConfig refreshConfigFile];
 #endif
 }
