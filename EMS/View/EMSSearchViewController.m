@@ -5,13 +5,28 @@
 #import "EMSSearchViewController.h"
 
 @interface EMSSearchViewController ()
-
+@property(nonatomic, strong) NSMutableArray *sections;
 @end
 
 @implementation EMSSearchViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.sections = [NSMutableArray arrayWithObjects:@"Keywords", @"Levels", @"Types", @"Rooms", @"Language", nil];
+
+    if (self.keywords == nil || [self.keywords count] == 0) {
+        [self.sections removeObject:@"Keywords"];
+    }
+    if (self.levels == nil || [self.levels count] == 0) {
+        [self.sections removeObject:@"Levels"];
+    }
+    if (self.types == nil || [self.types count] == 0) {
+        [self.sections removeObject:@"Types"];
+    }
+    if (self.rooms == nil || [self.rooms count] == 0) {
+        [self.sections removeObject:@"Rooms"];
+    }
 
     self.search.text = [self.advancedSearch search];
 
@@ -20,7 +35,6 @@
         if ([searchBarSubview conformsToProtocol:@protocol(UITextInputTraits)]) {
 
             @try {
-
                 [(UITextField *) searchBarSubview setReturnKeyType:UIReturnKeyDone];
                 [(UITextField *) searchBarSubview setKeyboardAppearance:UIKeyboardAppearanceAlert];
             }
@@ -49,29 +63,33 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 5;
+    return [self.sections count];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    switch (section) {
-        case 0:
-            return self.keywords.count;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex {
+    NSString *section = [self.sections objectAtIndex:sectionIndex];
 
-        case 1:
-            return self.levels.count;
-
-        case 2:
-            return self.types.count;
-
-        case 3:
-            return self.rooms.count;
-
-        case 4:
-            return 2;
-
-        default:
-            return 0;
+    if ([section isEqual:@"Keywords"]) {
+        return self.keywords.count;
     }
+
+    if ([section isEqual:@"Levels"]) {
+        return self.levels.count;
+    }
+
+    if ([section isEqual:@"Types"]) {
+        return self.types.count;
+    }
+
+    if ([section isEqual:@"Rooms"]) {
+        return self.rooms.count;
+    }
+
+    if ([section isEqual:@"Language"]) {
+        return 2;
+    }
+
+    return 0;
 }
 
 - (void)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
@@ -111,57 +129,35 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"SessionCell"];
     }
 
-    switch (indexPath.section) {
-        case 0: {
-            [self configureCell:cell forIndexPath:indexPath fromList:self.keywords andCurrentList:[self.advancedSearch fieldValuesForKey:emsKeyword] capitalized:NO cleaned:NO withImage:NO];
-            break;
-        }
+    NSString *section = [self.sections objectAtIndex:indexPath.section];
 
-        case 1: {
-            [self configureCell:cell forIndexPath:indexPath fromList:self.levels andCurrentList:[self.advancedSearch fieldValuesForKey:emsLevel] capitalized:YES cleaned:NO withImage:YES];
-            break;
-        }
-
-        case 2: {
-            [self configureCell:cell forIndexPath:indexPath fromList:self.types andCurrentList:[self.advancedSearch fieldValuesForKey:emsType] capitalized:YES cleaned:YES withImage:NO];
-            break;
-        }
-
-        case 3: {
-            [self configureCell:cell forIndexPath:indexPath fromList:self.rooms andCurrentList:[self.advancedSearch fieldValuesForKey:emsRoom] capitalized:NO cleaned:NO withImage:NO];
-            break;
-        }
-
-        case 4: {
-            [self configureCell:cell forIndexPath:indexPath fromList:@[@"English", @"Norwegian"] andCurrentList:[self.advancedSearch fieldValuesForKey:emsLang] capitalized:YES cleaned:NO withImage:YES];
-        }
-
-        default:
-            break;
+    if ([section isEqual:@"Keywords"]) {
+        [self configureCell:cell forIndexPath:indexPath fromList:self.keywords andCurrentList:[self.advancedSearch fieldValuesForKey:emsKeyword] capitalized:NO cleaned:NO withImage:NO];
     }
 
+    if ([section isEqual:@"Levels"]) {
+        [self configureCell:cell forIndexPath:indexPath fromList:self.levels andCurrentList:[self.advancedSearch fieldValuesForKey:emsLevel] capitalized:YES cleaned:NO withImage:YES];
+    }
+
+    if ([section isEqual:@"Types"]) {
+        [self configureCell:cell forIndexPath:indexPath fromList:self.types andCurrentList:[self.advancedSearch fieldValuesForKey:emsType] capitalized:YES cleaned:YES withImage:NO];
+    }
+
+    if ([section isEqual:@"Rooms"]) {
+        [self configureCell:cell forIndexPath:indexPath fromList:self.rooms andCurrentList:[self.advancedSearch fieldValuesForKey:emsRoom] capitalized:NO cleaned:NO withImage:NO];
+    }
+
+    if ([section isEqual:@"Language"]) {
+        [self configureCell:cell forIndexPath:indexPath fromList:@[@"English", @"Norwegian"] andCurrentList:[self.advancedSearch fieldValuesForKey:emsLang] capitalized:YES cleaned:NO withImage:YES];
+    }
 
     return cell;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    switch (section) {
-        case 0:
-            return @"Keywords";
-        case 1:
-            return @"Levels";
-        case 2:
-            return @"Types";
-        case 3:
-            return @"Rooms";
-        case 4:
-            return @"Language";
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)sectionIndex {
+    NSString *section = [self.sections objectAtIndex:sectionIndex];
 
-        default:
-            break;
-    }
-
-    return nil;
+    return section;
 }
 
 - (void)selectRowForIndexPath:(NSIndexPath *)indexPath forList:(NSArray *)list andKey:(EMSSearchField)key {
@@ -181,34 +177,26 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
-        case 0: {
-            [self selectRowForIndexPath:indexPath forList:self.keywords andKey:emsKeyword];
-            break;
-        }
+    NSString *section = [self.sections objectAtIndex:indexPath.section];
 
-        case 1: {
-            [self selectRowForIndexPath:indexPath forList:self.levels andKey:emsLevel];
-            break;
-        }
+    if ([section isEqual:@"Keywords"]) {
+        [self selectRowForIndexPath:indexPath forList:self.keywords andKey:emsKeyword];
+    }
 
-        case 2: {
-            [self selectRowForIndexPath:indexPath forList:self.types andKey:emsType];
-            break;
-        }
+    if ([section isEqual:@"Levels"]) {
+        [self selectRowForIndexPath:indexPath forList:self.levels andKey:emsLevel];
+    }
 
-        case 3: {
-            [self selectRowForIndexPath:indexPath forList:self.rooms andKey:emsRoom];
-            break;
-        }
+    if ([section isEqual:@"Types"]) {
+        [self selectRowForIndexPath:indexPath forList:self.types andKey:emsType];
+    }
 
-        case 4: {
-            [self selectRowForIndexPath:indexPath forList:@[@"English", @"Norwegian"] andKey:emsLang];
-            break;
-        }
+    if ([section isEqual:@"Rooms"]) {
+        [self selectRowForIndexPath:indexPath forList:self.rooms andKey:emsRoom];
+    }
 
-        default:
-            break;
+    if ([section isEqual:@"Language"]) {
+        [self selectRowForIndexPath:indexPath forList:@[@"English", @"Norwegian"] andKey:emsLang];
     }
 
     [tableView reloadData];

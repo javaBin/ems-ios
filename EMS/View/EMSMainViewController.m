@@ -264,59 +264,67 @@
 
         NSMutableArray *levels = [[NSMutableArray alloc] init];
 
-        [conference.conferenceLevels enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            ConferenceLevel *level = (ConferenceLevel *) obj;
+        if (levels != nil && [levels count] > 0) {
+            [conference.conferenceLevels enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+                ConferenceLevel *level = (ConferenceLevel *) obj;
 
-            [levels addObject:level.name];
-        }];
+                [levels addObject:level.name];
+            }];
 
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"EMS-Config" ofType:@"plist"];
-        NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:filePath];
-        NSDictionary *sort = [prefs objectForKey:@"level-sort"];
+            NSString *filePath = [[NSBundle mainBundle] pathForResource:@"EMS-Config" ofType:@"plist"];
+            NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+            NSDictionary *sort = [prefs objectForKey:@"level-sort"];
 
-        destination.levels = [levels sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-            NSNumber *firstKey = [sort valueForKey:obj1];
-            NSNumber *secondKey = [sort valueForKey:obj2];
+            destination.levels = [levels sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                NSNumber *firstKey = [sort valueForKey:obj1];
+                NSNumber *secondKey = [sort valueForKey:obj2];
 
-            if ([firstKey integerValue] > [secondKey integerValue]) {
-                return (NSComparisonResult) NSOrderedDescending;
-            }
+                if ([firstKey integerValue] > [secondKey integerValue]) {
+                    return (NSComparisonResult) NSOrderedDescending;
+                }
 
-            if ([firstKey integerValue] < [secondKey integerValue]) {
-                return (NSComparisonResult) NSOrderedAscending;
-            }
-            return (NSComparisonResult) NSOrderedSame;
-        }];
+                if ([firstKey integerValue] < [secondKey integerValue]) {
+                    return (NSComparisonResult) NSOrderedAscending;
+                }
+                return (NSComparisonResult) NSOrderedSame;
+            }];
+        }
 
         NSMutableArray *keywords = [[NSMutableArray alloc] init];
 
-        [conference.conferenceKeywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            ConferenceKeyword *keyword = (ConferenceKeyword *) obj;
+        if (keywords != nil && [keywords count] > 0) {
+            [conference.conferenceKeywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+                ConferenceKeyword *keyword = (ConferenceKeyword *) obj;
 
-            [keywords addObject:keyword.name];
-        }];
+                [keywords addObject:keyword.name];
+            }];
 
-        destination.keywords = [keywords sortedArrayUsingSelector:@selector(compare:)];
+            destination.keywords = [keywords sortedArrayUsingSelector:@selector(compare:)];
+        }
 
         NSMutableArray *rooms = [[NSMutableArray alloc] init];
 
-        [conference.rooms enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            Room *room = (Room *) obj;
+        if (rooms != nil && [rooms count] > 0) {
+            [conference.rooms enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+                Room *room = (Room *) obj;
 
-            [rooms addObject:room.name];
-        }];
+                [rooms addObject:room.name];
+            }];
 
-        destination.rooms = [rooms sortedArrayUsingSelector:@selector(compare:)];
+            destination.rooms = [rooms sortedArrayUsingSelector:@selector(compare:)];
+        }
 
         NSMutableArray *types = [[NSMutableArray alloc] init];
 
-        [conference.conferenceTypes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            ConferenceType *type = (ConferenceType *) obj;
+        if (types != nil && [types count] > 0) {
+            [conference.conferenceTypes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+                ConferenceType *type = (ConferenceType *) obj;
 
-            [types addObject:type.name];
-        }];
+                [types addObject:type.name];
+            }];
 
-        destination.types = [types sortedArrayUsingSelector:@selector(compare:)];
+            destination.types = [types sortedArrayUsingSelector:@selector(compare:)];
+        }
 
         destination.delegate = self;
 
