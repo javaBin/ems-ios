@@ -704,6 +704,14 @@
 				CLASSPREFIX = EMS;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Chris Searle";
+				TargetAttributes = {
+					F35BB6C117685885009077D3 = {
+						DevelopmentTeam = EL8Z296J47;
+					};
+					F394C96E17F0173900FAFBD4 = {
+						DevelopmentTeam = EL8Z296J47;
+					};
+				};
 			};
 			buildConfigurationList = F35BB6BD17685885009077D3 /* Build configuration list for PBXProject "EMS" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1095,6 +1103,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "JavaZone - AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 17;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1116,7 +1126,7 @@
 					"-DTEST_PROD=1",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "BEEA8A98-9CB2-48B2-ABAA-8BCBEE0E1926";
+				PROVISIONING_PROFILE = "";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1190,6 +1200,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "JavaZone - AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 17;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1211,7 +1223,7 @@
 					"-DTEST_PROD=1",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "BEEA8A98-9CB2-48B2-ABAA-8BCBEE0E1926";
+				PROVISIONING_PROFILE = "";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1223,7 +1235,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "JavaZone - AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chris Searle";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 17;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1239,7 +1252,7 @@
 					"\"$(SRCROOT)/EMS/externals/MMMarkdown\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D9882EFE-347C-4291-A316-75A214C600F0";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0C88122F-AAA1-4104-952D-FFAA4290D539";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
@@ -1252,6 +1265,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "flatMap - AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 17;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1286,6 +1300,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "flatMap - AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 17;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1319,6 +1334,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "flatMap - AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chris Searle";
 				CURRENT_PROJECT_VERSION = 17;
 				FRAMEWORK_SEARCH_PATHS = (
