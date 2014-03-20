@@ -14,7 +14,6 @@
 @dynamic roomCollection;
 @dynamic sessionCollection;
 @dynamic slotCollection;
-@dynamic slug;
 @dynamic start;
 @dynamic venue;
 @dynamic conferenceKeywords;

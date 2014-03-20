@@ -46,9 +46,6 @@ NSDate *timer;
             if ([@"name" isEqualToString:field]) {
                 conf.name = value;
             }
-            if ([@"slug" isEqualToString:field]) {
-                conf.slug = value;
-            }
             if ([@"venue" isEqualToString:field]) {
                 conf.venue = value;
             }

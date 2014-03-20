@@ -243,7 +243,6 @@
 
 - (void)populateConference:(Conference *)conference fromEMS:(EMSConference *)ems {
     conference.name = ems.name;
-    conference.slug = ems.slug;
     conference.venue = ems.venue;
     conference.href = [ems.href absoluteString];
     if (ems.start != nil) {
@@ -285,7 +284,6 @@
     session.format = ems.format;
     session.body = ems.body;
     session.state = ems.state;
-    session.slug = ems.slug;
     session.audience = ems.audience;
     session.language = ems.language;
     session.summary = ems.summary;

@@ -53,9 +53,6 @@ NSDate *timer;
             if ([@"state" isEqualToString:field]) {
                 session.state = (NSString *)value;
             }
-            if ([@"slug" isEqualToString:field]) {
-                session.slug = (NSString *)value;
-            }
             if ([@"audience" isEqualToString:field]) {
                 session.audience = (NSString *)value;
             }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15204C1F18DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */; };
+		15204C2018DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */; };
 		830C7D79176F8B4900D38B46 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830C7D78176F8B4900D38B46 /* Crashlytics.framework */; };
 		83172C231770FE67000135E6 /* 11-clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C1F1770FE67000135E6 /* 11-clock.png */; };
 		83172C241770FE67000135E6 /* 11-clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C201770FE67000135E6 /* 11-clock@2x.png */; };
@@ -211,6 +213,8 @@
 
 /* Begin PBXFileReference section */
 		0C5F2910AEBD4413B205CE89 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		15204C1D18DB82C40062874A /* EMSCoreDataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "EMSCoreDataModel 3.xcdatamodel"; sourceTree = "<group>"; };
+		15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = RemoveSlugMapping.xcmappingmodel; sourceTree = "<group>"; };
 		4E1AD00D04FA079A848CDAE5 /* JavaZone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "JavaZone-Info.plist"; sourceTree = "<group>"; };
 		4E1AD0E07B70D148B519768B /* flatMap-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "flatMap-Info.plist"; sourceTree = "<group>"; };
 		830C7D78176F8B4900D38B46 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -570,6 +574,7 @@
 			isa = PBXGroup;
 			children = (
 				F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */,
+				15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */,
 				F3CEA3CE17B224170092776F /* AddVideoLinkMapping.xcmappingmodel */,
 				F35BB6D417685885009077D3 /* EMSAppDelegate.h */,
 				F35BB6D517685885009077D3 /* EMSAppDelegate.m */,
@@ -960,6 +965,7 @@
 				F3939E611769C3CE0078C709 /* EMSModel.m in Sources */,
 				839BD65E176F9BD400900712 /* EMSConference.m in Sources */,
 				839BD65F176F9BD400900712 /* EMSConferencesRetriever.m in Sources */,
+				15204C1F18DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */,
 				839BD660176F9BD400900712 /* EMSDateConverter.m in Sources */,
 				839BD661176F9BD400900712 /* EMSRetriever.m in Sources */,
 				839BD662176F9BD400900712 /* EMSRoom.m in Sources */,
@@ -1002,6 +1008,7 @@
 				F394C97417F0173900FAFBD4 /* EMSModel.m in Sources */,
 				F394C97517F0173900FAFBD4 /* EMSConference.m in Sources */,
 				F394C97617F0173900FAFBD4 /* EMSConferencesRetriever.m in Sources */,
+				15204C2018DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */,
 				F394C97717F0173900FAFBD4 /* EMSDateConverter.m in Sources */,
 				F394C97817F0173900FAFBD4 /* EMSRetriever.m in Sources */,
 				F394C97917F0173900FAFBD4 /* EMSRoom.m in Sources */,
@@ -1397,6 +1404,7 @@
 		F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				15204C1D18DB82C40062874A /* EMSCoreDataModel 3.xcdatamodel */,
 				F37A6ABD17B223390060634D /* EMSCoreDataModel 2.xcdatamodel */,
 				F3939E521768879C0078C709 /* EMSCoreDataModel.xcdatamodel */,
 			);

@@ -7,7 +7,6 @@
 @interface EMSConference : NSObject
 
 @property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSString *slug;
 @property (strong, nonatomic) NSString *venue;
 
 @property (strong, nonatomic) NSDate   *start;

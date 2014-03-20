@@ -17,7 +17,6 @@
 @dynamic level;
 @dynamic roomName;
 @dynamic slotName;
-@dynamic slug;
 @dynamic speakerCollection;
 @dynamic state;
 @dynamic summary;

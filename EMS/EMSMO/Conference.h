@@ -16,7 +16,6 @@
 @property(nonatomic, retain) NSString *roomCollection;
 @property(nonatomic, retain) NSString *sessionCollection;
 @property(nonatomic, retain) NSString *slotCollection;
-@property(nonatomic, retain) NSString *slug;
 @property(nonatomic, retain) NSDate *start;
 @property(nonatomic, retain) NSString *venue;
 @property(nonatomic, retain) NSSet *conferenceKeywords;

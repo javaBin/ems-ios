@@ -19,7 +19,6 @@
 @property(nonatomic, retain) NSString *level;
 @property(nonatomic, retain) NSString *roomName;
 @property(nonatomic, retain) NSString *slotName;
-@property(nonatomic, retain) NSString *slug;
 @property(nonatomic, retain) NSString *speakerCollection;
 @property(nonatomic, retain) NSString *state;
 @property(nonatomic, retain) NSString *summary;

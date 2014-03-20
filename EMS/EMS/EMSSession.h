@@ -10,7 +10,6 @@
 @property (strong, nonatomic) NSString *format;
 @property (strong, nonatomic) NSString *body;
 @property (strong, nonatomic) NSString *state;
-@property (strong, nonatomic) NSString *slug;
 @property (strong, nonatomic) NSString *audience;
 @property (strong, nonatomic) NSArray *keywords;
 @property (strong, nonatomic) NSString *title;
