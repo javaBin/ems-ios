@@ -691,7 +691,24 @@
     
     UITableViewCell *cell = [self tableView:tableView buildCellForRow:row];
     
-    return cell.textLabel.frame.size.height + 10;
+    int padding = 10;
+    
+    // Make sure the user can hit the row
+    if (row.link) {
+        padding = 30;
+    }
+    
+    return cell.textLabel.frame.size.height + padding;
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    EMSDetailViewRow *row = [self.parts objectAtIndex:indexPath.row];
+
+    if (row.link) {
+        return indexPath;
+    }
+    
+    return nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -709,6 +726,8 @@
 
         [[UIApplication sharedApplication] openURL:row.link];
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:false];
 }
 
 - (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
