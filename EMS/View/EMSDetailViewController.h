@@ -7,7 +7,7 @@
 
 #import "Session.h"
 
-@interface EMSDetailViewController : UIViewController <EMSRetrieverDelegate, UIWebViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface EMSDetailViewController : UIViewController <EMSRetrieverDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property(nonatomic, strong) Session *session;
 @property(nonatomic, strong) IBOutlet UIWebView *webView;
