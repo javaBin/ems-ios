@@ -83,7 +83,7 @@
         case 2: {
             cell.textLabel.text = @"# Sessions";
             if (conference.sessions.count > 0) {
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", conference.sessions.count];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)conference.sessions.count];
             } else {
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"~ %@ available for download", conference.hintCount];
             }

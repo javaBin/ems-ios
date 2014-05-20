@@ -222,7 +222,7 @@
 }
 
 - (void)finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href {
-    CLS_LOG(@"Storing speakers %d for href %@", [speakers count], href);
+    CLS_LOG(@"Storing speakers %lu for href %@", [speakers count], href);
 
     NSError *error = nil;
 
@@ -511,7 +511,7 @@
     [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
     [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
 
-    return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04d-%02d-%02d %02d:%02d:00 +0200", [dateComp year], [dateComp month], [dateComp day], [timeComp hour], [timeComp minute]]];
+    return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04ld-%02ld-%02ld %02ld:%02ld:00 +0200", (long)[dateComp year], (long)[dateComp month], (long)[dateComp day], (long)[timeComp hour], (long)[timeComp minute]]];
 #else
     return date;
 #endif
@@ -530,7 +530,7 @@
         return nil;
     }
 
-    int rowCount = [[sections objectAtIndex:self.indexPath.section] numberOfObjects];
+    unsigned long rowCount = [[sections objectAtIndex:self.indexPath.section] numberOfObjects];
 
     return [self indexPathForRow:self.indexPath moving:direction withRows:rowCount];
 }
@@ -567,7 +567,7 @@
 }
 
 - (NSIndexPath *)indexPathForSection:(NSIndexPath *)current moving:(int)direction fromSections:(NSArray *)sections {
-    int section = current.section + (1 * direction);
+    long section = current.section + (1 * direction);
 
     if (section < 0) {
         return nil;
@@ -576,9 +576,9 @@
         return nil;
     }
 
-    int row = current.row;
+    long row = current.row;
 
-    int rowMax = ([[sections objectAtIndex:section] numberOfObjects] - 1);
+    long rowMax = ([[sections objectAtIndex:section] numberOfObjects] - 1);
 
     if (rowMax < row) {
         row = rowMax;
@@ -587,10 +587,10 @@
     return [NSIndexPath indexPathForRow:row inSection:section];
 }
 
-- (NSIndexPath *)indexPathForRow:(NSIndexPath *)current moving:(int)direction withRows:(int)rows {
-    int section = current.section;
+- (NSIndexPath *)indexPathForRow:(NSIndexPath *)current moving:(int)direction withRows:(unsigned long)rows {
+    long section = current.section;
 
-    int row = current.row + (1 * direction);
+    long row = current.row + (1 * direction);
 
     if (row < 0) {
         return nil;
@@ -628,7 +628,7 @@
 
 }
 
-- (int) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.parts count];
 }
 

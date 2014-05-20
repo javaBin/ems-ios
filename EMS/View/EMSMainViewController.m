@@ -513,7 +513,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSUInteger count = [[_fetchedResultsController sections] count];
 
-    CLS_LOG(@"numberOfSectionsInTableView: Found %d sections", count);
+    CLS_LOG(@"numberOfSectionsInTableView: Found %lu sections", (unsigned long)count);
 
     return count;
 }
@@ -523,13 +523,13 @@
 
     NSUInteger count = [sectionInfo numberOfObjects];
 
-    CLS_LOG(@"tableView:numberOfRowsInSection: %d: Found %d rows", section, count);
+    CLS_LOG(@"tableView:numberOfRowsInSection: %ld: Found %lu rows", (long)section, (unsigned long)count);
 
     return count;
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    CLS_LOG(@"configureCell:atIndexPath: asking for section %d and row %d", indexPath.section, indexPath.row);
+    CLS_LOG(@"configureCell:atIndexPath: asking for section %ld and row %ld", (long)indexPath.section, (long)indexPath.row);
 
     Session *session = [_fetchedResultsController objectAtIndexPath:indexPath];
 
@@ -594,7 +594,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CLS_LOG(@"tableView:cellForRowAtIndexPath: asking for section %d and row %d", indexPath.section, indexPath.row);
+    CLS_LOG(@"tableView:cellForRowAtIndexPath: asking for section %ld and row %ld", (long)indexPath.section, (long)indexPath.row);
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SessionCell"];
 
@@ -654,7 +654,7 @@
 }
 
 - (void)finishedSlots:(NSArray *)slots forHref:(NSURL *)href {
-    CLS_LOG(@"Storing slots %d", [slots count]);
+    CLS_LOG(@"Storing slots %lu", (unsigned long)[slots count]);
 
     NSError *error = nil;
 
@@ -672,7 +672,7 @@
 }
 
 - (void)finishedSessions:(NSArray *)sessions forHref:(NSURL *)href {
-    CLS_LOG(@"Storing sessions %d", [sessions count]);
+    CLS_LOG(@"Storing sessions %lu", (unsigned long)[sessions count]);
 
     NSError *error = nil;
 
@@ -690,7 +690,7 @@
 }
 
 - (void)finishedRooms:(NSArray *)rooms forHref:(NSURL *)href {
-    CLS_LOG(@"Storing rooms %d", [rooms count]);
+    CLS_LOG(@"Storing rooms %lu", (unsigned long)[rooms count]);
 
     NSError *error = nil;
 
