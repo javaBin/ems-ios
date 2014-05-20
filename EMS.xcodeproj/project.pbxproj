@@ -41,6 +41,8 @@
 		1595F0E2192B7C21000B6A6C /* advanced-o@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1595F0E0192B7C21000B6A6C /* advanced-o@2x.png */; };
 		1595F0E4192B7C40000B6A6C /* advanced-o.png in Resources */ = {isa = PBXBuildFile; fileRef = 1595F0E3192B7C40000B6A6C /* advanced-o.png */; };
 		1595F0E5192B7C40000B6A6C /* advanced-o.png in Resources */ = {isa = PBXBuildFile; fileRef = 1595F0E3192B7C40000B6A6C /* advanced-o.png */; };
+		4E1AD52D6C458D6D36CECFBA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4E1AD0EE5411335585333A2F /* README.md */; };
+		4E1ADFF1BCEBD89ABF3ACAE4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4E1AD0EE5411335585333A2F /* README.md */; };
 		830C7D79176F8B4900D38B46 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830C7D78176F8B4900D38B46 /* Crashlytics.framework */; };
 		83172C231770FE67000135E6 /* 11-clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C1F1770FE67000135E6 /* 11-clock.png */; };
 		83172C241770FE67000135E6 /* 11-clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83172C201770FE67000135E6 /* 11-clock@2x.png */; };
@@ -259,6 +261,7 @@
 		1595F0E3192B7C40000B6A6C /* advanced-o.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "advanced-o.png"; sourceTree = "<group>"; };
 		4E1AD00D04FA079A848CDAE5 /* JavaZone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "JavaZone-Info.plist"; sourceTree = "<group>"; };
 		4E1AD0E07B70D148B519768B /* flatMap-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "flatMap-Info.plist"; sourceTree = "<group>"; };
+		4E1AD0EE5411335585333A2F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; path = README.md; sourceTree = "<group>"; };
 		830C7D78176F8B4900D38B46 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		83172C1F1770FE67000135E6 /* 11-clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-clock.png"; sourceTree = "<group>"; };
 		83172C201770FE67000135E6 /* 11-clock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-clock@2x.png"; sourceTree = "<group>"; };
@@ -618,6 +621,7 @@
 				CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */,
 				EA1E8F6317E782E8000F2DB7 /* JavaZone.app */,
 				F394C9DE17F0173900FAFBD4 /* flatMap.app */,
+				4E1AD0EE5411335585333A2F /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -845,6 +849,7 @@
 				83A58F7317E4500900182B6E /* English.png in Resources */,
 				83A58F7417E4500900182B6E /* Norwegian.png in Resources */,
 				1595F0CE192B7BDE000B6A6C /* beginner-o@2x.png in Resources */,
+				4E1ADFF1BCEBD89ABF3ACAE4 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -920,6 +925,7 @@
 				F394C9D617F0173900FAFBD4 /* English.png in Resources */,
 				F394C9D717F0173900FAFBD4 /* Norwegian.png in Resources */,
 				1595F0CF192B7BDE000B6A6C /* beginner-o@2x.png in Resources */,
+				4E1AD52D6C458D6D36CECFBA /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

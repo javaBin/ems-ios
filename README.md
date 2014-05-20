@@ -2,7 +2,12 @@
 
 EMS-redux client app for iOS.
 
-Main usage is JavaZone but anyone who is using EMS-redux or who can deliver the same Collection+JSON feed structure can use the app.
+Currently used for
+
+* JavaZone
+* flatMap
+
+Can be used by anyone who is using EMS-redux or who can deliver the same Collection+JSON feed structure.
 
 ## EMS-redux
 
@@ -29,12 +34,18 @@ The build uses cocoapods - so you will need to run the pod command and make sure
 
 The following CFLAGS are available
 
-* USE_TEST_DATE - will use the current time but the first day of the selected conference when calculating Now & Next view
-* TEST_PROD - will use the production server for debug builds
-* TEST_PROD_NOTIFICATIONS - use the production notification server for a debug build (will require you to use correct certificate signing)
-* DO_NOT_USE_GA - removes google analytics (and therefore the need for google-analytics-tracking-id in the EMS-Keys.plist)
-* DO_NOT_USE_CRASHLYTICS - removes crashlytics (and therefore the need for crashlytics-api-key in the EMS-Keys.plist)
-* SKIP_CONFIG_REFRESH - will not pull down new versions of the config plist file - useful when editing this locally for testing
+* USE_TEST_DATE
+    * will use the current time but the first day of the selected conference when calculating Now & Next view
+* TEST_PROD
+    * will use the production server for debug builds
+* TEST_PROD_NOTIFICATIONS
+    * use the production notification server for a debug build (will require you to use correct certificate signing)
+* DO_NOT_USE_GA
+    * removes google analytics (and therefore the need for google-analytics-tracking-id in the EMS-Keys.plist)
+* DO_NOT_USE_CRASHLYTICS
+    * removes crashlytics (and therefore the need for crashlytics-api-key in the EMS-Keys.plist)
+* SKIP_CONFIG_REFRESH
+    * will not pull down new versions of the config plist file - useful when editing this locally for testing
 
 None of these are to be used on production builds.
 
@@ -49,9 +60,13 @@ To exclude parse.com (remote notifications) - set the config plist setting for f
 
 As noted in the building section we have two sets of keys that are used.
 
-Google analytics is used for usage tracking. If you don't have a google analytics account then add the CFLAG -DDO_NOT_USE_GA=1
+Google analytics is used for usage tracking. If you don't have a google analytics account then add the CFLAG
 
-Crashlytics provides crash reporting. If you don't have a crashlytics account then add the CFLAG -DDO_NOT_USE_CRASHLYTICS=1
+    -DDO_NOT_USE_GA=1
+
+Crashlytics provides crash reporting. If you don't have a crashlytics account then add the CFLAG
+
+    -DDO_NOT_USE_CRASHLYTICS=1
 
 Note that this will also remove most debug logging - since that goes thru Crashlytics CLS_LOG (so that we get the logging alongside the crashlogs when reported).
 
