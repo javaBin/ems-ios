@@ -535,12 +535,6 @@
         <!--Detail View Controller-->
         <scene sceneID="wAW-Da-G8O">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="J0b-XW-WHi" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer numberOfTapsRequired="3" numberOfTouchesRequired="3" id="MmW-fc-sId">
-                    <connections>
-                        <action selector="clearImageCache:" destination="ynZ-6T-4n5" id="UfA-CR-zeM"/>
-                    </connections>
-                </tapGestureRecognizer>
                 <viewController id="ynZ-6T-4n5" customClass="EMSDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="AYT-6p-RAw"/>
@@ -718,6 +712,12 @@
                         <outlet property="titleLabel" destination="EZz-Q4-iHl" id="eqO-et-YfC"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J0b-XW-WHi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer numberOfTapsRequired="3" numberOfTouchesRequired="3" id="MmW-fc-sId">
+                    <connections>
+                        <action selector="clearImageCache:" destination="ynZ-6T-4n5" id="UfA-CR-zeM"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-875" y="700"/>
         </scene>

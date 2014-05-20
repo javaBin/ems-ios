@@ -123,7 +123,7 @@
     [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.body]];
     
     if (self.session.level != nil) {
-        NSString *levelPath = [[NSBundle mainBundle] pathForResource:self.session.level ofType:@"png"];
+        NSString *levelPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@-o", self.session.level] ofType:@"png"];
         UIImage *img = [UIImage imageWithContentsOfFile:levelPath];
 
         [p addObject:[[EMSDetailViewRow alloc] initWithContent:[self cleanString:self.session.level] image:img]];
