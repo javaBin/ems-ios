@@ -44,10 +44,6 @@
         return [[features objectForKey:@"speaker-thumbnails"] boolValue];
     }
 
-    if (feature == fMarkdown) {
-        return [[features objectForKey:@"markdown"] boolValue];
-    }
-
     if (feature == fLinks) {
         return [[features objectForKey:@"links"] boolValue];
     }

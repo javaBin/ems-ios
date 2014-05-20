@@ -8,8 +8,6 @@
 	<dict>
 		<key>links</key>
 		<true/>
-		<key>markdown</key>
-		<true/>
 		<key>speaker-thumbnails</key>
 		<true/>
 		<key>local-notifications</key>

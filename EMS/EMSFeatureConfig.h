@@ -7,7 +7,7 @@
 @interface EMSFeatureConfig : NSObject
 
 typedef enum EMSFeature : NSUInteger {
-    fLocalNotifications, fBioPics, fMarkdown, fLinks, fRemoteNotifications
+    fLocalNotifications, fBioPics, fLinks, fRemoteNotifications
 } EMSFeature;
 
 + (BOOL)isFeatureEnabled:(EMSFeature)feature;

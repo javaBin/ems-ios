@@ -17,12 +17,14 @@
 #import "Keyword.h"
 #import "Room.h"
 
-#import "NHCalendarActivity.h"
+#import "EMSDetailViewRow.h"
 
-#import "MMMarkdown.h"
+#import "NHCalendarActivity.h"
 
 @interface EMSDetailViewController () <UIPopoverControllerDelegate>
 @property(nonatomic) UIPopoverController *sharePopoverController;
+@property(nonatomic) NSArray *parts;
+
 @end
 
 @implementation EMSDetailViewController
@@ -96,8 +98,8 @@
         self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
 
         [self setupMovement];
-
-        [self buildPage];
+        
+        [self setupParts];
 
         [self retrieve];
 
@@ -107,6 +109,70 @@
         self.button.hidden = YES;
     }
 
+}
+
+- (void)setupParts {
+    NSMutableArray *p = [[NSMutableArray alloc] init];
+    
+    if ([EMSFeatureConfig isFeatureEnabled:fLinks]) {
+        if (self.session.videoLink) {
+            [p addObject:[[EMSDetailViewRow alloc] initWithContent:@"Video" image:[UIImage imageNamed:@"70-tv"] link:[NSURL URLWithString:self.session.videoLink]]];
+        }
+    }
+
+    [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.body]];
+    
+    if (self.session.level != nil) {
+        NSString *levelPath = [[NSBundle mainBundle] pathForResource:self.session.level ofType:@"png"];
+        UIImage *img = [UIImage imageWithContentsOfFile:levelPath];
+
+        [p addObject:[[EMSDetailViewRow alloc] initWithContent:[self cleanString:self.session.level] image:img]];
+    }
+
+    NSArray *sortedKeywords = [self.session.keywords.allObjects sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        NSString *first = [(Keyword *)a name];
+        NSString *second = [(Keyword *)b name];
+        
+        return [first compare:second];
+    }];
+    
+    [sortedKeywords enumerateObjectsUsingBlock:^(id obj, NSUInteger x, BOOL *stop) {
+        Keyword *keyword = (Keyword *) obj;
+        
+        [p addObject:[[EMSDetailViewRow alloc] initWithContent:keyword.name image:[UIImage imageNamed:@"14-tag"]]];
+    }];
+    
+    [self.session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        Speaker *speaker = (Speaker *) obj;
+        
+        EMSDetailViewRow *row = [[EMSDetailViewRow alloc] initWithContent:speaker.name];
+        
+        if ([EMSFeatureConfig isFeatureEnabled:fBioPics]) {
+            if (speaker.thumbnailUrl != nil) {
+                CLS_LOG(@"Speaker has available thumbnail %@", speaker.thumbnailUrl);
+                
+                NSString *pngFilePath = [self pathForCachedThumbnail:speaker];
+                
+                UIImage *img = [UIImage imageWithContentsOfFile:pngFilePath];
+                
+                row.image = img;
+
+                [self checkForNewThumbnailForSpeaker:speaker withFilename:pngFilePath withSessionHref:self.session.href];
+            }
+        }
+
+        NSString *bio = [self.cachedSpeakerBios objectForKey:speaker.name];
+
+        if (bio && ![bio isEqualToString:@""]) {
+            row.body = bio;
+        }
+        
+        [p addObject:row];
+    }];
+    
+    self.parts = [NSArray arrayWithArray:p];
+    
+    [self.tableView reloadData];
 }
 
 - (void)viewDidLoad {
@@ -126,6 +192,8 @@
     [tracker set:kGAIScreenName value:@"Detail Screen"];
     [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 #endif
+    
+    [self.tableView reloadData];
 }
 
 
@@ -141,12 +209,6 @@
             self.button.tintColor = [UIColor lightGrayColor];
         }
     }
-}
-
-- (void)buildPage {
-    NSString *path = [[NSBundle mainBundle] bundlePath];
-    NSURL *baseURL = [NSURL fileURLWithPath:path];
-    [self.webView loadHTMLString:[self buildPage:self.session] baseURL:baseURL];
 }
 
 - (void)retrieve {
@@ -200,7 +262,7 @@
             if (newBios) {
                 CLS_LOG(@"Saw updated bios - updating screen");
                 self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
-                [self buildPage];
+                [self setupParts];
             }
         }
     });
@@ -357,173 +419,11 @@
 
 }
 
-- (NSString *)buildPage:(Session *)session {
-
-    NSString *page = [NSString stringWithFormat:@""
-                                                        "<html>"
-                                                        "<head>"
-                                                        "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"/>"
-                                                        "<meta name='viewport' content='width=device-width; initial-scale=1.0; maximum-scale=1.0;'>"
-                                                        "</head>"
-                                                        "<body>"
-                                                        "%@"
-                                                        "%@"
-                                                        "%@"
-                                                        "%@"
-                                                        "%@"
-                                                        "</body>"
-                                                        "</html>",
-                                                [self paraContent:session.body],
-                                                [self linkContent:session],
-                                                [self levelContent:session.level],
-                                                [self keywordContent:session.keywords],
-                                                [self speakerContent:session.speakers]];
-
-    return page;
-}
-
-- (NSString *)linkContent:(Session *)session {
-    NSMutableString *linkContent = [[NSMutableString alloc] init];
-
-    if ([EMSFeatureConfig isFeatureEnabled:fLinks]) {
-        if (session.videoLink) {
-            [linkContent appendString:@"<h2>Links</h2>"];
-            [linkContent appendString:@"<ul>"];
-            [linkContent appendFormat:@"<li><a href='%@'>Video</a></li>", session.videoLink];
-            [linkContent appendString:@"</ul>"];
-        }
-    }
-
-    return [NSString stringWithString:linkContent];
-}
-
-- (NSString *)paraContent:(NSString *)text {
-    if ([text isEqualToString:@""])
-        return @"";
-
-    if ([EMSFeatureConfig isFeatureEnabled:fMarkdown]) {
-        NSError *error = nil;
-
-        NSString *htmlString = [MMMarkdown HTMLStringWithMarkdown:text error:&error];
-
-        if (!htmlString) {
-            CLS_LOG(@"Unable to convert markdown %@ - %@", error, [error userInfo]);
-
-            return text;
-        }
-
-        return htmlString;
-    } else {
-        NSArray *lines = [text componentsSeparatedByString:@"\n"];
-
-        return [NSString stringWithFormat:@"<p>%@</p>", [lines componentsJoinedByString:@"</p><p>"]];
-    }
-}
-
-- (NSString *)levelContent:(NSString *)level {
-    NSMutableString *result = [[NSMutableString alloc] init];
-
-    if (level != nil) {
-        [result appendString:@"<h2>Level</h2>"];
-
-        [result appendString:@"<p>"];
-
-        NSString *levelPath = [[NSBundle mainBundle] pathForResource:level ofType:@"png"];
-        NSURL *levelUrl = [NSURL fileURLWithPath:levelPath];
-
-        [result appendFormat:@"<img src='%@' /> %@", levelUrl, [self cleanString:level]];
-
-        [result appendString:@"</p>"];
-    }
-
-    return [NSString stringWithString:result];
-}
-
-- (NSString *)keywordContent:(NSSet *)keywords {
-    NSMutableString *result = [[NSMutableString alloc] init];
-
-    if (keywords != nil && [keywords count] > 0) {
-        [result appendString:@"<h2>Keywords</h2>"];
-
-        [result appendString:@"<ul>"];
-
-        NSMutableArray *listItems = [[NSMutableArray alloc] init];
-
-        [keywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            Keyword *keyword = (Keyword *) obj;
-
-            [listItems addObject:keyword.name];
-        }];
-
-        [result appendFormat:@"<li>%@</li>", [[listItems sortedArrayUsingSelector:@selector(compare:)] componentsJoinedByString:@"</li><li>"]];
-
-        [result appendString:@"</ul>"];
-    }
-
-    return [NSString stringWithString:result];
-}
-
-- (NSString *)speakerContent:(NSSet *)speakers {
-    NSMutableString *result = [[NSMutableString alloc] init];
-
-    if (speakers != nil && [speakers count] > 0) {
-        [result appendString:@"<h2>Speakers</h2>"];
-
-        [speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            Speaker *speaker = (Speaker *) obj;
-
-            if (speaker.name != nil) {
-                [result appendString:[NSString stringWithFormat:@"<h3>%@</h3>", speaker.name]];
-            }
-
-            if ([EMSFeatureConfig isFeatureEnabled:fBioPics]) {
-                if (speaker.thumbnailUrl != nil) {
-                    CLS_LOG(@"Speaker has available thumbnail %@", speaker.thumbnailUrl);
-
-                    NSString *pngFilePath = [self pathForCachedThumbnail:speaker];
-
-                    NSFileManager *fileManager = [NSFileManager defaultManager];
-
-                    NSData *thumbData = nil;
-
-                    if ([fileManager fileExistsAtPath:pngFilePath]) {
-                        CLS_LOG(@"Speaker has cached thumbnail %@", speaker.thumbnailUrl);
-
-                        NSError *fileError = nil;
-
-                        NSDictionary *fileAttributes = [fileManager attributesOfItemAtPath:pngFilePath error:&fileError];
-
-                        if (fileError != nil) {
-                            CLS_LOG(@"Got a file error reading file attributes for file %@", pngFilePath);
-                        } else {
-                            if ([fileAttributes fileSize] > 0) {
-                                thumbData = [NSData dataWithContentsOfFile:pngFilePath];
-
-                                [result appendString:[NSString stringWithFormat:@"<img src='file://%@' width='50px' style='float: left; margin-right: 3px; margin-bottom: 3px'/>", pngFilePath]];
-                            } else {
-                                CLS_LOG(@"Empty bioPic %@", pngFilePath);
-                            }
-                        }
-                    }
-
-                    [self checkForNewThumbnailForSpeaker:speaker compareWith:thumbData withFilename:pngFilePath withSessionHref:self.session.href];
-                }
-            }
-
-            NSString *bio = [self.cachedSpeakerBios objectForKey:speaker.name];
-            if (bio && ![bio isEqualToString:@""]) {
-                [result appendString:[self paraContent:bio]];
-            }
-        }];
-
-    }
-
-    return [NSString stringWithString:result];
-}
-
-- (void)checkForNewThumbnailForSpeaker:(Speaker *)speaker compareWith:(NSData *)thumbData withFilename:(NSString *)pngFilePath withSessionHref:(NSString *)href {
+- (void)checkForNewThumbnailForSpeaker:(Speaker *)speaker withFilename:(NSString *)pngFilePath withSessionHref:(NSString *)href {
     CLS_LOG(@"Checking for updated thumbnail %@", speaker.thumbnailUrl);
 
+    NSData *thumbData = [NSData dataWithContentsOfFile:pngFilePath];
+    
     dispatch_queue_t queue = dispatch_queue_create("thumbnail_queue", DISPATCH_QUEUE_CONCURRENT);
 
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
@@ -570,7 +470,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (needToSave) {
                     if ([self.session.href isEqualToString:href]) {
-                        [self buildPage];
+                        [self setupParts];
                     }
                 }
             });
@@ -615,54 +515,6 @@
 #else
     return date;
 #endif
-}
-
-- (IBAction)clearImageCache:(id)sender {
-    if (![EMSFeatureConfig isFeatureEnabled:fBioPics]) {
-        return;
-    }
-
-    CLS_LOG(@"Clearing image cache");
-
-    __block BOOL removedAFile = NO;
-
-    [self.session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-        Speaker *speaker = (Speaker *) obj;
-
-        if (speaker.thumbnailUrl != nil) {
-            CLS_LOG(@"Speaker has available thumbnail %@", speaker.thumbnailUrl);
-
-            removedAFile = [self removedCachedFileForSpeaker:speaker];
-        }
-    }];
-
-    if (removedAFile) {
-        [self buildPage];
-    }
-}
-
-- (BOOL)removedCachedFileForSpeaker:(Speaker *)speaker {
-    NSString *pngFilePath = [self pathForCachedThumbnail:speaker];
-
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-
-    if ([fileManager fileExistsAtPath:pngFilePath]) {
-        CLS_LOG(@"Speaker has cached thumbnail to delete %@", pngFilePath);
-
-        NSError *fileError = nil;
-
-        [fileManager removeItemAtPath:pngFilePath error:&fileError];
-
-        if (fileError != nil) {
-            CLS_LOG(@"Got a file error deleting file %@", pngFilePath);
-        } else {
-            CLS_LOG(@"File deleted %@", pngFilePath);
-
-            return YES;
-        }
-    }
-
-    return NO;
 }
 
 - (NSIndexPath *)getSectionForDirection:(int)direction {
@@ -750,28 +602,6 @@
     return [NSIndexPath indexPathForRow:row inSection:section];
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    if (navigationType == UIWebViewNavigationTypeLinkClicked) {
-        // http:// -> safari, rest (file:// etc) opens in webview
-        if ([[request.URL scheme] hasPrefix:@"http"]) {
-
-#ifndef DO_NOT_USE_GA
-            id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"web"
-                                                                  action:@"open link"
-                                                                   label:request.URL.absoluteString
-                                                                   value:nil] build]];
-#endif
-
-            [[UIApplication sharedApplication] openURL:request.URL];
-            return NO;
-        }
-    }
-
-    return YES;
-}
-
 #pragma mark - UIPopoverControllerDelegate
 
 - (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController {
@@ -796,6 +626,93 @@
         self.button.tintColor = [UIColor lightGrayColor];
     }
 
+}
+
+- (int) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.parts count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView buildCellForRow:(EMSDetailViewRow *)row {
+    NSString *identifier = @"DetailBodyCell";
+    
+    if (row.link) {
+        identifier = @"DetailLinkCell";
+    } else if (row.body) {
+        identifier = @"DetailTopAlignCell";
+    }
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
+
+    if (row.body) {
+        cell.textLabel.text = [NSString stringWithFormat:@"%@\n\n%@", row.content, row.body];
+    } else {
+        cell.textLabel.text = row.content;
+    }
+    
+    if (row.image) {
+        UIImageView *image = [cell imageView];
+        
+        image.image = row.image;
+        
+        if (row.body) {
+            CGSize itemSize = CGSizeMake(50, 50);
+            UIGraphicsBeginImageContextWithOptions(itemSize, NO, UIScreen.mainScreen.scale);
+            CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
+            [cell.imageView.image drawInRect:imageRect];
+            [cell.imageView.layer setCornerRadius:8.0f];
+            [cell.imageView.layer setMasksToBounds:YES];
+            cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+
+        }
+    }
+
+    cell.textLabel.numberOfLines = 0;
+    [cell.textLabel sizeToFit];
+
+    return cell;
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    EMSDetailViewRow *row = [self.parts objectAtIndex:indexPath.row];
+
+    UITableViewCell *cell = [self tableView:tableView buildCellForRow:row];
+
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    EMSDetailViewRow *row = [self.parts objectAtIndex:indexPath.row];
+    
+    UITableViewCell *cell = [self tableView:tableView buildCellForRow:row];
+    
+    return cell.textLabel.frame.size.height + 10;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    EMSDetailViewRow *row = [self.parts objectAtIndex:indexPath.row];
+
+    if (row.link) {
+#ifndef DO_NOT_USE_GA
+        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+                    
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"web"
+                                                              action:@"open link"
+                                                               label:[row.link absoluteString]
+                                                                value:nil] build]];
+#endif
+
+        [[UIApplication sharedApplication] openURL:row.link];
+    }
+}
+
+- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [self.tableView reloadData];
 }
 
 @end
