@@ -264,67 +264,59 @@
 
         NSMutableArray *levels = [[NSMutableArray alloc] init];
 
-        if (levels != nil && [levels count] > 0) {
-            [conference.conferenceLevels enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-                ConferenceLevel *level = (ConferenceLevel *) obj;
+        [conference.conferenceLevels enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+            ConferenceLevel *level = (ConferenceLevel *) obj;
 
-                [levels addObject:level.name];
-            }];
+            [levels addObject:level.name];
+        }];
 
-            NSString *filePath = [[NSBundle mainBundle] pathForResource:@"EMS-Config" ofType:@"plist"];
-            NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:filePath];
-            NSDictionary *sort = [prefs objectForKey:@"level-sort"];
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"EMS-Config" ofType:@"plist"];
+        NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+        NSDictionary *sort = [prefs objectForKey:@"level-sort"];
 
-            destination.levels = [levels sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-                NSNumber *firstKey = [sort valueForKey:obj1];
-                NSNumber *secondKey = [sort valueForKey:obj2];
+        destination.levels = [levels sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            NSNumber *firstKey = [sort valueForKey:obj1];
+            NSNumber *secondKey = [sort valueForKey:obj2];
 
-                if ([firstKey integerValue] > [secondKey integerValue]) {
-                    return (NSComparisonResult) NSOrderedDescending;
-                }
+            if ([firstKey integerValue] > [secondKey integerValue]) {
+                return (NSComparisonResult) NSOrderedDescending;
+            }
 
-                if ([firstKey integerValue] < [secondKey integerValue]) {
-                    return (NSComparisonResult) NSOrderedAscending;
-                }
-                return (NSComparisonResult) NSOrderedSame;
-            }];
-        }
+            if ([firstKey integerValue] < [secondKey integerValue]) {
+                return (NSComparisonResult) NSOrderedAscending;
+            }
+            return (NSComparisonResult) NSOrderedSame;
+        }];
 
         NSMutableArray *keywords = [[NSMutableArray alloc] init];
 
-        if (keywords != nil && [keywords count] > 0) {
-            [conference.conferenceKeywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-                ConferenceKeyword *keyword = (ConferenceKeyword *) obj;
+        [conference.conferenceKeywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+            ConferenceKeyword *keyword = (ConferenceKeyword *) obj;
 
-                [keywords addObject:keyword.name];
-            }];
+            [keywords addObject:keyword.name];
+        }];
 
-            destination.keywords = [keywords sortedArrayUsingSelector:@selector(compare:)];
-        }
+        destination.keywords = [keywords sortedArrayUsingSelector:@selector(compare:)];
 
         NSMutableArray *rooms = [[NSMutableArray alloc] init];
 
-        if (rooms != nil && [rooms count] > 0) {
-            [conference.rooms enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-                Room *room = (Room *) obj;
+        [conference.rooms enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+            Room *room = (Room *) obj;
 
-                [rooms addObject:room.name];
-            }];
+            [rooms addObject:room.name];
+        }];
 
-            destination.rooms = [rooms sortedArrayUsingSelector:@selector(compare:)];
-        }
+        destination.rooms = [rooms sortedArrayUsingSelector:@selector(compare:)];
 
         NSMutableArray *types = [[NSMutableArray alloc] init];
 
-        if (types != nil && [types count] > 0) {
-            [conference.conferenceTypes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-                ConferenceType *type = (ConferenceType *) obj;
+        [conference.conferenceTypes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+            ConferenceType *type = (ConferenceType *) obj;
 
-                [types addObject:type.name];
-            }];
+            [types addObject:type.name];
+        }];
 
-            destination.types = [types sortedArrayUsingSelector:@selector(compare:)];
-        }
+        destination.types = [types sortedArrayUsingSelector:@selector(compare:)];
 
         destination.delegate = self;
 
@@ -513,7 +505,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSUInteger count = [[_fetchedResultsController sections] count];
 
-    CLS_LOG(@"numberOfSectionsInTableView: Found %lu sections", (unsigned long)count);
+    CLS_LOG(@"numberOfSectionsInTableView: Found %lu sections", (unsigned long) count);
 
     return count;
 }
@@ -523,13 +515,13 @@
 
     NSUInteger count = [sectionInfo numberOfObjects];
 
-    CLS_LOG(@"tableView:numberOfRowsInSection: %ld: Found %lu rows", (long)section, (unsigned long)count);
+    CLS_LOG(@"tableView:numberOfRowsInSection: %ld: Found %lu rows", (long) section, (unsigned long) count);
 
     return count;
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    CLS_LOG(@"configureCell:atIndexPath: asking for section %ld and row %ld", (long)indexPath.section, (long)indexPath.row);
+    CLS_LOG(@"configureCell:atIndexPath: asking for section %ld and row %ld", (long) indexPath.section, (long) indexPath.row);
 
     Session *session = [_fetchedResultsController objectAtIndexPath:indexPath];
 
@@ -594,7 +586,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CLS_LOG(@"tableView:cellForRowAtIndexPath: asking for section %ld and row %ld", (long)indexPath.section, (long)indexPath.row);
+    CLS_LOG(@"tableView:cellForRowAtIndexPath: asking for section %ld and row %ld", (long) indexPath.section, (long) indexPath.row);
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SessionCell"];
 
@@ -654,7 +646,7 @@
 }
 
 - (void)finishedSlots:(NSArray *)slots forHref:(NSURL *)href {
-    CLS_LOG(@"Storing slots %lu", (unsigned long)[slots count]);
+    CLS_LOG(@"Storing slots %lu", (unsigned long) [slots count]);
 
     NSError *error = nil;
 
@@ -672,7 +664,7 @@
 }
 
 - (void)finishedSessions:(NSArray *)sessions forHref:(NSURL *)href {
-    CLS_LOG(@"Storing sessions %lu", (unsigned long)[sessions count]);
+    CLS_LOG(@"Storing sessions %lu", (unsigned long) [sessions count]);
 
     NSError *error = nil;
 
@@ -690,7 +682,7 @@
 }
 
 - (void)finishedRooms:(NSArray *)rooms forHref:(NSURL *)href {
-    CLS_LOG(@"Storing rooms %lu", (unsigned long)[rooms count]);
+    CLS_LOG(@"Storing rooms %lu", (unsigned long) [rooms count]);
 
     NSError *error = nil;
 
