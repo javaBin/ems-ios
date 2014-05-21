@@ -666,32 +666,7 @@
                             <constraint firstAttribute="bottom" secondItem="ZBf-Q7-fK9" secondAttribute="bottom" id="yZ2-yt-ZIg"/>
                         </constraints>
                     </view>
-                    <toolbarItems>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="rKM-GT-QWN"/>
-                        <barButtonItem image="09-arrow-west.png" style="plain" id="DsT-sT-X5N">
-                            <connections>
-                                <action selector="movePreviousSession:" destination="ynZ-6T-4n5" id="Te5-b9-7rG"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="ybo-hO-ZVR"/>
-                        <barButtonItem image="03-arrow-north.png" style="plain" id="lhD-uV-MwN">
-                            <connections>
-                                <action selector="movePreviousSection:" destination="ynZ-6T-4n5" id="kVW-ad-lj5"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem image="06-arrow-south.png" style="plain" id="yM9-J6-P6W">
-                            <connections>
-                                <action selector="moveNextSection:" destination="ynZ-6T-4n5" id="aCa-He-Qmu"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="Om9-2B-Akd"/>
-                        <barButtonItem image="02-arrow-east.png" style="plain" id="7lP-Lf-d6l">
-                            <connections>
-                                <action selector="moveNextSession:" destination="ynZ-6T-4n5" id="VHf-Ue-SZy"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="MhH-o3-LCY"/>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="3MP-RJ-J85">
                         <nil key="title"/>
                         <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="action" id="EKq-sd-auT">
@@ -703,10 +678,6 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
                     <connections>
                         <outlet property="button" destination="aP0-PP-i6z" id="D4b-cg-msi"/>
-                        <outlet property="nextSectionButton" destination="yM9-J6-P6W" id="SKS-t8-6YB"/>
-                        <outlet property="nextSessionButton" destination="7lP-Lf-d6l" id="s37-Bu-K30"/>
-                        <outlet property="previousSectionButton" destination="lhD-uV-MwN" id="T28-3c-uZ1"/>
-                        <outlet property="previousSessionButton" destination="DsT-sT-X5N" id="zjH-zF-96S"/>
                         <outlet property="shareButton" destination="EKq-sd-auT" id="uof-ep-W0X"/>
                         <outlet property="tableView" destination="ZBf-Q7-fK9" id="0Xe-T2-lYa"/>
                         <outlet property="titleLabel" destination="EZz-Q4-iHl" id="eqO-et-YfC"/>
@@ -815,11 +786,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="02-arrow-east.png" width="19" height="16"/>
-        <image name="03-arrow-north.png" width="16" height="19"/>
-        <image name="06-arrow-south.png" width="16" height="19"/>
         <image name="06-magnify.png" width="24" height="24"/>
-        <image name="09-arrow-west.png" width="19" height="16"/>
         <image name="19-gear.png" width="26" height="26"/>
         <image name="258-checkmark-grey.png" width="19" height="18"/>
         <image name="28-star-grey.png" width="26" height="26"/>

@@ -429,16 +429,16 @@
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="256" translatesAutoresizingMaskIntoConstraints="NO" id="q35-VC-8on">
                                         <rect key="frame" x="10" y="0.0" width="256" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="256" id="4NL-U2-Xwh"/>
+                                            <constraint firstAttribute="height" constant="44" id="MXf-6J-HET"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="14"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ru-D1-L9h">
                                         <rect key="frame" x="276" y="0.0" width="44" height="44"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="44" id="1TG-6U-ORc"/>
-                                            <constraint firstAttribute="height" constant="44" id="KRw-k2-a4G"/>
-                                        </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="28-star-grey.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -454,19 +454,20 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="IJC-ri-naL"/>
-                                    <constraint firstAttribute="trailing" secondItem="2Ru-D1-L9h" secondAttribute="trailing" id="QdY-LV-8QN"/>
-                                    <constraint firstItem="q35-VC-8on" firstAttribute="leading" secondItem="LYi-VS-JyC" secondAttribute="leading" constant="10" id="QfC-FX-weW"/>
-                                    <constraint firstItem="q35-VC-8on" firstAttribute="height" secondItem="LYi-VS-JyC" secondAttribute="height" id="SOD-ro-mUS"/>
-                                    <constraint firstItem="2Ru-D1-L9h" firstAttribute="top" secondItem="LYi-VS-JyC" secondAttribute="top" id="TbB-e5-Gdd"/>
-                                    <constraint firstItem="2Ru-D1-L9h" firstAttribute="leading" secondItem="q35-VC-8on" secondAttribute="trailing" constant="10" id="iaM-5j-Hg2"/>
-                                    <constraint firstItem="q35-VC-8on" firstAttribute="top" secondItem="LYi-VS-JyC" secondAttribute="top" id="ybH-9T-7D1"/>
+                                    <constraint firstItem="q35-VC-8on" firstAttribute="bottom" secondItem="2Ru-D1-L9h" secondAttribute="bottom" id="4Wu-rg-tws"/>
+                                    <constraint firstItem="q35-VC-8on" firstAttribute="leading" secondItem="LYi-VS-JyC" secondAttribute="leading" constant="10" id="BT8-pZ-g2k"/>
+                                    <constraint firstItem="2Ru-D1-L9h" firstAttribute="leading" secondItem="q35-VC-8on" secondAttribute="trailing" constant="10" id="Jia-iy-FtE"/>
+                                    <constraint firstAttribute="bottom" secondItem="q35-VC-8on" secondAttribute="bottom" id="LaX-We-Etx"/>
+                                    <constraint firstItem="q35-VC-8on" firstAttribute="top" secondItem="LYi-VS-JyC" secondAttribute="top" id="P33-CD-r93"/>
+                                    <constraint firstItem="q35-VC-8on" firstAttribute="top" secondItem="2Ru-D1-L9h" secondAttribute="top" id="S3Q-0N-yLW"/>
+                                    <constraint firstAttribute="trailing" secondItem="2Ru-D1-L9h" secondAttribute="trailing" id="mna-vf-6fP"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dwD-rG-uDR">
-                                <rect key="frame" x="0.0" y="114" width="320" height="321"/>
+                                <rect key="frame" x="0.0" y="116" width="320" height="364"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailBodyCell" textLabel="CKy-hs-9f9" style="IBUITableViewCellStyleDefault" id="Z6E-VG-gyL">
                                         <rect key="frame" x="0.0" y="22" width="320" height="44"/>
@@ -530,44 +531,26 @@
                                 <connections>
                                     <outlet property="dataSource" destination="3lg-Sh-FWj" id="0P1-ln-Mg5"/>
                                     <outlet property="delegate" destination="3lg-Sh-FWj" id="6pf-vR-qpQ"/>
+                                    <outletCollection property="gestureRecognizers" destination="TLa-76-UNL" appends="YES" id="Pbi-Ln-hnu"/>
+                                    <outletCollection property="gestureRecognizers" destination="xCv-ZQ-uHU" appends="YES" id="uc4-5e-rv4"/>
+                                    <outletCollection property="gestureRecognizers" destination="EMw-et-3zc" appends="YES" id="y5v-to-Fks"/>
+                                    <outletCollection property="gestureRecognizers" destination="6pV-WS-Uat" appends="YES" id="sqr-Rf-3qx"/>
                                 </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="lZz-T4-HqT" firstAttribute="top" secondItem="dwD-rG-uDR" secondAttribute="bottom" constant="1" id="EWv-2y-YJS"/>
-                            <constraint firstItem="dwD-rG-uDR" firstAttribute="trailing" secondItem="LYi-VS-JyC" secondAttribute="trailing" id="NVp-2d-Fiu"/>
-                            <constraint firstItem="dwD-rG-uDR" firstAttribute="leading" secondItem="LYi-VS-JyC" secondAttribute="leading" id="O2B-1L-PFZ"/>
-                            <constraint firstItem="dwD-rG-uDR" firstAttribute="top" secondItem="Xl4-UN-Xdu" secondAttribute="bottom" constant="50" id="Tlp-Fj-M4C"/>
-                            <constraint firstItem="LYi-VS-JyC" firstAttribute="top" secondItem="Xl4-UN-Xdu" secondAttribute="bottom" id="fMg-dd-4jD"/>
-                            <constraint firstItem="LYi-VS-JyC" firstAttribute="leading" secondItem="LLw-3H-w5Y" secondAttribute="leading" id="gIF-NX-WBv"/>
-                            <constraint firstAttribute="trailing" secondItem="LYi-VS-JyC" secondAttribute="trailing" id="rjb-n6-C9K"/>
+                            <constraint firstAttribute="bottom" secondItem="dwD-rG-uDR" secondAttribute="bottom" id="46i-Gt-qpj"/>
+                            <constraint firstItem="dwD-rG-uDR" firstAttribute="top" secondItem="LLw-3H-w5Y" secondAttribute="top" constant="116" id="6aY-Ra-NOR"/>
+                            <constraint firstItem="dwD-rG-uDR" firstAttribute="leading" secondItem="LLw-3H-w5Y" secondAttribute="leading" id="9Ei-0R-76r"/>
+                            <constraint firstItem="dwD-rG-uDR" firstAttribute="top" secondItem="LYi-VS-JyC" secondAttribute="bottom" constant="8" symbolic="YES" id="EdD-Qw-kTX"/>
+                            <constraint firstItem="dwD-rG-uDR" firstAttribute="trailing" secondItem="LYi-VS-JyC" secondAttribute="trailing" id="iea-H8-uG5"/>
+                            <constraint firstItem="dwD-rG-uDR" firstAttribute="leading" secondItem="LYi-VS-JyC" secondAttribute="leading" id="nXq-4W-0ua"/>
+                            <constraint firstAttribute="trailing" secondItem="dwD-rG-uDR" secondAttribute="trailing" id="sVF-R9-Bad"/>
                         </constraints>
                     </view>
-                    <toolbarItems>
-                        <barButtonItem image="09-arrow-west.png" style="plain" id="gkC-bR-M4P">
-                            <connections>
-                                <action selector="movePreviousSession:" destination="3lg-Sh-FWj" id="f0q-1Q-okh"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="raf-ah-waj"/>
-                        <barButtonItem image="03-arrow-north.png" style="plain" id="p6R-Mj-zuA">
-                            <connections>
-                                <action selector="movePreviousSection:" destination="3lg-Sh-FWj" id="B1O-V4-e6O"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem image="06-arrow-south.png" style="plain" id="t30-4M-Cp2">
-                            <connections>
-                                <action selector="moveNextSection:" destination="3lg-Sh-FWj" id="5rh-3B-6sl"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="uXh-cP-Zvc"/>
-                        <barButtonItem image="02-arrow-east.png" style="plain" id="VOc-Q9-Wuo">
-                            <connections>
-                                <action selector="moveNextSession:" destination="3lg-Sh-FWj" id="n3x-PK-WiL"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="ib1-cg-KjS">
                         <nil key="title"/>
                         <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="action" id="0JI-IR-TXE">
@@ -576,23 +559,39 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="button" destination="2Ru-D1-L9h" id="1Ls-Kb-aJP"/>
-                        <outlet property="nextSectionButton" destination="t30-4M-Cp2" id="1Yy-cd-bIq"/>
-                        <outlet property="nextSessionButton" destination="VOc-Q9-Wuo" id="6t1-wY-zsC"/>
-                        <outlet property="previousSectionButton" destination="p6R-Mj-zuA" id="iQh-al-YfC"/>
-                        <outlet property="previousSessionButton" destination="gkC-bR-M4P" id="Avt-He-AZf"/>
                         <outlet property="shareButton" destination="0JI-IR-TXE" id="JCu-mw-jqw"/>
                         <outlet property="tableView" destination="dwD-rG-uDR" id="MfG-e2-CSI"/>
                         <outlet property="titleLabel" destination="q35-VC-8on" id="LZC-i3-v7C"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rlf-zs-OLZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer numberOfTapsRequired="3" numberOfTouchesRequired="3" id="vOx-jJ-27o">
+                <swipeGestureRecognizer direction="down" numberOfTouchesRequired="2" id="TLa-76-UNL">
                     <connections>
-                        <action selector="clearImageCache:" destination="3lg-Sh-FWj" id="tdj-xS-PD0"/>
+                        <action selector="moveNextSection:" destination="3lg-Sh-FWj" id="MUS-Tb-miG"/>
+                        <outlet property="delegate" destination="3lg-Sh-FWj" id="UsR-9x-TJR"/>
                     </connections>
-                </tapGestureRecognizer>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="up" numberOfTouchesRequired="2" id="xCv-ZQ-uHU">
+                    <connections>
+                        <action selector="movePreviousSection:" destination="3lg-Sh-FWj" id="gHp-EO-vUe"/>
+                        <outlet property="delegate" destination="3lg-Sh-FWj" id="lEa-f7-mi1"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" numberOfTouchesRequired="2" id="EMw-et-3zc">
+                    <connections>
+                        <action selector="movePreviousSession:" destination="3lg-Sh-FWj" id="xIw-5G-xK2"/>
+                        <outlet property="delegate" destination="3lg-Sh-FWj" id="454-WT-lTN"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="right" numberOfTouchesRequired="2" id="6pV-WS-Uat">
+                    <connections>
+                        <action selector="moveNextSession:" destination="3lg-Sh-FWj" id="xHs-q3-E3T"/>
+                        <outlet property="delegate" destination="3lg-Sh-FWj" id="92t-BD-ttT"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1583" y="590"/>
         </scene>
@@ -653,11 +652,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="02-arrow-east.png" width="19" height="16"/>
-        <image name="03-arrow-north.png" width="16" height="19"/>
-        <image name="06-arrow-south.png" width="16" height="19"/>
         <image name="06-magnify.png" width="24" height="24"/>
-        <image name="09-arrow-west.png" width="19" height="16"/>
         <image name="19-gear.png" width="26" height="26"/>
         <image name="258-checkmark-grey.png" width="19" height="18"/>
         <image name="28-star-grey.png" width="26" height="26"/>

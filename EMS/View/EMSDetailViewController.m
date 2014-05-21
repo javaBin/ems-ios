@@ -196,6 +196,13 @@
     [self.tableView reloadData];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.navigationController setToolbarHidden:NO];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setToolbarHidden:YES];
+}
 
 - (IBAction)toggleFavourite:(id)sender {
     self.session = [[[EMSAppDelegate sharedAppDelegate] model] toggleFavourite:self.session];
@@ -222,7 +229,7 @@
 }
 
 - (void)finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href {
-    CLS_LOG(@"Storing speakers %lu for href %@", [speakers count], href);
+    CLS_LOG(@"Storing speakers %lu for href %@", (unsigned long)[speakers count], href);
 
     NSError *error = nil;
 
@@ -732,6 +739,18 @@
 
 - (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [self.tableView reloadData];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    if ([gestureRecognizer isKindOfClass:[UISwipeGestureRecognizer class]] && [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 @end

@@ -87,7 +87,7 @@
 
     if (matched.count > 0) {
         if (matched.count > 1) {
-            CLS_LOG(@"WARNING - found %lu conferences for href %@", matched.count, url);
+            CLS_LOG(@"WARNING - found %lu conferences for href %@", (unsigned long)matched.count, url);
 
             [self analyticsWarningForType:@"conference" andHref:url withCount:[NSNumber numberWithLong:matched.count]];
         }

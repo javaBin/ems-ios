@@ -7,7 +7,7 @@
 
 #import "Session.h"
 
-@interface EMSDetailViewController : UIViewController <EMSRetrieverDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface EMSDetailViewController : UIViewController <EMSRetrieverDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 @property(nonatomic, strong) Session *session;
 @property(nonatomic, strong) IBOutlet UIWebView *webView;
@@ -34,5 +34,11 @@
 - (IBAction)toggleFavourite:(id)sender;
 
 - (void)refreshFavourite;
+
+- (IBAction)movePreviousSection:(id)sender;
+- (IBAction)moveNextSection:(id)sender;
+- (IBAction)movePreviousSession:(id)sender;
+- (IBAction)moveNextSession:(id)sender;
+
 
 @end
