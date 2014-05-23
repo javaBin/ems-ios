@@ -84,7 +84,7 @@
     NSSortDescriptor *nameSort = [[NSSortDescriptor alloc]
             initWithKey:@"name" ascending:NO];
 
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:startSort, nameSort, nil]];
+    [fetchRequest setSortDescriptors:@[startSort, nameSort]];
 
     [fetchRequest setFetchBatchSize:20];
 
@@ -128,7 +128,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger rows = 0;
     if (section == 0) {
-        id sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
+        id sectionInfo = [_fetchedResultsController sections][(NSUInteger) section];
 
         rows = [sectionInfo numberOfObjects];
     } else if (section == 1) {
@@ -257,11 +257,11 @@
     switch (type) {
 
         case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
 
         case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
 
         case NSFetchedResultsChangeUpdate:
@@ -269,10 +269,8 @@
             break;
 
         case NSFetchedResultsChangeMove:
-            [tableView                   deleteRowsAtIndexPaths:[NSArray
-                    arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView                      insertRowsAtIndexPaths:[NSArray
-                    arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
 }

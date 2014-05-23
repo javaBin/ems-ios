@@ -40,22 +40,22 @@ NSString *const PrefsSearchField = @"searchFields";
 }
 
 - (NSSet *)fieldValuesForKey:(EMSSearchField)key {
-    NSNumber *k = [NSNumber numberWithInt:key];
+    NSNumber *k = @(key);
 
     if ([self.fields.allKeys containsObject:k]) {
-        return [NSSet setWithSet:[self.fields objectForKey:k]];
+        return [NSSet setWithSet:self.fields[k]];
     }
 
     return [NSSet set];
 }
 
 - (void)setFieldValues:(NSSet *)values forKey:(EMSSearchField)key {
-    NSNumber *k = [NSNumber numberWithInt:key];
+    NSNumber *k = @(key);
 
     if (values != nil) {
-        [self.fields setObject:values forKey:k];
+        self.fields[k] = values;
     } else {
-        [self.fields setObject:[NSSet set] forKey:k];
+        self.fields[k] = [NSSet set];
     }
 
     [self persist];
@@ -69,10 +69,10 @@ NSString *const PrefsSearchField = @"searchFields";
     NSMutableDictionary *fieldsAsArrays = [[NSMutableDictionary alloc] init];
 
     for (int i = emsKeyword; i <= emsLang; i++) {
-        NSNumber *key = [NSNumber numberWithInt:i];
+        NSNumber *key = @(i);
 
         if ([[self.fields allKeys] containsObject:key]) {
-            [fieldsAsArrays setObject:[[self.fields objectForKey:key] allObjects] forKey:[key stringValue]];
+            fieldsAsArrays[[key stringValue]] = [self.fields[key] allObjects];
         }
     }
     [defaults setObject:[NSDictionary dictionaryWithDictionary:fieldsAsArrays] forKey:PrefsSearchField];
@@ -97,13 +97,9 @@ NSString *const PrefsSearchField = @"searchFields";
 
     if (storedSearchFields != nil) {
         for (int i = emsKeyword; i <= emsLang; i++) {
-            NSString *key = [[NSNumber numberWithInt:i] stringValue];
+            NSString *key = [@(i) stringValue];
 
-            if ([[storedSearchFields allKeys] containsObject:key]) {
-                [self setFieldValues:[NSSet setWithArray:[storedSearchFields objectForKey:key]] forKey:i];
-            } else {
-                [self setFieldValues:[NSSet set] forKey:i];
-            }
+            [self setFieldValues:[[storedSearchFields allKeys] containsObject:key] ? [NSSet setWithArray:storedSearchFields[key]] : [NSSet set] forKey:i];
         }
     }
 

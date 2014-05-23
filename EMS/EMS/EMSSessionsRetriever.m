@@ -18,66 +18,66 @@ NSDate *timer;
 
 - (NSArray *)processData:(NSData *)data forHref:(NSURL *)href {
     NSError *error = nil;
-    
+
     CJCollection *collection = [CJCollection collectionForNSData:data error:&error];
-    
+
     if (!collection) {
         CLS_LOG(@"Failed to retrieve sessions %@ - %@ - %@", href, error, [error userInfo]);
-        
+
         return [NSArray array];
     }
-    
+
     NSMutableArray *temp = [[NSMutableArray alloc] init];
-    
+
     [collection.items enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        CJItem *item = (CJItem *)obj;
-        
+        CJItem *item = (CJItem *) obj;
+
         EMSSession *session = [[EMSSession alloc] init];
-        
+
         session.keywords = nil;
-        
+
         session.href = item.href;
-        
-        [item.data enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            NSDictionary *dict = (NSDictionary *)obj;
-            
-            NSString *field = [dict objectForKey:@"name"];
-            NSObject *value = [dict objectForKey:@"value"];
-            
+
+        [item.data enumerateObjectsUsingBlock:^(id dataObj, NSUInteger dataIdx, BOOL *dataStop) {
+            NSDictionary *dict = (NSDictionary *) dataObj;
+
+            NSString *field = dict[@"name"];
+            NSObject *value = dict[@"value"];
+
             if ([@"format" isEqualToString:field]) {
-                session.format = (NSString *)value;
+                session.format = (NSString *) value;
             }
             if ([@"body" isEqualToString:field]) {
-                session.body = (NSString *)value;
+                session.body = (NSString *) value;
             }
             if ([@"state" isEqualToString:field]) {
-                session.state = (NSString *)value;
+                session.state = (NSString *) value;
             }
             if ([@"audience" isEqualToString:field]) {
-                session.audience = (NSString *)value;
+                session.audience = (NSString *) value;
             }
             if ([@"title" isEqualToString:field]) {
-                session.title = (NSString *)value;
+                session.title = (NSString *) value;
             }
             if ([@"lang" isEqualToString:field]) {
-                session.language = (NSString *)value;
+                session.language = (NSString *) value;
             }
             if ([@"summary" isEqualToString:field]) {
-                session.summary = (NSString *)value;
+                session.summary = (NSString *) value;
             }
             if ([@"level" isEqualToString:field]) {
-                session.level = (NSString *)value;
+                session.level = (NSString *) value;
             }
             if ([@"keywords" isEqualToString:field]) {
-                session.keywords = [NSArray arrayWithArray:[dict objectForKey:@"array"]];
+                session.keywords = [NSArray arrayWithArray:dict[@"array"]];
             }
         }];
-        
+
         NSMutableArray *speakers = [[NSMutableArray alloc] init];
-        
-        [item.links enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            CJLink *link = (CJLink *)obj;
-            
+
+        [item.links enumerateObjectsUsingBlock:^(id linksObj, NSUInteger linksIdx, BOOL *linksStop) {
+            CJLink *link = (CJLink *) linksObj;
+
             if ([@"alternate video" isEqualToString:link.rel]) {
                 session.videoLink = link.href;
             }
@@ -95,16 +95,16 @@ NSDate *timer;
             }
             if ([@"speaker item" isEqualToString:link.rel]) {
                 EMSSpeaker *speaker = [[EMSSpeaker alloc] init];
-                
+
                 speaker.href = link.href;
                 speaker.name = link.prompt;
-                
+
                 [speakers addObject:speaker];
             }
         }];
-        
+
         session.speakers = [NSArray arrayWithArray:speakers];
-        
+
         [temp addObject:session];
     }];
 
@@ -113,12 +113,12 @@ NSDate *timer;
 
 - (void)fetchedSessions:(NSData *)responseData forHref:(NSURL *)href {
     NSArray *collection = [self processData:responseData forHref:href];
-    
+
     [[EMSAppDelegate sharedAppDelegate] stopNetwork];
 
 #ifndef DO_NOT_USE_GA
-    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    NSNumber *interval = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSinceDate:timer]];
+    id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    NSNumber *interval = @([[NSDate date] timeIntervalSinceDate:timer]);
     [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"retrieval"
                                                          interval:interval
                                                              name:@"sessions"
@@ -126,32 +126,32 @@ NSDate *timer;
 
     [[GAI sharedInstance] dispatch];
 #endif
-    
+
     [self.delegate finishedSessions:collection forHref:href];
 }
 
-- (void) fetch:(NSURL *)url {
+- (void)fetch:(NSURL *)url {
     if (url == nil) {
         CLS_LOG(@"Asked to fetch nil sessions url");
 
         return;
     }
-    
+
     dispatch_queue_t queue = dispatch_queue_create("ems_session_queue", DISPATCH_QUEUE_CONCURRENT);
-    
+
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
 
     timer = [NSDate date];
 
     dispatch_async(queue, ^{
         NSError *rootError = nil;
-        
-        NSData* root = [NSData dataWithContentsOfURL:url options:NSDataReadingMappedIfSafe error:&rootError];
-        
+
+        NSData *root = [NSData dataWithContentsOfURL:url options:NSDataReadingMappedIfSafe error:&rootError];
+
         if (root == nil) {
             CLS_LOG(@"Retrieved nil root %@ - %@ - %@", url, rootError, [rootError userInfo]);
         }
-        
+
         dispatch_async(queue, ^{
             [self fetchedSessions:root forHref:url];
         });

@@ -36,8 +36,11 @@
 - (void)refreshFavourite;
 
 - (IBAction)movePreviousSection:(id)sender;
+
 - (IBAction)moveNextSection:(id)sender;
+
 - (IBAction)movePreviousSession:(id)sender;
+
 - (IBAction)moveNextSession:(id)sender;
 
 

@@ -272,7 +272,7 @@
 
         NSString *filePath = [[NSBundle mainBundle] pathForResource:@"EMS-Config" ofType:@"plist"];
         NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:filePath];
-        NSDictionary *sort = [prefs objectForKey:@"level-sort"];
+        NSDictionary *sort = prefs[@"level-sort"];
 
         destination.levels = [levels sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
             NSNumber *firstKey = [sort valueForKey:obj1];
@@ -410,7 +410,7 @@
 
         if (self.filterFavourites) {
             [predicates
-                    addObject:[NSPredicate predicateWithFormat:@"favourite = %@", [NSNumber numberWithBool:YES]]];
+                    addObject:[NSPredicate predicateWithFormat:@"favourite = %@", @YES]];
         }
 
         if (self.filterTime) {
@@ -453,7 +453,7 @@
     NSSortDescriptor *sortTitle = [[NSSortDescriptor alloc]
             initWithKey:@"title" ascending:YES];
 
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortSlot, sortRoom, sortTime, sortTitle, nil]];
+    [fetchRequest setSortDescriptors:@[sortSlot, sortRoom, sortTime, sortTitle]];
     [fetchRequest setFetchBatchSize:20];
 
     NSPredicate *conferencePredicate = [self currentConferencePredicate];
@@ -511,7 +511,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    id sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
+    id sectionInfo = [_fetchedResultsController sections][(NSUInteger) section];
 
     NSUInteger count = [sectionInfo numberOfObjects];
 
@@ -600,7 +600,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [_fetchedResultsController sections][(NSUInteger) section];
     return [sectionInfo name];
 }
 
@@ -713,11 +713,11 @@
     switch (type) {
 
         case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
 
         case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
 
         case NSFetchedResultsChangeUpdate:
@@ -725,10 +725,8 @@
             break;
 
         case NSFetchedResultsChangeMove:
-            [tableView                   deleteRowsAtIndexPaths:[NSArray
-                    arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView                      insertRowsAtIndexPaths:[NSArray
-                    arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
 }

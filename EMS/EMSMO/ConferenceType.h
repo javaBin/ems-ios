@@ -10,7 +10,7 @@
 
 @interface ConferenceType : NSManagedObject
 
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) Conference *conference;
+@property(nonatomic, retain) NSString *name;
+@property(nonatomic, retain) Conference *conference;
 
 @end

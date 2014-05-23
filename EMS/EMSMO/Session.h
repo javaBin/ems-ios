@@ -29,6 +29,9 @@
 @property(nonatomic, retain) Room *room;
 @property(nonatomic, retain) Slot *slot;
 @property(nonatomic, retain) NSSet *speakers;
+
+- (NSString *)sanitizedTitle;
+
 @end
 
 @interface Session (CoreDataGeneratedAccessors)
@@ -48,7 +51,5 @@
 - (void)addSpeakers:(NSSet *)values;
 
 - (void)removeSpeakers:(NSSet *)values;
-
-- (NSString *)sanitizedTitle;
 
 @end

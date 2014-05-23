@@ -6,7 +6,7 @@
 
 @interface EMSRoom : NSObject
 
-@property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSURL *href;
+@property(strong, nonatomic) NSString *name;
+@property(strong, nonatomic) NSURL *href;
 
 @end

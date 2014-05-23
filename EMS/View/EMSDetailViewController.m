@@ -89,16 +89,16 @@
             Speaker *speaker = (Speaker *) obj;
 
             if (speaker.bio != nil) {
-                [speakerBios setObject:speaker.bio forKey:speaker.name];
+                speakerBios[speaker.name] = speaker.bio;
             } else {
-                [speakerBios setObject:@"" forKey:speaker.name];
+                speakerBios[speaker.name] = @"";
             }
         }];
 
         self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
 
         [self setupMovement];
-        
+
         [self setupParts];
 
         [self retrieve];
@@ -113,7 +113,7 @@
 
 - (void)setupParts {
     NSMutableArray *p = [[NSMutableArray alloc] init];
-    
+
     if ([EMSFeatureConfig isFeatureEnabled:fLinks]) {
         if (self.session.videoLink) {
             [p addObject:[[EMSDetailViewRow alloc] initWithContent:@"Video" image:[UIImage imageNamed:@"70-tv"] link:[NSURL URLWithString:self.session.videoLink]]];
@@ -121,7 +121,7 @@
     }
 
     [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.body]];
-    
+
     if (self.session.level != nil) {
         NSString *levelPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@-o", self.session.level] ofType:@"png"];
         UIImage *img = [UIImage imageWithContentsOfFile:levelPath];
@@ -130,48 +130,48 @@
     }
 
     NSArray *sortedKeywords = [self.session.keywords.allObjects sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-        NSString *first = [(Keyword *)a name];
-        NSString *second = [(Keyword *)b name];
-        
+        NSString *first = [(Keyword *) a name];
+        NSString *second = [(Keyword *) b name];
+
         return [first compare:second];
     }];
-    
+
     [sortedKeywords enumerateObjectsUsingBlock:^(id obj, NSUInteger x, BOOL *stop) {
         Keyword *keyword = (Keyword *) obj;
-        
+
         [p addObject:[[EMSDetailViewRow alloc] initWithContent:keyword.name image:[UIImage imageNamed:@"14-tag"]]];
     }];
-    
+
     [self.session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         Speaker *speaker = (Speaker *) obj;
-        
+
         EMSDetailViewRow *row = [[EMSDetailViewRow alloc] initWithContent:speaker.name];
-        
+
         if ([EMSFeatureConfig isFeatureEnabled:fBioPics]) {
             if (speaker.thumbnailUrl != nil) {
                 CLS_LOG(@"Speaker has available thumbnail %@", speaker.thumbnailUrl);
-                
+
                 NSString *pngFilePath = [self pathForCachedThumbnail:speaker];
-                
+
                 UIImage *img = [UIImage imageWithContentsOfFile:pngFilePath];
-                
+
                 row.image = img;
 
                 [self checkForNewThumbnailForSpeaker:speaker withFilename:pngFilePath withSessionHref:self.session.href];
             }
         }
 
-        NSString *bio = [self.cachedSpeakerBios objectForKey:speaker.name];
+        NSString *bio = self.cachedSpeakerBios[speaker.name];
 
         if (bio && ![bio isEqualToString:@""]) {
             row.body = bio;
         }
-        
+
         [p addObject:row];
     }];
-    
+
     self.parts = [NSArray arrayWithArray:p];
-    
+
     [self.tableView reloadData];
 }
 
@@ -192,7 +192,7 @@
     [tracker set:kGAIScreenName value:@"Detail Screen"];
     [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 #endif
-    
+
     [self.tableView reloadData];
 }
 
@@ -229,7 +229,7 @@
 }
 
 - (void)finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href {
-    CLS_LOG(@"Storing speakers %lu for href %@", (unsigned long)[speakers count], href);
+    CLS_LOG(@"Storing speakers %lu for href %@", (unsigned long) [speakers count], href);
 
     NSError *error = nil;
 
@@ -258,7 +258,7 @@
                     if ([speaker.name isEqualToString:name]) {
                         if (![speaker.bio isEqualToString:bio]) {
                             if (speaker.bio != nil) {
-                                [speakerBios setObject:speaker.bio forKey:speaker.name];
+                                speakerBios[speaker.name] = speaker.bio;
                                 newBios = YES;
                             }
                         }
@@ -320,7 +320,7 @@
                 [result appendString:speaker.name];
             }
 
-            NSString *bio = [self.cachedSpeakerBios objectForKey:speaker.name];
+            NSString *bio = self.cachedSpeakerBios[speaker.name];
             if (bio && ![bio isEqualToString:@""]) {
                 [result appendString:@"\n\n"];
                 [result appendString:bio];
@@ -401,7 +401,7 @@
 
             [tracker send:[[GAIDictionaryBuilder createSocialWithNetwork:activityType
                                                                   action:@"Share"
-                                                                  target:[NSURL URLWithString:self.session.href]] build]];
+                                                                  target:self.session.href] build]];
 #endif
         }
     }];
@@ -430,7 +430,7 @@
     CLS_LOG(@"Checking for updated thumbnail %@", speaker.thumbnailUrl);
 
     NSData *thumbData = [NSData dataWithContentsOfFile:pngFilePath];
-    
+
     dispatch_queue_t queue = dispatch_queue_create("thumbnail_queue", DISPATCH_QUEUE_CONCURRENT);
 
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
@@ -518,7 +518,7 @@
     [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
     [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
 
-    return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04ld-%02ld-%02ld %02ld:%02ld:00 +0200", (long)[dateComp year], (long)[dateComp month], (long)[dateComp day], (long)[timeComp hour], (long)[timeComp minute]]];
+    return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04ld-%02ld-%02ld %02ld:%02ld:00 +0200", (long) [dateComp year], (long) [dateComp month], (long) [dateComp day], (long) [timeComp hour], (long) [timeComp minute]]];
 #else
     return date;
 #endif
@@ -537,7 +537,7 @@
         return nil;
     }
 
-    unsigned long rowCount = [[sections objectAtIndex:self.indexPath.section] numberOfObjects];
+    unsigned long rowCount = [sections[(NSUInteger) self.indexPath.section] numberOfObjects];
 
     return [self indexPathForRow:self.indexPath moving:direction withRows:rowCount];
 }
@@ -585,7 +585,7 @@
 
     long row = current.row;
 
-    long rowMax = ([[sections objectAtIndex:section] numberOfObjects] - 1);
+    long rowMax = ([sections[(NSUInteger) section] numberOfObjects] - 1);
 
     if (rowMax < row) {
         row = rowMax;
@@ -635,21 +635,21 @@
 
 }
 
-- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.parts count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView buildCellForRow:(EMSDetailViewRow *)row {
     NSString *identifier = @"DetailBodyCell";
-    
+
     if (row.link) {
         identifier = @"DetailLinkCell";
     } else if (row.body) {
         identifier = @"DetailTopAlignCell";
     }
-    
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    
+
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
@@ -659,12 +659,12 @@
     } else {
         cell.textLabel.text = row.content;
     }
-    
+
     if (row.image) {
         UIImageView *image = [cell imageView];
-        
+
         image.image = row.image;
-        
+
         if (row.body) {
             CGSize itemSize = CGSizeMake(50, 50);
             UIGraphicsBeginImageContextWithOptions(itemSize, NO, UIScreen.mainScreen.scale);
@@ -686,7 +686,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    EMSDetailViewRow *row = [self.parts objectAtIndex:indexPath.row];
+    EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
 
     UITableViewCell *cell = [self tableView:tableView buildCellForRow:row];
 
@@ -694,50 +694,50 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    EMSDetailViewRow *row = [self.parts objectAtIndex:indexPath.row];
-    
+    EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
+
     UITableViewCell *cell = [self tableView:tableView buildCellForRow:row];
-    
+
     int padding = 10;
-    
+
     // Make sure the user can hit the row
     if (row.link) {
         padding = 30;
     }
-    
+
     return cell.textLabel.frame.size.height + padding;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    EMSDetailViewRow *row = [self.parts objectAtIndex:indexPath.row];
+    EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
 
     if (row.link) {
         return indexPath;
     }
-    
+
     return nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    EMSDetailViewRow *row = [self.parts objectAtIndex:indexPath.row];
+    EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
 
     if (row.link) {
 #ifndef DO_NOT_USE_GA
         id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-                    
+
         [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"web"
                                                               action:@"open link"
                                                                label:[row.link absoluteString]
-                                                                value:nil] build]];
+                                                               value:nil] build]];
 #endif
 
         [[UIApplication sharedApplication] openURL:row.link];
     }
-    
+
     [tableView deselectRowAtIndexPath:indexPath animated:false];
 }
 
-- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [self.tableView reloadData];
 }
 
@@ -746,11 +746,8 @@
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    if ([gestureRecognizer isKindOfClass:[UISwipeGestureRecognizer class]] && [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
-        return YES;
-    }
-    
-    return NO;
+    return [gestureRecognizer isKindOfClass:[UISwipeGestureRecognizer class]] && [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
+
 }
 
 @end

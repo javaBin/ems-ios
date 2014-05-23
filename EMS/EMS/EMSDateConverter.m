@@ -8,12 +8,12 @@
 
 + (NSDate *)dateFromString:(NSString *)dateString {
     NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
-    
+
     [inputFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
     [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-    
-	NSDate *date = [inputFormatter dateFromString:dateString];
-	
+
+    NSDate *date = [inputFormatter dateFromString:dateString];
+
     return date;
 }
 

@@ -17,32 +17,32 @@
 
 NSDate *timer;
 
-- (NSArray *)processData:(NSData *)data andHref:(NSURL *) href {
+- (NSArray *)processData:(NSData *)data andHref:(NSURL *)href {
     NSError *error = nil;
-    
+
     CJCollection *collection = [CJCollection collectionForNSData:data error:&error];
-    
+
     if (!collection) {
         CLS_LOG(@"Failed to retrieve conferences %@ - %@ - %@", href, error, [error userInfo]);
-        
+
         return [NSArray array];
     }
-    
+
     NSMutableArray *temp = [[NSMutableArray alloc] init];
-    
+
     [collection.items enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        CJItem *item = (CJItem *)obj;
-        
+        CJItem *item = (CJItem *) obj;
+
         EMSConference *conf = [[EMSConference alloc] init];
-        
+
         conf.href = item.href;
-        
-        [item.data enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            NSDictionary *dict = (NSDictionary *)obj;
-            
-            NSString *field = [dict objectForKey:@"name"];
-            NSString *value = [dict objectForKey:@"value"];
-            
+
+        [item.data enumerateObjectsUsingBlock:^(id dataObj, NSUInteger dataIdx, BOOL *dataStop) {
+            NSDictionary *dict = (NSDictionary *) dataObj;
+
+            NSString *field = dict[@"name"];
+            NSString *value = dict[@"value"];
+
             if ([@"name" isEqualToString:field]) {
                 conf.name = value;
             }
@@ -56,15 +56,15 @@ NSDate *timer;
                 conf.end = [EMSDateConverter dateFromString:value];
             }
         }];
-        
-        [item.links enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            CJLink *link = (CJLink *)obj;
-            
+
+        [item.links enumerateObjectsUsingBlock:^(id linksObj, NSUInteger linksIdx, BOOL *linksStop) {
+            CJLink *link = (CJLink *) linksObj;
+
             if ([@"session collection" isEqualToString:link.rel]) {
                 conf.sessionCollection = link.href;
-                
+
                 if (link.otherFields != nil) {
-                    conf.hintCount = [link.otherFields objectForKey:@"count"];
+                    conf.hintCount = link.otherFields[@"count"];
                 }
             }
             if ([@"slot collection" isEqualToString:link.rel]) {
@@ -74,10 +74,10 @@ NSDate *timer;
                 conf.roomCollection = link.href;
             }
         }];
-        
+
         [temp addObject:conf];
     }];
-    
+
     return [NSArray arrayWithArray:temp];
 }
 
@@ -87,8 +87,8 @@ NSDate *timer;
     [[EMSAppDelegate sharedAppDelegate] stopNetwork];
 
 #ifndef DO_NOT_USE_GA
-    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    NSNumber *interval = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSinceDate:timer]];
+    id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    NSNumber *interval = @([[NSDate date] timeIntervalSinceDate:timer]);
     [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"retrieval"
                                                          interval:interval
                                                              name:@"conferences"
@@ -96,17 +96,17 @@ NSDate *timer;
 
     [[GAI sharedInstance] dispatch];
 #endif
-    
+
     [self.delegate finishedConferences:collection forHref:href];
 }
 
-- (void) fetch:(NSURL *)url {
+- (void)fetch:(NSURL *)url {
     if (url == nil) {
         CLS_LOG(@"Asked to fetch nil conferences url");
 
         return;
     }
-    
+
     dispatch_queue_t queue = dispatch_queue_create("ems_conference_queue", DISPATCH_QUEUE_CONCURRENT);
 
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
@@ -115,23 +115,23 @@ NSDate *timer;
 
     dispatch_async(queue, ^{
         NSError *rootError = nil;
-        
-        NSData* root = [NSData dataWithContentsOfURL:url options:NSDataReadingMappedIfSafe error:&rootError];
-        
+
+        NSData *root = [NSData dataWithContentsOfURL:url options:NSDataReadingMappedIfSafe error:&rootError];
+
         if (root == nil) {
             CLS_LOG(@"Retrieved nil root %@ - %@ - %@", url, rootError, [rootError userInfo]);
-            
+
             dispatch_async(queue, ^{
                 [self fetchedEventCollection:nil forHref:url];
             });
         }
-        
+
         if (root != nil) {
             dispatch_async(queue, ^{
                 NSError *error = nil;
-                
+
                 CJCollection *collection = [CJCollection collectionForNSData:root error:&error];
-            
+
                 if (!collection) {
                     CLS_LOG(@"Failed to retrieve root %@ - %@ - %@", url, error, [error userInfo]);
 
@@ -142,13 +142,13 @@ NSDate *timer;
 
                 if (collection) {
                     [collection.links enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                        CJLink *link = (CJLink *)obj;
-                
+                        CJLink *link = (CJLink *) obj;
+
                         if ([link.rel isEqualToString:@"event collection"]) {
                             dispatch_async(queue, ^{
                                 NSError *eventsError = nil;
-                            
-                                NSData* events = [NSData dataWithContentsOfURL:link.href options:NSDataReadingMappedIfSafe error:&eventsError];
+
+                                NSData *events = [NSData dataWithContentsOfURL:link.href options:NSDataReadingMappedIfSafe error:&eventsError];
 
                                 if (events == nil) {
                                     CLS_LOG(@"Retrieved nil events %@ - %@ - %@", url, eventsError, [eventsError userInfo]);

@@ -13,7 +13,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.sections = [NSMutableArray arrayWithObjects:@"Keywords", @"Levels", @"Types", @"Rooms", @"Language", nil];
+    self.sections = [@[@"Keywords", @"Levels", @"Types", @"Rooms", @"Language"] mutableCopy];
 
     if (self.keywords == nil || [self.keywords count] == 0) {
         [self.sections removeObject:@"Keywords"];
@@ -67,7 +67,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex {
-    NSString *section = [self.sections objectAtIndex:sectionIndex];
+    NSString *section = self.sections[(NSUInteger) sectionIndex];
 
     if ([section isEqual:@"Keywords"]) {
         return self.keywords.count;
@@ -97,7 +97,7 @@
           capitalized:(BOOL)capitalized
               cleaned:(BOOL)cleaned
             withImage:(BOOL)imageFlag {
-    NSString *value = [list objectAtIndex:indexPath.row];
+    NSString *value = list[(NSUInteger) indexPath.row];
 
     if (capitalized) {
         value = [value capitalizedString];
@@ -109,14 +109,14 @@
 
     cell.textLabel.text = value;
 
-    if ([currentList containsObject:[list objectAtIndex:indexPath.row]]) {
+    if ([currentList containsObject:list[(NSUInteger) indexPath.row]]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
 
     if (imageFlag) {
-        cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", [list objectAtIndex:indexPath.row]]];
+        cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", list[(NSUInteger) indexPath.row]]];
     } else {
         cell.imageView.image = nil;
     }
@@ -129,7 +129,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"SessionCell"];
     }
 
-    NSString *section = [self.sections objectAtIndex:indexPath.section];
+    NSString *section = self.sections[(NSUInteger) indexPath.section];
 
     if ([section isEqual:@"Keywords"]) {
         [self configureCell:cell forIndexPath:indexPath fromList:self.keywords andCurrentList:[self.advancedSearch fieldValuesForKey:emsKeyword] capitalized:NO cleaned:NO withImage:NO];
@@ -155,13 +155,13 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)sectionIndex {
-    NSString *section = [self.sections objectAtIndex:sectionIndex];
+    NSString *section = self.sections[(NSUInteger) sectionIndex];
 
     return section;
 }
 
 - (void)selectRowForIndexPath:(NSIndexPath *)indexPath forList:(NSArray *)list andKey:(EMSSearchField)key {
-    NSString *value = [list objectAtIndex:indexPath.row];
+    NSString *value = list[(NSUInteger) indexPath.row];
 
     NSMutableSet *values = [NSMutableSet setWithSet:[self.advancedSearch fieldValuesForKey:key]];
 
@@ -177,7 +177,7 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *section = [self.sections objectAtIndex:indexPath.section];
+    NSString *section = self.sections[(NSUInteger) indexPath.section];
 
     if ([section isEqual:@"Keywords"]) {
         [self selectRowForIndexPath:indexPath forList:self.keywords andKey:emsKeyword];

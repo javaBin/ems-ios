@@ -34,22 +34,22 @@
 
 + (BOOL)isFeatureEnabled:(EMSFeature)feature {
     NSDictionary *prefs = [EMSFeatureConfig workingDictionary];
-    NSDictionary *features = [prefs objectForKey:@"features"];
+    NSDictionary *features = prefs[@"features"];
 
     if (feature == fLocalNotifications) {
-        return [[features objectForKey:@"local-notifications"] boolValue];
+        return [features[@"local-notifications"] boolValue];
     }
 
     if (feature == fBioPics) {
-        return [[features objectForKey:@"speaker-thumbnails"] boolValue];
+        return [features[@"speaker-thumbnails"] boolValue];
     }
 
     if (feature == fLinks) {
-        return [[features objectForKey:@"links"] boolValue];
+        return [features[@"links"] boolValue];
     }
 
     if (feature == fRemoteNotifications) {
-        return [[features objectForKey:@"remote-notifications"] boolValue];
+        return [features[@"remote-notifications"] boolValue];
     }
 
     return NO;
@@ -63,7 +63,7 @@
         return;
     }
 
-    NSURL *onlineConfig = [NSURL URLWithString:[prefs objectForKey:@"ems-config-url"]];
+    NSURL *onlineConfig = [NSURL URLWithString:prefs[@"ems-config-url"]];
 
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 

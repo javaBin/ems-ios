@@ -8,6 +8,6 @@
 
 @required
 
-- (void) advancedSearchUpdated;
+- (void)advancedSearchUpdated;
 
 @end

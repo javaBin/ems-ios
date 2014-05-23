@@ -13,12 +13,9 @@
 #import "EMSAppDelegate.h"
 #import "EMSFeatureConfig.h"
 
-#import "Conference.h"
 #import "ConferenceKeyword.h"
 #import "ConferenceLevel.h"
 #import "ConferenceType.h"
-#import "Session.h"
-#import "Slot.h"
 #import "Keyword.h"
 #import "Room.h"
 #import "Speaker.h"
@@ -87,11 +84,11 @@
 
     if (matched.count > 0) {
         if (matched.count > 1) {
-            CLS_LOG(@"WARNING - found %lu conferences for href %@", (unsigned long)matched.count, url);
+            CLS_LOG(@"WARNING - found %lu conferences for href %@", (unsigned long) matched.count, url);
 
-            [self analyticsWarningForType:@"conference" andHref:url withCount:[NSNumber numberWithLong:matched.count]];
+            [self analyticsWarningForType:@"conference" andHref:url withCount:@(matched.count)];
         }
-        return [matched objectAtIndex:0];
+        return matched[0];
     }
 
     return nil;
@@ -104,11 +101,11 @@
 
     if (matched.count > 0) {
         if (matched.count > 1) {
-            CLS_LOG(@"WARNING - found %lu conferences for sessions href %@", (unsigned long)matched.count, url);
+            CLS_LOG(@"WARNING - found %lu conferences for sessions href %@", (unsigned long) matched.count, url);
 
-            [self analyticsWarningForType:@"conferenceForSession" andHref:url withCount:[NSNumber numberWithLong:matched.count]];
+            [self analyticsWarningForType:@"conferenceForSession" andHref:url withCount:@(matched.count)];
         }
-        return [matched objectAtIndex:0];
+        return matched[0];
     }
 
     return nil;
@@ -121,11 +118,11 @@
 
     if (matched.count > 0) {
         if (matched.count > 1) {
-            CLS_LOG(@"WARNING - found %lu slots for href %@", (unsigned long)matched.count, url);
+            CLS_LOG(@"WARNING - found %lu slots for href %@", (unsigned long) matched.count, url);
 
-            [self analyticsWarningForType:@"slot" andHref:url withCount:[NSNumber numberWithLong:matched.count]];
+            [self analyticsWarningForType:@"slot" andHref:url withCount:@(matched.count)];
         }
-        return [matched objectAtIndex:0];
+        return matched[0];
     }
 
     return nil;
@@ -138,11 +135,11 @@
 
     if (matched.count > 0) {
         if (matched.count > 1) {
-            CLS_LOG(@"WARNING - found %lu rooms for href %@", (unsigned long)matched.count, url);
+            CLS_LOG(@"WARNING - found %lu rooms for href %@", (unsigned long) matched.count, url);
 
-            [self analyticsWarningForType:@"room" andHref:url withCount:[NSNumber numberWithLong:matched.count]];
+            [self analyticsWarningForType:@"room" andHref:url withCount:@(matched.count)];
         }
-        return [matched objectAtIndex:0];
+        return matched[0];
     }
 
     return nil;
@@ -155,11 +152,11 @@
 
     if (matched.count > 0) {
         if (matched.count > 1) {
-            CLS_LOG(@"WARNING - found %lu sessions for href %@", (unsigned long)matched.count, url);
+            CLS_LOG(@"WARNING - found %lu sessions for href %@", (unsigned long) matched.count, url);
 
-            [self analyticsWarningForType:@"session" andHref:url withCount:[NSNumber numberWithLong:matched.count]];
+            [self analyticsWarningForType:@"session" andHref:url withCount:@(matched.count)];
         }
-        return [matched objectAtIndex:0];
+        return matched[0];
     }
 
     return nil;
@@ -172,11 +169,11 @@
 
     if (matched.count > 0) {
         if (matched.count > 1) {
-            CLS_LOG(@"WARNING - found %lu speakers for href %@", (unsigned long)matched.count, url);
+            CLS_LOG(@"WARNING - found %lu speakers for href %@", (unsigned long) matched.count, url);
 
-            [self analyticsWarningForType:@"speaker" andHref:url withCount:[NSNumber numberWithLong:matched.count]];
+            [self analyticsWarningForType:@"speaker" andHref:url withCount:@(matched.count)];
         }
-        return [matched objectAtIndex:0];
+        return matched[0];
     }
 
     return nil;
@@ -257,7 +254,7 @@
     conference.slotCollection = [ems.slotCollection absoluteString];
 
     if (ems.hintCount == nil) {
-        conference.hintCount = 0;
+        conference.hintCount = @0;
     } else {
         conference.hintCount = ems.hintCount;
     }
@@ -320,8 +317,8 @@
         [ems.keywords enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             NSString *keyword = (NSString *) obj;
 
-            NSSet *foundKeywords = [session.keywords objectsPassingTest:^BOOL(id obj, BOOL *stop) {
-                Keyword *sessionKeyword = (Keyword *) obj;
+            NSSet *foundKeywords = [session.keywords objectsPassingTest:^BOOL(id keywordObj, BOOL *keywordStop) {
+                Keyword *sessionKeyword = (Keyword *) keywordObj;
 
                 return [sessionKeyword.name isEqualToString:keyword];
             }];
@@ -333,8 +330,8 @@
                 newKeyword.session = session;
             }
 
-            NSSet *foundConferenceKeywords = [conference.conferenceKeywords objectsPassingTest:^BOOL(id obj, BOOL *stop) {
-                ConferenceKeyword *conferenceKeyword = (ConferenceKeyword *) obj;
+            NSSet *foundConferenceKeywords = [conference.conferenceKeywords objectsPassingTest:^BOOL(id conferenceObj, BOOL *conferenceStop) {
+                ConferenceKeyword *conferenceKeyword = (ConferenceKeyword *) conferenceObj;
 
                 return [conferenceKeyword.name isEqualToString:keyword];
             }];
@@ -384,7 +381,7 @@
             // Generate lightning slot names on first fetch - so that calculation is based on more correct data
             session.slotName = nil;
         } else {
-            session.slotName = [self getSlotNameForSlot:slot forConference:conference];
+            session.slotName = [self getSlotNameForSlot:slot];
         }
     } else {
         session.slotName = @"Time slot not yet allocated";
@@ -409,8 +406,8 @@
         [session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
             Speaker *speaker = (Speaker *) obj;
 
-            NSSet *foundSpeakers = [emsSpeakers objectsPassingTest:^BOOL(id obj, BOOL *stop) {
-                EMSSpeaker *emsSpeaker = (EMSSpeaker *) obj;
+            NSSet *foundSpeakers = [emsSpeakers objectsPassingTest:^BOOL(id speakerObj, BOOL *speakerStop) {
+                EMSSpeaker *emsSpeaker = (EMSSpeaker *) speakerObj;
 
                 return [[emsSpeaker.href absoluteString] isEqualToString:speaker.href];
             }];
@@ -469,7 +466,7 @@
 
 
     // Walk thru non-matching and delete
-    CLS_LOG(@"Deleting %lu conferences", (unsigned long)[unmatched count]);
+    CLS_LOG(@"Deleting %lu conferences", (unsigned long) [unmatched count]);
 
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Conference *conference = (Conference *) obj;
@@ -478,7 +475,7 @@
     }];
 
     // Walk thru matching and for each one - update. Store in list
-    CLS_LOG(@"Updating %lu conferences", (unsigned long)[matched count]);
+    CLS_LOG(@"Updating %lu conferences", (unsigned long) [matched count]);
 
     NSMutableSet *seen = [[NSMutableSet alloc] init];
 
@@ -487,11 +484,11 @@
 
         [seen addObject:conference.href];
 
-        [self populateConference:conference fromEMS:[hrefKeyed objectForKey:conference.href]];
+        [self populateConference:conference fromEMS:hrefKeyed[conference.href]];
     }];
 
     // Walk thru any new ones left
-    CLS_LOG(@"Inserting from %lu conferences with %lu seen", (unsigned long)[hrefKeyed count], (unsigned long)[seen count]);
+    CLS_LOG(@"Inserting from %lu conferences with %lu seen", (unsigned long) [hrefKeyed count], (unsigned long) [seen count]);
 
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
@@ -541,12 +538,12 @@
     }
 
     if (conferences.count > 1) {
-        CLS_LOG(@"WARNING - found %lu conferences for slot collection href %@", (unsigned long)conferences.count, href);
+        CLS_LOG(@"WARNING - found %lu conferences for slot collection href %@", (unsigned long) conferences.count, href);
 
-        [self analyticsWarningForType:@"conferenceForSlotCollection" andHref:href withCount:[NSNumber numberWithLong:conferences.count]];
+        [self analyticsWarningForType:@"conferenceForSlotCollection" andHref:href withCount:@(conferences.count)];
     }
 
-    Conference *conference = [conferences objectAtIndex:0];
+    Conference *conference = conferences[0];
 
     NSDictionary *hrefKeyed = [self slotsKeyedByHref:slots];
 
@@ -565,7 +562,7 @@
 
 
     // Walk thru non-matching and delete
-    CLS_LOG(@"Deleting %lu slots", (unsigned long)[unmatched count]);
+    CLS_LOG(@"Deleting %lu slots", (unsigned long) [unmatched count]);
 
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Slot *slot = (Slot *) obj;
@@ -574,7 +571,7 @@
     }];
 
     // Walk thru matching and for each one - update. Store in list
-    CLS_LOG(@"Updating %lu slots", (unsigned long)[matched count]);
+    CLS_LOG(@"Updating %lu slots", (unsigned long) [matched count]);
 
     NSMutableSet *seen = [[NSMutableSet alloc] init];
 
@@ -583,11 +580,11 @@
 
         [seen addObject:slot.href];
 
-        [self populateSlot:slot fromEMS:[hrefKeyed objectForKey:slot.href] forConference:conference];
+        [self populateSlot:slot fromEMS:hrefKeyed[slot.href] forConference:conference];
     }];
 
     // Walk thru any new ones left
-    CLS_LOG(@"Inserting from %lu slots with %lu seen", (unsigned long)[hrefKeyed count], (unsigned long)[seen count]);
+    CLS_LOG(@"Inserting from %lu slots with %lu seen", (unsigned long) [hrefKeyed count], (unsigned long) [seen count]);
 
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
@@ -639,12 +636,12 @@
     }
 
     if (conferences.count > 1) {
-        CLS_LOG(@"WARNING - found %lu conferences for room collection href %@", (unsigned long)conferences.count, href);
+        CLS_LOG(@"WARNING - found %lu conferences for room collection href %@", (unsigned long) conferences.count, href);
 
-        [self analyticsWarningForType:@"conferenceForRoomCollection" andHref:href withCount:[NSNumber numberWithLong:conferences.count]];
+        [self analyticsWarningForType:@"conferenceForRoomCollection" andHref:href withCount:@(conferences.count)];
     }
 
-    Conference *conference = [conferences objectAtIndex:0];
+    Conference *conference = conferences[0];
 
     NSDictionary *hrefKeyed = [self roomsKeyedByHref:rooms];
 
@@ -663,7 +660,7 @@
 
 
     // Walk thru non-matching and delete
-    CLS_LOG(@"Deleting %lu rooms", (unsigned long)[unmatched count]);
+    CLS_LOG(@"Deleting %lu rooms", (unsigned long) [unmatched count]);
 
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Room *room = (Room *) obj;
@@ -672,7 +669,7 @@
     }];
 
     // Walk thru matching and for each one - update. Store in list
-    CLS_LOG(@"Updating %lu rooms", (unsigned long)[matched count]);
+    CLS_LOG(@"Updating %lu rooms", (unsigned long) [matched count]);
 
     NSMutableSet *seen = [[NSMutableSet alloc] init];
 
@@ -681,11 +678,11 @@
 
         [seen addObject:room.href];
 
-        [self populateRoom:room fromEMS:[hrefKeyed objectForKey:room.href] forConference:conference];
+        [self populateRoom:room fromEMS:hrefKeyed[room.href] forConference:conference];
     }];
 
     // Walk thru any new ones left
-    CLS_LOG(@"Inserting from %lu rooms with %lu seen", (unsigned long)[hrefKeyed count], (unsigned long)[seen count]);
+    CLS_LOG(@"Inserting from %lu rooms with %lu seen", (unsigned long) [hrefKeyed count], (unsigned long) [seen count]);
 
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
@@ -737,12 +734,12 @@
     }
 
     if (sessions.count > 1) {
-        CLS_LOG(@"WARNING - found %lu sessions for speaker collection href %@", (unsigned long)sessions.count, href);
+        CLS_LOG(@"WARNING - found %lu sessions for speaker collection href %@", (unsigned long) sessions.count, href);
 
-        [self analyticsWarningForType:@"sessionsForSpeakerCollection" andHref:href withCount:[NSNumber numberWithLong:sessions.count]];
+        [self analyticsWarningForType:@"sessionsForSpeakerCollection" andHref:href withCount:@(sessions.count)];
     }
 
-    Session *session = [sessions objectAtIndex:0];
+    Session *session = sessions[0];
 
     NSDictionary *hrefKeyed = [self speakersKeyedByHref:speakers];
 
@@ -760,7 +757,7 @@
                          andSort:sort];
 
     // Walk thru non-matching and delete
-    CLS_LOG(@"Deleting %lu speakers", (unsigned long)[unmatched count]);
+    CLS_LOG(@"Deleting %lu speakers", (unsigned long) [unmatched count]);
 
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Speaker *speaker = (Speaker *) obj;
@@ -769,7 +766,7 @@
     }];
 
     // Walk thru matching and for each one - update. Store in list
-    CLS_LOG(@"Updating %lu speakers", (unsigned long)[matched count]);
+    CLS_LOG(@"Updating %lu speakers", (unsigned long) [matched count]);
 
     NSMutableSet *seen = [[NSMutableSet alloc] init];
 
@@ -778,11 +775,11 @@
 
         [seen addObject:speaker.href];
 
-        [self populateSpeaker:speaker fromEMS:[hrefKeyed objectForKey:speaker.href] forSession:session];
+        [self populateSpeaker:speaker fromEMS:hrefKeyed[speaker.href] forSession:session];
     }];
 
     // Walk thru any new ones left
-    CLS_LOG(@"Inserting from %lu speakers with %lu seen", (unsigned long)[hrefKeyed count], (unsigned long)[seen count]);
+    CLS_LOG(@"Inserting from %lu speakers with %lu seen", (unsigned long) [hrefKeyed count], (unsigned long) [seen count]);
 
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
@@ -832,12 +829,12 @@
     }
 
     if (conferences.count > 1) {
-        CLS_LOG(@"WARNING - found %lu conferences for session collection href %@", (unsigned long)conferences.count, href);
+        CLS_LOG(@"WARNING - found %lu conferences for session collection href %@", (unsigned long) conferences.count, href);
 
-        [self analyticsWarningForType:@"conferenceForSessionCollection" andHref:href withCount:[NSNumber numberWithLong:conferences.count]];
+        [self analyticsWarningForType:@"conferenceForSessionCollection" andHref:href withCount:@(conferences.count)];
     }
 
-    Conference *conference = [conferences objectAtIndex:0];
+    Conference *conference = conferences[0];
 
     NSDictionary *hrefKeyed = [self sessionsKeyedByHref:sessions];
 
@@ -856,7 +853,7 @@
 
 
     // Walk thru non-matching and delete
-    CLS_LOG(@"Deleting %lu sessions", (unsigned long)[unmatched count]);
+    CLS_LOG(@"Deleting %lu sessions", (unsigned long) [unmatched count]);
 
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Session *session = (Session *) obj;
@@ -865,7 +862,7 @@
     }];
 
     // Walk thru matching and for each one - update. Store in list
-    CLS_LOG(@"Updating %lu sessions", (unsigned long)[matched count]);
+    CLS_LOG(@"Updating %lu sessions", (unsigned long) [matched count]);
 
     NSMutableSet *seen = [[NSMutableSet alloc] init];
 
@@ -874,12 +871,12 @@
 
         [seen addObject:session.href];
 
-        [self populateSession:session fromEMS:[hrefKeyed objectForKey:session.href] forConference:conference];
+        [self populateSession:session fromEMS:hrefKeyed[session.href] forConference:conference];
     }];
 
 
     // Walk thru any new ones left
-    CLS_LOG(@"Inserting from %lu sessions with %lu seen", (unsigned long)[hrefKeyed count], (unsigned long)[seen count]);
+    CLS_LOG(@"Inserting from %lu sessions with %lu seen", (unsigned long) [hrefKeyed count], (unsigned long) [seen count]);
 
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
@@ -888,7 +885,7 @@
                              inManagedObjectContext:[self managedObjectContext]];
 
             // New sessions are not favourites by default.
-            session.favourite = [NSNumber numberWithBool:NO];
+            session.favourite = @NO;
 
             EMSSession *ems = (EMSSession *) obj;
 
@@ -912,10 +909,10 @@
         CLS_LOG(@"Setting conference dates from session dates for href %@", conference.href);
 
         NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"slot.start" ascending:YES];
-        NSArray *sorted = [conference.sessions sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateDescriptor]];
+        NSArray *sorted = [conference.sessions sortedArrayUsingDescriptors:@[dateDescriptor]];
 
         if (conference.start == nil) {
-            Session *first = [sorted objectAtIndex:0];
+            Session *first = sorted[0];
             CLS_LOG(@"Setting conference start date from session for href %@ to %@", conference.href, first.slot.start);
             conference.start = first.slot.start;
         }
@@ -968,12 +965,12 @@
 
     __block Slot *found = nil;
 
-    CLS_LOG(@"GSNFLS: Found %lu possible slots for %@ - %@", (unsigned long)slots.count, slot.start, slot.end);
+    CLS_LOG(@"GSNFLS: Found %lu possible slots for %@ - %@", (unsigned long) slots.count, slot.start, slot.end);
 
     [slots enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Slot *s = (Slot *) obj;
 
-        CLS_LOG(@"GSNFLS: Checking %@ - %@ with %lu possible slots for %@ - %@", s.start, s.end, (unsigned long)s.sessions.count, slot.start, slot.end);
+        CLS_LOG(@"GSNFLS: Checking %@ - %@ with %lu possible slots for %@ - %@", s.start, s.end, (unsigned long) s.sessions.count, slot.start, slot.end);
 
         if (s.sessions.count > 0) {
             if (![s.sessions containsObject:slot]) {
@@ -988,16 +985,16 @@
     if (found) {
         CLS_LOG(@"GSNFLS: Returning %@ - %@ for %@ - %@", found.start, found.end, slot.start, slot.end);
 
-        return [self getSlotNameForSlot:found forConference:conference];
+        return [self getSlotNameForSlot:found];
     }
 
     CLS_LOG(@"GSNFLS: Returning self for %@ - %@", slot.start, slot.end);
 
     // Default to our own name
-    return [self getSlotNameForSlot:slot forConference:conference];
+    return [self getSlotNameForSlot:slot];
 }
 
-- (NSString *)getSlotNameForSlot:(Slot *)slot forConference:(Conference *)conference {
+- (NSString *)getSlotNameForSlot:(Slot *)slot {
     if (slot == nil || slot.start == nil || slot.end == nil) {
         CLS_LOG(@"GSNFS: Slot data looks strange, %@, %@, %@", slot, slot.start, slot.end);
 
@@ -1019,12 +1016,12 @@
 - (NSSet *)slotsForSessionsWithPredicate:(NSPredicate *)predicate forConference:(Conference *)conference {
     NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"start" ascending:YES];
 
-    NSArray *slots = [self slotsForPredicate:predicate andSort:[NSArray arrayWithObject:sort]];
+    NSArray *slots = [self slotsForPredicate:predicate andSort:@[sort]];
 
     NSMutableSet *results = [[NSMutableSet alloc] init];
 
     if (slots != nil && [slots count] > 0) {
-        NSString *slotName = [self getSlotNameForSlot:[slots objectAtIndex:0] forConference:conference];
+        NSString *slotName = [self getSlotNameForSlot:slots[0]];
 
         NSArray *sessions = [self sessionsForPredicate:[NSPredicate predicateWithFormat:@"slotName = %@ AND conference == %@ AND state == %@", slotName, conference, @"approved"] andSort:nil];
 
@@ -1086,7 +1083,7 @@
 #endif
 
     if (isFavourite) {
-        session.favourite = [NSNumber numberWithBool:NO];
+        session.favourite = @NO;
 
         [self removeNotification:session];
 
@@ -1107,7 +1104,7 @@
             [currentInstallation saveInBackground];
         }
     } else {
-        session.favourite = [NSNumber numberWithBool:YES];
+        session.favourite = @YES;
 
         [self addNotification:session];
 
@@ -1165,7 +1162,7 @@
                                                         session.room.name]];
 
         [notification setSoundName:UILocalNotificationDefaultSoundName];
-        [notification setUserInfo:[NSDictionary dictionaryWithObject:session.href forKey:@"sessionhref"]];
+        [notification setUserInfo:@{@"sessionhref" : session.href}];
 
         CLS_LOG(@"Adding notification %@ for session %@ to notifications", notification, session);
 
@@ -1199,7 +1196,7 @@
         CLS_LOG(@"Saw a notification for %@", userInfo);
 
         if (userInfo != nil && [[userInfo allKeys] containsObject:@"sessionhref"]) {
-            if ([[userInfo objectForKey:@"sessionhref"] isEqual:session.href]) {
+            if ([userInfo[@"sessionhref"] isEqual:session.href]) {
                 CLS_LOG(@"Removing notification at %@ from notifications", notification);
 
                 [remaining removeObjectAtIndex:[notifications indexOfObject:obj]];
@@ -1218,8 +1215,8 @@
 
     // In debug mode we will use the current time of day but always the first day of conference. Otherwise we couldn't test until JZ started ;)
     NSSortDescriptor *conferenceSlotSort = [NSSortDescriptor sortDescriptorWithKey:@"start" ascending:YES];
-    NSArray *conferenceSlots = [self slotsForPredicate:[NSPredicate predicateWithFormat:@"conference == %@", conference] andSort:[NSArray arrayWithObject:conferenceSlotSort]];
-    Slot *firstSlot = [conferenceSlots objectAtIndex:0];
+    NSArray *conferenceSlots = [self slotsForPredicate:[NSPredicate predicateWithFormat:@"conference == %@", conference] andSort:@[conferenceSlotSort]];
+    Slot *firstSlot = conferenceSlots[0];
     NSDate *conferenceDate = firstSlot.start;
 
     CLS_LOG(@"Saw conference date of %@", conferenceDate);
@@ -1233,7 +1230,7 @@
     [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
     [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
 
-    return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04ld-%02ld-%02ld %02ld:%02ld:00 +0200", (long)[dateComp year], (long)[dateComp month], (long)[dateComp day], (long)[timeComp hour], (long)[timeComp minute]]];
+    return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04ld-%02ld-%02ld %02ld:%02ld:00 +0200", (long) [dateComp year], (long) [dateComp month], (long) [dateComp day], (long) [timeComp hour], (long) [timeComp minute]]];
 #else
     return date;
 #endif
@@ -1258,7 +1255,7 @@
     [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
     [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
 
-    return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04ld-%02ld-%02ld %02ld:%02ld:00 +0200", (long)[dateComp year], (long)[dateComp month], (long)[dateComp day], (long)[timeComp hour], (long)[timeComp minute]]];
+    return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04ld-%02ld-%02ld %02ld:%02ld:00 +0200", (long) [dateComp year], (long) [dateComp month], (long) [dateComp day], (long) [timeComp hour], (long) [timeComp minute]]];
 #else
     return session.slot.start;
 #endif

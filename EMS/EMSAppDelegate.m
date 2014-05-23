@@ -31,7 +31,7 @@ int networkCount = 0;
     NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:filePath];
 
 #ifndef DO_NOT_USE_CRASHLYTICS
-    [Crashlytics startWithAPIKey:[prefs objectForKey:@"crashlytics-api-key"]];
+    [Crashlytics startWithAPIKey:prefs[@"crashlytics-api-key"]];
 #endif
 
 #ifndef DO_NOT_USE_GA
@@ -44,22 +44,22 @@ int networkCount = 0;
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
 #ifdef DEBUG
 #ifdef TEST_PROD_NOTIFICATIONS
-        [Parse setApplicationId:[prefs objectForKey:@"parse-app-id-prod"]
-                      clientKey:[prefs objectForKey:@"parse-client-key-prod"]];
+        [Parse setApplicationId:prefs[@"parse-app-id-prod"]
+                      clientKey:prefs[@"parse-client-key-prod"]];
 #else
-        [Parse setApplicationId:[prefs objectForKey:@"parse-app-id"]
-                      clientKey:[prefs objectForKey:@"parse-client-key"]];
+        [Parse setApplicationId:prefs[@"parse-app-id"]
+                      clientKey:prefs[@"parse-client-key"]];
 #endif
 #else
-    [Parse setApplicationId:[prefs objectForKey:@"parse-app-id-prod"]
-                  clientKey:[prefs objectForKey:@"parse-client-key-prod"]];
+    [Parse setApplicationId:prefs[@"parse-app-id-prod"]
+                  clientKey:prefs[@"parse-client-key-prod"]];
 #endif
     }
 
     [self cleanup];
 
 #ifndef DO_NOT_USE_GA
-    id <GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:[prefs objectForKey:@"google-analytics-tracking-id"]];
+    id <GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:prefs[@"google-analytics-tracking-id"]];
 #endif
 
     if ([EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
@@ -70,7 +70,7 @@ int networkCount = 0;
                                                                value:nil] build]];
 #endif
 
-        UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+        UILocalNotification *notification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];
 
         [self activateWithNotification:notification];
     }
@@ -85,7 +85,7 @@ int networkCount = 0;
         [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert];
 
         if (launchOptions != nil) {
-            NSDictionary *dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+            NSDictionary *dictionary = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
             if (dictionary != nil) {
 #ifndef DO_NOT_USE_GA
                 [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
@@ -358,9 +358,7 @@ int networkCount = 0;
 
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
 
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
-            [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
-            [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+    NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption : @YES, NSInferMappingModelAutomaticallyOption : @YES};
 
     NSError *error = nil;
     if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {

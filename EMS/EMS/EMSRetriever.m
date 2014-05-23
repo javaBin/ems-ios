@@ -12,54 +12,54 @@
 
 @implementation EMSRetriever
 
-- (void) refreshConferences {
+- (void)refreshConferences {
     EMSConferencesRetriever *retriever = [[EMSConferencesRetriever alloc] init];
-    
+
     retriever.delegate = self.delegate;
-    
-	NSString *filePath = [[NSBundle mainBundle] pathForResource:@"EMS-Config" ofType:@"plist"];
+
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"EMS-Config" ofType:@"plist"];
     NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:filePath];
-    
+
 #ifdef DEBUG
 #ifdef TEST_PROD
-    [retriever fetch:[NSURL URLWithString:[prefs objectForKey:@"ems-root-url-prod"]]];
+    [retriever fetch:[NSURL URLWithString:prefs[@"ems-root-url-prod"]]];
 #else
-    [retriever fetch:[NSURL URLWithString:[prefs objectForKey:@"ems-root-url"]]];
+    [retriever fetch:[NSURL URLWithString:prefs[@"ems-root-url"]]];
 #endif
 #else
-    [retriever fetch:[NSURL URLWithString:[prefs objectForKey:@"ems-root-url-prod"]]];
+    [retriever fetch:[NSURL URLWithString:prefs[@"ems-root-url-prod"]]];
 #endif
 }
 
-- (void) refreshSlots:(NSURL *)slotCollection {
+- (void)refreshSlots:(NSURL *)slotCollection {
     EMSSlotsRetriever *retriever = [[EMSSlotsRetriever alloc] init];
-    
+
     retriever.delegate = self.delegate;
-    
+
     [retriever fetch:slotCollection];
 }
 
-- (void) refreshSessions:(NSURL *)sessionCollection {
+- (void)refreshSessions:(NSURL *)sessionCollection {
     EMSSessionsRetriever *retriever = [[EMSSessionsRetriever alloc] init];
-    
+
     retriever.delegate = self.delegate;
-    
+
     [retriever fetch:sessionCollection];
 }
 
-- (void) refreshRooms:(NSURL *)roomCollection {
+- (void)refreshRooms:(NSURL *)roomCollection {
     EMSRoomsRetriever *retriever = [[EMSRoomsRetriever alloc] init];
-    
+
     retriever.delegate = self.delegate;
-    
+
     [retriever fetch:roomCollection];
 }
 
-- (void) refreshSpeakers:(NSURL *)speakerCollection {
+- (void)refreshSpeakers:(NSURL *)speakerCollection {
     EMSSpeakersRetriever *retriever = [[EMSSpeakersRetriever alloc] init];
-    
+
     retriever.delegate = self.delegate;
-    
+
     [retriever fetch:speakerCollection];
 }
 
