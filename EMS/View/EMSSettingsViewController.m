@@ -214,8 +214,6 @@
                                                            label:@"conference.href"
                                                            value:nil] build]];
 #endif
-
-
 }
 
 - (void)finishedConferences:(NSArray *)conferenceList forHref:(NSURL *)href {
