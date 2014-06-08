@@ -380,8 +380,6 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="s3S-Bp-mRb"/>
-                        <barButtonItem title="Item" id="6wx-sH-YOH"/>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="pyL-kA-pP2"/>
                         <barButtonItem image="19-gear.png" style="plain" id="IHa-T0-39E">
                             <connections>
                                 <segue destination="QNg-bQ-mlr" kind="modal" identifier="showSettingsView" id="mpM-Oq-YCs"/>
