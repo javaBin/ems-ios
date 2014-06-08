@@ -89,6 +89,7 @@
 		EA6132BC193FC35B000F54DC /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
 		EA6132BF193FD089000F54DC /* EMSSyncService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BE193FD089000F54DC /* EMSSyncService.m */; };
 		EA6132C0193FD089000F54DC /* EMSSyncService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BE193FD089000F54DC /* EMSSyncService.m */; };
+		EA8F2C831944CCB7002EAE1F /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
 		F30A8CDB192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */ = {isa = PBXBuildFile; fileRef = F30A8CDA192B42FF0066DFD9 /* EMSDetailViewRow.m */; };
 		F30A8CDC192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */ = {isa = PBXBuildFile; fileRef = F30A8CDA192B42FF0066DFD9 /* EMSDetailViewRow.m */; };
 		F30A8CDF192B555A0066DFD9 /* 14-tag.png in Resources */ = {isa = PBXBuildFile; fileRef = F30A8CDD192B555A0066DFD9 /* 14-tag.png */; };
@@ -769,7 +770,7 @@
 						DevelopmentTeam = 8WE6452SWH;
 					};
 					F394C96E17F0173900FAFBD4 = {
-						DevelopmentTeam = EL8Z296J47;
+						DevelopmentTeam = 8WE6452SWH;
 					};
 				};
 			};
@@ -1116,15 +1117,16 @@
 				F394C98817F0173900FAFBD4 /* Conference.m in Sources */,
 				F394C98917F0173900FAFBD4 /* Keyword.m in Sources */,
 				F394C98A17F0173900FAFBD4 /* ConferenceLevel.m in Sources */,
-				EA6132C0193FD089000F54DC /* EMSSyncService.m in Sources */,
 				F394C98B17F0173900FAFBD4 /* Room.m in Sources */,
 				F394C98C17F0173900FAFBD4 /* Slot.m in Sources */,
 				F394C98D17F0173900FAFBD4 /* ConferenceKeyword.m in Sources */,
 				F30A8CDC192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */,
 				F394C98E17F0173900FAFBD4 /* ConferenceType.m in Sources */,
 				F394C98F17F0173900FAFBD4 /* Session.m in Sources */,
+				EA8F2C831944CCB7002EAE1F /* EMSConfig.m in Sources */,
 				F394C99017F0173900FAFBD4 /* EMSFeatureConfig.m in Sources */,
 				F394C99117F0173900FAFBD4 /* EMSAdvancedSearch.m in Sources */,
+				EA6132C0193FD089000F54DC /* EMSSyncService.m in Sources */,
 				F394C99217F0173900FAFBD4 /* EMSAboutViewController.m in Sources */,
 				F394C99317F0173900FAFBD4 /* AddVideoLinkMapping.xcmappingmodel in Sources */,
 				F394C99417F0173900FAFBD4 /* EMSConferenceDetailViewController.m in Sources */,
@@ -1363,6 +1365,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "flatMap - AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 17;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1384,7 +1387,7 @@
 					"-DSKIP_CONFIG_REFRESH",
 				);
 				PRODUCT_NAME = flatMap;
-				PROVISIONING_PROFILE = "DB7A84F5-6C88-4084-97B6-6175253A7887";
+				PROVISIONING_PROFILE = "";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1397,6 +1400,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "flatMap - AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 17;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1417,7 +1421,7 @@
 					"-DTEST_PROD=1",
 				);
 				PRODUCT_NAME = flatMap;
-				PROVISIONING_PROFILE = "DB7A84F5-6C88-4084-97B6-6175253A7887";
+				PROVISIONING_PROFILE = "";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1430,7 +1434,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "flatMap - AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chris Searle";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 17;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1445,7 +1449,7 @@
 					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = flatMap;
-				PROVISIONING_PROFILE = "D9882EFE-347C-4291-A316-75A214C600F0";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0C88122F-AAA1-4104-952D-FFAA4290D539";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
