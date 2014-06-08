@@ -7,15 +7,23 @@
 
 @interface EMSRetriever : NSObject
 
++ (instancetype) sharedInstance;
+
 @property(nonatomic, weak) id <EMSRetrieverDelegate> delegate;
+
+@property(readonly) BOOL refreshingConferences;
+
+@property(readonly) BOOL refreshingSlots;
+
+@property(readonly) BOOL refreshingSessions;
+
+@property(readonly) BOOL refreshingRooms;
+
+@property(readonly) BOOL refreshingSpeakers;
 
 - (void)refreshConferences;
 
-- (void)refreshSlots:(NSURL *)slotCollection;
-
-- (void)refreshSessions:(NSURL *)sessionCollection;
-
-- (void)refreshRooms:(NSURL *)roomCollection;
+- (void)refreshActiveConference;
 
 - (void)refreshSpeakers:(NSURL *)speakerCollection;
 

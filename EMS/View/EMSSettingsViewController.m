@@ -10,7 +10,7 @@
 #import "EMSConferenceDetailViewController.h"
 
 @interface EMSSettingsViewController ()
-
+@property(nonatomic) EMSRetriever *retriever;
 @end
 
 @implementation EMSSettingsViewController
@@ -29,9 +29,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.justRetrieved = NO;
-    self.emptyInitial = NO;
-
     [self setUpRefreshControl];
 
     NSError *error;
@@ -47,22 +44,45 @@
 
         CLS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
     }
-
-    if (![[[EMSAppDelegate sharedAppDelegate] model] conferencesWithDataAvailable]) {
-        self.emptyInitial = YES;
-
-        [self.tableView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:YES];
-        [self.refreshControl beginRefreshing];
-        [self retrieve];
-    }
+    
 }
 
+static void *refreshingConferencesContext = &refreshingConferencesContext;
+
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
 #ifndef DO_NOT_USE_GA
     id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Settings Screen"];
     [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 #endif
+    
+    
+    
+    [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingConferences)) options:0 context:refreshingConferencesContext];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    [[EMSRetriever sharedInstance] removeObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingConferences))];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (context == refreshingConferencesContext) {
+        
+        __weak EMSSettingsViewController *weakSelf = self;
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            __strong EMSSettingsViewController *strongSelf = weakSelf;
+            if ([EMSRetriever sharedInstance].refreshingConferences) {
+                [strongSelf.refreshControl beginRefreshing];
+            } else {
+                [strongSelf.refreshControl endRefreshing];
+            }
+        }];
+        
+    }
 }
 
 - (NSFetchedResultsController *)fetchedResultsController {
@@ -100,17 +120,17 @@
 
     _fetchedResultsController.delegate = self;
 
+    
+    
     return _fetchedResultsController;
 }
 
 - (void)retrieve {
-
-    EMSRetriever *retriever = [[EMSRetriever alloc] init];
-
-    retriever.delegate = self;
-
+    
+    EMSRetriever *retriever = [EMSRetriever sharedInstance];
+    
     CLS_LOG(@"Retrieving conferences");
-
+    
     [retriever refreshConferences];
 }
 
@@ -218,23 +238,6 @@
 
 }
 
-- (void)finishedConferences:(NSArray *)conferenceList forHref:(NSURL *)href {
-    self.justRetrieved = YES;
-
-    NSError *error = nil;
-
-    EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
-
-    if (![backgroundModel storeConferences:conferenceList error:&error]) {
-        CLS_LOG(@"Failed to store conferences %@ - %@", error, [error userInfo]);
-    }
-
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
-
-        [self.refreshControl endRefreshing];
-    });
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
@@ -296,15 +299,6 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView endUpdates];
-
-    if (self.justRetrieved && self.emptyInitial) {
-        self.justRetrieved = NO;
-        self.emptyInitial = NO;
-
-        Conference *conference = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-
-        [self selectConference:conference];
-    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

@@ -60,6 +60,7 @@ int networkCount = 0;
 
 #ifndef DO_NOT_USE_GA
     id <GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:prefs[@"google-analytics-tracking-id"]];
+    [GAI sharedInstance].trackUncaughtExceptions = NO; //GAI runs the main runloop after a crash occured. This might lead to asyncronous events being executed which in turn can lead to serious bugs. The main reason for disabling was that it leaded to deadlock in core data. 
 #endif
 
     if ([EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
@@ -101,6 +102,32 @@ int networkCount = 0;
     }
 
     [[self window] rootViewController];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"NSUserDefaultsDidChangeNotification" object:[NSUserDefaults standardUserDefaults] queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+           
+            if (![[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:[[EMSAppDelegate currentConference] absoluteString]]) {
+                CLS_LOG(@"Checking for existing data found no data - forced refresh");
+                [[EMSRetriever sharedInstance] refreshActiveConference];
+                
+            }
+            
+        }];
+
+
+    }];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        
+        if (![[[EMSAppDelegate sharedAppDelegate] model] conferencesWithDataAvailable]) {
+            CLS_LOG(@"Retrieving conferences");
+            [[EMSRetriever sharedInstance] refreshConferences];
+        }
+        
+    });
 
     return YES;
 }
@@ -126,6 +153,7 @@ int networkCount = 0;
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
 #ifndef DO_NOT_USE_GA
         id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    
 
         [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
                                                               action:@"remotenotification"

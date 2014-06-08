@@ -22,10 +22,6 @@
 @property(nonatomic, strong) EMSDetailViewController *detailViewController;
 
 @property(nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
-@property(nonatomic, strong) EMSRetriever *retriever;
-
-@property(nonatomic, assign) BOOL retrievingSlots;
-@property(nonatomic, assign) BOOL retrievingRooms;
 
 @property(nonatomic, assign) BOOL filterFavourites;
 @property(nonatomic, assign) BOOL filterTime;
@@ -79,26 +75,34 @@
 }
 
 - (void)initializeFooter {
+    
+    
     if ([[self.fetchedResultsController sections] count] == 0) {
         NSMutableString *labelText = [[NSMutableString alloc] init];
-
-        [labelText appendString:@"No rows found."];
-
-        if ([[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:[[self activeConference] href]]) {
-            [labelText appendString:@" Try"];
-
-            if ([self.advancedSearch hasAdvancedSearch] || ![self.search.text isEqualToString:@""]) {
-                [labelText appendString:@" a less restrictive search,"];
+        
+        
+        Conference *conference = [self activeConference];
+        if ([self activeConference]) {
+            [labelText appendString:@"No sessions found."];
+            
+            if ([[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:[conference href]]) {
+                [labelText appendString:@" Try"];
+                
+                if ([self.advancedSearch hasAdvancedSearch] || ![self.search.text isEqualToString:@""]) {
+                    [labelText appendString:@" a less restrictive search,"];
+                } else if (self.filterFavourites || self.filterTime) {
+                    [labelText appendString:@" switching back to the full list,"];
+                }
+                
+                [labelText appendString:@" or you can refresh the session list with pull to refresh."];
+            } else {
+                [labelText appendString:@" Refreshing session list."];
             }
-
-            if (self.filterFavourites || self.filterTime) {
-                [labelText appendString:@" switching back to the full list,"];
-            }
-
-            [labelText appendString:@" or you can refresh the session list with pull to refresh."];
+            
         } else {
-            [labelText appendString:@" Refreshing session list."];
+            [labelText appendString:@"Refreshing session list."];
         }
+
 
         self.footerLabel.text = [NSString stringWithString:labelText];
 
@@ -129,24 +133,13 @@
 
     [self.tableView reloadData];
 
-    Conference *activeConference = [self activeConference];
 
-    if (![[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:activeConference.href]) {
-        CLS_LOG(@"Checking for existing data found no data - forced refresh");
-
-        [self.tableView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:YES];
-        [self.refreshControl beginRefreshing];
-        [self retrieve];
-    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     self.title = @"Sessions";
-
-    self.retrievingSlots = NO;
-    self.retrievingRooms = NO;
 
     self.filterFavourites = NO;
     self.filterTime = NO;
@@ -155,9 +148,6 @@
 
     self.search.text = [self.advancedSearch search];
 
-    self.retriever = [[EMSRetriever alloc] init];
-    self.retriever.delegate = self;
-
     [self setUpRefreshControl];
 
     // All sections start with the same year name - so the index is meaningless.
@@ -165,24 +155,13 @@
     // This is also set in the storyboard but appears not to work.
     self.tableView.sectionIndexMinimumDisplayRowCount = 500;
 
-    Conference *conference = [self activeConference];
-
-    if (conference == nil) {
-        CLS_LOG(@"No conference - push to settings view");
-
-        [self performSegueWithIdentifier:@"showSettingsView" sender:self];
-    } else {
-        CLS_LOG(@"Conference found - initialize");
-
-        [self initializeFetchedResultsController];
-    }
-
-
     if (self.splitViewController) {
         self.splitViewController.delegate = self;
     }
 
 }
+
+static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -194,16 +173,30 @@
          }
      }*/
 
-
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
 #ifndef DO_NOT_USE_GA
     id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Main Screen"];
     [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 #endif
-
+    
+    [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions)) options:0 context:kRefreshActiveConferenceContext];
+    
+    
+    Conference *conference = [self activeConference];
+    
+    if (conference) {
+        CLS_LOG(@"Conference found - initialize");
+        
+        [self initializeFetchedResultsController];
+    }
+    
+    
     if (self.splitViewController) {
         if (self.tableView.numberOfSections > 0 && [self.tableView numberOfRowsInSection:0] > 0) {
             if ([self.tableView indexPathForSelectedRow] == nil) {
@@ -212,6 +205,34 @@
                 [self performSegueWithIdentifier:@"showDetailsView" sender:self];
             }
         }
+    }
+    
+    [self initializeFooter];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    
+    [[EMSRetriever sharedInstance] removeObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions))];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (context == kRefreshActiveConferenceContext) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            EMSRetriever *emsRetriever = [EMSRetriever sharedInstance];
+            if (emsRetriever.refreshingSessions) {
+                [self.refreshControl beginRefreshing];
+            } else {
+                [self.refreshControl endRefreshing];
+                
+                if ([self activeConference]) {
+                    [self initializeFetchedResultsController];
+                }
+                
+            }
+        });
     }
 }
 
@@ -637,91 +658,8 @@
     return [_fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
 }
 
-#pragma mark - retrieval
-
 - (void)retrieve {
-    Conference *activeConference = [self activeConference];
-
-    CLS_LOG(@"Starting retrieval");
-
-    if (activeConference != nil) {
-        CLS_LOG(@"Starting retrieval - saw conf");
-
-        if (activeConference.slotCollection != nil) {
-            CLS_LOG(@"Starting retrieval - saw slot collection");
-            self.retrievingSlots = YES;
-            [self.retriever refreshSlots:[NSURL URLWithString:activeConference.slotCollection]];
-        }
-        if (activeConference.roomCollection != nil) {
-            CLS_LOG(@"Starting retrieval - saw room collection");
-            self.retrievingRooms = YES;
-            [self.retriever refreshRooms:[NSURL URLWithString:activeConference.roomCollection]];
-        }
-    }
-}
-
-- (void)retrieveSessions {
-    CLS_LOG(@"Starting retrieval of sessions");
-    // Fetch sessions once rooms and slots are done. Don't want to get into a state when trying to persist sessions that it refers to non-existing room or slot
-    if (!self.retrievingRooms && !self.retrievingSlots) {
-        CLS_LOG(@"Starting retrieval of sessions - clear to go");
-        Conference *activeConference = [self activeConference];
-        [self.retriever refreshSessions:[NSURL URLWithString:activeConference.sessionCollection]];
-    }
-}
-
-- (void)finishedSlots:(NSArray *)slots forHref:(NSURL *)href {
-    CLS_LOG(@"Storing slots %lu", (unsigned long) [slots count]);
-
-    NSError *error = nil;
-
-    EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
-
-    if (![backgroundModel storeSlots:slots forHref:[href absoluteString] error:&error]) {
-        CLS_LOG(@"Failed to store slots %@ - %@", error, [error userInfo]);
-    }
-
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        self.retrievingSlots = NO;
-
-        [self retrieveSessions];
-    });
-}
-
-- (void)finishedSessions:(NSArray *)sessions forHref:(NSURL *)href {
-    CLS_LOG(@"Storing sessions %lu", (unsigned long) [sessions count]);
-
-    NSError *error = nil;
-
-    EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
-
-    if (![backgroundModel storeSessions:sessions forHref:[href absoluteString] error:&error]) {
-        CLS_LOG(@"Failed to store sessions %@ - %@", error, [error userInfo]);
-    }
-
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
-        [self.refreshControl endRefreshing];
-        [self initializeFooter];
-    });
-}
-
-- (void)finishedRooms:(NSArray *)rooms forHref:(NSURL *)href {
-    CLS_LOG(@"Storing rooms %lu", (unsigned long) [rooms count]);
-
-    NSError *error = nil;
-
-    EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
-
-    if (![backgroundModel storeRooms:rooms forHref:[href absoluteString] error:&error]) {
-        CLS_LOG(@"Failed to store rooms %@ - %@", error, [error userInfo]);
-    }
-
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        self.retrievingRooms = NO;
-
-        [self retrieveSessions];
-    });
+    [[EMSRetriever sharedInstance] refreshActiveConference];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate

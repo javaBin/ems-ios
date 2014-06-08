@@ -11,7 +11,4 @@
 
 @property(nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
-@property(nonatomic, assign) BOOL justRetrieved;
-@property(nonatomic, assign) BOOL emptyInitial;
-
 @end

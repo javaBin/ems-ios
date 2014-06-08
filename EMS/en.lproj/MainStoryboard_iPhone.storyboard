@@ -71,7 +71,7 @@
                     <navigationItem key="navigationItem" title="Settings" id="LwD-U9-yk6">
                         <barButtonItem key="leftBarButtonItem" style="done" systemItem="done" id="BNa-5Q-bha">
                             <connections>
-                                <segue destination="1hY-H8-YCf" kind="unwind" identifier="unwindSettingsSegue" unwindAction="back:" id="JSE-xx-EPK"/>
+                                <segue destination="1hY-H8-YCf" kind="unwind" identifier="unwindSettingsSegue" unwindAction="back:" id="dJz-BB-kbc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -244,7 +244,7 @@
                             <rect key="frame" x="0.0" y="544" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Footer" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="Laf-bi-x96">
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="Laf-bi-x96">
                                     <rect key="frame" x="10" y="0.0" width="300" height="44"/>
                                     <fontDescription key="fontDescription" type="italicSystem" pointSize="12"/>
                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -380,6 +380,8 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="s3S-Bp-mRb"/>
+                        <barButtonItem title="Item" id="6wx-sH-YOH"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="pyL-kA-pP2"/>
                         <barButtonItem image="19-gear.png" style="plain" id="IHa-T0-39E">
                             <connections>
                                 <segue destination="QNg-bQ-mlr" kind="modal" identifier="showSettingsView" id="mpM-Oq-YCs"/>
