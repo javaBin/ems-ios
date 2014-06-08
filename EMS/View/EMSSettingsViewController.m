@@ -234,8 +234,6 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
                                                            label:@"conference.href"
                                                            value:nil] build]];
 #endif
-
-
 }
 
 
