@@ -42,4 +42,6 @@
 
 - (void)clearConference:(Conference *)conference;
 
+- (NSDate *)dateForConference:(Conference *)conference andDate:(NSDate *)date;
+
 @end

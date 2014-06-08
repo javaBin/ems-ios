@@ -17,6 +17,7 @@
 #import "Speaker.h"
 #import "Room.h"
 
+
 @interface EMSMainViewController () <UISplitViewControllerDelegate,UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate>
 
 @property(nonatomic, strong) EMSDetailViewController *detailViewController;
@@ -24,7 +25,6 @@
 @property(nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @property(nonatomic, assign) BOOL filterFavourites;
-@property(nonatomic, assign) BOOL filterTime;
 
 @property(nonatomic, strong) EMSAdvancedSearch *advancedSearch;
 
@@ -37,6 +37,8 @@
 - (IBAction)toggleFavourite:(id)sender;
 
 - (IBAction)segmentChanged:(id)sender;
+
+- (IBAction) scrollToNow:(id) sender;
 
 - (IBAction)back:(UIStoryboardSegue *)segue;
 
@@ -92,7 +94,7 @@
                 
                 if ([self.advancedSearch hasAdvancedSearch] || ![self.search.text isEqualToString:@""]) {
                     [labelText appendString:@" a less restrictive search,"];
-                } else if (self.filterFavourites || self.filterTime) {
+                } else if (self.filterFavourites) {
                     [labelText appendString:@" switching back to the full list,"];
                 }
                 
@@ -216,13 +218,7 @@
             [predicates
              addObject:[NSPredicate predicateWithFormat:@"favourite = %@", @YES]];
         }
-        
-        if (self.filterTime) {
-            NSSet *slots = [[[EMSAppDelegate sharedAppDelegate] model] activeSlotNamesForConference:activeConference];
-            
-            [predicates
-             addObject:[NSPredicate predicateWithFormat:@"slot IN %@", slots]];
-        }
+
         
         NSPredicate *resultPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
         
@@ -287,7 +283,6 @@
     self.title = @"Sessions";
 
     self.filterFavourites = NO;
-    self.filterTime = NO;
 
     self.advancedSearch = [[EMSAdvancedSearch alloc] init];
 
@@ -816,7 +811,6 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
 
 - (void)segmentChanged:(id)sender {
     self.filterFavourites = NO;
-    self.filterTime = NO;
 
 #ifndef DO_NOT_USE_GA
     UISegmentedControl *segment = (UISegmentedControl *) sender;
@@ -841,15 +835,6 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
             self.filterFavourites = YES;
             break;
         }
-        case 2: {
-            // Now / Next
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
-                                                                  action:@"now/next"
-                                                                   label:nil
-                                                                   value:nil] build]];
-            self.filterTime = YES;
-            break;
-        }
 
         default:
             break;
@@ -858,6 +843,54 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
 
     [self initializeFetchedResultsController];
 }
+
+- (IBAction) scrollToNow:(id) sender {
+    
+    Conference *conference = [self activeConference];
+    if (!conference) {
+        return;
+    }
+    
+    NSArray *sections = [self.fetchedResultsController sections];
+    
+    if ([sections count] == 0) {
+        return;
+    }
+    
+    NSMutableArray *mappedObjects = [NSMutableArray array];
+    
+    for (id <NSFetchedResultsSectionInfo> sectionInfo in sections) {
+        if ([sectionInfo numberOfObjects] > 0) {
+            Session *session = [sectionInfo objects].firstObject;
+            [mappedObjects addObject:session.slot.end];
+        }
+    }
+    
+    NSRange range = NSMakeRange(0, [sections count]);
+
+    NSArray *sortedDates = [mappedObjects sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2];
+    }];
+    
+    
+    NSDate *now = [[[EMSAppDelegate sharedAppDelegate] model] dateForConference:conference andDate:[NSDate date]];
+   
+    NSInteger index = [sortedDates indexOfObject:now inSortedRange:range options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2];
+    }];
+    
+    if (index != NSNotFound) {
+        if (index >= [sections count]) {//scroll to end
+            index = [sections count] - 1;
+        }
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:index];
+            
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        
+    }
+}
+
 
 #pragma mark - UISplitViewControllerDelegate
 

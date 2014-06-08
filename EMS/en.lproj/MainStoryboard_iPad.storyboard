@@ -224,7 +224,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="em0-f4-RIp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5097" y="662"/>
+            <point key="canvasLocation" x="-631" y="-1642"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="qKq-Nh-HI0">
@@ -491,11 +491,6 @@
                         </prototypes>
                     </tableView>
                     <toolbarItems>
-                        <barButtonItem image="06-magnify.png" style="plain" id="XjE-3B-Jx5">
-                            <connections>
-                                <segue destination="q4g-1e-HQR" kind="modal" identifier="showSearchView" modalPresentationStyle="formSheet" id="LET-yQ-If7"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="GJU-RI-YVR"/>
                         <barButtonItem image="19-gear.png" style="plain" id="O8v-RP-Sfq">
                             <connections>
@@ -505,22 +500,30 @@
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="GVJ-Sj-som">
                         <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" title="Filter" id="Ji7-4n-uCE">
+                            <connections>
+                                <segue destination="q4g-1e-HQR" kind="modal" identifier="showSearchView" modalPresentationStyle="formSheet" id="72t-fp-DcX"/>
+                            </connections>
+                        </barButtonItem>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="xIm-NT-rXZ">
-                            <rect key="frame" x="44" y="7" width="233" height="30"/>
+                            <rect key="frame" x="83" y="7" width="155" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="All"/>
                                 <segment title="Favourites"/>
-                                <segment title="Now"/>
                             </segments>
                             <connections>
                                 <action selector="segmentChanged:" destination="Tnw-1T-TNg" eventType="valueChanged" id="Dwf-Ec-VkL"/>
                             </connections>
                         </segmentedControl>
+                        <barButtonItem key="rightBarButtonItem" title="Now" id="NpK-ch-5Qd">
+                            <connections>
+                                <action selector="scrollToNow:" destination="Tnw-1T-TNg" id="RJ4-r2-MyA"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
                     <connections>
-                        <outlet property="advancedSearchButton" destination="XjE-3B-Jx5" id="zg9-Yf-J0i"/>
                         <outlet property="footer" destination="gdR-6L-bQe" id="X8M-pm-DUk"/>
                         <outlet property="footerLabel" destination="UEs-dd-Koj" id="Xl2-gL-D5v"/>
                         <outlet property="search" destination="Do0-h2-Su0" id="e4P-L7-j41"/>
@@ -714,8 +717,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I51-W0-NK9">
-                                <rect key="frame" x="304" y="501" width="160" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I51-W0-NK9">
+                                <rect key="frame" x="305" y="502" width="159" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText">
                                     <fragment content="No session selected.">
@@ -795,7 +798,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dGx-qR-8c1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4123" y="662"/>
+            <point key="canvasLocation" x="-1605" y="-1642"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="K3P-zx-EED">
@@ -839,7 +842,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="06-magnify.png" width="24" height="24"/>
         <image name="19-gear.png" width="26" height="26"/>
         <image name="258-checkmark-grey.png" width="19" height="18"/>
         <image name="28-star-grey.png" width="26" height="26"/>

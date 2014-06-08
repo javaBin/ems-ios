@@ -374,11 +374,6 @@
                         </prototypes>
                     </tableView>
                     <toolbarItems>
-                        <barButtonItem image="06-magnify.png" style="plain" id="rEC-so-XYr">
-                            <connections>
-                                <segue destination="Q46-IM-sls" kind="modal" identifier="showSearchView" id="a8q-fW-7l2"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="s3S-Bp-mRb"/>
                         <barButtonItem image="19-gear.png" style="plain" id="IHa-T0-39E">
                             <connections>
@@ -387,21 +382,29 @@
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="iZo-Hp-orM">
+                        <barButtonItem key="leftBarButtonItem" title="Filter" id="sbU-kd-4dC">
+                            <connections>
+                                <segue destination="Q46-IM-sls" kind="modal" identifier="showSearchView" id="zXz-A1-g5T"/>
+                            </connections>
+                        </barButtonItem>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="47E-mD-yuA">
-                            <rect key="frame" x="44" y="7" width="233" height="30"/>
+                            <rect key="frame" x="83" y="7" width="155" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="All"/>
                                 <segment title="Favourites"/>
-                                <segment title="Now"/>
                             </segments>
                             <connections>
                                 <action selector="segmentChanged:" destination="bNB-PM-Jcs" eventType="valueChanged" id="BjY-8O-RzI"/>
                             </connections>
                         </segmentedControl>
+                        <barButtonItem key="rightBarButtonItem" title="Now" id="Vsi-Ju-aIE">
+                            <connections>
+                                <action selector="scrollToNow:" destination="bNB-PM-Jcs" id="XLA-Te-ztu"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="advancedSearchButton" destination="rEC-so-XYr" id="TM5-Vk-1IK"/>
                         <outlet property="footer" destination="5g9-P8-RVj" id="dfN-Ob-emi"/>
                         <outlet property="footerLabel" destination="Laf-bi-x96" id="376-Wq-gu6"/>
                         <outlet property="search" destination="Zif-KH-RXK" id="tq7-GP-YRY"/>
@@ -652,7 +655,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="06-magnify.png" width="24" height="24"/>
         <image name="19-gear.png" width="26" height="26"/>
         <image name="258-checkmark-grey.png" width="19" height="18"/>
         <image name="28-star-grey.png" width="26" height="26"/>

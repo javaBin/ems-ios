@@ -1,3 +1,4 @@
+
 //
 //  EMSModel.m
 //
@@ -1033,32 +1034,6 @@
     }
 
     return [NSSet setWithSet:results];
-}
-
-- (NSSet *)activeSlotNamesForConference:(Conference *)conference {
-    NSDate *date = [self dateForConference:conference andDate:[[NSDate alloc] init]];
-
-    CLS_LOG(@"Running now and next with date %@", date);
-
-    // First we get current - that's easy - all slots that current date is within
-    NSPredicate *currentPredicate = [NSPredicate predicateWithFormat:@"start <= %@ AND end >= %@ AND conference == %@ AND ANY sessions.format != %@ AND ANY sessions.state == %@",
-                                                                     date,
-                                                                     date,
-                                                                     conference,
-                                                                     @"lightning-talk",
-                                                                     @"approved"];
-
-    NSSet *currentSlots = [self slotsForSessionsWithPredicate:currentPredicate forConference:conference];
-
-    NSPredicate *nextPredicate = [NSPredicate predicateWithFormat:@"start > %@ AND conference == %@ AND ANY sessions.format != %@ AND ANY sessions.state == %@",
-                                                                  date,
-                                                                  conference,
-                                                                  @"lightning-talk",
-                                                                  @"approved"];
-
-    NSSet *nextSlots = [self slotsForSessionsWithPredicate:nextPredicate forConference:conference];
-
-    return [[NSSet setWithSet:currentSlots] setByAddingObjectsFromSet:nextSlots];
 }
 
 - (BOOL)conferencesWithDataAvailable {
