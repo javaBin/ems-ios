@@ -215,7 +215,7 @@
 
     //We do not do fullscreen layout on iOS 7+ right now.
     if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
-        self.automaticallyAdjustsScrollViewInsets = NO;
+        self.automaticallyAdjustsScrollViewInsets = YES;
     }
 
     [self setupViewWithSession:self.session];
@@ -733,13 +733,13 @@
 
     UITableViewCell *cell = [self tableView:tableView buildCellForRow:row];
 
-    int padding = 10;
+    int padding = 20;
 
     // Make sure the user can hit the row
     if (row.link) {
         padding = 30;
     }
-
+    
     return cell.textLabel.frame.size.height + padding;
 }
 

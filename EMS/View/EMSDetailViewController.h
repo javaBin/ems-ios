@@ -7,7 +7,7 @@
 
 #import "Session.h"
 
-@interface EMSDetailViewController : UIViewController 
+@interface EMSDetailViewController : UITableViewController
 
 @property(nonatomic, strong) Session *session;
 @property(nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
