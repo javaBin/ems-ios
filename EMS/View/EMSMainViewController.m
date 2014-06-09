@@ -298,6 +298,8 @@
     if (self.splitViewController) {
         self.splitViewController.delegate = self;
     }
+    
+    [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions)) options:0 context:kRefreshActiveConferenceContext];
 
 }
 
@@ -324,8 +326,6 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
     [tracker set:kGAIScreenName value:@"Main Screen"];
     [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 #endif
-    
-    [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions)) options:0 context:kRefreshActiveConferenceContext];
     
     if ([EMSRetriever sharedInstance].refreshingSessions) {
         [self.refreshControl beginRefreshing];
@@ -358,7 +358,7 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
     [super viewDidDisappear:animated];
     
     
-    [[EMSRetriever sharedInstance] removeObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions))];
+    
 }
 
 
@@ -896,6 +896,12 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
 
 - (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation {
     return NO;
+}
+
+#pragma mark - Memory management
+
+- (void)dealloc {
+    [[EMSRetriever sharedInstance] removeObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions))];
 }
 
 @end

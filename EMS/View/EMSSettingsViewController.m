@@ -45,6 +45,8 @@
         CLS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
     }
     
+    [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingConferences)) options:0 context:refreshingConferencesContext];
+    
 }
 
 static void *refreshingConferencesContext = &refreshingConferencesContext;
@@ -58,15 +60,10 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
     [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 #endif
     
-    
-    
-    [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingConferences)) options:0 context:refreshingConferencesContext];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    
-    [[EMSRetriever sharedInstance] removeObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingConferences))];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -312,5 +309,8 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
     }
 }
 
+-(void)dealloc {
+    [[EMSRetriever sharedInstance] removeObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingConferences))];
+}
 
 @end
