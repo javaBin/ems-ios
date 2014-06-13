@@ -26,6 +26,16 @@
     self.refreshControl = refreshControl;
 }
 
+- (void) updateRefreshControl {
+    UIRefreshControl *refreshControl = self.refreshControl;
+    if ([EMSRetriever sharedInstance].refreshingConferences) {
+        [refreshControl beginRefreshing];
+    } else {
+        [refreshControl endRefreshing];
+    }
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -45,11 +55,14 @@
         CLS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
     }
     
-    [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingConferences)) options:0 context:refreshingConferencesContext];
-    
 }
 
 static void *refreshingConferencesContext = &refreshingConferencesContext;
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self addObservers];
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -60,10 +73,25 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
     [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 #endif
     
+    [self updateRefreshControl];
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self removeObservers];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+}
+
+- (void) addObservers {
+    [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingConferences)) options:0 context:refreshingConferencesContext];
+}
+
+- (void) removeObservers {
+    [[EMSRetriever sharedInstance] removeObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions))];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -72,11 +100,9 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
         __weak EMSSettingsViewController *weakSelf = self;
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             __strong EMSSettingsViewController *strongSelf = weakSelf;
-            if ([EMSRetriever sharedInstance].refreshingConferences) {
-                [strongSelf.refreshControl beginRefreshing];
-            } else {
-                [strongSelf.refreshControl endRefreshing];
-            }
+            
+            [strongSelf updateRefreshControl];
+            
         }];
         
     }
@@ -309,8 +335,6 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
     }
 }
 
--(void)dealloc {
-    [[EMSRetriever sharedInstance] removeObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingConferences))];
-}
+
 
 @end

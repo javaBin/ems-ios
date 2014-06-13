@@ -42,6 +42,8 @@
 
 - (IBAction)back:(UIStoryboardSegue *)segue;
 
+@property BOOL observersInstalled;
+
 @end
 
 @implementation EMSMainViewController
@@ -58,6 +60,20 @@
     [refreshControl addTarget:self action:@selector(retrieve) forControlEvents:UIControlEventValueChanged];
 
     self.refreshControl = refreshControl;
+}
+
+- (void) updateRefreshControl {
+    UIRefreshControl *refreshControl = self.refreshControl;
+    if ([EMSRetriever sharedInstance].refreshingSessions) {
+        if (!refreshControl.refreshing) {
+            [refreshControl beginRefreshing];
+        }
+    } else {
+        if (refreshControl.refreshing) {
+            [refreshControl endRefreshing];
+        }
+    }
+
 }
 
 - (Conference *)conferenceForHref:(NSString *)href {
@@ -299,7 +315,7 @@
         self.splitViewController.delegate = self;
     }
     
-    [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions)) options:0 context:kRefreshActiveConferenceContext];
+    self.observersInstalled = NO;
 
 }
 
@@ -307,18 +323,22 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    /* if (!self.refreshControl.refreshing) {
-         if ([self.search.text isEqualToString:@""]) {
-             if (self.tableView.contentOffset.y < 44) {
-                 [self.tableView setContentOffset:CGPointMake(0, 44)];
-             }
-         }
-     }*/
-
     
+    [self addObservers];
 }
 
+
 - (void)viewDidAppear:(BOOL)animated {
+    
+    //This method should have been called in viewWillAppear, but UISplitViewController
+    //does not call viewWillAppear on master view controller when app is launched in portrait mode
+    //for some reason. This has been reported as a bug to Apple, the bug id 17291466.
+    //As a workaround we call [self addObservers] again here. The addObservers method has
+    //a guard to prevent that the observers are added twice.
+    //TODO: Remove this line when Apple fixes bug 17291466.
+    [self addObservers];
+ 
+    
     [super viewDidAppear:animated];
     
 #ifndef DO_NOT_USE_GA
@@ -326,11 +346,6 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
     [tracker set:kGAIScreenName value:@"Main Screen"];
     [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 #endif
-    
-    if ([EMSRetriever sharedInstance].refreshingSessions) {
-        [self.refreshControl beginRefreshing];
-    }
-    
     
     Conference *conference = [self activeConference];
     
@@ -340,6 +355,7 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
         [self initializeFetchedResultsController];
     }
     
+    [self updateRefreshControl];
     
     if (self.splitViewController) {
         if (self.tableView.numberOfSections > 0 && [self.tableView numberOfRowsInSection:0] > 0) {
@@ -354,15 +370,15 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
     [self initializeFooter];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     
-    
-    
+    [self removeObservers];
 }
 
-
-
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+}
 
 
 - (void)didReceiveMemoryWarning {
@@ -372,20 +388,29 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
 
 #pragma mark - Key Value Observing
 
+- (void) addObservers {
+    if (!self.observersInstalled) {
+        [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions)) options:0 context:kRefreshActiveConferenceContext];
+        self.observersInstalled = YES;
+    }
+}
+
+- (void) removeObservers {
+    if (self.observersInstalled) {
+        [[EMSRetriever sharedInstance] removeObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions))];
+        self.observersInstalled = NO;
+    }
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (context == kRefreshActiveConferenceContext) {
-        
         dispatch_async(dispatch_get_main_queue(), ^{
-            EMSRetriever *emsRetriever = [EMSRetriever sharedInstance];
-            if (emsRetriever.refreshingSessions) {
-                [self.refreshControl beginRefreshing];
-            } else {
-                [self.refreshControl endRefreshing];
-                
+            [self updateRefreshControl];
+            
+            if (![EMSRetriever sharedInstance].refreshingSessions) {
                 if ([self activeConference]) {
                     [self initializeFetchedResultsController];
                 }
-                
             }
         });
     }
@@ -896,12 +921,6 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
 
 - (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation {
     return NO;
-}
-
-#pragma mark - Memory management
-
-- (void)dealloc {
-    [[EMSRetriever sharedInstance] removeObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions))];
 }
 
 @end

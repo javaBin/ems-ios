@@ -100,8 +100,6 @@ int networkCount = 0;
             }
         }
     }
-
-    [[self window] rootViewController];
     
     
     [[NSNotificationCenter defaultCenter] addObserverForName:@"NSUserDefaultsDidChangeNotification" object:[NSUserDefaults standardUserDefaults] queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
