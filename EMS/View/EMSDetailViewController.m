@@ -31,8 +31,6 @@
 
 @property(nonatomic, strong) IBOutlet UIButton *button;
 
-@property(nonatomic, strong) IBOutlet UITableView *tableView;
-
 @property(nonatomic, strong) NSDictionary *cachedSpeakerBios;
 
 @property(nonatomic, strong) IBOutlet UIBarButtonItem *shareButton;
