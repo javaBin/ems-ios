@@ -21,9 +21,10 @@
 
 #import "NHCalendarActivity.h"
 
-@interface EMSDetailViewController () <UIPopoverControllerDelegate,EMSRetrieverDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
+@interface EMSDetailViewController () <UIPopoverControllerDelegate,EMSRetrieverDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property(nonatomic) UIPopoverController *sharePopoverController;
+
 @property(nonatomic) NSArray *parts;
 
 @property(nonatomic, strong) IBOutlet UILabel *titleLabel;
@@ -34,39 +35,16 @@
 
 @property(nonatomic, strong) NSDictionary *cachedSpeakerBios;
 
-@property(nonatomic, strong) IBOutlet UIBarButtonItem *previousSectionButton;
-@property(nonatomic, strong) IBOutlet UIBarButtonItem *nextSectionButton;
-@property(nonatomic, strong) IBOutlet UIBarButtonItem *previousSessionButton;
-@property(nonatomic, strong) IBOutlet UIBarButtonItem *nextSessionButton;
 @property(nonatomic, strong) IBOutlet UIBarButtonItem *shareButton;
-
-
 
 
 - (IBAction)share:(id)sender;
 
 - (IBAction)toggleFavourite:(id)sender;
 
-
-- (IBAction)movePreviousSection:(id)sender;
-
-- (IBAction)moveNextSection:(id)sender;
-
-- (IBAction)movePreviousSession:(id)sender;
-
-- (IBAction)moveNextSession:(id)sender;
-
-
 @end
 
 @implementation EMSDetailViewController
-
-- (void)setupMovement {
-    self.previousSessionButton.enabled = ([self getSessionForDirection:-1] != nil);
-    self.nextSessionButton.enabled = ([self getSessionForDirection:1] != nil);
-    self.previousSectionButton.enabled = ([self getSectionForDirection:-1] != nil);
-    self.nextSectionButton.enabled = ([self getSectionForDirection:1] != nil);
-}
 
 - (void)setupViewWithSession:(Session *)session {
     if (session) {
@@ -128,8 +106,6 @@
         }];
 
         self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
-
-        [self setupMovement];
 
         [self setupParts];
 
@@ -556,91 +532,6 @@
 #endif
 }
 
-- (NSIndexPath *)getSectionForDirection:(int)direction {
-    NSArray *sections = [self.fetchedResultsController sections];
-
-    return [self indexPathForSection:self.indexPath moving:direction fromSections:sections];
-}
-
-- (NSIndexPath *)getSessionForDirection:(int)direction {
-    NSArray *sections = [self.fetchedResultsController sections];
-
-    if (sections == nil) {
-        return nil;
-    }
-
-    unsigned long rowCount = [sections[(NSUInteger) self.indexPath.section] numberOfObjects];
-
-    return [self indexPathForRow:self.indexPath moving:direction withRows:rowCount];
-}
-
-- (void)updateWithIndexPath:(NSIndexPath *)path {
-    if (path != nil) {
-        self.indexPath = path;
-        [self setupViewWithSession:[self.fetchedResultsController objectAtIndexPath:self.indexPath]];
-    }
-}
-
-- (void)updateWithIndexPathIfNotNil:(NSIndexPath *)path {
-    if (path != nil) {
-        [self updateWithIndexPath:path];
-    } else {
-        [self setupMovement];
-    }
-}
-
-- (IBAction)movePreviousSection:(id)sender {
-    [self updateWithIndexPathIfNotNil:[self getSectionForDirection:-1]];
-}
-
-- (IBAction)moveNextSection:(id)sender {
-    [self updateWithIndexPathIfNotNil:[self getSectionForDirection:1]];
-}
-
-- (IBAction)movePreviousSession:(id)sender {
-    [self updateWithIndexPathIfNotNil:[self getSessionForDirection:-1]];
-}
-
-- (IBAction)moveNextSession:(id)sender {
-    [self updateWithIndexPathIfNotNil:[self getSessionForDirection:1]];
-}
-
-- (NSIndexPath *)indexPathForSection:(NSIndexPath *)current moving:(int)direction fromSections:(NSArray *)sections {
-    long section = current.section + (1 * direction);
-
-    if (section < 0) {
-        return nil;
-    }
-    if (section >= sections.count) {
-        return nil;
-    }
-
-    long row = current.row;
-
-    long rowMax = ([sections[(NSUInteger) section] numberOfObjects] - 1);
-
-    if (rowMax < row) {
-        row = rowMax;
-    }
-
-    return [NSIndexPath indexPathForRow:row inSection:section];
-}
-
-- (NSIndexPath *)indexPathForRow:(NSIndexPath *)current moving:(int)direction withRows:(unsigned long)rows {
-    long section = current.section;
-
-    long row = current.row + (1 * direction);
-
-    if (row < 0) {
-        return nil;
-    }
-    if (row >= rows) {
-        return nil;
-    }
-
-    return [NSIndexPath indexPathForRow:row inSection:section];
-}
-
 #pragma mark - UIPopoverControllerDelegate
 
 - (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController {
@@ -771,15 +662,6 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [self.tableView reloadData];
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    return YES;
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    return [gestureRecognizer isKindOfClass:[UISwipeGestureRecognizer class]] && [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
-
 }
 
 @end
