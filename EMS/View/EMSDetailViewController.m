@@ -26,9 +26,6 @@
 @property(nonatomic) UIPopoverController *sharePopoverController;
 @property(nonatomic) NSArray *parts;
 
-
-@property(nonatomic, strong) IBOutlet UIWebView *webView;
-
 @property(nonatomic, strong) IBOutlet UILabel *titleLabel;
 
 @property(nonatomic, strong) IBOutlet UIButton *button;
