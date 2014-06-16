@@ -535,7 +535,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="button" destination="FxO-rg-BNb" id="GNr-fz-sdd"/>
+                        <outlet property="favoriteButton" destination="FxO-rg-BNb" id="LaL-Ww-cOA"/>
                         <outlet property="titleLabel" destination="gPt-aB-ojM" id="fDb-Z0-zak"/>
                     </connections>
                 </tableViewController>

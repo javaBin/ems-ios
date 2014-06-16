@@ -538,7 +538,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="button" destination="ZxS-Z1-wT6" id="vUM-0x-kMJ"/>
+                        <outlet property="favoriteButton" destination="ZxS-Z1-wT6" id="zk7-it-s3s"/>
                         <outlet property="shareButton" destination="NyX-cg-7wG" id="QvY-oh-l6y"/>
                         <outlet property="titleLabel" destination="tMo-72-asq" id="kxi-1Y-UIv"/>
                     </connections>
