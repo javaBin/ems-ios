@@ -606,9 +606,7 @@
                 NSString *name = (NSString *) key;
                 NSString *bio = (NSString *) obj;
                 
-                [self.session.speakers enumerateObjectsUsingBlock:^(id speakerObj, BOOL *stopSpeakers) {
-                    Speaker *speaker = (Speaker *) speakerObj;
-                    
+                for (Speaker *speaker in self.session.speakers) {
                     if ([speaker.name isEqualToString:name]) {
                         if (![speaker.bio isEqualToString:bio]) {
                             if (speaker.bio != nil) {
@@ -617,7 +615,7 @@
                             }
                         }
                     }
-                }];
+                }
             }];
             
             if (newBios) {
