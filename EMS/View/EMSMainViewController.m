@@ -473,7 +473,6 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
 #endif
         }
         
-        destination.fetchedResultsController = self.fetchedResultsController;
         destination.indexPath = [[self tableView] indexPathForSelectedRow];
     }
     

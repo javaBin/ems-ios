@@ -10,7 +10,7 @@
 @interface EMSDetailViewController : UITableViewController
 
 @property(nonatomic, strong) Session *session;
-@property(nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+
 @property(nonatomic, strong) NSIndexPath *indexPath;
 
 
