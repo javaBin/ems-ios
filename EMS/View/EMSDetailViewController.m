@@ -425,6 +425,8 @@
     [activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
         CLS_LOG(@"Sharing of %@ via %@ - completed %d", shareString, activityType, completed);
         
+        
+        self.shareButton.enabled = YES;
         if (completed) {
 #ifndef DO_NOT_USE_GA
             id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
