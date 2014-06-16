@@ -45,77 +45,86 @@
 
 #pragma mark - Initialization Convenience
 
-- (void)setupViewWithSession:(Session *)session {
+- (void)setupWithSession:(Session *)session {
     if (session) {
-        self.shareButton.enabled = YES;
-
-        self.session = session;
-
-        NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
-
-        [dateFormatterTime setDateStyle:NSDateFormatterNoStyle];
-        [dateFormatterTime setTimeStyle:NSDateFormatterShortStyle];
-
-        NSMutableString *title = [[NSMutableString alloc] init];
-
-        if (session.slot) {
-            [title appendString:[NSString stringWithFormat:@"%@ - %@",
-                                                           [dateFormatterTime stringFromDate:session.slot.start],
-                                                           [dateFormatterTime stringFromDate:session.slot.end]]];
-        } else {
-            if (session.slotName != nil) {
-                [title appendString:session.slotName];
-            }
-        }
-
-        if (session.roomName != nil) {
-            [title appendString:[NSString stringWithFormat:@" : %@", session.roomName]];
-        }
-
-        self.title = [NSString stringWithString:title];
-
-        NSString *imageBaseName = [session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star";
-        NSString *imageNameFormat = @"%@-%@";
-
-        UIImage *normalImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"grey"]];
-        UIImage *selectedImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"yellow"]];
-
-        if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
-            normalImage = [normalImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-            selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        }
-
-        [self.favoriteButton setImage:normalImage forState:UIControlStateNormal];
-        [self.favoriteButton setImage:selectedImage forState:UIControlStateSelected];
-
-        [self refreshFavourite];
-
+        self.title = [EMSDetailViewController createControllerTitle:session];
+        
         self.titleLabel.text = session.title;
-
-        NSMutableDictionary *speakerBios = [[NSMutableDictionary alloc] init];
-
-        [session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            Speaker *speaker = (Speaker *) obj;
-
-            if (speaker.bio != nil) {
-                speakerBios[speaker.name] = speaker.bio;
-            } else {
-                speakerBios[speaker.name] = @"";
-            }
-        }];
-
-        self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
-
+        
+        [self initFavoriteButton:session];
+        
+        [self initSpeakerCache:session];
+        
         [self setupParts];
-
+        
         [self retrieve];
-
+        
+        self.shareButton.enabled = YES;
+        
     } else {
         self.title = @"";
         self.titleLabel.text = @"";
         self.favoriteButton.hidden = YES;
+        
+        self.shareButton.enabled = false;
     }
+    
+}
 
++ (NSString *) createControllerTitle: (Session *)session {
+    NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
+    
+    [dateFormatterTime setDateStyle:NSDateFormatterNoStyle];
+    [dateFormatterTime setTimeStyle:NSDateFormatterShortStyle];
+    
+    NSMutableString *title = [[NSMutableString alloc] init];
+    
+    if (session.slot) {
+        [title appendString:[NSString stringWithFormat:@"%@ - %@",
+                             [dateFormatterTime stringFromDate:session.slot.start],
+                             [dateFormatterTime stringFromDate:session.slot.end]]];
+    } else {
+        if (session.slotName != nil) {
+            [title appendString:session.slotName];
+        }
+    }
+    
+    if (session.roomName != nil) {
+        [title appendString:[NSString stringWithFormat:@" : %@", session.roomName]];
+    }
+    return [title copy];
+}
+
+- (void)initFavoriteButton:(Session *)session {
+    NSString *imageBaseName = [session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star";
+    NSString *imageNameFormat = @"%@-%@";
+    
+    UIImage *normalImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"grey"]];
+    UIImage *selectedImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"yellow"]];
+    
+    if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
+        normalImage = [normalImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    }
+    
+    [self.favoriteButton setImage:normalImage forState:UIControlStateNormal];
+    [self.favoriteButton setImage:selectedImage forState:UIControlStateSelected];
+    
+    [self refreshFavourite];
+}
+
+- (void)initSpeakerCache:(Session *)session {
+    NSMutableDictionary *speakerBios = [[NSMutableDictionary alloc] init];
+    
+    for (Speaker *speaker in session.speakers) {
+        if (speaker.bio != nil) {
+            speakerBios[speaker.name] = speaker.bio;
+        } else {
+            speakerBios[speaker.name] = @"";
+        }
+    }
+    
+    self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
 }
 
 - (void)setupParts {
@@ -191,10 +200,10 @@
     if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
         self.automaticallyAdjustsScrollViewInsets = YES;
     }
+    
+    [self setupWithSession:self.session];
 
-    [self setupViewWithSession:self.session];
 }
-
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
