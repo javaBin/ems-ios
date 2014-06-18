@@ -624,7 +624,7 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
 
     UIImageView *level = sessionCell.level;
 
-    [level setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png", session.level]]];
+    [level setImage:[UIImage imageNamed:session.level]];
 
     UIImageView *video = sessionCell.video;
 

@@ -139,8 +139,9 @@
     [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.body]];
 
     if (self.session.level != nil) {
-        NSString *levelPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@-o", self.session.level] ofType:@"png"];
-        UIImage *img = [UIImage imageWithContentsOfFile:levelPath];
+        NSString *imageName = [NSString stringWithFormat:@"%@-o", self.session.level];
+        
+        UIImage *img = [UIImage imageNamed:imageName];
 
         [p addObject:[[EMSDetailViewRow alloc] initWithContent:[self cleanString:self.session.level] image:img]];
     }
