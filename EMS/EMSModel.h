@@ -28,8 +28,6 @@
 
 - (BOOL)storeSpeakers:(NSArray *)speakers forHref:(NSString *)href error:(NSError **)error;
 
-- (NSSet *)activeSlotNamesForConference:(Conference *)conference;
-
 - (Session *)sessionForHref:(NSString *)url;
 
 - (Slot *)slotForHref:(NSString *)url;
