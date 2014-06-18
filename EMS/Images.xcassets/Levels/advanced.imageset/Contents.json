@@ -3,11 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "advanced.png"
+      "filename" : "advanced-o.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "advanced-o@2x.png"
     }
   ],
   "info" : {

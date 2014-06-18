@@ -139,9 +139,8 @@
     [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.body]];
 
     if (self.session.level != nil) {
-        NSString *imageName = [NSString stringWithFormat:@"%@-o", self.session.level];
-        
-        UIImage *img = [UIImage imageNamed:imageName];
+
+        UIImage *img = [UIImage imageNamed:self.session.level];
 
         [p addObject:[[EMSDetailViewRow alloc] initWithContent:[self cleanString:self.session.level] image:img]];
     }
