@@ -51,7 +51,6 @@
     return self;
 }
 
-
 - (Conference *)conferenceForHref:(NSString *)href {
     CLS_LOG(@"Getting conference for %@", href);
     
@@ -74,6 +73,10 @@
 - (void)refreshConferences {
     NSAssert([NSThread isMainThread], @"Should be called on main thread.");
     
+    if (self.refreshingConferences) {
+        return;
+    }
+
     self.refreshingConferences = YES;
     
     EMSConferencesRetriever *retriever = [[EMSConferencesRetriever alloc] init];
@@ -126,6 +129,12 @@
 
 - (void)refreshActiveConference {
     
+    NSAssert([NSThread isMainThread], @"Should be called from main thread.");
+    
+    if (self.refreshingSessions) {
+        return;
+    }
+    
     self.refreshingSessions = YES;
     
     Conference *activeConference = [self activeConference];
@@ -149,6 +158,8 @@
 }
 
 - (void)retrieveSessions {
+    NSAssert([NSThread isMainThread], @"Should be called from main thread.");
+    
     CLS_LOG(@"Starting retrieval of sessions");
     // Fetch sessions once rooms and slots are done. Don't want to get into a state when trying to persist sessions that it refers to non-existing room or slot
     if (!_refreshingRooms && !_refreshingSlots) {
@@ -157,6 +168,31 @@
         [self refreshSessions:[NSURL URLWithString:activeConference.sessionCollection]];
     }
 }
+
+- (void)retrieveSpeakers:(Session *) session {
+    NSAssert([NSThread isMainThread], @"Should be called from main thread.");
+    
+    EMSRetriever *retriever = [[EMSRetriever alloc] init];
+    
+    retriever.delegate = self;
+    
+    CLS_LOG(@"Retrieving speakers for href %@", session.speakerCollection);
+    
+    [retriever refreshSpeakers:[NSURL URLWithString:session.speakerCollection]];
+}
+
+- (void)finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href {
+    CLS_LOG(@"Storing speakers %lu for href %@", (unsigned long) [speakers count], href);
+    
+    NSError *error = nil;
+    
+    EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
+    
+    if (![backgroundModel storeSpeakers:speakers forHref:[href absoluteString] error:&error]) {
+        CLS_LOG(@"Failed to store speakers %@ - %@", error, [error userInfo]);
+    }
+}
+
 
 - (void)finishedSlots:(NSArray *)slots forHref:(NSURL *)href {
     CLS_LOG(@"Storing slots %lu", (unsigned long) [slots count]);
@@ -212,10 +248,9 @@
     });
 }
 
-
-
-
 - (void)refreshSlots:(NSURL *)slotCollection {
+    NSAssert([NSThread isMainThread], @"Should be called from main thread.");
+    
     EMSSlotsRetriever *retriever = [[EMSSlotsRetriever alloc] init];
 
     retriever.delegate = self;
@@ -224,6 +259,8 @@
 }
 
 - (void)refreshSessions:(NSURL *)sessionCollection {
+    NSAssert([NSThread isMainThread], @"Should be called from main thread.");
+    
     EMSSessionsRetriever *retriever = [[EMSSessionsRetriever alloc] init];
 
     retriever.delegate = self;
@@ -232,6 +269,8 @@
 }
 
 - (void)refreshRooms:(NSURL *)roomCollection {
+    NSAssert([NSThread isMainThread], @"Should be called from main thread.");
+    
     EMSRoomsRetriever *retriever = [[EMSRoomsRetriever alloc] init];
 
     retriever.delegate = self;
@@ -240,9 +279,15 @@
 }
 
 - (void)refreshSpeakers:(NSURL *)speakerCollection {
+    NSAssert([NSThread isMainThread], @"Should be called from main thread.");
+    
+    if (self.refreshingSpeakers) {
+        return;
+    }
+    
     EMSSpeakersRetriever *retriever = [[EMSSpeakersRetriever alloc] init];
 
-    retriever.delegate = self.delegate;
+    retriever.delegate = self;
 
     [retriever fetch:speakerCollection];
 }
