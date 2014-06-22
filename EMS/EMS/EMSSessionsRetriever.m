@@ -12,6 +12,93 @@
 #import "CJItem.h"
 #import "CJLink.h"
 
+
+@interface EMSSession (JsonParser)
+
++ (EMSSession *) sessionWithItem:(CJItem *) item;
+
+@end
+
+@implementation EMSSession(JsonParser)
+
++ (EMSSession *)sessionWithItem:(CJItem *) item
+{
+    EMSSession *session = [[EMSSession alloc] init];
+    
+    session.keywords = nil;
+    
+    session.href = item.href;
+    
+    for (NSDictionary *dict in item.data) {
+        
+        NSString *field = dict[@"name"];
+        NSObject *value = dict[@"value"];
+        
+        if ([@"format" isEqualToString:field]) {
+            session.format = (NSString *) value;
+        }
+        if ([@"body" isEqualToString:field]) {
+            session.body = (NSString *) value;
+        }
+        if ([@"state" isEqualToString:field]) {
+            session.state = (NSString *) value;
+        }
+        if ([@"audience" isEqualToString:field]) {
+            session.audience = (NSString *) value;
+        }
+        if ([@"title" isEqualToString:field]) {
+            session.title = (NSString *) value;
+        }
+        if ([@"lang" isEqualToString:field]) {
+            session.language = (NSString *) value;
+        }
+        if ([@"summary" isEqualToString:field]) {
+            session.summary = (NSString *) value;
+        }
+        if ([@"level" isEqualToString:field]) {
+            session.level = (NSString *) value;
+        }
+        if ([@"keywords" isEqualToString:field]) {
+            session.keywords = [NSArray arrayWithArray:dict[@"array"]];
+        }
+    }
+    
+    NSMutableArray *speakers = [[NSMutableArray alloc] init];
+    
+    
+    for (CJLink *link in item.links) {
+        
+        if ([@"alternate video" isEqualToString:link.rel]) {
+            session.videoLink = link.href;
+        }
+        if ([@"attachment collection" isEqualToString:link.rel]) {
+            session.attachmentCollection = link.href;
+        }
+        if ([@"speaker collection" isEqualToString:link.rel]) {
+            session.speakerCollection = link.href;
+        }
+        if ([@"room item" isEqualToString:link.rel]) {
+            session.roomItem = link.href;
+        }
+        if ([@"slot item" isEqualToString:link.rel]) {
+            session.slotItem = link.href;
+        }
+        if ([@"speaker item" isEqualToString:link.rel]) {
+            EMSSpeaker *speaker = [[EMSSpeaker alloc] init];
+            
+            speaker.href = link.href;
+            speaker.name = link.prompt;
+            
+            [speakers addObject:speaker];
+        }
+    }
+    
+    session.speakers = [NSArray arrayWithArray:speakers];
+    
+    return session;
+}
+@end
+
 @implementation EMSSessionsRetriever
 
 NSDate *timer;
@@ -28,85 +115,11 @@ NSDate *timer;
     }
 
     NSMutableArray *temp = [[NSMutableArray alloc] init];
-
-    [collection.items enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        CJItem *item = (CJItem *) obj;
-
-        EMSSession *session = [[EMSSession alloc] init];
-
-        session.keywords = nil;
-
-        session.href = item.href;
-
-        [item.data enumerateObjectsUsingBlock:^(id dataObj, NSUInteger dataIdx, BOOL *dataStop) {
-            NSDictionary *dict = (NSDictionary *) dataObj;
-
-            NSString *field = dict[@"name"];
-            NSObject *value = dict[@"value"];
-
-            if ([@"format" isEqualToString:field]) {
-                session.format = (NSString *) value;
-            }
-            if ([@"body" isEqualToString:field]) {
-                session.body = (NSString *) value;
-            }
-            if ([@"state" isEqualToString:field]) {
-                session.state = (NSString *) value;
-            }
-            if ([@"audience" isEqualToString:field]) {
-                session.audience = (NSString *) value;
-            }
-            if ([@"title" isEqualToString:field]) {
-                session.title = (NSString *) value;
-            }
-            if ([@"lang" isEqualToString:field]) {
-                session.language = (NSString *) value;
-            }
-            if ([@"summary" isEqualToString:field]) {
-                session.summary = (NSString *) value;
-            }
-            if ([@"level" isEqualToString:field]) {
-                session.level = (NSString *) value;
-            }
-            if ([@"keywords" isEqualToString:field]) {
-                session.keywords = [NSArray arrayWithArray:dict[@"array"]];
-            }
-        }];
-
-        NSMutableArray *speakers = [[NSMutableArray alloc] init];
-
-        [item.links enumerateObjectsUsingBlock:^(id linksObj, NSUInteger linksIdx, BOOL *linksStop) {
-            CJLink *link = (CJLink *) linksObj;
-
-            if ([@"alternate video" isEqualToString:link.rel]) {
-                session.videoLink = link.href;
-            }
-            if ([@"attachment collection" isEqualToString:link.rel]) {
-                session.attachmentCollection = link.href;
-            }
-            if ([@"speaker collection" isEqualToString:link.rel]) {
-                session.speakerCollection = link.href;
-            }
-            if ([@"room item" isEqualToString:link.rel]) {
-                session.roomItem = link.href;
-            }
-            if ([@"slot item" isEqualToString:link.rel]) {
-                session.slotItem = link.href;
-            }
-            if ([@"speaker item" isEqualToString:link.rel]) {
-                EMSSpeaker *speaker = [[EMSSpeaker alloc] init];
-
-                speaker.href = link.href;
-                speaker.name = link.prompt;
-
-                [speakers addObject:speaker];
-            }
-        }];
-
-        session.speakers = [NSArray arrayWithArray:speakers];
-
+    
+    for (CJItem *item in collection.items) {
+        EMSSession *session = [EMSSession sessionWithItem:item];
         [temp addObject:session];
-    }];
+    }
 
     return [NSArray arrayWithArray:temp];
 }
