@@ -105,6 +105,10 @@ int networkCount = 0;
     [[NSNotificationCenter defaultCenter] addObserverForName:@"NSUserDefaultsDidChangeNotification" object:[NSUserDefaults standardUserDefaults] queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            
+            if (![EMSAppDelegate currentConference]) {
+                return ;
+            }
            
             if (![[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:[[EMSAppDelegate currentConference] absoluteString]]) {
                 CLS_LOG(@"Checking for existing data found no data - forced refresh");
