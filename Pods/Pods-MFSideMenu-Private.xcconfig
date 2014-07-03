@@ -1,0 +1,5 @@
+#include "Pods-MFSideMenu.xcconfig"
+GCC_PREPROCESSOR_DEFINITIONS = COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/MFSideMenu" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/Collection-JSON-ObjC" "${PODS_ROOT}/Headers/GoogleAnalytics-iOS-SDK" "${PODS_ROOT}/Headers/MFSideMenu" "${PODS_ROOT}/Headers/NHCalendarActivity"
+OTHER_LDFLAGS = -ObjC ${PODS_MFSIDEMENU_OTHER_LDFLAGS}
+PODS_ROOT = ${SRCROOT}
