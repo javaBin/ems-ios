@@ -9,6 +9,8 @@
 #import "EMSAppDelegate.h"
 #import "EMSConferenceDetailViewController.h"
 
+#import "EMSAdvancedSearch.h"
+
 @interface EMSSettingsViewController ()
 @property(nonatomic) EMSRetriever *retriever;
 @end
@@ -244,7 +246,16 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
 
 
 - (void)selectConference:(Conference *)conference {
-    [EMSAppDelegate storeCurrentConference:[NSURL URLWithString:conference.href]];
+    NSURL *currentConference = [EMSAppDelegate currentConference];
+    NSURL *selectedConference = [NSURL URLWithString:conference.href];
+    
+    if (![[currentConference absoluteString] isEqualToString:[selectedConference absoluteString]]) {
+        EMSAdvancedSearch *advancedSearch = [[EMSAdvancedSearch alloc] init];
+        [advancedSearch clear];
+        [advancedSearch setSearch:@""];
+    }
+    
+    [EMSAppDelegate storeCurrentConference:selectedConference];
 
     [self.tableView reloadData];
 

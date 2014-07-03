@@ -563,6 +563,10 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
     }
     
     if ([segue.identifier isEqualToString:@"unwindSettingsSegue"]) {
+        self.advancedSearch = [[EMSAdvancedSearch alloc] init];
+        
+        self.search.text = [self.advancedSearch search];
+
         [self initializeFetchedResultsController];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
