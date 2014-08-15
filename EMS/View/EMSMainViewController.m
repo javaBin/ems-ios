@@ -133,6 +133,8 @@
 }
 
 - (void)initializeFetchedResultsController {
+    [self setDefaultTypeSearch];
+
     [self.fetchedResultsController.fetchRequest setPredicate:[self currentConferencePredicate]];
 
     NSError *error;
@@ -180,13 +182,13 @@
              addObject:[NSPredicate predicateWithFormat:@"(level IN %@)",
                         [self.advancedSearch fieldValuesForKey:emsLevel]]];
         }
-        
+
         if ([[self.advancedSearch fieldValuesForKey:emsType] count] > 0) {
             [predicates
              addObject:[NSPredicate predicateWithFormat:@"(format IN %@)",
                         [self.advancedSearch fieldValuesForKey:emsType]]];
         }
-        
+
         if ([[self.advancedSearch fieldValuesForKey:emsRoom] count] > 0) {
             [predicates
              addObject:[NSPredicate predicateWithFormat:@"(room.name IN %@)",
@@ -290,6 +292,27 @@
     return _fetchedResultsController;
 }
 
+- (void)setDefaultTypeSearch {
+    Conference *conference = [self activeConference];
+    
+    if (conference) {
+        if ([[self.advancedSearch fieldValuesForKey:emsType] count] == 0) {
+            NSArray *types = [self typesForConference:conference];
+            
+            NSMutableSet *typeNames = [[NSMutableSet alloc] init];
+            
+            [types enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                NSString *type = (NSString *)obj;
+                
+                if (![type isEqualToString:@"workshop"]) {
+                    [typeNames addObject:type];
+                }
+            }];
+            
+            [self.advancedSearch setFieldValues:typeNames forKey:emsType];
+        }
+    }
+}
 
 #pragma  mark - Lifecycle Events
 
@@ -303,7 +326,7 @@
     self.advancedSearch = [[EMSAdvancedSearch alloc] init];
 
     self.search.text = [self.advancedSearch search];
-
+    
     [self setUpRefreshControl];
 
     // All sections start with the same year name - so the index is meaningless.
@@ -419,6 +442,18 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
 
 #pragma mark - Storyboard Segues
 
+- (NSArray *)typesForConference:(Conference *)conference {
+   NSMutableArray *types = [[NSMutableArray alloc] init];
+   
+   [conference.conferenceTypes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+       ConferenceType *type = (ConferenceType *) obj;
+    
+       [types addObject:type.name];
+   }];
+   
+    return [NSArray arrayWithArray:types];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     [self.search setShowsCancelButton:NO animated:YES];
     [self.search resignFirstResponder];
@@ -532,13 +567,7 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
         
         destination.rooms = [rooms sortedArrayUsingSelector:@selector(compare:)];
         
-        NSMutableArray *types = [[NSMutableArray alloc] init];
-        
-        [conference.conferenceTypes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            ConferenceType *type = (ConferenceType *) obj;
-            
-            [types addObject:type.name];
-        }];
+        NSArray *types = [self typesForConference:conference];
         
         destination.types = [types sortedArrayUsingSelector:@selector(compare:)];
         
