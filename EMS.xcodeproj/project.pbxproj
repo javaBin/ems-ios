@@ -38,6 +38,8 @@
 		85E86E298BD74799AE57514E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C5F2910AEBD4413B205CE89 /* libPods.a */; };
 		EA6132BC193FC35B000F54DC /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
 		EA8F2C831944CCB7002EAE1F /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
+		EACB2E9B199EBD1700557D82 /* EMSDefaultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */; };
+		EACB2E9C199EBD1700557D82 /* EMSDefaultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */; };
 		F30A8CDB192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */ = {isa = PBXBuildFile; fileRef = F30A8CDA192B42FF0066DFD9 /* EMSDetailViewRow.m */; };
 		F30A8CDC192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */ = {isa = PBXBuildFile; fileRef = F30A8CDA192B42FF0066DFD9 /* EMSDetailViewRow.m */; };
 		F30A8CE5192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F30A8CE4192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m */; };
@@ -179,6 +181,8 @@
 		EA1E8F6317E782E8000F2DB7 /* JavaZone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JavaZone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA6132BA193FC35B000F54DC /* EMSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConfig.h; sourceTree = "<group>"; };
 		EA6132BB193FC35B000F54DC /* EMSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConfig.m; sourceTree = "<group>"; };
+		EACB2E99199EBD1700557D82 /* EMSDefaultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSDefaultTableViewCell.h; sourceTree = "<group>"; };
+		EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDefaultTableViewCell.m; sourceTree = "<group>"; };
 		F30A8CD9192B42FF0066DFD9 /* EMSDetailViewRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSDetailViewRow.h; sourceTree = "<group>"; };
 		F30A8CDA192B42FF0066DFD9 /* EMSDetailViewRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDetailViewRow.m; sourceTree = "<group>"; };
 		F30A8CE3192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSTopAlignCellTableViewCell.h; sourceTree = "<group>"; };
@@ -336,6 +340,8 @@
 				F30A8CDA192B42FF0066DFD9 /* EMSDetailViewRow.m */,
 				F30A8CE3192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.h */,
 				F30A8CE4192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m */,
+				EACB2E99199EBD1700557D82 /* EMSDefaultTableViewCell.h */,
+				EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */,
 			);
 			name = View;
 			path = EMS/View;
@@ -697,6 +703,7 @@
 				F30A8CE5192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m in Sources */,
 				836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */,
 				F3AE33C71772EA93000EE4A9 /* Speaker.m in Sources */,
+				EACB2E9B199EBD1700557D82 /* EMSDefaultTableViewCell.m in Sources */,
 				F3AE33CA1772EA93000EE4A9 /* Conference.m in Sources */,
 				F3AE33CD1772EA93000EE4A9 /* Keyword.m in Sources */,
 				F3AE33D01772EA94000EE4A9 /* ConferenceLevel.m in Sources */,
@@ -743,6 +750,7 @@
 				F394C98617F0173900FAFBD4 /* EMSSearchViewController.m in Sources */,
 				F394C98717F0173900FAFBD4 /* Speaker.m in Sources */,
 				F394C98817F0173900FAFBD4 /* Conference.m in Sources */,
+				EACB2E9C199EBD1700557D82 /* EMSDefaultTableViewCell.m in Sources */,
 				F394C98917F0173900FAFBD4 /* Keyword.m in Sources */,
 				F394C98A17F0173900FAFBD4 /* ConferenceLevel.m in Sources */,
 				F394C98B17F0173900FAFBD4 /* Room.m in Sources */,

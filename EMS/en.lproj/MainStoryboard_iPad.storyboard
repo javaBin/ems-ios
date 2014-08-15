@@ -428,8 +428,8 @@
                             <rect key="frame" x="0.0" y="64" width="768" height="60"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="709" translatesAutoresizingMaskIntoConstraints="NO" id="gPt-aB-ojM">
-                                    <rect key="frame" x="15" y="8" width="709" height="44"/>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="709" translatesAutoresizingMaskIntoConstraints="NO" id="gPt-aB-ojM">
+                                    <rect key="frame" x="15" y="0.0" width="709" height="60"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -463,7 +463,7 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailBodyCell" textLabel="iaP-vd-2S6" style="IBUITableViewCellStyleDefault" id="HyB-5z-CQt">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailBodyCell" textLabel="iaP-vd-2S6" style="IBUITableViewCellStyleDefault" id="HyB-5z-CQt" customClass="EMSDefaultTableViewCell">
                                 <rect key="frame" x="0.0" y="146" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HyB-5z-CQt" id="18H-p8-OPq">
@@ -480,7 +480,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailLinkCell" textLabel="3Fp-gm-flt" detailTextLabel="IeW-os-Ivn" style="IBUITableViewCellStyleValue1" id="Qme-GL-gXk">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailLinkCell" textLabel="3Fp-gm-flt" detailTextLabel="IeW-os-Ivn" style="IBUITableViewCellStyleValue1" id="Qme-GL-gXk" customClass="EMSDefaultTableViewCell">
                                 <rect key="frame" x="0.0" y="190" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qme-GL-gXk" id="LvY-V4-lvO">
@@ -504,22 +504,52 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailTopAlignCell" textLabel="KbR-gM-9oF" style="IBUITableViewCellStyleDefault" id="wb4-Ic-anW" customClass="EMSTopAlignCellTableViewCell">
-                                <rect key="frame" x="0.0" y="234" width="768" height="44"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SpeakerCell" rowHeight="124" id="l6n-2U-T5Q" customClass="EMSTopAlignCellTableViewCell">
+                                <rect key="frame" x="0.0" y="234" width="768" height="124"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wb4-Ic-anW" id="fe0-fx-wyo">
-                                    <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l6n-2U-T5Q" id="roc-86-4g8">
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="124"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KbR-gM-9oF">
-                                            <rect key="frame" x="15" y="0.0" width="738" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0oJ-23-AUx">
+                                            <rect key="frame" x="10" y="10" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="50" id="63u-pp-jWO"/>
+                                                <constraint firstAttribute="height" constant="50" id="OLE-Mf-a8l"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Speaker Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jKb-GC-Pnd">
+                                            <rect key="frame" x="70" y="22" width="688" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorum ipsum sdflakjf lksdfjals ødkfjasdf ølkasjdf økj asødf" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="748" translatesAutoresizingMaskIntoConstraints="NO" id="VOx-dt-H7Q">
+                                            <rect key="frame" x="10" y="65" width="748" height="54"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="jKb-GC-Pnd" firstAttribute="centerY" secondItem="0oJ-23-AUx" secondAttribute="centerY" constant="-2.5" id="2bu-XA-e5H"/>
+                                        <constraint firstAttribute="bottom" secondItem="VOx-dt-H7Q" secondAttribute="bottom" constant="5" id="5wy-Sf-6ra"/>
+                                        <constraint firstAttribute="trailing" secondItem="VOx-dt-H7Q" secondAttribute="trailing" constant="10" id="ACd-mp-7oT"/>
+                                        <constraint firstAttribute="trailing" secondItem="jKb-GC-Pnd" secondAttribute="trailing" constant="10" id="QpC-pp-io8"/>
+                                        <constraint firstItem="VOx-dt-H7Q" firstAttribute="leading" secondItem="roc-86-4g8" secondAttribute="leading" constant="10" id="RTQ-Nj-wBf"/>
+                                        <constraint firstItem="jKb-GC-Pnd" firstAttribute="leading" secondItem="0oJ-23-AUx" secondAttribute="trailing" constant="10" id="Szd-w8-Rgu"/>
+                                        <constraint firstItem="0oJ-23-AUx" firstAttribute="leading" secondItem="roc-86-4g8" secondAttribute="leading" constant="10" id="jCV-te-coa"/>
+                                        <constraint firstItem="VOx-dt-H7Q" firstAttribute="top" secondItem="0oJ-23-AUx" secondAttribute="bottom" constant="5" id="lvT-5Q-Fwl"/>
+                                        <constraint firstItem="0oJ-23-AUx" firstAttribute="top" secondItem="roc-86-4g8" secondAttribute="top" constant="10" id="qm1-PK-Ji8"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="descriptionLabel" destination="VOx-dt-H7Q" id="eKx-Tl-ZQP"/>
+                                    <outlet property="nameLabel" destination="jKb-GC-Pnd" id="eOI-Z8-U0X"/>
+                                    <outlet property="thumbnailView" destination="0oJ-23-AUx" id="5AN-Mu-wKc"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

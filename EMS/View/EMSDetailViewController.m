@@ -21,6 +21,11 @@
 
 #import "NHCalendarActivity.h"
 
+#import "EMSTopAlignCellTableViewCell.h"
+
+#import "EMSDefaultTableViewCell.h"
+
+
 @interface EMSDetailViewController () <UIPopoverControllerDelegate,EMSRetrieverDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property(nonatomic) UIPopoverController *sharePopoverController;
@@ -221,8 +226,7 @@
     [tracker set:kGAIScreenName value:@"Detail Screen"];
     [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 #endif
-
-    [self.tableView reloadData];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -486,18 +490,44 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
-
     UITableViewCell *cell = [self tableView:tableView buildCellForRow:row];
 
-    int padding = 20;
-
-    // Make sure the user can hit the row
-    if (row.link) {
-        padding = 30;
+    
+    
+    if ([cell isKindOfClass:[EMSDefaultTableViewCell class]]) {
+        
+        cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
+        
+        [cell setNeedsLayout];
+        [cell layoutIfNeeded];
+        
+        NSInteger height =  [cell intrinsicContentSize].height;
+        
+        return height;
+        
+    } else if ([cell isKindOfClass:[EMSTopAlignCellTableViewCell class]]) {
+    
+        cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
+        
+      
+        [cell setNeedsLayout];
+        [cell layoutIfNeeded];
+        
+        // Get the actual height required for the cell's contentView
+        CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+        
+        
+        if (row.link && height < 48) {
+            height = 48;
+        }
+        
+        return height;
+    } else {
+        return 48;
     }
     
-    return cell.textLabel.frame.size.height + padding;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -530,48 +560,32 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView buildCellForRow:(EMSDetailViewRow *)row {
-    NSString *identifier = @"DetailBodyCell";
-    
-    if (row.link) {
-        identifier = @"DetailLinkCell";
-    } else if (row.body) {
-        identifier = @"DetailTopAlignCell";
-    }
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    }
     
     if (row.body) {
-        cell.textLabel.text = [NSString stringWithFormat:@"%@\n\n%@", row.content, row.body];
-    } else {
+        EMSTopAlignCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SpeakerCell"];
+        cell.nameLabel.text = row.content;
+        cell.descriptionLabel.text = row.body;
+        cell.thumbnailView.image = row.image;
+        
+        [cell.descriptionLabel sizeToFit];
+        return  cell;
+    } else if (row.link) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailLinkCell"];
+        cell.imageView.image = row.image;
         cell.textLabel.text = row.content;
-    }
-    
-    if (row.image) {
-        UIImageView *image = [cell imageView];
         
-        image.image = row.image;
+        [cell.textLabel sizeToFit];
+        return  cell;
+    } else {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailBodyCell"];
+        cell.imageView.image = row.image;
+        cell.textLabel.text = row.content;
         
-        if (row.body) {
-            CGSize itemSize = CGSizeMake(50, 50);
-            UIGraphicsBeginImageContextWithOptions(itemSize, NO, UIScreen.mainScreen.scale);
-            CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
-            [cell.imageView.image drawInRect:imageRect];
-            [cell.imageView.layer setCornerRadius:8.0f];
-            [cell.imageView.layer setMasksToBounds:YES];
-            cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            
-        }
+        [cell.textLabel sizeToFit];
+        return  cell;
     }
+
     
-    cell.textLabel.numberOfLines = 0;
-    [cell.textLabel sizeToFit];
-    
-    return cell;
 }
 
 #pragma mark - Load Speakers
