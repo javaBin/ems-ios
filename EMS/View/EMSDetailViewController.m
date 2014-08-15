@@ -35,6 +35,8 @@
 
 @property(nonatomic, strong) IBOutlet UIBarButtonItem *shareButton;
 
+@property(nonatomic, strong) EMSRetriever *speakerRetriever;
+
 - (IBAction)share:(id)sender;
 
 - (IBAction)toggleFavourite:(id)sender;
@@ -47,6 +49,8 @@
 
 - (void)setupWithSession:(Session *)session {
     if (session) {
+        
+        
         self.title = [EMSDetailViewController createControllerTitle:session];
         
         self.titleLabel.text = session.title;
@@ -573,29 +577,22 @@
 #pragma mark - Load Speakers
 
 - (void)retrieve {
-    EMSRetriever *retriever = [[EMSRetriever alloc] init];
     
-    retriever.delegate = self;
+    if (!self.speakerRetriever) {
+        self.speakerRetriever = [[EMSRetriever alloc] init];
+        
+        self.speakerRetriever.delegate = self;
+    }
+   
     
     CLS_LOG(@"Retrieving speakers for href %@", self.session.speakerCollection);
     
-    [retriever refreshSpeakers:[NSURL URLWithString:self.session.speakerCollection]];
+    [self.speakerRetriever refreshSpeakers:[NSURL URLWithString:self.session.speakerCollection]];
 }
 
 - (void)finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href {
-    CLS_LOG(@"Storing speakers %lu for href %@", (unsigned long) [speakers count], href);
-    
-    NSError *error = nil;
-    
-    EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
-    
-    if (![backgroundModel storeSpeakers:speakers forHref:[href absoluteString] error:&error]) {
-        CLS_LOG(@"Failed to store speakers %@ - %@", error, [error userInfo]);
-    }
-    
+
     dispatch_sync(dispatch_get_main_queue(), ^{
-        [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
-        
         // Check we haven't navigated to a new session
         if ([[href absoluteString] isEqualToString:self.session.speakerCollection]) {
             __block BOOL newBios = NO;

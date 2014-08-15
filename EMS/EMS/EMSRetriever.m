@@ -20,6 +20,7 @@
 
 @property(readwrite) BOOL refreshingConferences;
 @property(readwrite) BOOL refreshingSessions;
+@property(readwrite) BOOL refreshingSpeakers;
 
 @end
 
@@ -191,6 +192,17 @@
     if (![backgroundModel storeSpeakers:speakers forHref:[href absoluteString] error:&error]) {
         CLS_LOG(@"Failed to store speakers %@ - %@", error, [error userInfo]);
     }
+    
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
+        self.refreshingSpeakers = NO;
+        
+       
+    });
+    if ([self.delegate respondsToSelector:@selector(finishedSpeakers:forHref:)]) {
+        [self.delegate finishedSpeakers:speakers forHref:href];
+    }
+    
 }
 
 
@@ -284,6 +296,8 @@
     if (self.refreshingSpeakers) {
         return;
     }
+    
+    self.refreshingSpeakers = YES;
     
     EMSSpeakersRetriever *retriever = [[EMSSpeakersRetriever alloc] init];
 
