@@ -101,28 +101,7 @@ int networkCount = 0;
         }
     }
     
-    
-    [[NSNotificationCenter defaultCenter] addObserverForName:@"NSUserDefaultsDidChangeNotification" object:[NSUserDefaults standardUserDefaults] queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            
-            if (![EMSAppDelegate currentConference]) {
-                return ;
-            }
-           
-            if (![[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:[[EMSAppDelegate currentConference] absoluteString]]) {
-                CLS_LOG(@"Checking for existing data found no data - forced refresh");
-                [[EMSRetriever sharedInstance] refreshActiveConference];
-                
-            }
-            
-        }];
-
-
-    }];
-    
     dispatch_async(dispatch_get_main_queue(), ^{
-        
         
         if (![[[EMSAppDelegate sharedAppDelegate] model] conferencesWithDataAvailable]) {
             CLS_LOG(@"Retrieving conferences");
@@ -462,10 +441,25 @@ int networkCount = 0;
 }
 
 + (void)storeCurrentConference:(NSURL *)href {
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setURL:href forKey:@"activeConference"];
 
     [defaults synchronize];
+
+    
+    // Refresh sessions for conference if neccesary.
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        if (![EMSAppDelegate currentConference]) {
+            return ;
+        }
+        
+        if (![[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:[[EMSAppDelegate currentConference] absoluteString]]) {
+            CLS_LOG(@"Checking for existing data found no data - forced refresh");
+            [[EMSRetriever sharedInstance] refreshActiveConference];
+            
+        }
+    }];
 
 #ifndef DO_NOT_USE_CRASHLYTICS
     [Crashlytics setObjectValue:href forKey:@"lastStoredConference"];
