@@ -566,7 +566,11 @@
         cell.nameLabel.text = row.content;
         cell.descriptionLabel.text = row.body;
         cell.thumbnailView.image = row.image;
-        
+        cell.thumbnailView.layer.borderWidth = 1.0f;
+        cell.thumbnailView.layer.borderColor = [UIColor grayColor].CGColor;
+        cell.thumbnailView.layer.masksToBounds = NO;
+        cell.thumbnailView.clipsToBounds = YES;
+        cell.thumbnailView.layer.cornerRadius = 10;
         [cell.descriptionLabel sizeToFit];
         return  cell;
     } else if (row.link) {
