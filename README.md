@@ -15,7 +15,7 @@ EMS-redux is provided by javaBin: https://github.com/javaBin/ems-redux
 
 ## Building
 
-The file EMS/EMS-Keys.plist is not provided. You will need to create this plist file.
+The file EMS/EMS-Keys.plist is not provided. You will need to create this plist file. Use `EMS/Config/EMS-Keys.sample.plist` as a sample, and place your file in either `JavaZone/EMS-Keys.plist` or `/flatMap/EMS-Keys.plist`.
 
 The current keys it provides are:
 
