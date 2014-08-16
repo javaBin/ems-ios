@@ -376,6 +376,7 @@
                     <toolbarItems>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="GJU-RI-YVR"/>
                         <barButtonItem image="19-gear.png" style="plain" id="O8v-RP-Sfq">
+                            <color key="tintColor" red="0.99215692280000001" green="0.52549022440000004" blue="0.29019609089999998" alpha="1" colorSpace="deviceRGB"/>
                             <connections>
                                 <segue destination="r5V-br-gFe" kind="modal" identifier="showSettingsView" modalPresentationStyle="formSheet" id="T4c-oe-cxy"/>
                             </connections>
@@ -431,7 +432,7 @@
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="709" translatesAutoresizingMaskIntoConstraints="NO" id="Vgz-59-1fo">
                                     <rect key="frame" x="15" y="10" width="709" height="41"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                    <color key="textColor" red="0.98431378599999997" green="0.68627452850000004" blue="0.1960784495" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="textColor" red="0.99215692280000001" green="0.52549022440000004" blue="0.29019609089999998" alpha="1" colorSpace="deviceRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J8L-ft-CBx">
@@ -523,7 +524,7 @@
                                             <rect key="frame" x="70" y="22" width="688" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.98431378599999997" green="0.68627452850000004" blue="0.1960784495" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="textColor" red="0.99215692280000001" green="0.52549022440000004" blue="0.29019609089999998" alpha="1" colorSpace="deviceRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorum ipsum sdflakjf lksdfjals ødkfjasdf ølkasjdf økj asødf" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="748" translatesAutoresizingMaskIntoConstraints="NO" id="VOx-dt-H7Q">
@@ -729,7 +730,7 @@
         <image name="258-checkmark-grey.png" width="19" height="18"/>
         <image name="28-star-grey.png" width="26" height="26"/>
     </resources>
-    <color key="tintColor" red="0.98431378599999997" green="0.68627452850000004" blue="0.1960784495" alpha="1" colorSpace="deviceRGB"/>
+    <color key="tintColor" red="0.99215692280000001" green="0.52549022440000004" blue="0.29019609089999998" alpha="1" colorSpace="deviceRGB"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
