@@ -25,20 +25,20 @@ h1 {
 h2 {
   font-size: 15px;
   font-weight: bold;
-  color: #5E8DFF;
-  border-bottom: solid 1px #5E8DFF;
+  color: #fda500;
+  border-bottom: solid 1px #fda500;
 }
 h3 {
   font-size: 15px;
   font-weight: normal;
 }
 h3.about {
-  color: #5E8DFF;
+  color: #fda500;
 }
 p img {
   margin-right: 5px;
 }
 a {
-  color: #5E8DFF;
+  color: #fda500;
   text-decoration: none;
 }
