@@ -580,10 +580,10 @@
         cell.descriptionLabel.text = row.body;
         cell.thumbnailView.image = row.image;
         cell.thumbnailView.layer.borderWidth = 1.0f;
-        cell.thumbnailView.layer.borderColor = [UIColor colorWithRed:252/255.0f green:175/255.0f blue:23/255.0f alpha:1.0].CGColor;
+        cell.thumbnailView.layer.borderColor = [UIColor grayColor].CGColor;
         cell.thumbnailView.layer.masksToBounds = NO;
         cell.thumbnailView.clipsToBounds = YES;
-        cell.thumbnailView.layer.cornerRadius = 25;
+        cell.thumbnailView.layer.cornerRadius = 10;
         [cell.descriptionLabel sizeToFit];
         return  cell;
     } else if (row.link) {
