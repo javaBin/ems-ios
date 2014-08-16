@@ -1,4 +1,3 @@
-
 //
 //  EMSModel.m
 //
@@ -975,10 +974,23 @@
 
         if (s.sessions.count > 0) {
             if (![s.sessions containsObject:slot]) {
-                CLS_LOG(@"GSNFLS: Found %@ - %@ for %@ - %@", s.start, s.end, slot.start, slot.end);
+                __block BOOL sawWorkshop = NO;
 
-                found = s;
-                *stop = YES;
+                [s.sessions enumerateObjectsUsingBlock:^(id sessionObj, BOOL *sessionStop) {
+                    Session *session = (Session *) sessionObj;
+
+                    if ([session.format isEqualToString:@"workshop"]) {
+                        sawWorkshop = YES;
+                        *sessionStop = YES;
+                    }
+                }];
+
+                if (!sawWorkshop) {
+                    CLS_LOG(@"GSNFLS: Found %@ - %@ for %@ - %@", s.start, s.end, slot.start, slot.end);
+
+                    found = s;
+                    *stop = YES;
+                }
             }
         }
     }];
