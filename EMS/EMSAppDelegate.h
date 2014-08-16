@@ -6,7 +6,11 @@
 #import <CoreData/CoreData.h>
 #import "EMSModel.h"
 
+#ifndef DO_NOT_USE_CRASHLYTICS
 @interface EMSAppDelegate : UIResponder <UIApplicationDelegate, CrashlyticsDelegate>
+#else
+@interface EMSAppDelegate : UIResponder <UIApplicationDelegate>
+#endif
 
 @property(strong, nonatomic) UIWindow *window;
 
@@ -35,7 +39,8 @@
 
 - (void)syncManagedObjectContext;
 
+#ifndef DO_NOT_USE_CRASHLYTICS
 - (void)crashlyticsDidDetectCrashDuringPreviousExecution:(Crashlytics *)crashlytics;
-
+#endif
 
 @end

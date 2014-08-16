@@ -479,11 +479,13 @@ int networkCount = 0;
     return href;
 }
 
+#ifndef DO_NOT_USE_CRASHLYTICS
 - (void)crashlyticsDidDetectCrashDuringPreviousExecution:(Crashlytics *)crashlytics {
     CLS_LOG(@"Crash detected - clearing advanced search");
 
     EMSAdvancedSearch *advancedSearch = [[EMSAdvancedSearch alloc] init];
     [advancedSearch clear];
 }
+#endif
 
 @end
