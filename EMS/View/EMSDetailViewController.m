@@ -217,6 +217,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setToolbarHidden:YES];
+    
+    [self resizeTitleHeaderHack];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -238,7 +240,18 @@
     [super viewDidDisappear:animated];
 }
 
+- (void)resizeTitleHeaderHack {
+    self.titleLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.tableView.bounds);
+    [self.titleLabel sizeToFit];
+    
+    CGRect frame = self.tableView.tableHeaderView.frame;
+    frame.size = CGSizeMake(CGRectGetWidth(self.tableView.bounds), MAX(CGRectGetHeight(self.titleLabel.frame), CGRectGetHeight(self.favoriteButton.frame)) + 10);
+    self.tableView.tableHeaderView.frame = frame;
+    self.tableView.tableHeaderView = self.tableView.tableHeaderView;
+}
+
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [self resizeTitleHeaderHack];
     [self.tableView reloadData];
 }
 
