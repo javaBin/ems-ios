@@ -6,7 +6,7 @@
 #import <CoreData/CoreData.h>
 #import "EMSModel.h"
 
-@interface EMSAppDelegate : UIResponder <UIApplicationDelegate>
+@interface EMSAppDelegate : UIResponder <UIApplicationDelegate, CrashlyticsDelegate>
 
 @property(strong, nonatomic) UIWindow *window;
 
@@ -34,5 +34,8 @@
 - (EMSModel *)modelForBackground;
 
 - (void)syncManagedObjectContext;
+
+- (void)crashlyticsDidDetectCrashDuringPreviousExecution:(Crashlytics *)crashlytics;
+
 
 @end

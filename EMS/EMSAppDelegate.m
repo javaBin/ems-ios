@@ -31,7 +31,7 @@ int networkCount = 0;
     NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:filePath];
 
 #ifndef DO_NOT_USE_CRASHLYTICS
-    [Crashlytics startWithAPIKey:prefs[@"crashlytics-api-key"]];
+    [Crashlytics startWithAPIKey:prefs[@"crashlytics-api-key"] delegate:self];
 #endif
 
 #ifndef DO_NOT_USE_GA
@@ -100,7 +100,7 @@ int networkCount = 0;
             }
         }
     }
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
         
         if (![[[EMSAppDelegate sharedAppDelegate] model] conferencesWithDataAvailable]) {
@@ -356,6 +356,7 @@ int networkCount = 0;
     }
 }
 
+
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
     if (__persistentStoreCoordinator != nil) {
         return __persistentStoreCoordinator;
@@ -476,6 +477,13 @@ int networkCount = 0;
 #endif
 
     return href;
+}
+
+- (void)crashlyticsDidDetectCrashDuringPreviousExecution:(Crashlytics *)crashlytics {
+    CLS_LOG(@"Crash detected - clearing advanced search");
+
+    EMSAdvancedSearch *advancedSearch = [[EMSAdvancedSearch alloc] init];
+    [advancedSearch clear];
 }
 
 @end
