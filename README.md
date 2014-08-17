@@ -51,9 +51,9 @@ The following CFLAGS are available
 
 None of these are to be used on production builds.
 
-DO_NOT_USE_GA is provided only as a convenience for other developers to avoid having to have a google analytics key.
-DO_NOT_USE_CRASHLYTICS is provided only as a convenience for other developers to avoid having to have a crashlytics api key (and read the next section about the run script too).
-DO_NOT_USE_PARSE is provided only as a convenience for other developers to avoid having to have a parse.com key and app ud.
+* DO_NOT_USE_GA is provided only as a convenience for other developers to avoid having to have a google analytics key.
+* DO_NOT_USE_CRASHLYTICS is provided only as a convenience for other developers to avoid having to have a crashlytics api key (and read the next section about the run script too).
+* DO_NOT_USE_PARSE is provided only as a convenience for other developers to avoid having to have a parse.com key and app id.
 
 None of these three should not be present in the CFLAGS setting when files are committed to git.
 
