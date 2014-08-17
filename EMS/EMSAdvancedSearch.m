@@ -3,6 +3,7 @@
 //
 
 #import "EMSAdvancedSearch.h"
+#import "EMSFeatureConfig.h"
 
 @interface EMSAdvancedSearch ()
 
@@ -79,10 +80,10 @@ NSString *const PrefsSearchField = @"searchFields";
 
     [defaults synchronize];
 
-#ifndef DO_NOT_USE_CRASHLYTICS
-    [Crashlytics setObjectValue:self.searchText forKey:@"lastStoredSearchText"];
-    [Crashlytics setObjectValue:self.fields forKey:@"lastStoredSearchFields"];
-#endif
+    if ([EMSFeatureConfig isCrashlyticsEnabled]) {
+        [Crashlytics setObjectValue:self.searchText forKey:@"lastStoredSearchText"];
+        [Crashlytics setObjectValue:self.fields forKey:@"lastStoredSearchFields"];
+    }
 }
 
 - (void)retrieve {
@@ -103,10 +104,10 @@ NSString *const PrefsSearchField = @"searchFields";
         }
     }
 
-#ifndef DO_NOT_USE_CRASHLYTICS
-    [Crashlytics setObjectValue:self.searchText forKey:@"lastRetrievedSearchText"];
-    [Crashlytics setObjectValue:self.fields forKey:@"lastRetrievedSearchFields"];
-#endif
+    if ([EMSFeatureConfig isCrashlyticsEnabled]) {
+        [Crashlytics setObjectValue:self.searchText forKey:@"lastRetrievedSearchText"];
+        [Crashlytics setObjectValue:self.fields forKey:@"lastRetrievedSearchFields"];
+    }
 }
 
 - (BOOL)hasAdvancedSearch {

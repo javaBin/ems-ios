@@ -10,6 +10,7 @@
 #import "CJCollection.h"
 #import "CJItem.h"
 #import "CJLink.h"
+#import "EMSFeatureConfig.h"
 
 @implementation EMSSpeakersRetriever
 
@@ -68,17 +69,17 @@ NSDate *timer;
 
     [[EMSAppDelegate sharedAppDelegate] stopNetwork];
 
-#ifndef DO_NOT_USE_GA
-    id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    NSNumber *interval = @([[NSDate date] timeIntervalSinceDate:timer]);
-    [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"retrieval"
-                                                         interval:interval
-                                                             name:@"speakers"
-                                                            label:nil] build]];
+    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        NSNumber *interval = @([[NSDate date] timeIntervalSinceDate:timer]);
+        [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"retrieval"
+                                                             interval:interval
+                                                                 name:@"speakers"
+                                                                label:nil] build]];
 
-    [[GAI sharedInstance] dispatch];
-#endif
-
+        [[GAI sharedInstance] dispatch];
+    }
+    
     [self.delegate finishedSpeakers:collection forHref:href];
 }
 

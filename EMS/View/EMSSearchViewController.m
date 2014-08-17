@@ -3,6 +3,7 @@
 //
 
 #import "EMSSearchViewController.h"
+#import "EMSFeatureConfig.h"
 
 @interface EMSSearchViewController ()
 @property(nonatomic, strong) NSMutableArray *sections;
@@ -48,11 +49,11 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-#ifndef DO_NOT_USE_GA
-    id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker set:kGAIScreenName value:@"Search Screen"];
-    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
-#endif
+    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        [tracker set:kGAIScreenName value:@"Search Screen"];
+        [tracker send:[[GAIDictionaryBuilder createAppView] build]];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

@@ -16,6 +16,7 @@
 #import "ConferenceType.h"
 #import "Speaker.h"
 #import "Room.h"
+#import "EMSFeatureConfig.h"
 
 
 @interface EMSMainViewController () <UISplitViewControllerDelegate,UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate>
@@ -239,11 +240,11 @@
 
         
         NSPredicate *resultPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
-        
-#ifndef DO_NOT_USE_CRASHLYTICS
-        [Crashlytics setObjectValue:resultPredicate forKey:@"activePredicate"];
-#endif
-        
+
+        if ([EMSFeatureConfig isCrashlyticsEnabled]) {
+            [Crashlytics setObjectValue:resultPredicate forKey:@"activePredicate"];
+        }
+
         return resultPredicate;
     }
     
@@ -363,13 +364,13 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
  
     
     [super viewDidAppear:animated];
-    
-#ifndef DO_NOT_USE_GA
-    id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker set:kGAIScreenName value:@"Main Screen"];
-    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
-#endif
-    
+
+    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        [tracker set:kGAIScreenName value:@"Main Screen"];
+        [tracker send:[[GAIDictionaryBuilder createAppView] build]];
+    }
+
     Conference *conference = [self activeConference];
     
     if (conference) {
@@ -457,11 +458,13 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     [self.search setShowsCancelButton:NO animated:YES];
     [self.search resignFirstResponder];
-    
-#ifndef DO_NOT_USE_GA
-    id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-#endif
-    
+
+    id <GAITracker> tracker = nil;
+
+    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+        tracker = [[GAI sharedInstance] defaultTracker];
+    }
+
     if ([[segue identifier] isEqualToString:@"showDetailsView"]) {
         UIViewController *tmpDestination = [segue destinationViewController];
         if ([tmpDestination isKindOfClass:[UINavigationController class]]) {
@@ -478,34 +481,34 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
             CLS_LOG(@"Preparing detail view from passed href %@", session);
             
             destination.session = session;
-            
-#ifndef DO_NOT_USE_CRASHLYTICS
-            [Crashlytics setObjectValue:session.href forKey:@"lastDetailSessionFromNotification"];
-#endif
-            
-#ifndef DO_NOT_USE_GA
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
-                                                                  action:@"detailFromNotification"
-                                                                   label:session.href
-                                                                   value:nil] build]];
-#endif
+
+            if ([EMSFeatureConfig isCrashlyticsEnabled]) {
+                [Crashlytics setObjectValue:session.href forKey:@"lastDetailSessionFromNotification"];
+            }
+
+            if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+                [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
+                                                                      action:@"detailFromNotification"
+                                                                       label:session.href
+                                                                       value:nil] build]];
+            }
         } else {
             Session *session = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
             
             CLS_LOG(@"Preparing detail view with %@", session);
             
             destination.session = session;
-            
-#ifndef DO_NOT_USE_CRASHLYTICS
-            [Crashlytics setObjectValue:session.href forKey:@"lastDetailSession"];
-#endif
-            
-#ifndef DO_NOT_USE_GA
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
-                                                                  action:@"detail"
-                                                                   label:session.href
-                                                                   value:nil] build]];
-#endif
+
+            if ([EMSFeatureConfig isCrashlyticsEnabled]) {
+                [Crashlytics setObjectValue:session.href forKey:@"lastDetailSession"];
+            }
+
+            if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+                [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
+                                                                      action:@"detail"
+                                                                       label:session.href
+                                                                       value:nil] build]];
+            }
         }
         
         destination.indexPath = [[self tableView] indexPathForSelectedRow];
@@ -572,13 +575,13 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
         destination.types = [types sortedArrayUsingSelector:@selector(compare:)];
         
         destination.delegate = self;
-        
-#ifndef DO_NOT_USE_GA
-        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
-                                                              action:@"search"
-                                                               label:nil
-                                                               value:nil] build]];
-#endif
+
+        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
+                                                                  action:@"search"
+                                                                   label:nil
+                                                                   value:nil] build]];
+        }
     }
 }
 
@@ -869,34 +872,34 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
 - (void)segmentChanged:(id)sender {
     self.filterFavourites = NO;
 
-#ifndef DO_NOT_USE_GA
-    UISegmentedControl *segment = (UISegmentedControl *) sender;
+    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+        UISegmentedControl *segment = (UISegmentedControl *) sender;
 
-    id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
 
-    switch ([segment selectedSegmentIndex]) {
-        case 0: {
-            // All
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
-                                                                  action:@"all"
-                                                                   label:nil
-                                                                   value:nil] build]];
-            break;
+        switch ([segment selectedSegmentIndex]) {
+            case 0: {
+                // All
+                [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
+                                                                      action:@"all"
+                                                                       label:nil
+                                                                       value:nil] build]];
+                break;
+            }
+            case 1: {
+                // My
+                [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
+                                                                      action:@"favourites"
+                                                                       label:nil
+                                                                       value:nil] build]];
+                self.filterFavourites = YES;
+                break;
+            }
+
+            default:
+                break;
         }
-        case 1: {
-            // My
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
-                                                                  action:@"favourites"
-                                                                   label:nil
-                                                                   value:nil] build]];
-            self.filterFavourites = YES;
-            break;
-        }
-
-        default:
-            break;
     }
-#endif
 
     [self initializeFetchedResultsController];
 }

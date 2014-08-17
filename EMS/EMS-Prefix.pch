@@ -9,20 +9,22 @@
 #endif
 
 #ifdef __OBJC__
-    #import <UIKit/UIKit.h>
-    #import <Foundation/Foundation.h>
-    #import <CoreData/CoreData.h>
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
+
 #ifndef DO_NOT_USE_CRASHLYTICS
-    #import <Crashlytics/Crashlytics.h>
+#import <Crashlytics/Crashlytics.h>
 #else
-    #define CLS_LOG(__FORMAT__, ...)
+#define CLS_LOG(__FORMAT__, ...)
 #endif
-#ifndef DO_NOT_USE_GA
-    #import "GAI.h"
-    #import "GAITracker.h"
-    #import "GAIDictionaryBuilder.h"
-    #import "GAIFields.h"
-#endif
+
+#import "GAI.h"
+#import "GAITracker.h"
+#import "GAIDictionaryBuilder.h"
+#import "GAIFields.h"
 #import <Parse/Parse.h>
+
 #endif
 

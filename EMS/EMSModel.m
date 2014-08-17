@@ -1065,21 +1065,24 @@
 
     BOOL isFavourite = [session.favourite boolValue];
 
-#ifndef DO_NOT_USE_GA
-    id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-#endif
+    id <GAITracker> tracker = nil;
+
+    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+        tracker = [[GAI sharedInstance] defaultTracker];
+    }
 
     if (isFavourite) {
         session.favourite = @NO;
 
         [self removeNotification:session];
 
-#ifndef DO_NOT_USE_GA
-        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"favourite"
-                                                              action:@"remove"
-                                                               label:session.href
-                                                               value:nil] build]];
-#endif
+        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"favourite"
+                                                                  action:@"remove"
+                                                                   label:session.href
+                                                                   value:nil] build]];
+        }
+
         if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
             PFInstallation *currentInstallation = [PFInstallation currentInstallation];
             CLS_LOG(@"Current channels %@", [currentInstallation channels]);
@@ -1095,12 +1098,13 @@
 
         [self addNotification:session];
 
-#ifndef DO_NOT_USE_GA
-        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"favourite"
-                                                              action:@"add"
-                                                               label:session.href
-                                                               value:nil] build]];
-#endif
+        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"favourite"
+                                                                  action:@"add"
+                                                                   label:session.href
+                                                                   value:nil] build]];
+        }
+
         if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
             PFInstallation *currentInstallation = [PFInstallation currentInstallation];
             CLS_LOG(@"Current channels %@", [currentInstallation channels]);
@@ -1262,25 +1266,25 @@
 
 - (void)analyticsWarningForType:(NSString *)type andHref:(NSString *)href withCount:(NSNumber *)count {
 
-#ifndef DO_NOT_USE_GA
-    id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
 
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"warning"
-                                                          action:type
-                                                           label:href
-                                                           value:count] build]];
-#endif
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"warning"
+                                                              action:type
+                                                               label:href
+                                                               value:count] build]];
+    }
 }
 
 - (void)clearConference:(Conference *)conference {
-#ifndef DO_NOT_USE_GA
-    id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
 
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"clearing"
-                                                          action:@"deleting"
-                                                           label:conference.href
-                                                           value:nil] build]];
-#endif
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"clearing"
+                                                              action:@"deleting"
+                                                               label:conference.href
+                                                               value:nil] build]];
+    }
 
     [conference.sessions enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         NSManagedObject *dbObj = (NSManagedObject *) obj;
