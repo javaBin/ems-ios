@@ -26,7 +26,8 @@ The current keys it provides are:
 * parse-client-key-prod
 * parse-app-id-prod
 
-See EMS/EMS-Keys.sample.plist.
+**DO NOT JUST COPY THE SAMPLE FILE!** It will use the placeholders as keys and things will break. If you do not have keys - create an empty plist file.
+
 
 The build uses cocoapods - so you will need to run the pod command and make sure you open EMS.xcworkspace and not EMS.xcodeproj.
 
@@ -40,38 +41,20 @@ The following CFLAGS are available
     * will use the production server for debug builds
 * TEST_PROD_NOTIFICATIONS
     * use the production notification server for a debug build (will require you to use correct certificate signing)
-* DO_NOT_USE_GA
-    * removes google analytics (and therefore the need for google-analytics-tracking-id in the EMS-Keys.plist)
-* DO_NOT_USE_CRASHLYTICS
-    * removes crashlytics (and therefore the need for crashlytics-api-key in the EMS-Keys.plist)
-* DO_NOT_USE_PARSE
-    * removes parse.com (and therefore the need for parse-* in EMS-Keys.plist)
 * SKIP_CONFIG_REFRESH
     * will not pull down new versions of the config plist file - useful when editing this locally for testing
 
 None of these are to be used on production builds.
 
-* DO_NOT_USE_GA is provided only as a convenience for other developers to avoid having to have a google analytics key.
-* DO_NOT_USE_CRASHLYTICS is provided only as a convenience for other developers to avoid having to have a crashlytics api key (and read the next section about the run script too).
-* DO_NOT_USE_PARSE is provided only as a convenience for other developers to avoid having to have a parse.com key and app id.
-
-None of these three should not be present in the CFLAGS setting when files are committed to git.
-
 ## But I don't have the keys or accounts?
 
-As noted in the building section we have two sets of keys that are used.
+For most things we'll detect that and not use them.
 
-Google analytics is used for usage tracking. If you don't have a google analytics account then add the CFLAG
+The one that this currently doesn't work totally with is Crashlytics - one specific place - I'm thinking about how to fix but for now this still has to be done.
 
-    -DDO_NOT_USE_GA=1
-
-Crashlytics provides crash reporting. If you don't have a crashlytics account then add the CFLAG
+Crashlytics provides crash reporting. If you don't have a Crashlytics account then add the CFLAG
 
     -DDO_NOT_USE_CRASHLYTICS=1
-
-Parse.com provides push notification. If you don't have a parse.com account then add the CFLAG
-
-    -DDO_NOT_USE_PARSE=1
 
 Note that this will also remove most debug logging - since that goes thru Crashlytics CLS_LOG (so that we get the logging alongside the crashlogs when reported).
 

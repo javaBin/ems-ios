@@ -10,6 +10,7 @@
 #import "EMSConferenceDetailViewController.h"
 
 #import "EMSAdvancedSearch.h"
+#import "EMSFeatureConfig.h"
 
 @interface EMSSettingsViewController ()
 @property(nonatomic) EMSRetriever *retriever;
@@ -68,13 +69,13 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-#ifndef DO_NOT_USE_GA
-    id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker set:kGAIScreenName value:@"Settings Screen"];
-    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
-#endif
-    
+
+    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        [tracker set:kGAIScreenName value:@"Settings Screen"];
+        [tracker send:[[GAIDictionaryBuilder createAppView] build]];
+    }
+
     [self updateRefreshControl];
     
 }
@@ -260,14 +261,14 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
     [self.tableView reloadData];
 
 
-#ifndef DO_NOT_USE_GA
-    id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
 
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"settingsView"
-                                                          action:@"selectConference"
-                                                           label:@"conference.href"
-                                                           value:nil] build]];
-#endif
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"settingsView"
+                                                              action:@"selectConference"
+                                                               label:@"conference.href"
+                                                               value:nil] build]];
+    }
 }
 
 

@@ -27,19 +27,19 @@ int networkCount = 0;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"EMS-Keys" ofType:@"plist"];
-    NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+    NSDictionary *prefs = [EMSFeatureConfig getKeys];
 
-#ifndef DO_NOT_USE_CRASHLYTICS
-    [Crashlytics startWithAPIKey:prefs[@"crashlytics-api-key"] delegate:self];
-#endif
+    if ([EMSFeatureConfig isCrashlyticsEnabled]) {
+        [Crashlytics startWithAPIKey:prefs[@"crashlytics-api-key"] delegate:self];
+    }
 
-#ifndef DO_NOT_USE_GA
-    [GAI sharedInstance].trackUncaughtExceptions = YES;
+
+    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+        [GAI sharedInstance].trackUncaughtExceptions = YES;
 #ifdef DEBUG
-    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
+        [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
 #endif
-#endif
+    }
 
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
 #ifdef DEBUG
@@ -58,18 +58,20 @@ int networkCount = 0;
 
     [self cleanup];
 
-#ifndef DO_NOT_USE_GA
-    id <GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:prefs[@"google-analytics-tracking-id"]];
-    [GAI sharedInstance].trackUncaughtExceptions = NO; //GAI runs the main runloop after a crash occured. This might lead to asyncronous events being executed which in turn can lead to serious bugs. The main reason for disabling was that it leaded to deadlock in core data. 
-#endif
+    id <GAITracker> tracker = nil;
+
+    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+        tracker = [[GAI sharedInstance] trackerWithTrackingId:prefs[@"google-analytics-tracking-id"]];
+        [GAI sharedInstance].trackUncaughtExceptions = NO; //GAI runs the main runloop after a crash occured. This might lead to asyncronous events being executed which in turn can lead to serious bugs. The main reason for disabling was that it leaded to deadlock in core data.
+    }
 
     if ([EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
-#ifndef DO_NOT_USE_GA
-        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
-                                                              action:@"notification"
-                                                               label:@"initialize"
-                                                               value:nil] build]];
-#endif
+        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
+                                                                  action:@"notification"
+                                                                   label:@"initialize"
+                                                                   value:nil] build]];
+        }
 
         UILocalNotification *notification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];
 
@@ -77,23 +79,24 @@ int networkCount = 0;
     }
 
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
-#ifndef DO_NOT_USE_GA
-        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
-                                                              action:@"remotenotification"
-                                                               label:@"initialize"
-                                                               value:nil] build]];
-#endif
+        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
+                                                                  action:@"remotenotification"
+                                                                   label:@"initialize"
+                                                                   value:nil] build]];
+        }
+
         [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert];
 
         if (launchOptions != nil) {
             NSDictionary *dictionary = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
             if (dictionary != nil) {
-#ifndef DO_NOT_USE_GA
-                [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
-                                                                      action:@"remotenotification"
-                                                                       label:@"init-receive"
-                                                                       value:nil] build]];
-#endif
+                if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+                    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
+                                                                          action:@"remotenotification"
+                                                                           label:@"init-receive"
+                                                                           value:nil] build]];
+                }
 
                 CLS_LOG(@"Launched from push notification: %@", dictionary);
                 [self handleIncomingRemoteNotification:dictionary];
@@ -102,12 +105,12 @@ int networkCount = 0;
     }
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        
+
         if (![[[EMSAppDelegate sharedAppDelegate] model] conferencesWithDataAvailable]) {
             CLS_LOG(@"Retrieving conferences");
             [[EMSRetriever sharedInstance] refreshConferences];
         }
-        
+
     });
 
     return YES;
@@ -115,16 +118,16 @@ int networkCount = 0;
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
-#ifndef DO_NOT_USE_GA
-        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+            id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
 
-        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
-                                                              action:@"remotenotification"
-                                                               label:@"receive"
-                                                               value:nil] build]];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
+                                                                  action:@"remotenotification"
+                                                                   label:@"receive"
+                                                                   value:nil] build]];
 
-        [[GAI sharedInstance] dispatch];
-#endif
+            [[GAI sharedInstance] dispatch];
+        }
 
         [self handleIncomingRemoteNotification:userInfo];
     }
@@ -132,15 +135,15 @@ int networkCount = 0;
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
-#ifndef DO_NOT_USE_GA
-        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    
+        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+            id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
 
-        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
-                                                              action:@"remotenotification"
-                                                               label:@"register"
-                                                               value:nil] build]];
-#endif
+
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
+                                                                  action:@"remotenotification"
+                                                                   label:@"register"
+                                                                   value:nil] build]];
+        }
 
         [[GAI sharedInstance] dispatch];
 
@@ -191,16 +194,17 @@ int networkCount = 0;
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     if ([EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
-#ifndef DO_NOT_USE_GA
-        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+            id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
 
-        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
-                                                              action:@"notification"
-                                                               label:@"receive"
-                                                               value:nil] build]];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
+                                                                  action:@"notification"
+                                                                   label:@"receive"
+                                                                   value:nil] build]];
 
-        [[GAI sharedInstance] dispatch];
-#endif
+            [[GAI sharedInstance] dispatch];
+        }
+
         [self activateWithNotification:notification];
     }
 }
@@ -448,23 +452,23 @@ int networkCount = 0;
 
     [defaults synchronize];
 
-    
+
     // Refresh sessions for conference if neccesary.
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         if (![EMSAppDelegate currentConference]) {
-            return ;
+            return;
         }
-        
+
         if (![[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:[[EMSAppDelegate currentConference] absoluteString]]) {
             CLS_LOG(@"Checking for existing data found no data - forced refresh");
             [[EMSRetriever sharedInstance] refreshActiveConference];
-            
+
         }
     }];
 
-#ifndef DO_NOT_USE_CRASHLYTICS
-    [Crashlytics setObjectValue:href forKey:@"lastStoredConference"];
-#endif
+    if ([EMSFeatureConfig isCrashlyticsEnabled]) {
+        [Crashlytics setObjectValue:href forKey:@"lastStoredConference"];
+    }
 }
 
 + (NSURL *)currentConference {
@@ -472,20 +476,18 @@ int networkCount = 0;
 
     NSURL *href = [defaults URLForKey:@"activeConference"];
 
-#ifndef DO_NOT_USE_CRASHLYTICS
-    [Crashlytics setObjectValue:href forKey:@"lastRetrievedConference"];
-#endif
+    if ([EMSFeatureConfig isCrashlyticsEnabled]) {
+        [Crashlytics setObjectValue:href forKey:@"lastRetrievedConference"];
+    }
 
     return href;
 }
 
-#ifndef DO_NOT_USE_CRASHLYTICS
 - (void)crashlyticsDidDetectCrashDuringPreviousExecution:(Crashlytics *)crashlytics {
     CLS_LOG(@"Crash detected - clearing advanced search");
 
     EMSAdvancedSearch *advancedSearch = [[EMSAdvancedSearch alloc] init];
     [advancedSearch clear];
 }
-#endif
 
 @end

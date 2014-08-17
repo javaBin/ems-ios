@@ -49,14 +49,48 @@
     }
 
     if (feature == fRemoteNotifications) {
-#ifndef DO_NOT_USE_PARSE
-        return [features[@"remote-notifications"] boolValue];
-#else
-        return NO;
-#endif
+        if ([self isParseEnabled]) {
+            return [features[@"remote-notifications"] boolValue];
+        } else {
+            return NO;
+        }
     }
 
     return NO;
+}
+
++ (BOOL)isCrashlyticsEnabled {
+    return ([self getKeys][@"crashlytics-api-key"] != nil);
+}
+
++ (BOOL)isGoogleAnalyticsEnabled {
+    return ([self getKeys][@"google-analytics-tracking-id"] != nil);
+}
+
++ (BOOL)isParseEnabled {
+    NSDictionary *prefs = [self getKeys];
+
+    NSString *idKey = @"parse-app-id";
+    NSString *clientKey = @"parse-client-key";
+
+#ifdef DEBUG
+#ifdef TEST_PROD_NOTIFICATIONS
+    idKey = @"parse-app-id-prod";
+    clientKey = @"parse-client-key-prod";
+#endif
+#else
+    idKey = @"parse-app-id-prod";
+    clientKey = @"parse-client-key-prod";
+#endif
+
+    return ([[prefs allKeys] containsObject:idKey] && [[prefs allKeys] containsObject:clientKey]);
+}
+
+
++ (NSDictionary *)getKeys {
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"EMS-Keys" ofType:@"plist"];
+
+    return [[NSDictionary alloc] initWithContentsOfFile:filePath];
 }
 
 - (void)refreshConfigFile {
