@@ -25,16 +25,12 @@ h1 {
 h2 {
   font-size: 15px;
   font-weight: bold;
-  color: #ff8641;
-  border-bottom: solid 1px #ff8641;
 }
 h3 {
   font-size: 15px;
   font-weight: normal;
 }
-h3.about {
-  color: #ff8641;
-}
+
 p img {
   margin-right: 5px;
 }
