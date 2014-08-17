@@ -16,12 +16,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FBSocialSentenceView : UIView
+@class FBSession;
 
-@property (nonatomic, copy) NSString *text;
-@property (nonatomic, assign) NSTextAlignment textAlignment;
-@property (nonatomic, strong) UIColor *textColor;
+@interface FBViewImpressionTracker : NSObject
 
-- (void)setText:(NSString *)text animated:(BOOL)animated;
++ (instancetype)impressionTrackerWithEventName:(NSString *)eventName;
+
+@property (nonatomic, copy, readonly) NSString *eventName;
+@property (nonatomic, retain) FBSession *session;
+
+- (void)logImpressionWithView:(UIView *)view
+                   identifier:(NSString *)identifier
+                   parameters:(NSDictionary *)parameters;
 
 @end

@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 
+#import "FBInternalSettings.h"
 #import "FBSDKMacros.h"
-#import "FBSettings.h"
 
 FBSDK_EXTERN NSString *const FBPLISTUrlSchemeSuffixKey;
 
 @interface FBSettings (Internal)
 
 + (void)autoPublishInstall:(NSString *)appID;
+
+/*!
+ @method
+
+ @abstract This method has been replaced by [FBAppEvents activateApp] */
++ (void)publishInstall:(NSString *)appID;
 
 /*!
  @method

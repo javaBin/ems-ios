@@ -16,6 +16,7 @@
 
 #import "FBSessionUtility.h"
 
+#import "FBBase64.h"
 #import "FBLogger.h"
 #import "FBSession+Internal.h"
 #import "FBUtility.h"
@@ -48,7 +49,16 @@
         }
     }
 
-    return [FBUtility queryParamsDictionaryFromFBURL:url];
+    NSDictionary *params = [FBUtility queryParamsDictionaryFromFBURL:url];
+
+    NSString *userID = [FBSessionUtility userIDFromSignedRequest:params[@"signed_request"]];
+    if (userID) {
+        NSMutableDictionary *mutableParams = [[params mutableCopy] autorelease];
+        [mutableParams setObject:userID forKey:@"user_id"];
+        params = [NSDictionary dictionaryWithDictionary:mutableParams];
+    }
+
+    return params;
 }
 
 + (NSDictionary *)clientStateFromQueryParams:(NSDictionary *)params {
@@ -158,7 +168,10 @@
     }
 }
 
-+ (void)extractPermissionsFromResponse:(NSDictionary *)responseObject allPermissions:(NSMutableArray *)allPermissions grantedPermissions:(NSMutableArray *)grantedPermissions {
++ (void)extractPermissionsFromResponse:(NSDictionary *)responseObject
+                        allPermissions:(NSMutableArray *)allPermissions
+                    grantedPermissions:(NSMutableArray *)grantedPermissions
+                   declinedPermissions:(NSMutableArray *)declinedPermissions {
     NSArray *resultData = responseObject[@"data"];
     if (resultData.count > 0) {
         if (resultData.count == 1 && [resultData[0] isKindOfClass:[NSDictionary class]] && resultData[0][@"permission"] == nil) {
@@ -173,6 +186,8 @@
                 [allPermissions addObject:permissionName];
                 if ([status isEqualToString:@"granted"]) {
                     [grantedPermissions addObject:permissionName];
+                } else if ([status isEqualToString:@"declined"]) {
+                    [declinedPermissions addObject:permissionName];
                 }
             }
         }
@@ -226,6 +241,38 @@
             loginBehavior = FBSessionLoginBehaviorWithFallbackToWebView;
     }
     return loginBehavior;
+}
+
++ (NSString *)userIDFromSignedRequest:(NSString *)signedRequest {
+    if (!signedRequest) {
+        return nil;
+    }
+
+    NSArray *signatureAndPayload = [signedRequest componentsSeparatedByString:@"."];
+    NSString *userID = nil;
+
+    if (signatureAndPayload.count == 2) {
+        NSData *data = FBDecodeBase64(signatureAndPayload[1]);
+        if (data) {
+            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            userID = dictionary[@"user_id"];
+        }
+    }
+    return userID;
+}
+
++ (NSString *)audienceNameWithAudience:(FBSessionDefaultAudience)audience
+{
+    switch (audience) {
+        case FBSessionDefaultAudienceOnlyMe:
+            return @"only_me";
+        case FBSessionDefaultAudienceFriends:
+            return @"friends";
+        case FBSessionDefaultAudienceEveryone:
+            return @"everyone";
+        default:
+            return nil;
+    }
 }
 
 @end

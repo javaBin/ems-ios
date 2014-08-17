@@ -15,24 +15,15 @@
  */
 
 #import "FBLinkShareParams.h"
-#import "FBShareDialogParams.h"
 
 #import "FBAppBridge.h"
+#import "FBAppBridgeScheme.h"
 #import "FBDialogsParams+Internal.h"
 #import "FBError.h"
+#import "FBInternalSettings.h"
 #import "FBLogger.h"
-#import "FBAppBridgeScheme.h"
+#import "FBShareDialogParams.h"
 #import "FBUtility.h"
-
-#ifndef FB_BUILD_ONLY
-#define FB_BUILD_ONLY
-#endif
-
-#import "FBSettings.h"
-
-#ifdef FB_BUILD_ONLY
-#undef FB_BUILD_ONLY
-#endif
 
 @implementation FBShareDialogParams
 @end
@@ -150,6 +141,23 @@
     } else {
         _picture = [picture copy];
     }
+}
+
+#pragma mark - NSCopying
+
+- (instancetype)copyWithZone:(NSZone *)zone
+{
+    FBLinkShareParams *copy = [super copyWithZone:zone];
+    copy->_caption = [_caption copyWithZone:zone];
+    copy->_dataFailuresFatal = _dataFailuresFatal;
+    copy->_friends = [_friends copyWithZone:zone];
+    copy->_link = [_link copyWithZone:zone];
+    copy->_linkDescription = [_linkDescription copyWithZone:zone];
+    copy->_name = [_name copyWithZone:zone];
+    copy->_picture = [_picture copyWithZone:zone];
+    copy->_place = [_place copyWithZone:zone];
+    copy->_ref = [_ref copyWithZone:zone];
+    return copy;
 }
 
 @end
