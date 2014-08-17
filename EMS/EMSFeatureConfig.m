@@ -49,7 +49,11 @@
     }
 
     if (feature == fRemoteNotifications) {
+#ifndef DO_NOT_USE_PARSE
         return [features[@"remote-notifications"] boolValue];
+#else
+        return NO;
+#endif
     }
 
     return NO;

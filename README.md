@@ -44,6 +44,8 @@ The following CFLAGS are available
     * removes google analytics (and therefore the need for google-analytics-tracking-id in the EMS-Keys.plist)
 * DO_NOT_USE_CRASHLYTICS
     * removes crashlytics (and therefore the need for crashlytics-api-key in the EMS-Keys.plist)
+* DO_NOT_USE_PARSE
+    * removes parse.com (and therefore the need for parse-* in EMS-Keys.plist)
 * SKIP_CONFIG_REFRESH
     * will not pull down new versions of the config plist file - useful when editing this locally for testing
 
@@ -51,10 +53,9 @@ None of these are to be used on production builds.
 
 DO_NOT_USE_GA is provided only as a convenience for other developers to avoid having to have a google analytics key.
 DO_NOT_USE_CRASHLYTICS is provided only as a convenience for other developers to avoid having to have a crashlytics api key (and read the next section about the run script too).
+DO_NOT_USE_PARSE is provided only as a convenience for other developers to avoid having to have a parse.com key and app ud.
 
-Neither should not be present in the CFLAGS setting when files are committed to git.
-
-To exclude parse.com (remote notifications) - set the config plist setting for features > remote-notifications to false
+None of these three should not be present in the CFLAGS setting when files are committed to git.
 
 ## But I don't have the keys or accounts?
 
@@ -67,6 +68,10 @@ Google analytics is used for usage tracking. If you don't have a google analytic
 Crashlytics provides crash reporting. If you don't have a crashlytics account then add the CFLAG
 
     -DDO_NOT_USE_CRASHLYTICS=1
+
+Parse.com provides push notification. If you don't have a parse.com account then add the CFLAG
+
+    -DDO_NOT_USE_PARSE=1
 
 Note that this will also remove most debug logging - since that goes thru Crashlytics CLS_LOG (so that we get the logging alongside the crashlogs when reported).
 
