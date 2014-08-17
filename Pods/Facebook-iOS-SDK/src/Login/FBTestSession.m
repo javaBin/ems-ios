@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+#if !defined SAFE_TO_USE_FBTESTSESSION
 #define SAFE_TO_USE_FBTESTSESSION
+#endif
 
 #import "FBTestSession.h"
 #import "FBTestSession+Internal.h"
@@ -162,6 +165,7 @@ static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
                                                   parameters:parameters
                                                   HTTPMethod:nil]
                           autorelease];
+    [request overrideVersionPartWith:@"v2.0"];
     [request startWithCompletionHandler:
      ^(FBRequestConnection *connection, id result, NSError *error) {
          id userToken;
@@ -270,8 +274,9 @@ static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
                                                                parameters:@{ @"access_token" : self.appAccessToken }
                                                                HTTPMethod:nil]
                                        autorelease];
+    [requestForAccountIds overrideVersionPartWith:@"v2.0"];
     __block id testAccounts = nil;
-    [connection addRequest:requestForAccountIds completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+    [connection addRequest:requestForAccountIds completionHandler:^(FBRequestConnection *innerConnection, id result, NSError *error) {
         if (error ||
             !result) {
             [self raiseException:error];
@@ -284,7 +289,7 @@ static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
                                                                   parameters:@{ @"access_token" : self.appAccessToken }
                                                                   HTTPMethod:nil]
                                           autorelease];
-    [connection addRequest:requestForUsersAndNames completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+    [connection addRequest:requestForUsersAndNames completionHandler:^(FBRequestConnection *innerConnection, id result, NSError *error) {
         if (error ||
             !result) {
             [self raiseException:error];

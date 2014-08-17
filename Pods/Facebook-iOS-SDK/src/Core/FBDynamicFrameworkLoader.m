@@ -18,8 +18,8 @@
 
 #import <dlfcn.h>
 
+#import "FBInternalSettings.h"
 #import "FBLogger.h"
-#import "FBSettings.h"
 
 static dispatch_once_t g_dispatchTokenLibrary;
 static dispatch_once_t g_dispatchTokenSymbol;
@@ -88,11 +88,66 @@ static NSString *g_sqlitePath = @"/usr/lib/libsqlite3.dylib";
     return s;
 }
 
++ (CFTypeRef)loadTypeRefConstantFromSecurityFramework:(NSString *)constantName {
+    void *symbol = [self loadSymbol:constantName withFramework:@"Security"];
+    NSAssert((symbol != nil), @"Failed to load constant %@ in the Security framework", constantName);
+    CFTypeRef ref = *(CFTypeRef *)symbol;
+    return ref;
+}
+
 + (SecRandomRef)loadkSecRandomDefault {
     void *symbol = [self loadSymbol:@"kSecRandomDefault" withFramework:@"Security"];
     NSAssert((symbol != nil), @"Failed to load symbol kSecRandomDefault in the Security framework");
     SecRandomRef ref = *(SecRandomRef *)symbol;
     return ref;
+}
+
++ (CFTypeRef)loadkSecAttrAccessible {
+    return [self loadTypeRefConstantFromSecurityFramework:@"kSecAttrAccessible"];
+}
+
++ (CFTypeRef)loadkSecAttrAccessibleAfterFirstUnlockThisDeviceOnly {
+    return [self loadTypeRefConstantFromSecurityFramework:@"kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly"];
+}
+
++ (CFTypeRef)loadkSecAttrAccount {
+    return [self loadTypeRefConstantFromSecurityFramework:@"kSecAttrAccount"];
+}
+
++ (CFTypeRef)loadkSecAttrService {
+    return [self loadTypeRefConstantFromSecurityFramework:@"kSecAttrService"];
+}
+
++ (CFTypeRef)loadkSecAttrGeneric {
+    return [self loadTypeRefConstantFromSecurityFramework:@"kSecAttrGeneric"];
+}
+
++ (CFTypeRef)loadkSecValueData {
+    return [self loadTypeRefConstantFromSecurityFramework:@"kSecValueData"];
+}
+
++ (CFTypeRef)loadkSecClassGenericPassword {
+    return [self loadTypeRefConstantFromSecurityFramework:@"kSecClassGenericPassword"];
+}
+
++ (CFTypeRef)loadkSecAttrAccessGroup {
+    return [self loadTypeRefConstantFromSecurityFramework:@"kSecAttrAccessGroup"];
+}
+
++ (CFTypeRef)loadkSecMatchLimitOne {
+    return [self loadTypeRefConstantFromSecurityFramework:@"kSecMatchLimitOne"];
+}
+
++ (CFTypeRef)loadkSecMatchLimit {
+    return [self loadTypeRefConstantFromSecurityFramework:@"kSecMatchLimit"];
+}
+
++ (CFTypeRef)loadkSecReturnData {
+    return [self loadTypeRefConstantFromSecurityFramework:@"kSecReturnData"];
+}
+
++ (CFTypeRef)loadkSecClass {
+    return [self loadTypeRefConstantFromSecurityFramework:@"kSecClass"];
 }
 
 + (void *)loadSymbol:(NSString *)symbol withFramework:(NSString *)framework {
@@ -131,8 +186,37 @@ int fbdfl_SecRandomCopyBytes(SecRandomRef rnd, size_t count, uint8_t *bytes) {
     return f(rnd, count, bytes);
 }
 
+typedef OSStatus (*SecItemUpdateFuncType)(CFDictionaryRef, CFDictionaryRef);
+typedef OSStatus (*SecItemAddFuncType)(CFDictionaryRef, CFTypeRef);
+typedef OSStatus (*SecItemCopyMatchingFuncType)(CFDictionaryRef, CFTypeRef);
+typedef OSStatus (*SecItemDeleteFuncType)(CFDictionaryRef);
+
+OSStatus fbdfl_SecItemUpdate(CFDictionaryRef query, CFDictionaryRef attributesToUpdate) {
+    NSString *handle = buildFrameworkPath(@"Security");
+    SecItemUpdateFuncType f = (SecItemUpdateFuncType)loadSymbol(handle, @"SecItemUpdate");
+    return f(query, attributesToUpdate);
+}
+
+OSStatus fbdfl_SecItemAdd(CFDictionaryRef attributes, CFTypeRef *result) {
+    NSString *handle = buildFrameworkPath(@"Security");
+    SecItemAddFuncType f = (SecItemAddFuncType)loadSymbol(handle, @"SecItemAdd");
+    return f(attributes, result);
+}
+
+OSStatus fbdfl_SecItemCopyMatching(CFDictionaryRef query, CFTypeRef *result) {
+    NSString *handle = buildFrameworkPath(@"Security");
+    SecItemCopyMatchingFuncType f = (SecItemCopyMatchingFuncType)loadSymbol(handle, @"SecItemCopyMatching");
+    return f(query, result);
+}
+
+OSStatus fbdfl_SecItemDelete(CFDictionaryRef query) {
+    NSString *handle = buildFrameworkPath(@"Security");
+    SecItemDeleteFuncType f = (SecItemDeleteFuncType)loadSymbol(handle, @"SecItemDelete");
+    return f(query);
+}
+
 // SQLITE3 APIs
-void *loadSqliteSymbol(NSString *symbol) {
+static void *loadSqliteSymbol(NSString *symbol) {
     return loadSymbol([FBDynamicFrameworkLoader sqlitePath], symbol);
 }
 
