@@ -52,5 +52,6 @@ For most things we'll detect that and not use them.
 
 The one that this currently doesn't work totally with is Crashlytics.
 
-You will also need to remove the target > Build Phases > Run Script that calls Crashlytics (this uploads dsym information to Crashlytics so that they can re-hydrate the crash log with file, line, method info etc).
+You will need to remove the target > Build Phases > Run Script that calls Crashlytics (this uploads dsym information to Crashlytics so that they can re-hydrate the crash log with file, line, method info etc).
 
+You may also choose to run the Debug No Analytics target instead of Debug - this sets the EMS_NO_ANALYTICS environment variable so that the shell script doesn't call the crashlytics binary.
