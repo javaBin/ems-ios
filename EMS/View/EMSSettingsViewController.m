@@ -12,10 +12,6 @@
 #import "EMSAdvancedSearch.h"
 #import "EMSFeatureConfig.h"
 
-@interface EMSSettingsViewController ()
-@property(nonatomic) EMSRetriever *retriever;
-@end
-
 @implementation EMSSettingsViewController
 
 - (void)setUpRefreshControl {
@@ -105,7 +101,6 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
             __strong EMSSettingsViewController *strongSelf = weakSelf;
             
             [strongSelf updateRefreshControl];
-            
         }];
         
     }
