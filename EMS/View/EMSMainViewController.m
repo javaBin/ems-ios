@@ -78,13 +78,13 @@
 }
 
 - (Conference *)conferenceForHref:(NSString *)href {
-    CLS_LOG(@"Getting conference for %@", href);
+    EMS_LOG(@"Getting conference for %@", href);
 
     return [[[EMSAppDelegate sharedAppDelegate] model] conferenceForHref:href];
 }
 
 - (Conference *)activeConference {
-    CLS_LOG(@"Getting current conference");
+    EMS_LOG(@"Getting current conference");
 
     NSString *activeConference = [[EMSAppDelegate currentConference] absoluteString];
 
@@ -149,7 +149,7 @@
             otherButtonTitles:nil];
         [errorAlert show];
 
-        CLS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
+        EMS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
     }
 
     [self initializeFooter];
@@ -374,7 +374,7 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
     Conference *conference = [self activeConference];
     
     if (conference) {
-        CLS_LOG(@"Conference found - initialize");
+        EMS_LOG(@"Conference found - initialize");
         
         [self initializeFetchedResultsController];
     }
@@ -478,7 +478,7 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
         if ([sender isKindOfClass:[NSString class]]) {
             Session *session = [[[EMSAppDelegate sharedAppDelegate] model] sessionForHref:(NSString *) sender];
             
-            CLS_LOG(@"Preparing detail view from passed href %@", session);
+            EMS_LOG(@"Preparing detail view from passed href %@", session);
             
             destination.session = session;
 
@@ -495,7 +495,7 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
         } else {
             Session *session = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
             
-            CLS_LOG(@"Preparing detail view with %@", session);
+            EMS_LOG(@"Preparing detail view with %@", session);
             
             destination.session = session;
 
@@ -518,7 +518,7 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
         UINavigationController *navigationController = [segue destinationViewController];
         EMSSearchViewController *destination = (EMSSearchViewController *) navigationController.childViewControllers[0];
         
-        CLS_LOG(@"Preparing search view with %@ and conference %@", self.search.text, [self activeConference]);
+        EMS_LOG(@"Preparing search view with %@ and conference %@", self.search.text, [self activeConference]);
         
         destination.advancedSearch = self.advancedSearch;
         
@@ -611,7 +611,7 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSUInteger count = [[_fetchedResultsController sections] count];
 
-    CLS_LOG(@"numberOfSectionsInTableView: Found %lu sections", (unsigned long) count);
+    EMS_LOG(@"numberOfSectionsInTableView: Found %lu sections", (unsigned long) count);
 
     return count;
 }
@@ -621,13 +621,13 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
 
     NSUInteger count = [sectionInfo numberOfObjects];
 
-    CLS_LOG(@"tableView:numberOfRowsInSection: %ld: Found %lu rows", (long) section, (unsigned long) count);
+    EMS_LOG(@"tableView:numberOfRowsInSection: %ld: Found %lu rows", (long) section, (unsigned long) count);
 
     return count;
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    CLS_LOG(@"configureCell:atIndexPath: asking for section %ld and row %ld", (long) indexPath.section, (long) indexPath.row);
+    EMS_LOG(@"configureCell:atIndexPath: asking for section %ld and row %ld", (long) indexPath.section, (long) indexPath.row);
 
     Session *session = [_fetchedResultsController objectAtIndexPath:indexPath];
 
@@ -692,7 +692,7 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CLS_LOG(@"tableView:cellForRowAtIndexPath: asking for section %ld and row %ld", (long) indexPath.section, (long) indexPath.row);
+    EMS_LOG(@"tableView:cellForRowAtIndexPath: asking for section %ld and row %ld", (long) indexPath.section, (long) indexPath.row);
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SessionCell"];
 

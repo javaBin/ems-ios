@@ -110,7 +110,7 @@ NSDate *timer;
     CJCollection *collection = [CJCollection collectionForNSData:data error:&error];
 
     if (!collection) {
-        CLS_LOG(@"Failed to retrieve sessions %@ - %@ - %@", href, error, [error userInfo]);
+        EMS_LOG(@"Failed to retrieve sessions %@ - %@ - %@", href, error, [error userInfo]);
 
         return [NSArray array];
     }
@@ -146,7 +146,7 @@ NSDate *timer;
 
 - (void)fetch:(NSURL *)url {
     if (url == nil) {
-        CLS_LOG(@"Asked to fetch nil sessions url");
+        EMS_LOG(@"Asked to fetch nil sessions url");
 
         return;
     }
@@ -163,7 +163,7 @@ NSDate *timer;
         NSData *root = [NSData dataWithContentsOfURL:url options:NSDataReadingMappedIfSafe error:&rootError];
 
         if (root == nil) {
-            CLS_LOG(@"Retrieved nil root %@ - %@ - %@", url, rootError, [rootError userInfo]);
+            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, rootError, [rootError userInfo]);
         }
 
         dispatch_async(queue, ^{

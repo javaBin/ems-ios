@@ -50,22 +50,7 @@ None of these are to be used on production builds.
 
 For most things we'll detect that and not use them.
 
-The one that this currently doesn't work totally with is Crashlytics - one specific place - I'm thinking about how to fix but for now this still has to be done.
-
-Crashlytics provides crash reporting. If you don't have a Crashlytics account then add the CFLAG
-
-    -DDO_NOT_USE_CRASHLYTICS=1
-
-Note that this will also remove most debug logging - since that goes thru Crashlytics CLS_LOG (so that we get the logging alongside the crashlogs when reported).
+The one that this currently doesn't work totally with is Crashlytics.
 
 You will also need to remove the target > Build Phases > Run Script that calls Crashlytics (this uploads dsym information to Crashlytics so that they can re-hydrate the crash log with file, line, method info etc).
 
-On a final note - please **do not** commit the project files with either of these DO_NOT_... build flags set.
-
-## Testers
-
-Want to help us make the app better and more stable by being a beta tester?
-
-Sign up at http://tflig.ht/dMc3DB
-
-Note that we can't let everyone test - we have a limited number of slots available for device IDs but if you're interested - register your devices and we'll let you in if we can :)

@@ -14,17 +14,19 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-#ifndef DO_NOT_USE_CRASHLYTICS
 #import <Crashlytics/Crashlytics.h>
-#else
-#define CLS_LOG(__FORMAT__, ...)
-#endif
+
 
 #import "GAI.h"
 #import "GAITracker.h"
 #import "GAIDictionaryBuilder.h"
 #import "GAIFields.h"
 #import <Parse/Parse.h>
+
+#import "EMSFeatureConfig.h"
+
+#define EMS_LOG(__FORMAT__, ...) if ([EMSFeatureConfig isCrashlyticsEnabled]) { CLS_LOG(__FORMAT__, ##__VA_ARGS__); } else { NSLog(__FORMAT__, ##__VA_ARGS__); }
+
 
 #endif
 

@@ -53,13 +53,13 @@
 }
 
 - (Conference *)conferenceForHref:(NSString *)href {
-    CLS_LOG(@"Getting conference for %@", href);
+    EMS_LOG(@"Getting conference for %@", href);
     
     return [[[EMSAppDelegate sharedAppDelegate] model] conferenceForHref:href];
 }
 
 - (Conference *)activeConference {
-    CLS_LOG(@"Getting current conference");
+    EMS_LOG(@"Getting current conference");
     
     NSString *activeConference = [[EMSAppDelegate currentConference] absoluteString];
     
@@ -95,7 +95,7 @@
     EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
     
     if (![backgroundModel storeConferences:conferences error:&error]) {
-        CLS_LOG(@"Failed to store conferences %@ - %@", error, [error userInfo]);
+        EMS_LOG(@"Failed to store conferences %@ - %@", error, [error userInfo]);
     }
     
     dispatch_sync(dispatch_get_main_queue(), ^{
@@ -140,18 +140,18 @@
     
     Conference *activeConference = [self activeConference];
     
-    CLS_LOG(@"Starting retrieval");
+    EMS_LOG(@"Starting retrieval");
     
     if (activeConference != nil) {
-        CLS_LOG(@"Starting retrieval - saw conf");
+        EMS_LOG(@"Starting retrieval - saw conf");
         
         if (activeConference.slotCollection != nil) {
-            CLS_LOG(@"Starting retrieval - saw slot collection");
+            EMS_LOG(@"Starting retrieval - saw slot collection");
             _refreshingSlots = YES;
             [self refreshSlots:[NSURL URLWithString:activeConference.slotCollection]];
         }
         if (activeConference.roomCollection != nil) {
-            CLS_LOG(@"Starting retrieval - saw room collection");
+            EMS_LOG(@"Starting retrieval - saw room collection");
             _refreshingRooms = YES;
             [self refreshRooms:[NSURL URLWithString:activeConference.roomCollection]];
         }
@@ -161,10 +161,10 @@
 - (void)retrieveSessions {
     NSAssert([NSThread isMainThread], @"Should be called from main thread.");
     
-    CLS_LOG(@"Starting retrieval of sessions");
+    EMS_LOG(@"Starting retrieval of sessions");
     // Fetch sessions once rooms and slots are done. Don't want to get into a state when trying to persist sessions that it refers to non-existing room or slot
     if (!_refreshingRooms && !_refreshingSlots) {
-        CLS_LOG(@"Starting retrieval of sessions - clear to go");
+        EMS_LOG(@"Starting retrieval of sessions - clear to go");
         Conference *activeConference = [self activeConference];
         [self refreshSessions:[NSURL URLWithString:activeConference.sessionCollection]];
     }
@@ -177,20 +177,20 @@
     
     retriever.delegate = self;
     
-    CLS_LOG(@"Retrieving speakers for href %@", session.speakerCollection);
+    EMS_LOG(@"Retrieving speakers for href %@", session.speakerCollection);
     
     [retriever refreshSpeakers:[NSURL URLWithString:session.speakerCollection]];
 }
 
 - (void)finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href {
-    CLS_LOG(@"Storing speakers %lu for href %@", (unsigned long) [speakers count], href);
+    EMS_LOG(@"Storing speakers %lu for href %@", (unsigned long) [speakers count], href);
     
     NSError *error = nil;
     
     EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
     
     if (![backgroundModel storeSpeakers:speakers forHref:[href absoluteString] error:&error]) {
-        CLS_LOG(@"Failed to store speakers %@ - %@", error, [error userInfo]);
+        EMS_LOG(@"Failed to store speakers %@ - %@", error, [error userInfo]);
     }
     
     dispatch_sync(dispatch_get_main_queue(), ^{
@@ -207,14 +207,14 @@
 
 
 - (void)finishedSlots:(NSArray *)slots forHref:(NSURL *)href {
-    CLS_LOG(@"Storing slots %lu", (unsigned long) [slots count]);
+    EMS_LOG(@"Storing slots %lu", (unsigned long) [slots count]);
     
     NSError *error = nil;
     
     EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
     
     if (![backgroundModel storeSlots:slots forHref:[href absoluteString] error:&error]) {
-        CLS_LOG(@"Failed to store slots %@ - %@", error, [error userInfo]);
+        EMS_LOG(@"Failed to store slots %@ - %@", error, [error userInfo]);
     }
     
     dispatch_sync(dispatch_get_main_queue(), ^{
@@ -225,14 +225,14 @@
 }
 
 - (void)finishedSessions:(NSArray *)sessions forHref:(NSURL *)href {
-    CLS_LOG(@"Storing sessions %lu", (unsigned long) [sessions count]);
+    EMS_LOG(@"Storing sessions %lu", (unsigned long) [sessions count]);
     
     NSError *error = nil;
     
     EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
     
     if (![backgroundModel storeSessions:sessions forHref:[href absoluteString] error:&error]) {
-        CLS_LOG(@"Failed to store sessions %@ - %@", error, [error userInfo]);
+        EMS_LOG(@"Failed to store sessions %@ - %@", error, [error userInfo]);
     }
     
     dispatch_sync(dispatch_get_main_queue(), ^{
@@ -243,14 +243,14 @@
 }
 
 - (void)finishedRooms:(NSArray *)rooms forHref:(NSURL *)href {
-    CLS_LOG(@"Storing rooms %lu", (unsigned long) [rooms count]);
+    EMS_LOG(@"Storing rooms %lu", (unsigned long) [rooms count]);
     
     NSError *error = nil;
     
     EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
     
     if (![backgroundModel storeRooms:rooms forHref:[href absoluteString] error:&error]) {
-        CLS_LOG(@"Failed to store rooms %@ - %@", error, [error userInfo]);
+        EMS_LOG(@"Failed to store rooms %@ - %@", error, [error userInfo]);
     }
     
     dispatch_sync(dispatch_get_main_queue(), ^{

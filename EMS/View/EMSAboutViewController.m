@@ -27,7 +27,7 @@
     NSString *content = [NSString stringWithContentsOfURL:docURL encoding:NSUTF8StringEncoding error:&error];
 
     if (!content) {
-        CLS_LOG(@"Unable to get about content %@ %@", error, [error userInfo]);
+        EMS_LOG(@"Unable to get about content %@ %@", error, [error userInfo]);
 
         return;
     }

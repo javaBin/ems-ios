@@ -20,16 +20,22 @@ int networkCount = 0;
 
 - (void)handleIncomingRemoteNotification:(NSDictionary *)dictionary {
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
-        CLS_LOG(@"Incoming remote notification: %@", dictionary);
+        EMS_LOG(@"Incoming remote notification: %@", dictionary);
 
         [PFPush handlePush:dictionary];
     }
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+    EMS_LOG(@"WE STARTED");
+
     NSDictionary *prefs = [EMSFeatureConfig getKeys];
 
     if ([EMSFeatureConfig isCrashlyticsEnabled]) {
+#ifdef DEBUG
+        [[Crashlytics sharedInstance] setDebugMode:YES];
+#endif
         [Crashlytics startWithAPIKey:prefs[@"crashlytics-api-key"] delegate:self];
     }
 
@@ -98,7 +104,7 @@ int networkCount = 0;
                                                                            value:nil] build]];
                 }
 
-                CLS_LOG(@"Launched from push notification: %@", dictionary);
+                EMS_LOG(@"Launched from push notification: %@", dictionary);
                 [self handleIncomingRemoteNotification:dictionary];
             }
         }
@@ -107,7 +113,7 @@ int networkCount = 0;
     dispatch_async(dispatch_get_main_queue(), ^{
 
         if (![[[EMSAppDelegate sharedAppDelegate] model] conferencesWithDataAvailable]) {
-            CLS_LOG(@"Retrieving conferences");
+            EMS_LOG(@"Retrieving conferences");
             [[EMSRetriever sharedInstance] refreshConferences];
         }
 
@@ -147,7 +153,7 @@ int networkCount = 0;
 
         [[GAI sharedInstance] dispatch];
 
-        CLS_LOG(@"My token is: %@", deviceToken);
+        EMS_LOG(@"My token is: %@", deviceToken);
 
         PFInstallation *currentInstallation = [PFInstallation currentInstallation];
         [currentInstallation setDeviceTokenFromData:deviceToken];
@@ -158,7 +164,7 @@ int networkCount = 0;
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
-        CLS_LOG(@"Failed to get token, error: %@ [%@]", error, [error userInfo]);
+        EMS_LOG(@"Failed to get token, error: %@ [%@]", error, [error userInfo]);
     }
 }
 
@@ -212,10 +218,10 @@ int networkCount = 0;
 - (void)remove:(NSString *)path {
     NSError *error = nil;
     if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        CLS_LOG(@"Deleting %@", path);
+        EMS_LOG(@"Deleting %@", path);
 
         if (![[NSFileManager defaultManager] removeItemAtPath:path error:&error]) {
-            CLS_LOG("Failed to delete %@ - %@ - %@", path, error, [error userInfo]);
+            EMS_LOG(@"Failed to delete %@ - %@ - %@", path, error, [error userInfo]);
         }
     }
 }
@@ -236,7 +242,7 @@ int networkCount = 0;
     if (notification != nil) {
         NSDictionary *userInfo = [notification userInfo];
 
-        CLS_LOG(@"Starting with a notification with userInfo %@", userInfo);
+        EMS_LOG(@"Starting with a notification with userInfo %@", userInfo);
 
         if (userInfo != nil && [[userInfo allKeys] containsObject:@"sessionhref"]) {
             NSString *url = [userInfo valueForKey:@"sessionhref"];
@@ -270,7 +276,7 @@ int networkCount = 0;
         return __model;
     }
 
-    CLS_LOG(@"No model - initializing");
+    EMS_LOG(@"No model - initializing");
 
     __model = [[EMSModel alloc] initWithManagedObjectContext:[self uiManagedObjectContext]];
 
@@ -286,7 +292,7 @@ int networkCount = 0;
         return __managedObjectContext;
     }
 
-    CLS_LOG(@"No moc - initializing");
+    EMS_LOG(@"No moc - initializing");
 
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
@@ -294,7 +300,7 @@ int networkCount = 0;
         [__managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
 
-    CLS_LOG(@"No moc - initialized");
+    EMS_LOG(@"No moc - initialized");
 
     return __managedObjectContext;
 }
@@ -304,7 +310,7 @@ int networkCount = 0;
         return __uiManagedObjectContext;
     }
 
-    CLS_LOG(@"No UI moc - initializing");
+    EMS_LOG(@"No UI moc - initializing");
 
     NSManagedObjectContext *parent = [self managedObjectContext];
     if (parent != nil) {
@@ -313,7 +319,7 @@ int networkCount = 0;
         [__uiManagedObjectContext setParentContext:parent];
     }
 
-    CLS_LOG(@"No moc - initialized");
+    EMS_LOG(@"No moc - initialized");
 
     return __uiManagedObjectContext;
 }
@@ -323,18 +329,18 @@ int networkCount = 0;
         return __managedObjectModel;
     }
 
-    CLS_LOG(@"No mom - initializing");
+    EMS_LOG(@"No mom - initializing");
 
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"EMSCoreDataModel" withExtension:@"momd"];
     __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
 
-    CLS_LOG(@"No mom - initialized");
+    EMS_LOG(@"No mom - initialized");
 
     return __managedObjectModel;
 }
 
 - (EMSModel *)modelForBackground {
-    CLS_LOG(@"Creating background model");
+    EMS_LOG(@"Creating background model");
 
     NSManagedObjectContext *backgroundContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
     [backgroundContext setUndoManager:nil];
@@ -349,13 +355,13 @@ int networkCount = 0;
     NSError *error = nil;
     if (__uiManagedObjectContext != nil) {
         if ([__uiManagedObjectContext hasChanges] && ![__uiManagedObjectContext save:&error]) {
-            CLS_LOG(@"Failed to save ui data at shutdown %@, %@", error, [error userInfo]);
+            EMS_LOG(@"Failed to save ui data at shutdown %@, %@", error, [error userInfo]);
         }
     }
     error = nil;
     if (__managedObjectContext != nil) {
         if ([__managedObjectContext hasChanges] && ![__managedObjectContext save:&error]) {
-            CLS_LOG(@"Failed to save data at shutdown %@, %@", error, [error userInfo]);
+            EMS_LOG(@"Failed to save data at shutdown %@, %@", error, [error userInfo]);
         }
     }
 }
@@ -366,7 +372,7 @@ int networkCount = 0;
         return __persistentStoreCoordinator;
     }
 
-    CLS_LOG(@"No persistent store - initializing");
+    EMS_LOG(@"No persistent store - initializing");
 
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"EMSCoreDataModel.sqlite"];
 
@@ -376,25 +382,25 @@ int networkCount = 0;
 
     NSError *error = nil;
     if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
-        CLS_LOG(@"Failed to set up SQL database. Deleting. %@, %@", error, [error userInfo]);
+        EMS_LOG(@"Failed to set up SQL database. Deleting. %@, %@", error, [error userInfo]);
 
         //delete the sqlite file and try again
         NSError *deleteError = nil;
 
         if (![[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:&deleteError]) {
-            CLS_LOG(@"Failed to delete database on failed first attempt %@, %@", deleteError, [deleteError userInfo]);
+            EMS_LOG(@"Failed to delete database on failed first attempt %@, %@", deleteError, [deleteError userInfo]);
         }
 
         NSError *error2 = nil;
 
         if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error2]) {
-            CLS_LOG(@"Failed to set up database on second attempt %@, %@", error2, [error2 userInfo]);
+            EMS_LOG(@"Failed to set up database on second attempt %@, %@", error2, [error2 userInfo]);
 
             [self showErrorAlertWithTitle:@"Database error" andMessage:@"We failed to create the database. If this happens again after an application restart please delete and re-install."];
         }
     }
 
-    CLS_LOG(@"No persistent store - initialized");
+    EMS_LOG(@"No persistent store - initialized");
 
     return __persistentStoreCoordinator;
 }
@@ -427,11 +433,11 @@ int networkCount = 0;
     UIApplication *app = [UIApplication sharedApplication];
     app.networkActivityIndicatorVisible = YES;
 
-    CLS_LOG(@"startNetwork finished with %d", networkCount);
+    EMS_LOG(@"startNetwork finished with %d", networkCount);
 }
 
 - (void)stopNetwork {
-    CLS_LOG(@"stopNetwork started with %d", networkCount);
+    EMS_LOG(@"stopNetwork started with %d", networkCount);
 
     networkCount--;
 
@@ -460,7 +466,7 @@ int networkCount = 0;
         }
 
         if (![[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:[[EMSAppDelegate currentConference] absoluteString]]) {
-            CLS_LOG(@"Checking for existing data found no data - forced refresh");
+            EMS_LOG(@"Checking for existing data found no data - forced refresh");
             [[EMSRetriever sharedInstance] refreshActiveConference];
 
         }
@@ -484,7 +490,7 @@ int networkCount = 0;
 }
 
 - (void)crashlyticsDidDetectCrashDuringPreviousExecution:(Crashlytics *)crashlytics {
-    CLS_LOG(@"Crash detected - clearing advanced search");
+    EMS_LOG(@"Crash detected - clearing advanced search");
 
     EMSAdvancedSearch *advancedSearch = [[EMSAdvancedSearch alloc] init];
     [advancedSearch clear];

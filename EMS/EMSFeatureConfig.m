@@ -19,12 +19,12 @@
 }
 
 + (NSDictionary *)workingDictionary {
-    CLS_LOG(@"Looking for config");
+    EMS_LOG(@"Looking for config");
 
     NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:[EMSFeatureConfig workingFile]];
 
     if (prefs == nil) {
-        CLS_LOG(@"Looking for default config");
+        EMS_LOG(@"Looking for default config");
 
         prefs = [EMSFeatureConfig defaultDictionary];
     }
@@ -97,7 +97,7 @@
     NSDictionary *prefs = [EMSFeatureConfig defaultDictionary];
 
     if (![[prefs allKeys] containsObject:@"ems-config-url"]) {
-        CLS_LOG(@"No config file to poll");
+        EMS_LOG(@"No config file to poll");
         return;
     }
 
@@ -110,17 +110,17 @@
     dispatch_async(queue, ^{
         NSError *error = nil;
 
-        CLS_LOG(@"Checking for config file");
+        EMS_LOG(@"Checking for config file");
 
         NSData *data = [NSData dataWithContentsOfURL:onlineConfig options:NSDataReadingMappedIfSafe error:&error];
 
         if (data == nil) {
-            CLS_LOG(@"Retrieved nil config %@ - %@ - %@", onlineConfig, error, [error userInfo]);
+            EMS_LOG(@"Retrieved nil config %@ - %@ - %@", onlineConfig, error, [error userInfo]);
 
             [[EMSAppDelegate sharedAppDelegate] stopNetwork];
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
-                CLS_LOG(@"Storing config file");
+                EMS_LOG(@"Storing config file");
 
                 [data writeToFile:[EMSFeatureConfig workingFile] atomically:YES];
 

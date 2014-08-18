@@ -51,7 +51,7 @@
             otherButtonTitles:nil];
         [errorAlert show];
 
-        CLS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
+        EMS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
     }
     
 }
@@ -150,7 +150,7 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
     
     EMSRetriever *retriever = [EMSRetriever sharedInstance];
     
-    CLS_LOG(@"Retrieving conferences");
+    EMS_LOG(@"Retrieving conferences");
     
     [retriever refreshConferences];
 }
@@ -334,7 +334,7 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
 
         EMSConferenceDetailViewController *destination = (EMSConferenceDetailViewController *) [segue destinationViewController];
 
-        CLS_LOG(@"Preparing conference detail view");
+        EMS_LOG(@"Preparing conference detail view");
 
         Conference *conference = [_fetchedResultsController objectAtIndexPath:[self.tableView indexPathForCell:sender]];
 

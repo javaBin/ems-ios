@@ -174,7 +174,7 @@
 
         if ([EMSFeatureConfig isFeatureEnabled:fBioPics]) {
             if (speaker.thumbnailUrl != nil) {
-                CLS_LOG(@"Speaker has available thumbnail %@", speaker.thumbnailUrl);
+                EMS_LOG(@"Speaker has available thumbnail %@", speaker.thumbnailUrl);
 
                 NSString *pngFilePath = [self pathForCachedThumbnail:speaker];
 
@@ -292,7 +292,7 @@
 
     calendarEvent.alarms = alarms;
 
-    CLS_LOG(@"Created calendar event %@", calendarEvent);
+    EMS_LOG(@"Created calendar event %@", calendarEvent);
 
     return calendarEvent;
 }
@@ -367,7 +367,7 @@
 
 - (NSDate *)dateForDate:(NSDate *)date {
 #ifdef USE_TEST_DATE
-    CLS_LOG(@"WARNING - RUNNING IN USE_TEST_DATE mode");
+    EMS_LOG(@"WARNING - RUNNING IN USE_TEST_DATE mode");
 
     // In debug mode we will use the current day but always the start time of the slot. Otherwise we couldn't test until JZ started ;)
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -420,7 +420,7 @@
     }
 
     NSString *shareString = [NSString stringWithFormat:@"%@ - %@", self.session.conference.name, self.session.title];
-    CLS_LOG(@"About to share for %@", shareString);
+    EMS_LOG(@"About to share for %@", shareString);
 
     // TODO - web URL?
     // NSURL *shareUrl = [NSURL URLWithString:@"http://www.java.no"];
@@ -452,7 +452,7 @@
             UIActivityTypeSaveToCameraRoll];
 
     [activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
-        CLS_LOG(@"Sharing of %@ via %@ - completed %d", shareString, activityType, completed);
+        EMS_LOG(@"Sharing of %@ via %@ - completed %d", shareString, activityType, completed);
 
 
         self.shareButton.enabled = YES;
@@ -614,7 +614,7 @@
     }
 
 
-    CLS_LOG(@"Retrieving speakers for href %@", self.session.speakerCollection);
+    EMS_LOG(@"Retrieving speakers for href %@", self.session.speakerCollection);
 
     [self.speakerRetriever refreshSpeakers:[NSURL URLWithString:self.session.speakerCollection]];
 }
@@ -645,7 +645,7 @@
             }];
 
             if (newBios) {
-                CLS_LOG(@"Saw updated bios - updating screen");
+                EMS_LOG(@"Saw updated bios - updating screen");
                 self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
                 [self setupParts];
             }
@@ -654,7 +654,7 @@
 }
 
 - (void)checkForNewThumbnailForSpeaker:(Speaker *)speaker withFilename:(NSString *)pngFilePath withSessionHref:(NSString *)href {
-    CLS_LOG(@"Checking for updated thumbnail %@", speaker.thumbnailUrl);
+    EMS_LOG(@"Checking for updated thumbnail %@", speaker.thumbnailUrl);
 
     NSData *thumbData = [NSData dataWithContentsOfFile:pngFilePath];
 
@@ -672,7 +672,7 @@
                                                error:&thumbnailError];
 
         if (data == nil) {
-            CLS_LOG(@"Failed to retrieve thumbnail %@ - %@ - %@", url, thumbnailError, [thumbnailError userInfo]);
+            EMS_LOG(@"Failed to retrieve thumbnail %@ - %@ - %@", url, thumbnailError, [thumbnailError userInfo]);
 
             [[EMSAppDelegate sharedAppDelegate] stopNetwork];
         } else {
@@ -683,15 +683,15 @@
             __block BOOL needToSave = NO;
 
             if (thumbData == nil) {
-                CLS_LOG(@"No existing bioPic - need to save");
+                EMS_LOG(@"No existing bioPic - need to save");
                 needToSave = YES;
             } else if (![thumbData isEqualToData:newThumbData]) {
-                CLS_LOG(@"Thumbnail data didn't match - update");
+                EMS_LOG(@"Thumbnail data didn't match - update");
                 needToSave = YES;
             }
 
             if (needToSave) {
-                CLS_LOG(@"Saving image file");
+                EMS_LOG(@"Saving image file");
 
                 [newThumbData writeToFile:pngFilePath atomically:YES];
             }

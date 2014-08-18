@@ -202,7 +202,7 @@
 
 - (void)alertView:(UIAlertView *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        CLS_LOG(@"Deleting all sessions for conference %@", conference.href);
+        EMS_LOG(@"Deleting all sessions for conference %@", conference.href);
 
         EMSModel *model = [[EMSAppDelegate sharedAppDelegate] model];
 

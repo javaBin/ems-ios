@@ -24,7 +24,7 @@ NSDate *timer;
     CJCollection *collection = [CJCollection collectionForNSData:data error:&error];
 
     if (!collection) {
-        CLS_LOG(@"Failed to retrieve conferences %@ - %@ - %@", href, error, [error userInfo]);
+        EMS_LOG(@"Failed to retrieve conferences %@ - %@ - %@", href, error, [error userInfo]);
 
         return [NSArray array];
     }
@@ -103,7 +103,7 @@ NSDate *timer;
 
 - (void)fetch:(NSURL *)url {
     if (url == nil) {
-        CLS_LOG(@"Asked to fetch nil conferences url");
+        EMS_LOG(@"Asked to fetch nil conferences url");
 
         return;
     }
@@ -120,7 +120,7 @@ NSDate *timer;
         NSData *root = [NSData dataWithContentsOfURL:url options:NSDataReadingMappedIfSafe error:&rootError];
 
         if (root == nil) {
-            CLS_LOG(@"Retrieved nil root %@ - %@ - %@", url, rootError, [rootError userInfo]);
+            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, rootError, [rootError userInfo]);
 
             dispatch_async(queue, ^{
                 [self fetchedEventCollection:nil forHref:url];
@@ -134,7 +134,7 @@ NSDate *timer;
                 CJCollection *collection = [CJCollection collectionForNSData:root error:&error];
 
                 if (!collection) {
-                    CLS_LOG(@"Failed to retrieve root %@ - %@ - %@", url, error, [error userInfo]);
+                    EMS_LOG(@"Failed to retrieve root %@ - %@ - %@", url, error, [error userInfo]);
 
                     dispatch_async(queue, ^{
                         [self fetchedEventCollection:nil forHref:url];
@@ -152,7 +152,7 @@ NSDate *timer;
                                 NSData *events = [NSData dataWithContentsOfURL:link.href options:NSDataReadingMappedIfSafe error:&eventsError];
 
                                 if (events == nil) {
-                                    CLS_LOG(@"Retrieved nil events %@ - %@ - %@", url, eventsError, [eventsError userInfo]);
+                                    EMS_LOG(@"Retrieved nil events %@ - %@ - %@", url, eventsError, [eventsError userInfo]);
                                 }
 
                                 dispatch_async(queue, ^{
