@@ -3,7 +3,6 @@
 //
 
 #import "EMSSearchViewController.h"
-#import "EMSFeatureConfig.h"
 
 @interface EMSSearchViewController ()
 @property(nonatomic, strong) NSMutableArray *sections;

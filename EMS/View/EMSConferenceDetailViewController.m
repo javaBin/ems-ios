@@ -5,7 +5,6 @@
 #import "EMSConferenceDetailViewController.h"
 
 #import "EMSAppDelegate.h"
-#import "EMSFeatureConfig.h"
 
 @interface EMSConferenceDetailViewController ()
 

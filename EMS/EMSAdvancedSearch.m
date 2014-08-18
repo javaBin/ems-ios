@@ -3,7 +3,6 @@
 //
 
 #import "EMSAdvancedSearch.h"
-#import "EMSFeatureConfig.h"
 
 @interface EMSAdvancedSearch ()
 
@@ -12,7 +11,8 @@
 
 @end
 
-@implementation EMSAdvancedSearch
+@implementation
+EMSAdvancedSearch
 
 NSString *const PrefsSearchText = @"searchText";
 NSString *const PrefsSearchField = @"searchFields";

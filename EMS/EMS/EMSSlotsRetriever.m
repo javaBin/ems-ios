@@ -11,7 +11,6 @@
 #import "CJItem.h"
 
 #import "EMSDateConverter.h"
-#import "EMSFeatureConfig.h"
 
 @implementation EMSSlotsRetriever
 

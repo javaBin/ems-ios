@@ -5,8 +5,6 @@
 #import "EMSAppDelegate.h"
 #import "EMSMainViewController.h"
 
-#import "EMSFeatureConfig.h"
-
 @implementation EMSAppDelegate
 
 int networkCount = 0;

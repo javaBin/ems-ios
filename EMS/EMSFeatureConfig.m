@@ -2,7 +2,6 @@
 //  EMSFeatureConfig.m
 //
 
-#import "EMSFeatureConfig.h"
 #import "EMSAppDelegate.h"
 
 @implementation EMSFeatureConfig

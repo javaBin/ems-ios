@@ -10,7 +10,6 @@
 #import "EMSConferenceDetailViewController.h"
 
 #import "EMSAdvancedSearch.h"
-#import "EMSFeatureConfig.h"
 
 @implementation EMSSettingsViewController
 

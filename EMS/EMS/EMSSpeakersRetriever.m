@@ -10,7 +10,6 @@
 #import "CJCollection.h"
 #import "CJItem.h"
 #import "CJLink.h"
-#import "EMSFeatureConfig.h"
 
 @implementation EMSSpeakersRetriever
 

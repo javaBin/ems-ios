@@ -11,8 +11,6 @@
 
 #import "EMSRetriever.h"
 
-#import "EMSFeatureConfig.h"
-
 #import "Speaker.h"
 #import "Keyword.h"
 #import "Room.h"

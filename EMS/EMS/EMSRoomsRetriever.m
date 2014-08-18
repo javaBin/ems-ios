@@ -9,7 +9,6 @@
 
 #import "CJCollection.h"
 #import "CJItem.h"
-#import "EMSFeatureConfig.h"
 
 @implementation EMSRoomsRetriever
 
