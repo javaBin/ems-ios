@@ -16,7 +16,6 @@
 #import "ConferenceType.h"
 #import "Speaker.h"
 #import "Room.h"
-#import "EMSFeatureConfig.h"
 
 
 @interface EMSMainViewController () <UISplitViewControllerDelegate,UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate>
@@ -155,8 +154,6 @@
     [self initializeFooter];
 
     [self.tableView reloadData];
-
-
 }
 
 - (NSPredicate *)currentConferencePredicate {
@@ -587,20 +584,24 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
 
 
 - (IBAction)back:(UIStoryboardSegue *)segue {
+    if ([segue.identifier isEqualToString:@"unwindSettingsSegue"]) {
+        self.advancedSearch = [[EMSAdvancedSearch alloc] init];
+
+        self.search.text = [self.advancedSearch search];
+
+        if ([self activeConference] && [[[self activeConference] sessions] count] == 0) {
+            [self retrieve];
+        }
+
+        [self initializeFetchedResultsController];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+
     if ([[self.fetchedResultsController sections] count] > 0) {
         if ([segue.identifier isEqualToString:@"popDetailSegue"]) {
             EMSDetailViewController *detail = (EMSDetailViewController *) segue.sourceViewController;
             [self.tableView scrollToRowAtIndexPath:detail.indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
         }
-    }
-    
-    if ([segue.identifier isEqualToString:@"unwindSettingsSegue"]) {
-        self.advancedSearch = [[EMSAdvancedSearch alloc] init];
-        
-        self.search.text = [self.advancedSearch search];
-
-        [self initializeFetchedResultsController];
-        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
