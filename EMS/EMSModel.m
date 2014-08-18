@@ -11,7 +11,6 @@
 #import "EMSSpeaker.h"
 
 #import "EMSAppDelegate.h"
-#import "EMSFeatureConfig.h"
 
 #import "ConferenceKeyword.h"
 #import "ConferenceLevel.h"
@@ -908,7 +907,7 @@
         EMS_LOG(@"Setting conference dates from session dates for href %@", conference.href);
 
         NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"slot.start" ascending:YES];
-        NSArray *sorted = [conference.sessions sortedArrayUsingDescriptors:@[dateDescriptor]];
+        NSArray *sorted = [self sessionsForPredicate:[NSPredicate predicateWithFormat:@"(format != %@ AND conference == %@)", @"workshop", conference] andSort:@[dateDescriptor]];
 
         if (conference.start == nil) {
             Session *first = sorted[0];
@@ -1204,10 +1203,11 @@
     EMS_LOG(@"WARNING - RUNNING IN USE_TEST_DATE mode");
 
     // In debug mode we will use the current time of day but always the first day of conference. Otherwise we couldn't test until JZ started ;)
-    NSSortDescriptor *conferenceSlotSort = [NSSortDescriptor sortDescriptorWithKey:@"start" ascending:YES];
-    NSArray *conferenceSlots = [self slotsForPredicate:[NSPredicate predicateWithFormat:@"conference == %@", conference] andSort:@[conferenceSlotSort]];
-    Slot *firstSlot = conferenceSlots[0];
-    NSDate *conferenceDate = firstSlot.start;
+    NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"slot.start" ascending:YES];
+    NSArray *sessions = [self sessionsForPredicate:[NSPredicate predicateWithFormat:@"(format != %@ AND conference == %@)", @"workshop", conference] andSort:@[dateDescriptor]];
+
+    Session *firstSession = sessions[0];
+    NSDate *conferenceDate = firstSession.slot.start;
 
     EMS_LOG(@"Saw conference date of %@", conferenceDate);
 
@@ -1315,6 +1315,8 @@
 
         [self.managedObjectContext deleteObject:dbObj];
     }];
+    conference.start = nil;
+    conference.end = nil;
 
     NSError *saveError = nil;
 
