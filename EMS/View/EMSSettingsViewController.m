@@ -136,7 +136,7 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
     NSFetchedResultsController *theFetchedResultsController =
             [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                 managedObjectContext:managedObjectContext sectionNameKeyPath:nil
-                                                           cacheName:@"Conferences"];
+                                                           cacheName:nil];
     self.fetchedResultsController = theFetchedResultsController;
 
     _fetchedResultsController.delegate = self;
