@@ -21,7 +21,7 @@
     return [NSURL URLWithString:prefs[@"ems-root-url"]];
 #endif
 #else
-    [NSURL URLWithString:prefs[@"ems-root-url-prod"]];
+    return [NSURL URLWithString:prefs[@"ems-root-url-prod"]];
 #endif
 }
 
