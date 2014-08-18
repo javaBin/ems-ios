@@ -356,11 +356,20 @@ int networkCount = 0;
             EMS_LOG(@"Failed to save ui data at shutdown %@, %@", error, [error userInfo]);
         }
     }
-    error = nil;
     if (__managedObjectContext != nil) {
-        if ([__managedObjectContext hasChanges] && ![__managedObjectContext save:&error]) {
-            EMS_LOG(@"Failed to save data at shutdown %@, %@", error, [error userInfo]);
-        }
+        __block NSError *mocError;
+        __block BOOL savedOK = NO;
+
+        [__managedObjectContext performBlockAndWait:^{
+            if ([__managedObjectContext hasChanges]) {
+                // Do lots of things with the context.
+                savedOK = [__managedObjectContext save:&mocError];
+
+                if (!savedOK) {
+                    EMS_LOG(@"Failed to save data at shutdown %@, %@", mocError, [mocError userInfo]);
+                }
+            }
+        }];
     }
 }
 
@@ -411,7 +420,9 @@ int networkCount = 0;
     return [[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
-- (void)showErrorAlertWithTitle:(NSString *)title andMessage:(NSString *)message {
+- (void)showErrorAlertWithTitle:(NSString *)title
+                     andMessage:
+                             (NSString *)message {
     UIAlertView *errorAlert = [[UIAlertView alloc]
             initWithTitle:title
                   message:message
