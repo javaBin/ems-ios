@@ -18,7 +18,7 @@
 #import "Room.h"
 
 
-@interface EMSMainViewController () <UISplitViewControllerDelegate,UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate>
+@interface EMSMainViewController () <UISplitViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate>
 
 @property(nonatomic, strong) EMSDetailViewController *detailViewController;
 
@@ -38,7 +38,7 @@
 
 - (IBAction)segmentChanged:(id)sender;
 
-- (IBAction) scrollToNow:(id) sender;
+- (IBAction)scrollToNow:(id)sender;
 
 - (IBAction)back:(UIStoryboardSegue *)segue;
 
@@ -62,7 +62,7 @@
     self.refreshControl = refreshControl;
 }
 
-- (void) updateRefreshControl {
+- (void)updateRefreshControl {
     UIRefreshControl *refreshControl = self.refreshControl;
     if ([EMSRetriever sharedInstance].refreshingSessions) {
         if (!refreshControl.refreshing) {
@@ -95,30 +95,30 @@
 }
 
 - (void)initializeFooter {
-    
-    
+
+
     if ([[self.fetchedResultsController sections] count] == 0) {
         NSMutableString *labelText = [[NSMutableString alloc] init];
-        
-        
+
+
         Conference *conference = [self activeConference];
         if ([self activeConference]) {
             [labelText appendString:@"No sessions found."];
-            
+
             if ([[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:[conference href]]) {
                 [labelText appendString:@" Try"];
-                
+
                 if ([self.advancedSearch hasAdvancedSearch] || ![self.search.text isEqualToString:@""]) {
                     [labelText appendString:@" a less restrictive search,"];
                 } else if (self.filterFavourites) {
                     [labelText appendString:@" switching back to the full list,"];
                 }
-                
+
                 [labelText appendString:@" or you can refresh the session list with pull to refresh."];
             } else {
                 [labelText appendString:@" Refreshing session list."];
             }
-            
+
         } else {
             [labelText appendString:@"Refreshing session list."];
         }
@@ -158,84 +158,84 @@
 
 - (NSPredicate *)currentConferencePredicate {
     Conference *activeConference = [self activeConference];
-    
+
     if (activeConference != nil) {
         NSMutableArray *predicates = [[NSMutableArray alloc] init];
-        
+
         [predicates
-         addObject:[NSPredicate predicateWithFormat:@"((state == %@) AND (conference == %@))",
-                    @"approved",
-                    activeConference]];
-        
+                addObject:[NSPredicate predicateWithFormat:@"((state == %@) AND (conference == %@))",
+                                                           @"approved",
+                                                           activeConference]];
+
         if (!([[self.advancedSearch search] isEqualToString:@""])) {
             [predicates
-             addObject:[NSPredicate predicateWithFormat:@"(title CONTAINS[cd] %@ OR body CONTAINS[cd] %@ OR ANY speakers.name CONTAINS[cd] %@)",
-                        [self.advancedSearch search],
-                        [self.advancedSearch search],
-                        [self.advancedSearch search]]];
+                    addObject:[NSPredicate predicateWithFormat:@"(title CONTAINS[cd] %@ OR body CONTAINS[cd] %@ OR ANY speakers.name CONTAINS[cd] %@)",
+                                                               [self.advancedSearch search],
+                                                               [self.advancedSearch search],
+                                                               [self.advancedSearch search]]];
         }
-        
+
         if ([[self.advancedSearch fieldValuesForKey:emsLevel] count] > 0) {
             [predicates
-             addObject:[NSPredicate predicateWithFormat:@"(level IN %@)",
-                        [self.advancedSearch fieldValuesForKey:emsLevel]]];
+                    addObject:[NSPredicate predicateWithFormat:@"(level IN %@)",
+                                                               [self.advancedSearch fieldValuesForKey:emsLevel]]];
         }
 
         if ([[self.advancedSearch fieldValuesForKey:emsType] count] > 0) {
             [predicates
-             addObject:[NSPredicate predicateWithFormat:@"(format IN %@)",
-                        [self.advancedSearch fieldValuesForKey:emsType]]];
+                    addObject:[NSPredicate predicateWithFormat:@"(format IN %@)",
+                                                               [self.advancedSearch fieldValuesForKey:emsType]]];
         }
 
         if ([[self.advancedSearch fieldValuesForKey:emsRoom] count] > 0) {
             [predicates
-             addObject:[NSPredicate predicateWithFormat:@"(room.name IN %@)",
-                        [self.advancedSearch fieldValuesForKey:emsRoom]]];
+                    addObject:[NSPredicate predicateWithFormat:@"(room.name IN %@)",
+                                                               [self.advancedSearch fieldValuesForKey:emsRoom]]];
         }
-        
+
         if ([[self.advancedSearch fieldValuesForKey:emsKeyword] count] > 0) {
             NSMutableArray *keywordPredicates = [[NSMutableArray alloc] init];
-            
+
             [[self.advancedSearch fieldValuesForKey:emsKeyword] enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
                 NSString *keyword = (NSString *) obj;
-                
+
                 [keywordPredicates
-                 addObject:[NSPredicate predicateWithFormat:@"(ANY keywords.name CONTAINS[cd] %@)",
-                            keyword]];
+                        addObject:[NSPredicate predicateWithFormat:@"(ANY keywords.name CONTAINS[cd] %@)",
+                                                                   keyword]];
             }];
-            
+
             [predicates
-             addObject:[NSCompoundPredicate orPredicateWithSubpredicates:keywordPredicates]];
+                    addObject:[NSCompoundPredicate orPredicateWithSubpredicates:keywordPredicates]];
         }
-        
+
         if ([[self.advancedSearch fieldValuesForKey:emsLang] count] > 0) {
             NSSet *languages = [self.advancedSearch fieldValuesForKey:emsLang];
-            
+
             NSMutableSet *langs = [[NSMutableSet alloc] init];
-            
+
             [languages enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
                 NSString *language = (NSString *) obj;
-                
+
                 if ([language isEqualToString:@"English"]) {
                     [langs addObject:@"en"];
                 }
-                
+
                 if ([language isEqualToString:@"Norwegian"]) {
                     [langs addObject:@"no"];
                 }
             }];
-            
+
             [predicates
-             addObject:[NSPredicate predicateWithFormat:@"(language IN %@)",
-                        [NSSet setWithSet:langs]]];
-        }
-        
-        if (self.filterFavourites) {
-            [predicates
-             addObject:[NSPredicate predicateWithFormat:@"favourite = %@", @YES]];
+                    addObject:[NSPredicate predicateWithFormat:@"(language IN %@)",
+                                                               [NSSet setWithSet:langs]]];
         }
 
-        
+        if (self.filterFavourites) {
+            [predicates
+                    addObject:[NSPredicate predicateWithFormat:@"favourite = %@", @YES]];
+        }
+
+
         NSPredicate *resultPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
 
         if ([EMSFeatureConfig isCrashlyticsEnabled]) {
@@ -244,7 +244,7 @@
 
         return resultPredicate;
     }
-    
+
     return nil;
 }
 
@@ -252,61 +252,61 @@
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
     }
-    
+
     NSManagedObjectContext *managedObjectContext = [[EMSAppDelegate sharedAppDelegate] uiManagedObjectContext];
-    
+
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:@"Session" inManagedObjectContext:managedObjectContext];
+            entityForName:@"Session" inManagedObjectContext:managedObjectContext];
     [fetchRequest setEntity:entity];
-    
+
     NSSortDescriptor *sortSlot = [[NSSortDescriptor alloc]
-                                  initWithKey:@"slotName" ascending:YES];
+            initWithKey:@"slotName" ascending:YES];
     NSSortDescriptor *sortRoom = [[NSSortDescriptor alloc]
-                                  initWithKey:@"room.name" ascending:YES];
+            initWithKey:@"room.name" ascending:YES];
     NSSortDescriptor *sortTime = [[NSSortDescriptor alloc]
-                                  initWithKey:@"slot.start" ascending:YES];
+            initWithKey:@"slot.start" ascending:YES];
     NSSortDescriptor *sortTitle = [[NSSortDescriptor alloc]
-                                   initWithKey:@"title" ascending:YES];
-    
+            initWithKey:@"title" ascending:YES];
+
     [fetchRequest setSortDescriptors:@[sortSlot, sortRoom, sortTime, sortTitle]];
     [fetchRequest setFetchBatchSize:20];
-    
+
     NSPredicate *conferencePredicate = [self currentConferencePredicate];
-    
+
     if (conferencePredicate != nil) {
         [fetchRequest setPredicate:conferencePredicate];
     }
-    
+
     NSFetchedResultsController *theFetchedResultsController =
-    [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                        managedObjectContext:managedObjectContext sectionNameKeyPath:@"slotName"
-                                                   cacheName:nil];
-    
+            [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                managedObjectContext:managedObjectContext sectionNameKeyPath:@"slotName"
+                                                           cacheName:nil];
+
     self.fetchedResultsController = theFetchedResultsController;
-    
+
     _fetchedResultsController.delegate = self;
-    
+
     return _fetchedResultsController;
 }
 
 - (void)setDefaultTypeSearch {
     Conference *conference = [self activeConference];
-    
+
     if (conference) {
         if ([[self.advancedSearch fieldValuesForKey:emsType] count] == 0) {
             NSArray *types = [self typesForConference:conference];
-            
+
             NSMutableSet *typeNames = [[NSMutableSet alloc] init];
-            
+
             [types enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                NSString *type = (NSString *)obj;
-                
+                NSString *type = (NSString *) obj;
+
                 if (![type isEqualToString:@"workshop"]) {
                     [typeNames addObject:type];
                 }
             }];
-            
+
             [self.advancedSearch setFieldValues:typeNames forKey:emsType];
         }
     }
@@ -324,7 +324,7 @@
     self.advancedSearch = [[EMSAdvancedSearch alloc] init];
 
     self.search.text = [self.advancedSearch search];
-    
+
     [self setUpRefreshControl];
 
     // All sections start with the same year name - so the index is meaningless.
@@ -335,22 +335,22 @@
     if (self.splitViewController) {
         self.splitViewController.delegate = self;
     }
-    
+
     self.observersInstalled = NO;
 
 }
 
-static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
+static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+
     [self addObservers];
 }
 
 
 - (void)viewDidAppear:(BOOL)animated {
-    
+
     //This method should have been called in viewWillAppear, but UISplitViewController
     //does not call viewWillAppear on master view controller when app is launched in portrait mode
     //for some reason. This has been reported as a bug to Apple, the bug id 17291466.
@@ -358,8 +358,8 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
     //a guard to prevent that the observers are added twice.
     //TODO: Remove this line when Apple fixes bug 17291466.
     [self addObservers];
- 
-    
+
+
     [super viewDidAppear:animated];
 
     if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
@@ -369,15 +369,15 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
     }
 
     Conference *conference = [self activeConference];
-    
+
     if (conference) {
         EMS_LOG(@"Conference found - initialize");
-        
+
         [self initializeFetchedResultsController];
     }
-    
+
     [self updateRefreshControl];
-    
+
     if (self.splitViewController) {
         if (self.tableView.numberOfSections > 0 && [self.tableView numberOfRowsInSection:0] > 0) {
             if ([self.tableView indexPathForSelectedRow] == nil) {
@@ -387,13 +387,13 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
             }
         }
     }
-    
+
     [self initializeFooter];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
+
     [self removeObservers];
 }
 
@@ -409,14 +409,14 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
 
 #pragma mark - Key Value Observing
 
-- (void) addObservers {
+- (void)addObservers {
     if (!self.observersInstalled) {
         [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions)) options:0 context:kRefreshActiveConferenceContext];
         self.observersInstalled = YES;
     }
 }
 
-- (void) removeObservers {
+- (void)removeObservers {
     if (self.observersInstalled) {
         [[EMSRetriever sharedInstance] removeObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions))];
         self.observersInstalled = NO;
@@ -427,7 +427,7 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
     if (context == kRefreshActiveConferenceContext) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self updateRefreshControl];
-            
+
             if (![EMSRetriever sharedInstance].refreshingSessions) {
                 if ([self activeConference]) {
                     [self initializeFetchedResultsController];
@@ -441,14 +441,14 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
 #pragma mark - Storyboard Segues
 
 - (NSArray *)typesForConference:(Conference *)conference {
-   NSMutableArray *types = [[NSMutableArray alloc] init];
-   
-   [conference.conferenceTypes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-       ConferenceType *type = (ConferenceType *) obj;
-    
-       [types addObject:type.name];
-   }];
-   
+    NSMutableArray *types = [[NSMutableArray alloc] init];
+
+    [conference.conferenceTypes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        ConferenceType *type = (ConferenceType *) obj;
+
+        [types addObject:type.name];
+    }];
+
     return [NSArray arrayWithArray:types];
 }
 
@@ -467,16 +467,16 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
         if ([tmpDestination isKindOfClass:[UINavigationController class]]) {
             tmpDestination = tmpDestination.childViewControllers[0];
         }
-        
+
         EMSDetailViewController *destination = (EMSDetailViewController *) tmpDestination;
-        
+
         self.detailViewController = destination;
-        
+
         if ([sender isKindOfClass:[NSString class]]) {
             Session *session = [[[EMSAppDelegate sharedAppDelegate] model] sessionForHref:(NSString *) sender];
-            
+
             EMS_LOG(@"Preparing detail view from passed href %@", session);
-            
+
             destination.session = session;
 
             if ([EMSFeatureConfig isCrashlyticsEnabled]) {
@@ -491,9 +491,9 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
             }
         } else {
             Session *session = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
-            
+
             EMS_LOG(@"Preparing detail view with %@", session);
-            
+
             destination.session = session;
 
             if ([EMSFeatureConfig isCrashlyticsEnabled]) {
@@ -507,70 +507,70 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
                                                                        value:nil] build]];
             }
         }
-        
+
         destination.indexPath = [[self tableView] indexPathForSelectedRow];
     }
-    
+
     if ([[segue identifier] isEqualToString:@"showSearchView"]) {
         UINavigationController *navigationController = [segue destinationViewController];
         EMSSearchViewController *destination = (EMSSearchViewController *) navigationController.childViewControllers[0];
-        
+
         EMS_LOG(@"Preparing search view with %@ and conference %@", self.search.text, [self activeConference]);
-        
+
         destination.advancedSearch = self.advancedSearch;
-        
+
         Conference *conference = [self activeConference];
-        
+
         NSMutableArray *levels = [[NSMutableArray alloc] init];
-        
+
         [conference.conferenceLevels enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
             ConferenceLevel *level = (ConferenceLevel *) obj;
-            
+
             [levels addObject:level.name];
         }];
-        
+
         NSString *filePath = [[NSBundle mainBundle] pathForResource:@"EMS-Config" ofType:@"plist"];
         NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:filePath];
         NSDictionary *sort = prefs[@"level-sort"];
-        
+
         destination.levels = [levels sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
             NSNumber *firstKey = [sort valueForKey:obj1];
             NSNumber *secondKey = [sort valueForKey:obj2];
-            
+
             if ([firstKey integerValue] > [secondKey integerValue]) {
                 return (NSComparisonResult) NSOrderedDescending;
             }
-            
+
             if ([firstKey integerValue] < [secondKey integerValue]) {
                 return (NSComparisonResult) NSOrderedAscending;
             }
             return (NSComparisonResult) NSOrderedSame;
         }];
-        
+
         NSMutableArray *keywords = [[NSMutableArray alloc] init];
-        
+
         [conference.conferenceKeywords enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
             ConferenceKeyword *keyword = (ConferenceKeyword *) obj;
-            
+
             [keywords addObject:keyword.name];
         }];
-        
+
         destination.keywords = [keywords sortedArrayUsingSelector:@selector(compare:)];
-        
+
         NSMutableArray *rooms = [[NSMutableArray alloc] init];
-        
+
         [conference.rooms enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
             Room *room = (Room *) obj;
-            
+
             [rooms addObject:room.name];
         }];
-        
+
         destination.rooms = [rooms sortedArrayUsingSelector:@selector(compare:)];
-        
+
         NSArray *types = [self typesForConference:conference];
-        
+
         destination.types = [types sortedArrayUsingSelector:@selector(compare:)];
-        
+
         destination.delegate = self;
 
         if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
@@ -604,7 +604,6 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
         }
     }
 }
-
 
 
 #pragma mark - Table view data source
@@ -846,109 +845,115 @@ static void  * kRefreshActiveConferenceContext = &kRefreshActiveConferenceContex
 
 - (void)toggleFavourite:(id)sender {
     UIButton *button = (UIButton *) sender;
-    
+
     UIView *view = [button superview];
-    
+
     while (view != nil) {
         if ([view isKindOfClass:[EMSSessionCell class]]) {
             EMSSessionCell *cell = (EMSSessionCell *) view;
-            
+
             Session *session = cell.session;
-            
+
             [[[EMSAppDelegate sharedAppDelegate] model] toggleFavourite:session];
-            
+
             break;
         }
-        
+
         view = [view superview];
     }
-    
+
     if (self.detailViewController != nil) {
         [self.detailViewController refreshFavourite];
     }
-    
+
     [self.tableView reloadData];
 }
 
 - (void)segmentChanged:(id)sender {
     self.filterFavourites = NO;
 
+    UISegmentedControl *segment = (UISegmentedControl *) sender;
+
+    id <GAITracker> tracker = nil;
+
     if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-        UISegmentedControl *segment = (UISegmentedControl *) sender;
+        tracker = [[GAI sharedInstance] defaultTracker];
+    }
 
-        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-
-        switch ([segment selectedSegmentIndex]) {
-            case 0: {
-                // All
+    switch ([segment selectedSegmentIndex]) {
+        case 0: {
+            // All
+            if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
                 [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
                                                                       action:@"all"
                                                                        label:nil
                                                                        value:nil] build]];
-                break;
             }
-            case 1: {
-                // My
+            break;
+        }
+        case 1: {
+            // My
+            if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
                 [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
                                                                       action:@"favourites"
                                                                        label:nil
                                                                        value:nil] build]];
-                self.filterFavourites = YES;
-                break;
             }
-
-            default:
-                break;
+            self.filterFavourites = YES;
+            break;
         }
+
+        default:
+            break;
     }
 
     [self initializeFetchedResultsController];
 }
 
-- (IBAction) scrollToNow:(id) sender {
-    
+- (IBAction)scrollToNow:(id)sender {
+
     Conference *conference = [self activeConference];
     if (!conference) {
         return;
     }
-    
+
     NSArray *sections = [self.fetchedResultsController sections];
-    
+
     if ([sections count] == 0) {
         return;
     }
-    
+
     NSMutableArray *mappedObjects = [NSMutableArray array];
-    
+
     for (id <NSFetchedResultsSectionInfo> sectionInfo in sections) {
         if ([sectionInfo numberOfObjects] > 0) {
             Session *session = [sectionInfo objects].firstObject;
             [mappedObjects addObject:session.slot.end];
         }
     }
-    
+
     NSRange range = NSMakeRange(0, [sections count]);
 
     NSArray *sortedDates = [mappedObjects sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         return [obj1 compare:obj2];
     }];
-    
-    
+
+
     NSDate *now = [[[EMSAppDelegate sharedAppDelegate] model] dateForConference:conference andDate:[NSDate date]];
-   
+
     NSInteger index = [sortedDates indexOfObject:now inSortedRange:range options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(id obj1, id obj2) {
         return [obj1 compare:obj2];
     }];
-    
+
     if (index != NSNotFound) {
         if (index >= [sections count]) {//scroll to end
             index = [sections count] - 1;
         }
-        
+
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:index];
-            
+
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-        
+
     }
 }
 
