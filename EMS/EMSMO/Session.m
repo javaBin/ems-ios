@@ -46,8 +46,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateStyle = NSDateFormatterMediumStyle;
-        dateFormatter.timeStyle = NSDateFormatterNoStyle;
+        dateFormatter.dateFormat = @"EEEE";
         
         timeFormatter = [[NSDateFormatter alloc] init];
         timeFormatter.dateStyle = NSDateFormatterNoStyle;
@@ -62,9 +61,7 @@
 
     NSArray *parts = [self.slotName componentsSeparatedByString:@" "];
 
-    EMS_LOG(@"%@", parts);
-
-    NSString *date = [dateFormatter stringFromDate:[dateParser dateFromString:parts[0]]];
+    NSString *date = [[dateFormatter stringFromDate:[dateParser dateFromString:parts[0]]] uppercaseString];
     NSString *startTime = [timeFormatter stringFromDate:[timeParser dateFromString:parts[1]]];
     NSString *endTime = [timeFormatter stringFromDate:[timeParser dateFromString:parts[3]]];
     
