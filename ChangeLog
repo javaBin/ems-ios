@@ -1,3 +1,14 @@
+2014-08-20  Ronnie Nessa  <ronnie.nessa@gmail.com>
+
+        * Localize section titles (#105)
+
+2014-08-19  Chris Searle  <chris@chrissearle.org>
+
+        * Update to iOS7
+        * Split view for iPad
+        * 4.0b19
+        * Submitted to Apple
+
 2014-05-20  Chris Searle  <chris@chrissearle.org>
 
         * Switch from web view to native components (#77)
