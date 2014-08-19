@@ -3,6 +3,7 @@
 //
 
 #import "Session.h"
+#import "Slot.h"
 
 
 @implementation Session
@@ -32,6 +33,29 @@
 - (NSString *)sanitizedTitle {
     NSCharacterSet *notAllowedChars = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyz"] invertedSet];
     return [[[self.title lowercaseString] componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""];
+}
+
+- (NSString *) sectionTitle {
+    
+    static NSDateFormatter *dateFormatter;
+    static NSDateFormatter *timeFormatter;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateStyle = NSDateFormatterMediumStyle;
+        dateFormatter.timeStyle = NSDateFormatterNoStyle;
+        
+        timeFormatter = [[NSDateFormatter alloc] init];
+        timeFormatter.dateStyle = NSDateFormatterNoStyle;
+        timeFormatter.timeStyle = NSDateFormatterShortStyle;
+    });
+    
+    NSString *date = [dateFormatter stringFromDate:self.slot.start];
+    NSString *startTime = [timeFormatter stringFromDate:self.slot.start];
+    NSString *endTime = [timeFormatter stringFromDate:self.slot.end];
+    
+    return  [NSString stringWithFormat:@"%@ %@ - %@", date, startTime, endTime];
 }
 
 @end

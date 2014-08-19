@@ -280,7 +280,7 @@
 
     NSFetchedResultsController *theFetchedResultsController =
             [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                managedObjectContext:managedObjectContext sectionNameKeyPath:@"slotName"
+                                                managedObjectContext:managedObjectContext sectionNameKeyPath:@"sectionTitle"
                                                            cacheName:nil];
 
     self.fetchedResultsController = theFetchedResultsController;
