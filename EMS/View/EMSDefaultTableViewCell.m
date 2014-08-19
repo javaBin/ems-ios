@@ -14,8 +14,6 @@
     
     self.textLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.bounds) - 20;
     
-    [self.textLabel sizeToFit];
-    
     [super layoutSubviews];
 }
 

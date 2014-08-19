@@ -412,6 +412,10 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 - (void)addObservers {
     if (!self.observersInstalled) {
         [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions)) options:0 context:kRefreshActiveConferenceContext];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTableViewRowHeightReload) name:UIContentSizeCategoryDidChangeNotification object:nil];
+        [self updateTableViewRowHeightReload];
+        
         self.observersInstalled = YES;
     }
 }
@@ -419,6 +423,8 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 - (void)removeObservers {
     if (self.observersInstalled) {
         [[EMSRetriever sharedInstance] removeObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions))];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
         self.observersInstalled = NO;
     }
 }
@@ -608,6 +614,38 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
 #pragma mark - Table view data source
 
+
+- (void) updateTableViewRowHeightReload {
+    [self updateTableViewRowHeight];
+    
+}
+
+- (void) updateTableViewRowHeight {
+    EMSSessionCell *sessionCell  = [self.tableView dequeueReusableCellWithIdentifier:@"SessionCell"];
+    
+    sessionCell.title.text = @"We want it to always be the size of two lines, so we put in a really long title before we calculate size.";
+    sessionCell.room.text = @"Room";
+    sessionCell.speaker.text =@"Speakers";
+    
+    sessionCell.title.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    sessionCell.room.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+    sessionCell.speaker.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+    
+    
+    sessionCell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.bounds), CGRectGetHeight(sessionCell.bounds));
+    
+    [sessionCell setNeedsLayout];
+    [sessionCell layoutIfNeeded];
+    
+    
+    CGFloat height = [sessionCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    
+    self.tableView.rowHeight = height + 1;
+    
+    [self.tableView reloadData];
+}
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSUInteger count = [[_fetchedResultsController sections] count];
 
@@ -632,6 +670,12 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     Session *session = [_fetchedResultsController objectAtIndexPath:indexPath];
 
     EMSSessionCell *sessionCell = (EMSSessionCell *) cell;
+    
+    sessionCell.title.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    sessionCell.room.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+    sessionCell.speaker.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+    [sessionCell setNeedsLayout];
+    [sessionCell layoutIfNeeded];
 
     UIButton *icon = sessionCell.icon;
 
@@ -695,10 +739,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     EMS_LOG(@"tableView:cellForRowAtIndexPath: asking for section %ld and row %ld", (long) indexPath.section, (long) indexPath.row);
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SessionCell"];
-
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"SessionCell"];
-    }
 
     [self configureCell:cell atIndexPath:indexPath];
 

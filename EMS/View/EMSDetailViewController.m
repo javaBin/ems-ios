@@ -32,6 +32,8 @@
 
 @property(nonatomic, strong) NSDictionary *cachedSpeakerBios;
 
+@property (weak, nonatomic) IBOutlet UIView *titleBar;
+
 @property(nonatomic, strong) IBOutlet UILabel *titleLabel;
 
 @property(nonatomic, strong) IBOutlet UIButton *favoriteButton;
@@ -199,6 +201,26 @@
 }
 
 #pragma mark - Lifecycle
+- (void) updateTableViewRowHeightReload {
+    [self resizeTitleHeaderHack];
+    [self.tableView reloadData];
+}
+
+- (void)addObservers {
+   
+              [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTableViewRowHeightReload) name:UIContentSizeCategoryDidChangeNotification object:nil];
+        [self.tableView reloadData];
+    
+        [self resizeTitleHeaderHack];
+    
+}
+
+- (void)removeObservers {
+    
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
+        
+   
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -215,8 +237,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setToolbarHidden:YES];
-
-    [self resizeTitleHeaderHack];
+    [self addObservers];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -232,6 +253,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController setToolbarHidden:NO];
+    [self removeObservers];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -239,12 +261,19 @@
 }
 
 - (void)resizeTitleHeaderHack {
-    self.titleLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.tableView.bounds);
-    [self.titleLabel sizeToFit];
-
-    CGRect frame = self.tableView.tableHeaderView.frame;
-    frame.size = CGSizeMake(CGRectGetWidth(self.tableView.bounds), MAX(CGRectGetHeight(self.titleLabel.frame), CGRectGetHeight(self.favoriteButton.frame)) + 10);
-    self.tableView.tableHeaderView.frame = frame;
+    self.titleBar.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.bounds), CGRectGetHeight(self.titleBar.bounds));
+    
+    self.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    self.titleLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.tableView.bounds) - 44 - 15;
+    
+    [self.titleBar setNeedsLayout];
+    [self.titleBar layoutIfNeeded];
+    
+    CGFloat height = [self.titleBar systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    
+    self.tableView.tableHeaderView.frame = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.frame), height);
+    
+    
     self.tableView.tableHeaderView = self.tableView.tableHeaderView;
 }
 
@@ -573,28 +602,43 @@
     if (row.body) {
         EMSTopAlignCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SpeakerCell"];
         cell.nameLabel.text = row.content;
+        cell.nameLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
         cell.descriptionLabel.text = row.body;
+        cell.descriptionLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+        
+        
+
+        
         cell.thumbnailView.image = row.image;
         cell.thumbnailView.layer.borderWidth = 1.0f;
         cell.thumbnailView.layer.borderColor = [UIColor grayColor].CGColor;
         cell.thumbnailView.layer.masksToBounds = NO;
         cell.thumbnailView.clipsToBounds = YES;
         cell.thumbnailView.layer.cornerRadius = 10;
-        [cell.descriptionLabel sizeToFit];
+
+        [cell setNeedsLayout];
+        [cell layoutIfNeeded];
+        
         return cell;
     } else if (row.link) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailLinkCell"];
         cell.imageView.image = row.image;
         cell.textLabel.text = row.content;
-
-        [cell.textLabel sizeToFit];
+        cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+        
+        [cell setNeedsLayout];
+        [cell layoutIfNeeded];
+        
         return cell;
     } else {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailBodyCell"];
         cell.imageView.image = row.image;
         cell.textLabel.text = row.content;
-
-        [cell.textLabel sizeToFit];
+        cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+        
+        [cell setNeedsLayout];
+        [cell layoutIfNeeded];
+        
         return cell;
     }
 
