@@ -39,7 +39,10 @@
     
     static NSDateFormatter *dateFormatter;
     static NSDateFormatter *timeFormatter;
-    
+
+    static NSDateFormatter *dateParser;
+    static NSDateFormatter *timeParser;
+
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         dateFormatter = [[NSDateFormatter alloc] init];
@@ -49,11 +52,21 @@
         timeFormatter = [[NSDateFormatter alloc] init];
         timeFormatter.dateStyle = NSDateFormatterNoStyle;
         timeFormatter.timeStyle = NSDateFormatterShortStyle;
+
+        dateParser = [[NSDateFormatter alloc] init];
+        [dateParser setDateFormat:@"yyyy-MM-dd"];
+
+        timeParser = [[NSDateFormatter alloc] init];
+        [timeParser setDateFormat:@"HH:mm"];
     });
-    
-    NSString *date = [dateFormatter stringFromDate:self.slot.start];
-    NSString *startTime = [timeFormatter stringFromDate:self.slot.start];
-    NSString *endTime = [timeFormatter stringFromDate:self.slot.end];
+
+    NSArray *parts = [self.slotName componentsSeparatedByString:@" "];
+
+    EMS_LOG(@"%@", parts);
+
+    NSString *date = [dateFormatter stringFromDate:[dateParser dateFromString:parts[0]]];
+    NSString *startTime = [timeFormatter stringFromDate:[timeParser dateFromString:parts[1]]];
+    NSString *endTime = [timeFormatter stringFromDate:[timeParser dateFromString:parts[3]]];
     
     return  [NSString stringWithFormat:@"%@ %@ - %@", date, startTime, endTime];
 }
