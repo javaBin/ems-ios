@@ -94,8 +94,9 @@
 }
 
 - (void)initializeFooter {
-   if ([[self.fetchedResultsController sections] count] == 0) {            self.footerLabel.text = NSLocalizedString(@"No sessions.", @"Message in main session list when no sessions is found for current search.");
-       self.footer.hidden = NO;
+    if ([[self.fetchedResultsController sections] count] == 0) {
+        self.footerLabel.text = NSLocalizedString(@"No sessions.", @"Message in main session list when no sessions is found for current search.");
+        self.footer.hidden = NO;
     } else {
         self.footer.hidden = YES;
     }
@@ -137,7 +138,8 @@
 
         if (!([[self.advancedSearch search] isEqualToString:@""])) {
             [predicates
-                    addObject:[NSPredicate predicateWithFormat:@"(title CONTAINS[cd] %@ OR body CONTAINS[cd] %@ OR ANY speakers.name CONTAINS[cd] %@)",
+                    addObject:[NSPredicate predicateWithFormat:@"(title CONTAINS[cd] %@ OR body CONTAINS[cd] %@ OR summary CONTAINS[cd] %@ OR ANY speakers.name CONTAINS[cd] %@)",
+                                                               [self.advancedSearch search],
                                                                [self.advancedSearch search],
                                                                [self.advancedSearch search],
                                                                [self.advancedSearch search]]];
@@ -284,7 +286,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     self.title = NSLocalizedString(@"Sessions", @"Session list title");
 
     self.filterFavourites = NO;
@@ -380,10 +382,10 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 - (void)addObservers {
     if (!self.observersInstalled) {
         [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions)) options:0 context:kRefreshActiveConferenceContext];
-        
+
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTableViewRowHeightReload) name:UIContentSizeCategoryDidChangeNotification object:nil];
         [self updateTableViewRowHeightReload];
-        
+
         self.observersInstalled = YES;
     }
 }
@@ -391,7 +393,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 - (void)removeObservers {
     if (self.observersInstalled) {
         [[EMSRetriever sharedInstance] removeObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions))];
-        
+
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
         self.observersInstalled = NO;
     }
@@ -583,33 +585,33 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 #pragma mark - Table view data source
 
 
-- (void) updateTableViewRowHeightReload {
+- (void)updateTableViewRowHeightReload {
     [self updateTableViewRowHeight];
-    
+
 }
 
-- (void) updateTableViewRowHeight {
-    EMSSessionCell *sessionCell  = [self.tableView dequeueReusableCellWithIdentifier:@"SessionCell"];
-    
+- (void)updateTableViewRowHeight {
+    EMSSessionCell *sessionCell = [self.tableView dequeueReusableCellWithIdentifier:@"SessionCell"];
+
     sessionCell.title.text = @"We want it to always be the size of two lines, so we put in a really long title before we calculate size.";
     sessionCell.room.text = @"Room";
-    sessionCell.speaker.text =@"Speakers";
-    
+    sessionCell.speaker.text = @"Speakers";
+
     sessionCell.title.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     sessionCell.room.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
     sessionCell.speaker.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-    
-    
+
+
     sessionCell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.bounds), CGRectGetHeight(sessionCell.bounds));
-    
+
     [sessionCell setNeedsLayout];
     [sessionCell layoutIfNeeded];
-    
-    
+
+
     CGFloat height = [sessionCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-    
+
     self.tableView.rowHeight = height + 1;
-    
+
     [self.tableView reloadData];
 }
 
@@ -638,7 +640,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     Session *session = [_fetchedResultsController objectAtIndexPath:indexPath];
 
     EMSSessionCell *sessionCell = (EMSSessionCell *) cell;
-    
+
     sessionCell.title.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     sessionCell.room.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
     sessionCell.speaker.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
@@ -873,7 +875,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     if (self.detailViewController != nil) {
         [self.detailViewController refreshFavourite];
     }
-    
+
     [self initializeFooter];
     [self.tableView reloadData];
 }
