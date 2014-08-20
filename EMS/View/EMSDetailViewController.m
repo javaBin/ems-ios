@@ -638,7 +638,9 @@
         UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 
         if (row.emphasis) {
-            font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+            UIFontDescriptor *fontD = [font.fontDescriptor
+                    fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic];
+            font = [UIFont fontWithDescriptor:fontD size:0];
         }
 
         cell.textLabel.font = font;
