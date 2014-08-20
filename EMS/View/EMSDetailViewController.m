@@ -32,7 +32,7 @@
 
 @property(nonatomic, strong) NSDictionary *cachedSpeakerBios;
 
-@property (weak, nonatomic) IBOutlet UIView *titleBar;
+@property(weak, nonatomic) IBOutlet UIView *titleBar;
 
 @property(nonatomic, strong) IBOutlet UILabel *titleLabel;
 
@@ -145,7 +145,9 @@
         }
     }
 
+    [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.summary emphasized:YES]];
     [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.body]];
+    [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.audience title:@"Intended Audience"]];
 
     if (self.session.level != nil) {
 
@@ -201,25 +203,26 @@
 }
 
 #pragma mark - Lifecycle
-- (void) updateTableViewRowHeightReload {
+
+- (void)updateTableViewRowHeightReload {
     [self resizeTitleHeaderHack];
     [self.tableView reloadData];
 }
 
 - (void)addObservers {
-   
-              [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTableViewRowHeightReload) name:UIContentSizeCategoryDidChangeNotification object:nil];
-        [self.tableView reloadData];
-    
-        [self resizeTitleHeaderHack];
-    
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTableViewRowHeightReload) name:UIContentSizeCategoryDidChangeNotification object:nil];
+    [self.tableView reloadData];
+
+    [self resizeTitleHeaderHack];
+
 }
 
 - (void)removeObservers {
-    
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
-        
-   
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
+
+
 }
 
 - (void)viewDidLoad {
@@ -262,18 +265,18 @@
 
 - (void)resizeTitleHeaderHack {
     self.titleBar.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.bounds), CGRectGetHeight(self.titleBar.bounds));
-    
+
     self.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
     self.titleLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.tableView.bounds) - 44 - 15;
-    
+
     [self.titleBar setNeedsLayout];
     [self.titleBar layoutIfNeeded];
-    
+
     CGFloat height = [self.titleBar systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-    
+
     self.tableView.tableHeaderView.frame = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.frame), height);
-    
-    
+
+
     self.tableView.tableHeaderView = self.tableView.tableHeaderView;
 }
 
@@ -375,7 +378,7 @@
 - (NSString *)md5:(NSString *)input {
     const char *cStr = [input UTF8String];
     unsigned char digest[CC_MD5_DIGEST_LENGTH];
-    CC_MD5(cStr, (CC_LONG)strlen(cStr), digest); // This is the md5 call
+    CC_MD5(cStr, (CC_LONG) strlen(cStr), digest); // This is the md5 call
 
     NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
 
@@ -605,10 +608,7 @@
         cell.nameLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
         cell.descriptionLabel.text = row.body;
         cell.descriptionLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-        
-        
 
-        
         cell.thumbnailView.image = row.image;
         cell.thumbnailView.layer.borderWidth = 1.0f;
         cell.thumbnailView.layer.borderColor = [UIColor grayColor].CGColor;
@@ -618,27 +618,34 @@
 
         [cell setNeedsLayout];
         [cell layoutIfNeeded];
-        
+
         return cell;
     } else if (row.link) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailLinkCell"];
         cell.imageView.image = row.image;
         cell.textLabel.text = row.content;
         cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-        
+
         [cell setNeedsLayout];
         [cell layoutIfNeeded];
-        
+
         return cell;
     } else {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailBodyCell"];
         cell.imageView.image = row.image;
         cell.textLabel.text = row.content;
-        cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-        
+
+        UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+
+        if (row.emphasis) {
+            font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+        }
+
+        cell.textLabel.font = font;
+
         [cell setNeedsLayout];
         [cell layoutIfNeeded];
-        
+
         return cell;
     }
 
