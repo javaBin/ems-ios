@@ -1082,18 +1082,24 @@
         }
 
         if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
-            @try {
-                PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-                EMS_LOG(@"Current channels %@", [currentInstallation channels]);
-                NSString *channelName = [session sanitizedTitle];
-                if ([[currentInstallation channels] containsObject:channelName]) {
-                    [currentInstallation removeObject:channelName forKey:@"channels"];
-                    EMS_LOG(@"Updated channels %@", [currentInstallation channels]);
-                }
-                [currentInstallation saveEventually];
-            } @catch (NSException *e) {
-                EMS_LOG(@"NSException %@ thrown trying to remove parse channel name due to %@. %@", [e name], [e reason], [e userInfo]);
+            PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+            EMS_LOG(@"Current channels %@", [currentInstallation channels]);
+            NSString *channelName = [session sanitizedTitle];
+            if ([[currentInstallation channels] containsObject:channelName]) {
+                [currentInstallation removeObject:channelName forKey:@"channels"];
+                EMS_LOG(@"Updated channels %@", [currentInstallation channels]);
             }
+            [currentInstallation saveEventually:^(BOOL succeeded, NSError *error) {
+                if (!succeeded) {
+                    NSString *log = [NSString stringWithFormat:@"Unable to save adding of channel due to Code: %ld, Domain: %@, Info: %@", (long)error.code, [error domain], [error userInfo]];
+
+                    EMS_LOG(@"%@", log);
+
+                    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+                        [tracker send:[[GAIDictionaryBuilder createExceptionWithDescription:log withFatal:@NO] build]];
+                    }
+                }
+            }];
         }
     } else {
         session.favourite = @YES;
@@ -1108,16 +1114,22 @@
         }
 
         if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
-            @try {
-                PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-                EMS_LOG(@"Current channels %@", [currentInstallation channels]);
-                NSString *channelName = [session sanitizedTitle];
-                [currentInstallation addUniqueObject:channelName forKey:@"channels"];
-                EMS_LOG(@"Updated channels %@", [currentInstallation channels]);
-                [currentInstallation saveEventually];
-            } @catch (NSException *e) {
-                EMS_LOG(@"NSException %@ thrown trying to add parse channel name due to %@. %@", [e name], [e reason], [e userInfo]);
-            }
+            PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+            EMS_LOG(@"Current channels %@", [currentInstallation channels]);
+            NSString *channelName = [session sanitizedTitle];
+            [currentInstallation addUniqueObject:channelName forKey:@"channels"];
+            EMS_LOG(@"Updated channels %@", [currentInstallation channels]);
+            [currentInstallation saveEventually:^(BOOL succeeded, NSError *error) {
+                if (!succeeded) {
+                    NSString *log = [NSString stringWithFormat:@"Unable to save removing of channel due to Code: %ld, Domain: %@, Info: %@", (long)error.code, [error domain], [error userInfo]];
+
+                    EMS_LOG(@"%@", log);
+
+                    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+                        [tracker send:[[GAIDictionaryBuilder createExceptionWithDescription:log withFatal:@NO] build]];
+                    }
+                }
+            }];
         }
     }
 

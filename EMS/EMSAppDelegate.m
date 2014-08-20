@@ -147,16 +147,32 @@ int networkCount = 0;
                                                                   action:@"remotenotification"
                                                                    label:@"register"
                                                                    value:nil] build]];
+
+            [[GAI sharedInstance] dispatch];
         }
 
-        [[GAI sharedInstance] dispatch];
 
         EMS_LOG(@"My token is: %@", deviceToken);
 
         PFInstallation *currentInstallation = [PFInstallation currentInstallation];
         [currentInstallation setDeviceTokenFromData:deviceToken];
         [currentInstallation addUniqueObject:@"Conference" forKey:@"channels"];
-        [currentInstallation saveInBackground];
+
+        [currentInstallation saveEventually:^(BOOL succeeded, NSError *error) {
+            if (!succeeded) {
+                NSString *log = [NSString stringWithFormat:@"Unable to save Conference channel due to Code: %ld, Domain: %@, Info: %@", (long)error.code, [error domain], [error userInfo]];
+
+                EMS_LOG(@"%@", log);
+
+                if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+                    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+                        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+                        
+                        [tracker send:[[GAIDictionaryBuilder createExceptionWithDescription:log withFatal:@NO] build]];
+                    }
+                }
+            }
+        }];
     }
 }
 
