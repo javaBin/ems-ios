@@ -1,11 +1,13 @@
 2014-08-20  Chris Searle  <chris@chrissearle.org>
 
         * Remove search bar from filter view (#117)
+        * Add summary and audience (#112)
 
 2014-08-20  Ronnie Nessa  <ronnie.nessa@gmail.com>
 
         * Localize section titles (#105)
         * Support users chosen Dynamic Type text size (#92)
+        * Localization to Norwegian (#110)
 
 2014-08-19  Chris Searle  <chris@chrissearle.org>
 
