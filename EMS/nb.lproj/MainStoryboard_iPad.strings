@@ -3,10 +3,10 @@
 "3Fp-gm-flt.text" = "Tittel";
 
 /* Class = "IBUINavigationItem"; title = "Settings"; ObjectID = "4Ph-FC-7wj"; */
-"4Ph-FC-7wj.title" = "Instillinger";
+"4Ph-FC-7wj.title" = "Innstillinger";
 
 /* Class = "IBUISearchBar"; placeholder = "Search by session title, content or speaker name"; ObjectID = "5oR-m3-uLe"; */
-"5oR-m3-uLe.placeholder" = "Søk etter tittel eller foredragsholder";
+"5oR-m3-uLe.placeholder" = "Søk på tittel eller foredragsholder";
 
 /* Class = "IBUISearchBar"; 5oR-m3-uLe.scopeButtonTitles[0] = "Title"; ObjectID = "5oR-m3-uLe"; */
 "5oR-m3-uLe.scopeButtonTitles[0]" = "Tittel";
@@ -15,13 +15,13 @@
 "5oR-m3-uLe.scopeButtonTitles[1]" = "Tittel";
 
 /* Class = "IBUISearchBar"; placeholder = "Search by session title, content or speaker name"; ObjectID = "Do0-h2-Su0"; */
-"Do0-h2-Su0.placeholder" = "Søk etter tittel eller foredragsholder";
+"Do0-h2-Su0.placeholder" = "Søk på tittel eller foredragsholder";
 
 /* Class = "IBUILabel"; text = "Title"; ObjectID = "Gf3-cq-Y9H"; */
 "Gf3-cq-Y9H.text" = "Tittel";
 
 /* Class = "IBUILabel"; text = "Detail"; ObjectID = "H22-EE-GZF"; */
-"H22-EE-GZF.text" = "Detalj";
+"H22-EE-GZF.text" = "Detaljer";
 
 /* Class = "IBUIBarButtonItem"; title = "Clear"; ObjectID = "HPs-pd-HUx"; */
 "HPs-pd-HUx.title" = "Nullstill";

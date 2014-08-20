@@ -1,6 +1,6 @@
 
 /* Class = "IBUILabel"; text = "Testing layout with title that is more than two lines."; ObjectID = "0hN-js-9bq"; */
-"0hN-js-9bq.text" = "Tester layout med tittel som er lengre en to linjer.";
+"0hN-js-9bq.text" = "Tester layout med tittel som er lengre enn to linjer.";
 
 /* Class = "IBUILabel"; text = "Open in Safari"; ObjectID = "2hx-Ag-VRG"; */
 "2hx-Ag-VRG.text" = "Åpne i Safari";
@@ -30,10 +30,10 @@
 "KgL-ev-KHv.text" = "Foredragsholder";
 
 /* Class = "IBUINavigationItem"; title = "Settings"; ObjectID = "LwD-U9-yk6"; */
-"LwD-U9-yk6.title" = "Instillinger";
+"LwD-U9-yk6.title" = "Innstillinger";
 
 /* Class = "IBUILabel"; text = "Detail"; ObjectID = "MNR-Bu-CdT"; */
-"MNR-Bu-CdT.text" = "Detalj";
+"MNR-Bu-CdT.text" = "Detaljer";
 
 /* Class = "IBUILabel"; text = "Room 1"; ObjectID = "O8a-bl-G72"; */
 "O8a-bl-G72.text" = "Rom 1";
@@ -54,13 +54,13 @@
 "X2B-jN-wam.text" = "Tittel";
 
 /* Class = "IBUISearchBar"; placeholder = "Search by session or speaker name"; ObjectID = "Zif-KH-RXK"; */
-"Zif-KH-RXK.placeholder" = "Søk etter tittel eller foredragsholder";
+"Zif-KH-RXK.placeholder" = "Søk på tittel eller foredragsholder";
 
 /* Class = "IBUILabel"; text = "Title"; ObjectID = "aZM-X2-agk"; */
 "aZM-X2-agk.text" = "Tittel";
 
 /* Class = "IBUISearchBar"; placeholder = "Search by session or speaker name"; ObjectID = "dF3-A5-Ac0"; */
-"dF3-A5-Ac0.placeholder" = "Søk etter tittel eller foredragsholder";
+"dF3-A5-Ac0.placeholder" = "Søk på tittel eller foredragsholder";
 
 /* Class = "IBUISearchBar"; dF3-A5-Ac0.scopeButtonTitles[0] = "Title"; ObjectID = "dF3-A5-Ac0"; */
 "dF3-A5-Ac0.scopeButtonTitles[0]" = "Tittel";
