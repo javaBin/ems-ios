@@ -145,9 +145,15 @@
         }
     }
 
-    [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.summary emphasized:YES]];
-    [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.body]];
-    [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.audience title:@"Intended Audience"]];
+    if (self.session.summary != nil) {
+        [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.summary emphasized:YES]];
+    }
+    if (self.session.body != nil) {
+        [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.body]];
+    }
+    if (self.session.audience != nil) {
+        [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.audience title:@"Intended Audience"]];
+    }
 
     if (self.session.level != nil) {
 
