@@ -85,8 +85,8 @@
             if (conference.sessions.count > 0) {
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long) conference.sessions.count];
             } else {
-                NSString *text = [NSString stringWithFormat:NSLocalizedString(@"~ %@ available for download", @"~ {Number of sessions} available for download")];
-                cell.detailTextLabel.text = [NSString stringWithFormat:text, conference.hintCount];
+                NSString *string = NSLocalizedString(@"~ %@ available for download", @"~ {Number of sessions} available for download");
+                cell.detailTextLabel.text = [NSString stringWithFormat:string, conference.hintCount];
             }
             break;
         }
