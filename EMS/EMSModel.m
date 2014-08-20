@@ -1082,14 +1082,18 @@
         }
 
         if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
-            PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-            EMS_LOG(@"Current channels %@", [currentInstallation channels]);
-            NSString *channelName = [session sanitizedTitle];
-            if ([[currentInstallation channels] containsObject:channelName]) {
-                [currentInstallation removeObject:channelName forKey:@"channels"];
-                EMS_LOG(@"Updated channels %@", [currentInstallation channels]);
+            @try {
+                PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+                EMS_LOG(@"Current channels %@", [currentInstallation channels]);
+                NSString *channelName = [session sanitizedTitle];
+                if ([[currentInstallation channels] containsObject:channelName]) {
+                    [currentInstallation removeObject:channelName forKey:@"channels"];
+                    EMS_LOG(@"Updated channels %@", [currentInstallation channels]);
+                }
+                [currentInstallation saveInBackground];
+            } @catch (NSException *e) {
+                EMS_LOG(@"NSException %@ thrown trying to remove parse channel name due to %@. %@", [e name], [e reason], [e userInfo]);
             }
-            [currentInstallation saveInBackground];
         }
     } else {
         session.favourite = @YES;
@@ -1104,12 +1108,16 @@
         }
 
         if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
-            PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-            EMS_LOG(@"Current channels %@", [currentInstallation channels]);
-            NSString *channelName = [session sanitizedTitle];
-            [currentInstallation addUniqueObject:channelName forKey:@"channels"];
-            EMS_LOG(@"Updated channels %@", [currentInstallation channels]);
-            [currentInstallation saveInBackground];
+            @try {
+                PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+                EMS_LOG(@"Current channels %@", [currentInstallation channels]);
+                NSString *channelName = [session sanitizedTitle];
+                [currentInstallation addUniqueObject:channelName forKey:@"channels"];
+                EMS_LOG(@"Updated channels %@", [currentInstallation channels]);
+                [currentInstallation saveInBackground];
+            } @catch (NSException *e) {
+                EMS_LOG(@"NSException %@ thrown trying to add parse channel name due to %@. %@", [e name], [e reason], [e userInfo]);
+            }
         }
     }
 
