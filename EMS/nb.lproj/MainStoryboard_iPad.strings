@@ -1,0 +1,81 @@
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "3Fp-gm-flt"; */
+"3Fp-gm-flt.text" = "Tittel";
+
+/* Class = "IBUINavigationItem"; title = "Settings"; ObjectID = "4Ph-FC-7wj"; */
+"4Ph-FC-7wj.title" = "Instillinger";
+
+/* Class = "IBUISearchBar"; placeholder = "Search by session title, content or speaker name"; ObjectID = "5oR-m3-uLe"; */
+"5oR-m3-uLe.placeholder" = "Søk etter tittel eller foredragsholder";
+
+/* Class = "IBUISearchBar"; 5oR-m3-uLe.scopeButtonTitles[0] = "Title"; ObjectID = "5oR-m3-uLe"; */
+"5oR-m3-uLe.scopeButtonTitles[0]" = "Tittel";
+
+/* Class = "IBUISearchBar"; 5oR-m3-uLe.scopeButtonTitles[1] = "Title"; ObjectID = "5oR-m3-uLe"; */
+"5oR-m3-uLe.scopeButtonTitles[1]" = "Tittel";
+
+/* Class = "IBUISearchBar"; placeholder = "Search by session title, content or speaker name"; ObjectID = "Do0-h2-Su0"; */
+"Do0-h2-Su0.placeholder" = "Søk etter tittel eller foredragsholder";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "Gf3-cq-Y9H"; */
+"Gf3-cq-Y9H.text" = "Tittel";
+
+/* Class = "IBUILabel"; text = "Detail"; ObjectID = "H22-EE-GZF"; */
+"H22-EE-GZF.text" = "Detalj";
+
+/* Class = "IBUIBarButtonItem"; title = "Clear"; ObjectID = "HPs-pd-HUx"; */
+"HPs-pd-HUx.title" = "Nullstill";
+
+/* Class = "IBUILabel"; text = "Open in Safari"; ObjectID = "IeW-os-Ivn"; */
+"IeW-os-Ivn.text" = "Åpne i Safari";
+
+/* Class = "IBUIBarButtonItem"; title = "Filter"; ObjectID = "Ji7-4n-uCE"; */
+"Ji7-4n-uCE.title" = "Filtrer";
+
+/* Class = "IBUIBarButtonItem"; title = "Now"; ObjectID = "NpK-ch-5Qd"; */
+"NpK-ch-5Qd.title" = "Nå";
+
+/* Class = "IBUILabel"; text = "Testing layout with title that is more than two lines."; ObjectID = "Pye-ep-KZc"; */
+"Pye-ep-KZc.text" = "Testing layout with title that is more than two lines.";
+
+/* Class = "IBUILabel"; text = "Lorum ipsum sdflakjf lksdfjals ødkfjasdf ølkasjdf økj asødf"; ObjectID = "VOx-dt-H7Q"; */
+"VOx-dt-H7Q.text" = "Lorum ipsum sdflakjf lksdfjals ødkfjasdf ølkasjdf økj asødf";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "Vgz-59-1fo"; */
+"Vgz-59-1fo.text" = "Tittel";
+
+/* Class = "IBUINavigationItem"; title = "About"; ObjectID = "Yfx-DI-OVh"; */
+"Yfx-DI-OVh.title" = "Om";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "akV-4R-bpH"; */
+"akV-4R-bpH.text" = "Tittel";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "eqp-Bj-MfC"; */
+"eqp-Bj-MfC.text" = "Tittel";
+
+/* Class = "IBUILabel"; text = "Room 1"; ObjectID = "hYZ-5B-fa6"; */
+"hYZ-5B-fa6.text" = "Rom 1";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "iaP-vd-2S6"; */
+"iaP-vd-2S6.text" = "Tittel";
+
+/* Class = "IBUILabel"; text = "Speaker Name"; ObjectID = "jKb-GC-Pnd"; */
+"jKb-GC-Pnd.text" = "Foredragsholder";
+
+/* Class = "IBUILabel"; text = "Subtitle"; ObjectID = "kTq-VJ-F0L"; */
+"kTq-VJ-F0L.text" = "Subtitle";
+
+/* Class = "IBUILabel"; text = "Speaker 1, Speaker 2, Speaker 3, Speaker 4, SPeaker 5"; ObjectID = "q2W-oB-Adh"; */
+"q2W-oB-Adh.text" = "Foredragsholder 1, Foredragsholder 2, Foredragsholder 3, Foredragsholder 4, Foredragsholder 5";
+
+/* Class = "IBUINavigationItem"; title = "Search/Filter"; ObjectID = "v4V-tk-hCi"; */
+"v4V-tk-hCi.title" = "Søk/Filtrer";
+
+/* Class = "IBUISegmentedControl"; xIm-NT-rXZ.segmentTitles[0] = "All"; ObjectID = "xIm-NT-rXZ"; */
+"xIm-NT-rXZ.segmentTitles[0]" = "Alle";
+
+/* Class = "IBUISegmentedControl"; xIm-NT-rXZ.segmentTitles[1] = "Favourites"; ObjectID = "xIm-NT-rXZ"; */
+"xIm-NT-rXZ.segmentTitles[1]" = "Favoritter";
+
+/* Class = "IBUILabel"; text = "About"; ObjectID = "xtA-2h-dGb"; */
+"xtA-2h-dGb.text" = "Om";

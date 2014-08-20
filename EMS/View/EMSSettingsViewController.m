@@ -17,7 +17,7 @@
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
 
     refreshControl.tintColor = [UIColor grayColor];
-    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refresh available conferences"];
+    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Refresh available conferences", @"Title for conference list refresh control.")];
     refreshControl.backgroundColor = self.tableView.backgroundColor;
     [refreshControl addTarget:self action:@selector(retrieve) forControlEvents:UIControlEventValueChanged];
 
@@ -43,10 +43,10 @@
 
     if (![[self fetchedResultsController] performFetch:&error]) {
         UIAlertView *errorAlert = [[UIAlertView alloc]
-                initWithTitle:@"Unable to connect view to data store"
-                      message:@"The data store did something unexpected and without it this application has no data to show. This is not an error we can recover from - please exit using the home button."
+                initWithTitle:NSLocalizedString(@"Unable to connect view to data store", @"Setting view core data fatal error dialog title.")
+                      message:NSLocalizedString(@"The data store did something unexpected and without it this application has no data to show. This is not an error we can recover from - please exit using the home button.", @"Setting view core data fatal error dialog message.")
                      delegate:nil
-            cancelButtonTitle:@"OK"
+            cancelButtonTitle:NSLocalizedString(@"OK", @"Fatal error dialog dismiss button (setting view controller)")
             otherButtonTitles:nil];
         [errorAlert show];
 
@@ -233,7 +233,7 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSString *title = @"";
     if (section == 0) {
-        title = @"Available Conferences";
+        title = NSLocalizedString(@"Available Conferences", @"Available conferences settings view controller section title");
     }
     return title;
 

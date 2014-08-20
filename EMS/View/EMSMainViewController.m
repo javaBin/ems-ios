@@ -54,9 +54,8 @@
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
 
     refreshControl.tintColor = [UIColor grayColor];
-    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refresh available sessions"];
+    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Refresh available sessions", @"Session RefreshControl title")];
     refreshControl.backgroundColor = self.tableView.backgroundColor;
-
     [refreshControl addTarget:self action:@selector(retrieve) forControlEvents:UIControlEventValueChanged];
 
     self.refreshControl = refreshControl;
@@ -95,38 +94,8 @@
 }
 
 - (void)initializeFooter {
-
-
-    if ([[self.fetchedResultsController sections] count] == 0) {
-        NSMutableString *labelText = [[NSMutableString alloc] init];
-
-
-        Conference *conference = [self activeConference];
-        if ([self activeConference]) {
-            [labelText appendString:@"No sessions found."];
-
-            if ([[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:[conference href]]) {
-                [labelText appendString:@" Try"];
-
-                if ([self.advancedSearch hasAdvancedSearch] || ![self.search.text isEqualToString:@""]) {
-                    [labelText appendString:@" a less restrictive search,"];
-                } else if (self.filterFavourites) {
-                    [labelText appendString:@" switching back to the full list,"];
-                }
-
-                [labelText appendString:@" or you can refresh the session list with pull to refresh."];
-            } else {
-                [labelText appendString:@" Refreshing session list."];
-            }
-
-        } else {
-            [labelText appendString:@"Refreshing session list."];
-        }
-
-
-        self.footerLabel.text = [NSString stringWithString:labelText];
-
-        self.footer.hidden = NO;
+   if ([[self.fetchedResultsController sections] count] == 0) {            self.footerLabel.text = NSLocalizedString(@"No sessions.", @"Message in main session list when no sessions is found for current search.");
+       self.footer.hidden = NO;
     } else {
         self.footer.hidden = YES;
     }
@@ -141,10 +110,10 @@
 
     if (![[self fetchedResultsController] performFetch:&error]) {
         UIAlertView *errorAlert = [[UIAlertView alloc]
-                initWithTitle:@"Unable to connect view to data store"
-                      message:@"The data store did something unexpected and without it this application has no data to show. This is not an error we can recover from - please exit using the home button."
+                initWithTitle:NSLocalizedString(@"Unable to connect view to data store", @"Error dialog connection to database - Title")
+                      message:NSLocalizedString(@"The data store did something unexpected and without it this application has no data to show. This is not an error we can recover from - please exit using the home button.", @"Error dialog connecting to database - Description")
                      delegate:nil
-            cancelButtonTitle:@"OK"
+            cancelButtonTitle:NSLocalizedString(@"OK", @"Error dialog dismiss button.")
             otherButtonTitles:nil];
         [errorAlert show];
 
@@ -152,7 +121,6 @@
     }
 
     [self initializeFooter];
-
     [self.tableView reloadData];
 }
 
@@ -316,8 +284,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    self.title = @"Sessions";
+    
+    self.title = NSLocalizedString(@"Sessions", @"Session list title");
 
     self.filterFavourites = NO;
 
@@ -905,7 +873,8 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     if (self.detailViewController != nil) {
         [self.detailViewController refreshFavourite];
     }
-
+    
+    [self initializeFooter];
     [self.tableView reloadData];
 }
 

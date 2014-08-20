@@ -141,7 +141,7 @@
 
     if ([EMSFeatureConfig isFeatureEnabled:fLinks]) {
         if (self.session.videoLink) {
-            [p addObject:[[EMSDetailViewRow alloc] initWithContent:@"Video" image:[UIImage imageNamed:@"70-tv"] link:[NSURL URLWithString:self.session.videoLink]]];
+            [p addObject:[[EMSDetailViewRow alloc] initWithContent:NSLocalizedString(@"Video", @"Title for video button in detail view") image:[UIImage imageNamed:@"70-tv"] link:[NSURL URLWithString:self.session.videoLink]]];
         }
     }
 

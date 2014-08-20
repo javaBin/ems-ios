@@ -17,9 +17,6 @@
 		830C7D79176F8B4900D38B46 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830C7D78176F8B4900D38B46 /* Crashlytics.framework */; };
 		833EF2DB1774E49F005E24A3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */; };
 		836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836331311770DD2B000F8D95 /* EMSSearchViewController.m */; };
-		8394836C17F0D4BD002DA2A1 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 8394836B17F0D4BD002DA2A1 /* about.html */; };
-		8394836E17F0D4CA002DA2A1 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 8394836D17F0D4CA002DA2A1 /* about.html */; };
-		839BD65D176F9BD400900712 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 839BD639176F9BD400900712 /* EMS-Keys.plist */; };
 		839BD65E176F9BD400900712 /* EMSConference.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD63C176F9BD400900712 /* EMSConference.m */; };
 		839BD65F176F9BD400900712 /* EMSConferencesRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD63E176F9BD400900712 /* EMSConferencesRetriever.m */; };
 		839BD660176F9BD400900712 /* EMSDateConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD640176F9BD400900712 /* EMSDateConverter.m */; };
@@ -38,9 +35,15 @@
 		83F455A1177D5B5C00BC79A1 /* EMSAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */; };
 		85E86E298BD74799AE57514E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C5F2910AEBD4413B205CE89 /* libPods.a */; };
 		EA6132BC193FC35B000F54DC /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
+		EA74604019A42A2500E24D04 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA74603F19A42A2500E24D04 /* EMS-Keys.plist */; };
+		EA74604219A42A3600E24D04 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA74604119A42A3600E24D04 /* EMS-Keys.plist */; };
 		EA8F2C831944CCB7002EAE1F /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
 		EACB2E9B199EBD1700557D82 /* EMSDefaultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */; };
 		EACB2E9C199EBD1700557D82 /* EMSDefaultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */; };
+		EAE4330819A52F1C002C3EBA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAE4330619A52F1C002C3EBA /* Localizable.strings */; };
+		EAE4330919A52F1C002C3EBA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAE4330619A52F1C002C3EBA /* Localizable.strings */; };
+		EAE4330B19A52F75002C3EBA /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = EAE4330D19A52F75002C3EBA /* about.html */; };
+		EAE4330F19A52FA5002C3EBA /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = EAE4331119A52FA5002C3EBA /* about.html */; };
 		F30A8CDB192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */ = {isa = PBXBuildFile; fileRef = F30A8CDA192B42FF0066DFD9 /* EMSDetailViewRow.m */; };
 		F30A8CDC192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */ = {isa = PBXBuildFile; fileRef = F30A8CDA192B42FF0066DFD9 /* EMSDetailViewRow.m */; };
 		F30A8CE5192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F30A8CE4192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m */; };
@@ -111,7 +114,6 @@
 		F394C9C817F0173900FAFBD4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83BF8B6917ECDA4D0093242C /* Images.xcassets */; };
 		F394C9CE17F0173900FAFBD4 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = F354B0B81781AA1D007F7B01 /* iTunesArtwork.png */; };
 		F394C9CF17F0173900FAFBD4 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F354B0B91781AA1D007F7B01 /* iTunesArtwork@2x.png */; };
-		F394C9E317F01ABF00FAFBD4 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F394C9E217F01ABF00FAFBD4 /* EMS-Keys.plist */; };
 		F394C9E717F01C0300FAFBD4 /* EMS-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = F394C9E617F01C0300FAFBD4 /* EMS-Config.plist */; };
 		F399B73917CF42CC004DE2EC /* EMSConferenceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F399B73817CF42CC004DE2EC /* EMSConferenceDetailViewController.m */; };
 		F3AE33C71772EA93000EE4A9 /* Speaker.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C61772EA93000EE4A9 /* Speaker.m */; };
@@ -143,9 +145,6 @@
 		836331301770DD2B000F8D95 /* EMSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSearchViewController.h; sourceTree = "<group>"; };
 		836331311770DD2B000F8D95 /* EMSSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSearchViewController.m; sourceTree = "<group>"; };
 		8363313B1770F06C000F8D95 /* EMSSearchViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EMSSearchViewDelegate.h; path = ../View/EMSSearchViewDelegate.h; sourceTree = "<group>"; };
-		8394836B17F0D4BD002DA2A1 /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
-		8394836D17F0D4CA002DA2A1 /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
-		839BD639176F9BD400900712 /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
 		839BD63B176F9BD400900712 /* EMSConference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConference.h; sourceTree = "<group>"; };
 		839BD63C176F9BD400900712 /* EMSConference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConference.m; sourceTree = "<group>"; };
 		839BD63D176F9BD400900712 /* EMSConferencesRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConferencesRetriever.h; sourceTree = "<group>"; };
@@ -180,10 +179,23 @@
 		83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSAboutViewController.m; sourceTree = "<group>"; };
 		CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		EA1E8F6317E782E8000F2DB7 /* JavaZone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JavaZone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA28E8CA19A422D9004AAF81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		EA28E8CB19A422D9004AAF81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		EA28E8CC19A422E3004AAF81 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/MainStoryboard_iPhone.strings; sourceTree = "<group>"; };
+		EA28E8CD19A422E3004AAF81 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/MainStoryboard_iPad.strings; sourceTree = "<group>"; };
+		EA28E8CE19A422E3004AAF81 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EA6132BA193FC35B000F54DC /* EMSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConfig.h; sourceTree = "<group>"; };
 		EA6132BB193FC35B000F54DC /* EMSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConfig.m; sourceTree = "<group>"; };
+		EA74603F19A42A2500E24D04 /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
+		EA74604119A42A3600E24D04 /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
 		EACB2E99199EBD1700557D82 /* EMSDefaultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSDefaultTableViewCell.h; sourceTree = "<group>"; };
 		EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDefaultTableViewCell.m; sourceTree = "<group>"; };
+		EAE4330719A52F1C002C3EBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		EAE4330A19A52F28002C3EBA /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
+		EAE4330C19A52F75002C3EBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = en; path = en.lproj/about.html; sourceTree = "<group>"; };
+		EAE4330E19A52F7C002C3EBA /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = nb; path = nb.lproj/about.html; sourceTree = "<group>"; };
+		EAE4331019A52FA5002C3EBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = en; path = en.lproj/about.html; sourceTree = "<group>"; };
+		EAE4331319A53115002C3EBA /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = nb; path = nb.lproj/about.html; sourceTree = "<group>"; };
 		F30A8CD9192B42FF0066DFD9 /* EMSDetailViewRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSDetailViewRow.h; sourceTree = "<group>"; };
 		F30A8CDA192B42FF0066DFD9 /* EMSDetailViewRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDetailViewRow.m; sourceTree = "<group>"; };
 		F30A8CE3192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSTopAlignCellTableViewCell.h; sourceTree = "<group>"; };
@@ -202,8 +214,6 @@
 		F35BB6D317685885009077D3 /* EMS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EMS-Prefix.pch"; sourceTree = "<group>"; };
 		F35BB6D417685885009077D3 /* EMSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EMSAppDelegate.h; sourceTree = "<group>"; };
 		F35BB6D517685885009077D3 /* EMSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EMSAppDelegate.m; sourceTree = "<group>"; };
-		F35BB6DE17685885009077D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		F35BB6E117685885009077D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		F37953C917797E41000B7CDD /* EMSAdvancedSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSAdvancedSearch.h; sourceTree = "<group>"; };
 		F37953CA17797E41000B7CDD /* EMSAdvancedSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSAdvancedSearch.m; sourceTree = "<group>"; };
 		F37A6ABD17B223390060634D /* EMSCoreDataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "EMSCoreDataModel 2.xcdatamodel"; sourceTree = "<group>"; };
@@ -212,7 +222,6 @@
 		F3939E5F1769C3CD0078C709 /* EMSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSModel.h; sourceTree = "<group>"; };
 		F3939E601769C3CD0078C709 /* EMSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSModel.m; sourceTree = "<group>"; };
 		F394C9DE17F0173900FAFBD4 /* flatMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = flatMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F394C9E217F01ABF00FAFBD4 /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
 		F394C9E617F01C0300FAFBD4 /* EMS-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Config.plist"; sourceTree = "<group>"; };
 		F399B73717CF42CC004DE2EC /* EMSConferenceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConferenceDetailViewController.h; sourceTree = "<group>"; };
 		F399B73817CF42CC004DE2EC /* EMSConferenceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConferenceDetailViewController.m; sourceTree = "<group>"; };
@@ -432,6 +441,7 @@
 		F35BB6CC17685885009077D3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EAE4330619A52F1C002C3EBA /* Localizable.strings */,
 				F35BB6CE17685885009077D3 /* InfoPlist.strings */,
 				F35BB6D117685885009077D3 /* main.m */,
 				F35BB6D317685885009077D3 /* EMS-Prefix.pch */,
@@ -443,12 +453,12 @@
 		F394C9E017F019E400FAFBD4 /* JavaZone */ = {
 			isa = PBXGroup;
 			children = (
-				8394836D17F0D4CA002DA2A1 /* about.html */,
-				839BD639176F9BD400900712 /* EMS-Keys.plist */,
+				EAE4330D19A52F75002C3EBA /* about.html */,
 				F354B0B81781AA1D007F7B01 /* iTunesArtwork.png */,
 				F354B0B91781AA1D007F7B01 /* iTunesArtwork@2x.png */,
 				4E1AD00D04FA079A848CDAE5 /* JavaZone-Info.plist */,
 				4E1ADCA4A8B28565D66D9816 /* EMS-Config.plist */,
+				EA74603F19A42A2500E24D04 /* EMS-Keys.plist */,
 			);
 			path = JavaZone;
 			sourceTree = "<group>";
@@ -456,10 +466,10 @@
 		F394C9E117F019F600FAFBD4 /* flatMap */ = {
 			isa = PBXGroup;
 			children = (
-				8394836B17F0D4BD002DA2A1 /* about.html */,
+				EAE4331119A52FA5002C3EBA /* about.html */,
 				F394C9E617F01C0300FAFBD4 /* EMS-Config.plist */,
-				F394C9E217F01ABF00FAFBD4 /* EMS-Keys.plist */,
 				4E1AD0E07B70D148B519768B /* flatMap-Info.plist */,
+				EA74604119A42A3600E24D04 /* EMS-Keys.plist */,
 			);
 			path = flatMap;
 			sourceTree = "<group>";
@@ -518,7 +528,7 @@
 				ORGANIZATIONNAME = "Chris Searle";
 				TargetAttributes = {
 					F35BB6C117685885009077D3 = {
-						DevelopmentTeam = EL8Z296J47;
+						DevelopmentTeam = 8WE6452SWH;
 					};
 					F394C96E17F0173900FAFBD4 = {
 						DevelopmentTeam = 8WE6452SWH;
@@ -531,6 +541,8 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
+				nb,
 			);
 			mainGroup = F35BB6B917685885009077D3;
 			productRefGroup = F35BB6B917685885009077D3;
@@ -551,10 +563,11 @@
 				F35BB6D017685885009077D3 /* InfoPlist.strings in Resources */,
 				F35BB6DF17685885009077D3 /* MainStoryboard_iPhone.storyboard in Resources */,
 				F35BB6E217685885009077D3 /* MainStoryboard_iPad.storyboard in Resources */,
-				839BD65D176F9BD400900712 /* EMS-Keys.plist in Resources */,
 				F3D5E2C41770946100888A7E /* style.css in Resources */,
-				8394836E17F0D4CA002DA2A1 /* about.html in Resources */,
+				EAE4330B19A52F75002C3EBA /* about.html in Resources */,
 				83BF8B6A17ECDA4D0093242C /* Images.xcassets in Resources */,
+				EAE4330819A52F1C002C3EBA /* Localizable.strings in Resources */,
+				EA74604019A42A2500E24D04 /* EMS-Keys.plist in Resources */,
 				F354B0BA1781AA1D007F7B01 /* iTunesArtwork.png in Resources */,
 				F354B0BB1781AA1D007F7B01 /* iTunesArtwork@2x.png in Resources */,
 				4E1ADFF1BCEBD89ABF3ACAE4 /* README.md in Resources */,
@@ -571,12 +584,13 @@
 				F394C9A117F0173900FAFBD4 /* MainStoryboard_iPhone.storyboard in Resources */,
 				F394C9A217F0173900FAFBD4 /* MainStoryboard_iPad.storyboard in Resources */,
 				F394C9B517F0173900FAFBD4 /* style.css in Resources */,
-				8394836C17F0D4BD002DA2A1 /* about.html in Resources */,
+				EAE4330F19A52FA5002C3EBA /* about.html in Resources */,
 				F394C9E717F01C0300FAFBD4 /* EMS-Config.plist in Resources */,
+				EA74604219A42A3600E24D04 /* EMS-Keys.plist in Resources */,
+				EAE4330919A52F1C002C3EBA /* Localizable.strings in Resources */,
 				F394C9C817F0173900FAFBD4 /* Images.xcassets in Resources */,
 				F394C9CE17F0173900FAFBD4 /* iTunesArtwork.png in Resources */,
 				F394C9CF17F0173900FAFBD4 /* iTunesArtwork@2x.png in Resources */,
-				F394C9E317F01ABF00FAFBD4 /* EMS-Keys.plist in Resources */,
 				4E1AD52D6C458D6D36CECFBA /* README.md in Resources */,
 				4E1ADC3468CFC054FD549975 /* ChangeLog in Resources */,
 			);
@@ -771,10 +785,38 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		EAE4330619A52F1C002C3EBA /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EAE4330719A52F1C002C3EBA /* en */,
+				EAE4330A19A52F28002C3EBA /* nb */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		EAE4330D19A52F75002C3EBA /* about.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EAE4330C19A52F75002C3EBA /* en */,
+				EAE4330E19A52F7C002C3EBA /* nb */,
+			);
+			name = about.html;
+			sourceTree = "<group>";
+		};
+		EAE4331119A52FA5002C3EBA /* about.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EAE4331019A52FA5002C3EBA /* en */,
+				EAE4331319A53115002C3EBA /* nb */,
+			);
+			name = about.html;
+			sourceTree = "<group>";
+		};
 		F35BB6CE17685885009077D3 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				F35BB6CF17685885009077D3 /* en */,
+				EA28E8CE19A422E3004AAF81 /* nb */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -782,7 +824,8 @@
 		F35BB6DD17685885009077D3 /* MainStoryboard_iPhone.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F35BB6DE17685885009077D3 /* en */,
+				EA28E8CA19A422D9004AAF81 /* Base */,
+				EA28E8CC19A422E3004AAF81 /* nb */,
 			);
 			name = MainStoryboard_iPhone.storyboard;
 			sourceTree = "<group>";
@@ -790,7 +833,8 @@
 		F35BB6E017685885009077D3 /* MainStoryboard_iPad.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F35BB6E117685885009077D3 /* en */,
+				EA28E8CB19A422D9004AAF81 /* Base */,
+				EA28E8CD19A422E3004AAF81 /* nb */,
 			);
 			name = MainStoryboard_iPad.storyboard;
 			sourceTree = "<group>";
@@ -901,8 +945,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "JavaZone - AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Chris Searle (EL8Z296J47)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chris Searle (EL8Z296J47)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 19;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -917,7 +961,7 @@
 					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "60ef02e5-a467-46a3-93e1-c8d4bc777a9f";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "60ef02e5-a467-46a3-93e1-c8d4bc777a9f";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;

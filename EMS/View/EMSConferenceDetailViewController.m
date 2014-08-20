@@ -71,21 +71,22 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.row) {
         case 0: {
-            cell.textLabel.text = @"Name";
+            cell.textLabel.text = NSLocalizedString(@"Name", @"Conference detail name label.");
             cell.detailTextLabel.text = conference.name;
             break;
         }
         case 1: {
-            cell.textLabel.text = @"Venue";
+            cell.textLabel.text = NSLocalizedString(@"Venue", @"Conference detail venue label.");
             cell.detailTextLabel.text = conference.venue;
             break;
         }
         case 2: {
-            cell.textLabel.text = @"# Sessions";
+            cell.textLabel.text = NSLocalizedString(@"# Sessions", @"Conference detail #Sessions label.");
             if (conference.sessions.count > 0) {
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long) conference.sessions.count];
             } else {
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"~ %@ available for download", conference.hintCount];
+                NSString *text = [NSString stringWithFormat:NSLocalizedString(@"~ %@ available for download", @"~ {Number of sessions} available for download")];
+                cell.detailTextLabel.text = [NSString stringWithFormat:text, conference.hintCount];
             }
             break;
         }
@@ -105,7 +106,7 @@
                 [dates addObject:[dateFormatter stringFromDate:conference.end]];
             }
 
-            cell.textLabel.text = @"Dates";
+            cell.textLabel.text = NSLocalizedString(@"Dates", @"Conference detail dates label.");
             cell.detailTextLabel.text = [dates componentsJoinedByString:@" - "];
 
             break;
@@ -120,7 +121,7 @@
 - (void)configureActionCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.row) {
         case 0:
-            cell.textLabel.text = @"Delete all sessions";
+            cell.textLabel.text = NSLocalizedString(@"Delete all sessions", @"Conference detail delete all sessions button title.");
             cell.textLabel.textColor = [UIColor redColor];
             break;
 
@@ -167,10 +168,10 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return @"Details";
+            return NSLocalizedString(@"Details", @"Conference Details Section Header");
 
         case 1:
-            return @"Actions";
+            return NSLocalizedString(@"Actions", @"Conference Actions Section Header");
 
         default:
             return @"";
@@ -188,11 +189,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1 && indexPath.row == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Are you sure?"
-                                                        message:@"This will remove all sessions including any favourite marks. Session information will then have to be downloaded again."
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Delete all sessions", @"Delete Conference Confirmation Dialog Title")
+                                                        message:NSLocalizedString(@"This will remove all sessions including any favourite marks. Session information will then have to be downloaded again.", @"Delete Conference Confirmation Dialog Description")
                                                        delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"Delete", nil];
+                                              cancelButtonTitle:NSLocalizedString(@"Cancel", @"Delete Conference Confirmation Dialog Cancel")
+                                              otherButtonTitles:NSLocalizedString(@"Delete", @"Delete Conference Confirmation Dialog Delete"), nil];
         [alert show];
     }
 }

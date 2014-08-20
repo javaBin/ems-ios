@@ -441,7 +441,7 @@
     if (conferences == nil || conferences.count == 0) {
         if (error != NULL) {
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-            [errorDetail setValue:@"Empty conference list seen" forKey:NSLocalizedDescriptionKey];
+            [errorDetail setValue:NSLocalizedString(@"Empty conference list seen", @"Error message when trying to store empty conference list.") forKey:NSLocalizedDescriptionKey];
             *error = [NSError errorWithDomain:@"EMSModel" code:100 userInfo:errorDetail];
         }
 
@@ -518,7 +518,7 @@
     if (slots == nil || slots.count == 0) {
         if (error != NULL) {
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-            [errorDetail setValue:@"Empty slots list seen" forKey:NSLocalizedDescriptionKey];
+            [errorDetail setValue:NSLocalizedString(@"Empty slots list seen"  , @"Error message when trying to save empty slot list.") forKey:NSLocalizedDescriptionKey];
             *error = [NSError errorWithDomain:@"EMSModel" code:200 userInfo:errorDetail];
         }
 
@@ -531,7 +531,7 @@
 
     if (conferences.count == 0) {
         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-        [errorDetail setValue:@"Conference not found in database" forKey:NSLocalizedDescriptionKey];
+        [errorDetail setValue:NSLocalizedString(@"Conference not found in database", @"Error message if conference was not found in database when saving slots.") forKey:NSLocalizedDescriptionKey];
         *error = [NSError errorWithDomain:@"EMS" code:100 userInfo:errorDetail];
         return NO;
     }
@@ -614,7 +614,7 @@
     if (rooms == nil || rooms.count == 0) {
         if (error != NULL) {
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-            [errorDetail setValue:@"Empty rooms list seen" forKey:NSLocalizedDescriptionKey];
+            [errorDetail setValue:NSLocalizedString(@"Empty rooms list seen", @"Error message when trying to save an empty room list.") forKey:NSLocalizedDescriptionKey];
             *error = [NSError errorWithDomain:@"EMSModel" code:300 userInfo:errorDetail];
         }
 
@@ -628,7 +628,7 @@
     if (conferences.count == 0) {
         if (error != NULL) {
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-            [errorDetail setValue:@"Conference not found in database" forKey:NSLocalizedDescriptionKey];
+            [errorDetail setValue:NSLocalizedString(@"Conference not found in database", @"Error message if conference was not found when trying to store room list.") forKey:NSLocalizedDescriptionKey];
             *error = [NSError errorWithDomain:@"EMS" code:100 userInfo:errorDetail];
         }
         return NO;
@@ -711,7 +711,7 @@
     if (speakers == nil || speakers.count == 0) {
         if (error != NULL) {
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-            [errorDetail setValue:@"Empty speakers list seen" forKey:NSLocalizedDescriptionKey];
+            [errorDetail setValue:NSLocalizedString(@"Empty speakers list seen",@"Error message when trying to save an empty speaker list.") forKey:NSLocalizedDescriptionKey];
             *error = [NSError errorWithDomain:@"EMSModel" code:400 userInfo:errorDetail];
         }
 
@@ -725,7 +725,7 @@
     if (sessions.count == 0) {
         if (error != NULL) {
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-            [errorDetail setValue:@"Conference not found in database" forKey:NSLocalizedDescriptionKey];
+            [errorDetail setValue:NSLocalizedString(@"Conference not found in database", @"Error message if conference not found in database when trying to save speaker collection.") forKey:NSLocalizedDescriptionKey];
             *error = [NSError errorWithDomain:@"EMS" code:100 userInfo:errorDetail];
         }
         return NO;
@@ -808,7 +808,7 @@
     if (sessions == nil || sessions.count == 0) {
         if (error != NULL) {
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-            [errorDetail setValue:@"Empty sessions list seen" forKey:NSLocalizedDescriptionKey];
+            [errorDetail setValue:NSLocalizedString(@"Empty sessions list seen", @"Error message if trying to save empty session list.") forKey:NSLocalizedDescriptionKey];
             *error = [NSError errorWithDomain:@"EMSModel" code:500 userInfo:errorDetail];
         }
 
@@ -821,7 +821,7 @@
 
     if (conferences.count == 0) {
         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-        [errorDetail setValue:@"Conference not found in database" forKey:NSLocalizedDescriptionKey];
+        [errorDetail setValue:NSLocalizedString(@"Conference not found in database", @"Error message if conference not found when trying to save session collection.") forKey:NSLocalizedDescriptionKey];
         *error = [NSError errorWithDomain:@"EMS" code:100 userInfo:errorDetail];
         return NO;
     }
@@ -1166,7 +1166,7 @@
         [notification setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
 
         [notification
-                setAlertBody:[NSString stringWithFormat:@"Your next session is %@ in %@ in 5 mins",
+                setAlertBody:[NSString stringWithFormat:NSLocalizedString(@"Your next session is %@ in %@ in 5 mins", @"Your next session is {Session Title} in {5} minutes. (Local notification)"),
                                                         session.title,
                                                         session.room.name]];
 

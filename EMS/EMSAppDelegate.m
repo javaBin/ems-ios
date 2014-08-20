@@ -415,7 +415,8 @@ int networkCount = 0;
         if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error2]) {
             EMS_LOG(@"Failed to set up database on second attempt %@, %@", error2, [error2 userInfo]);
 
-            [self showErrorAlertWithTitle:@"Database error" andMessage:@"We failed to create the database. If this happens again after an application restart please delete and re-install."];
+            [self showErrorAlertWithTitle:NSLocalizedString(@"Database error", "Database error dialog title")
+                               andMessage:NSLocalizedString(@"We failed to create the database. If this happens again after an application restart please delete and re-install.", "Database error dialog message")];
         }
     }
 
@@ -439,7 +440,7 @@ int networkCount = 0;
             initWithTitle:title
                   message:message
                  delegate:nil
-        cancelButtonTitle:@"OK"
+        cancelButtonTitle:NSLocalizedString(@"OK", "Error dialog dismiss button")
         otherButtonTitles:nil];
     [errorAlert show];
 }
