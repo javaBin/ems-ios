@@ -18,6 +18,4 @@ typedef enum EMSFeature : NSUInteger {
 
 + (NSDictionary *)getKeys;
 
-- (void)refreshConfigFile;
-
 @end

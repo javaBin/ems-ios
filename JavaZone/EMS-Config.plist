@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
     <dict>
-        <key>ems-config-url</key>
-        <string>http://dav.java.no/resources/iOS/EMS-Config.plist</string>
         <key>features</key>
         <dict>
             <key>links</key>

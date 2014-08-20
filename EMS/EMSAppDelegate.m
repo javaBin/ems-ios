@@ -184,11 +184,6 @@ int networkCount = 0;
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     networkCount = 0;
     [self stopNetwork];
-
-#ifndef SKIP_CONFIG_REFRESH
-    EMSFeatureConfig *featureConfig = [[EMSFeatureConfig alloc] init];
-    [featureConfig refreshConfigFile];
-#endif
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -230,6 +225,7 @@ int networkCount = 0;
     [self remove:[[[self applicationCacheDirectory] URLByAppendingPathComponent:@"labelIcons"] path]];
     [self remove:[[[self applicationCacheDirectory] URLByAppendingPathComponent:@"levelIcons"] path]];
     [self remove:[[[self applicationCacheDirectory] URLByAppendingPathComponent:@"SHK"] path]];
+    [self remove:[[[self applicationCacheDirectory] URLByAppendingPathComponent:@"EMS-Config.plist"] path]];
 }
 
 - (void)activateWithNotification:(UILocalNotification *)notification {

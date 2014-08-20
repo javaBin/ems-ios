@@ -1090,7 +1090,7 @@
                     [currentInstallation removeObject:channelName forKey:@"channels"];
                     EMS_LOG(@"Updated channels %@", [currentInstallation channels]);
                 }
-                [currentInstallation saveInBackground];
+                [currentInstallation saveEventually];
             } @catch (NSException *e) {
                 EMS_LOG(@"NSException %@ thrown trying to remove parse channel name due to %@. %@", [e name], [e reason], [e userInfo]);
             }
@@ -1114,7 +1114,7 @@
                 NSString *channelName = [session sanitizedTitle];
                 [currentInstallation addUniqueObject:channelName forKey:@"channels"];
                 EMS_LOG(@"Updated channels %@", [currentInstallation channels]);
-                [currentInstallation saveInBackground];
+                [currentInstallation saveEventually];
             } @catch (NSException *e) {
                 EMS_LOG(@"NSException %@ thrown trying to add parse channel name due to %@. %@", [e name], [e reason], [e userInfo]);
             }
