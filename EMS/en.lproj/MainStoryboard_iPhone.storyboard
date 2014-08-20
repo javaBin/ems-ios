@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0Ye-bN-FPt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0Ye-bN-FPt">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -162,7 +162,7 @@
             </objects>
             <point key="canvasLocation" x="3557" y="-265"/>
         </scene>
-        <!--Search View Controller - Search/Filter-->
+        <!--Search View Controller - Filter-->
         <scene sceneID="Seh-yI-vwO">
             <objects>
                 <tableViewController storyboardIdentifier="SearchView" id="cM7-wC-1Xm" customClass="EMSSearchViewController" sceneMemberID="viewController">
@@ -170,21 +170,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search by session or speaker name" id="dF3-A5-Ac0">
-                            <rect key="frame" x="0.0" y="64" width="320" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits"/>
-                            <scopeButtonTitles>
-                                <string>Title</string>
-                                <string>Title</string>
-                            </scopeButtonTitles>
-                            <connections>
-                                <outlet property="delegate" destination="cM7-wC-1Xm" id="aKA-8p-prc"/>
-                            </connections>
-                        </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchCell" textLabel="SdI-BN-OgO" style="IBUITableViewCellStyleDefault" id="zFU-A1-fQ5">
-                                <rect key="frame" x="0.0" y="163" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="119" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zFU-A1-fQ5" id="yuf-0v-X88">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -205,7 +193,7 @@
                             <outlet property="delegate" destination="cM7-wC-1Xm" id="V3f-DZ-4Ej"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Search/Filter" id="qan-0d-j9g">
+                    <navigationItem key="navigationItem" title="Filter" id="qan-0d-j9g">
                         <barButtonItem key="leftBarButtonItem" style="done" systemItem="done" id="ryV-ZF-vLS">
                             <connections>
                                 <action selector="apply:" destination="cM7-wC-1Xm" id="Egj-Bb-NTt"/>
@@ -217,9 +205,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="search" destination="dF3-A5-Ac0" id="pr3-Uc-kzD"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dYb-LO-n5h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

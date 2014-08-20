@@ -27,24 +27,6 @@
     if (self.rooms == nil || [self.rooms count] == 0) {
         [self.sections removeObject:@"Rooms"];
     }
-
-    self.search.text = [self.advancedSearch search];
-
-    for (UIView *searchBarSubview in [self.search subviews]) {
-
-        if ([searchBarSubview conformsToProtocol:@protocol(UITextInputTraits)]) {
-
-            @try {
-                [(UITextField *) searchBarSubview setReturnKeyType:UIReturnKeyDone];
-                [(UITextField *) searchBarSubview setKeyboardAppearance:UIKeyboardAppearanceAlert];
-            }
-            @catch (NSException *e) {
-
-                // ignore exception
-            }
-        }
-    }
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -230,17 +212,11 @@
 }
 
 - (void)apply:(id)sender {
-    [self.advancedSearch setSearch:self.search.text];
-
     [self.delegate advancedSearchUpdated];
-
-
 }
 
 - (void)clear:(id)sender {
     [self.advancedSearch clear];
-
-    self.search.text = [self.advancedSearch search];
 
     [self apply:sender];
 }
