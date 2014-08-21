@@ -152,7 +152,8 @@
         [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.body]];
     }
     if (self.session.audience != nil) {
-        [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.audience title:@"Intended Audience"]];
+        [p addObject:[[EMSDetailViewRow alloc] initWithContent:NSLocalizedString(@"Intended Audience", @"Subtitle for detail view for audience") emphasized:YES]];
+        [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.audience title:NSLocalizedString(@"Intended Audience", @"Subtitle for detail view for audience")]];
     }
 
     if (self.session.level != nil) {
@@ -645,7 +646,7 @@
 
         if (row.emphasis) {
             UIFontDescriptor *fontD = [font.fontDescriptor
-                    fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic];
+                    fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
             font = [UIFont fontWithDescriptor:fontD size:0];
         }
 
