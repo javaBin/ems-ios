@@ -284,6 +284,13 @@
 
 #pragma  mark - Lifecycle Events
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    if (self.splitViewController) {
+        self.splitViewController.delegate = self;
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -302,10 +309,6 @@
     // This is also set in the storyboard but appears not to work.
     self.tableView.sectionIndexMinimumDisplayRowCount = 500;
 
-    if (self.splitViewController) {
-        self.splitViewController.delegate = self;
-    }
-
     self.observersInstalled = NO;
 
 }
@@ -320,15 +323,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
 
 - (void)viewDidAppear:(BOOL)animated {
-
-    //This method should have been called in viewWillAppear, but UISplitViewController
-    //does not call viewWillAppear on master view controller when app is launched in portrait mode
-    //for some reason. This has been reported as a bug to Apple, the bug id 17291466.
-    //As a workaround we call [self addObservers] again here. The addObservers method has
-    //a guard to prevent that the observers are added twice.
-    //TODO: Remove this line when Apple fixes bug 17291466.
-    [self addObservers];
-
 
     [super viewDidAppear:animated];
 
