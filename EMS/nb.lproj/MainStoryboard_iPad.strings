@@ -30,7 +30,7 @@
 "IeW-os-Ivn.text" = "Åpne i Safari";
 
 /* Class = "IBUIBarButtonItem"; title = "Filter"; ObjectID = "Ji7-4n-uCE"; */
-"Ji7-4n-uCE.title" = "Filtrer";
+"Ji7-4n-uCE.title" = "Filter";
 
 /* Class = "IBUIBarButtonItem"; title = "Now"; ObjectID = "NpK-ch-5Qd"; */
 "NpK-ch-5Qd.title" = "Nå";
@@ -69,7 +69,7 @@
 "q2W-oB-Adh.text" = "Foredragsholder 1, Foredragsholder 2, Foredragsholder 3, Foredragsholder 4, Foredragsholder 5";
 
 /* Class = "IBUINavigationItem"; title = "Search/Filter"; ObjectID = "v4V-tk-hCi"; */
-"v4V-tk-hCi.title" = "Søk/Filtrer";
+"v4V-tk-hCi.title" = "Filter";
 
 /* Class = "IBUISegmentedControl"; xIm-NT-rXZ.segmentTitles[0] = "All"; ObjectID = "xIm-NT-rXZ"; */
 "xIm-NT-rXZ.segmentTitles[0]" = "Alle";
