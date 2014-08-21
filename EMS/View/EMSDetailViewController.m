@@ -283,9 +283,6 @@
 
     self.tableView.tableHeaderView.frame = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.frame), height);
 
-
-    [self.tableView.tableHeaderView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-
     self.tableView.tableHeaderView = self.tableView.tableHeaderView;
 }
 
@@ -553,7 +550,7 @@
         [cell setNeedsLayout];
         [cell layoutIfNeeded];
 
-        NSInteger height = [cell intrinsicContentSize].height;
+        NSInteger height = (NSInteger) [cell intrinsicContentSize].height;
 
         return height;
 
