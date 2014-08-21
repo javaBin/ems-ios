@@ -638,9 +638,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     Session *session = [_fetchedResultsController objectAtIndexPath:indexPath];
 
     EMSSessionCell *sessionCell = (EMSSessionCell *) cell;
-    sessionCell.title.accessibilityLanguage = session.language;
-    sessionCell.room.accessibilityLanguage = @"en";
-    sessionCell.speaker.accessibilityLanguage = session.language;
 
     sessionCell.title.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     sessionCell.room.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
@@ -701,6 +698,14 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     }];
 
     sessionCell.speaker.text = [speakerNames componentsJoinedByString:@", "];
+    
+    
+    
+    sessionCell.title.accessibilityLanguage = session.language;
+    
+    sessionCell.accessibilityLabel = [NSString stringWithFormat:NSLocalizedString(@"%@, Location: %@, Speakers: %@", @"{Session title}, Location: {Session Location}, Speakers: {Session speakers}"),
+                                      sessionCell.title.text, sessionCell.room.text, sessionCell.speaker.text];
+    sessionCell.accessibilityLanguage = session.language;
 
     sessionCell.session = session;
 }
