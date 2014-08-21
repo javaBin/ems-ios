@@ -10,13 +10,13 @@
 
 @implementation EMSSearchViewController
 
-static NSString const * DictionaryTitleKey = @"DictionaryTitleKey";
-static NSString const * DictionaryIdKey = @"DictionaryIdKey";
-static NSString const * DictionaryPredicateKey = @"DictionaryPredicateKey";
-static NSString const * DictionaryMultiSelectKey = @"DictionaryMultiSelectKey";
-static NSString const * DictionaryCapitalized = @"DictionaryCapitalized";
-static NSString const * DictionaryCleaned = @"DictionaryCleaned";
-static NSString const * DictionaryImage = @"DictionaryImage";
+static NSString *const  DictionaryTitleKey = @"DictionaryTitleKey";
+static NSString *const  DictionaryIdKey = @"DictionaryIdKey";
+static NSString *const  DictionaryPredicateKey = @"DictionaryPredicateKey";
+static NSString *const  DictionaryMultiSelectKey = @"DictionaryMultiSelectKey";
+static NSString *const  DictionaryCapitalized = @"DictionaryCapitalized";
+static NSString *const  DictionaryCleaned = @"DictionaryCleaned";
+static NSString *const  DictionaryImage = @"DictionaryImage";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
