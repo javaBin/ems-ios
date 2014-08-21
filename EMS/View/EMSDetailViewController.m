@@ -59,6 +59,7 @@
         self.title = [EMSDetailViewController createControllerTitle:session];
 
         self.titleLabel.text = session.title;
+        self.titleLabel.accessibilityLanguage = session.language;
 
         [self initFavoriteButton:session];
 
@@ -610,11 +611,15 @@
 
     if (row.body) {
         EMSTopAlignCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SpeakerCell"];
+        
         cell.nameLabel.text = row.content;
         cell.nameLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+        cell.nameLabel.accessibilityLanguage = self.session.language;
+        
         cell.descriptionLabel.text = row.body;
         cell.descriptionLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-
+        cell.descriptionLabel.accessibilityLanguage = self.session.language;
+        
         cell.thumbnailView.image = row.image;
         cell.thumbnailView.layer.borderWidth = 1.0f;
         cell.thumbnailView.layer.borderColor = [UIColor grayColor].CGColor;
@@ -628,6 +633,9 @@
         return cell;
     } else if (row.link) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailLinkCell"];
+        
+        cell.accessibilityLanguage = self.session.language;
+        
         cell.imageView.image = row.image;
         cell.textLabel.text = row.content;
         cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
@@ -638,9 +646,13 @@
         return cell;
     } else {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailBodyCell"];
+        
+        cell.accessibilityLanguage = self.session.language;
+        
         cell.imageView.image = row.image;
         cell.textLabel.text = row.content;
-
+        
+        
         UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 
         if (row.emphasis) {

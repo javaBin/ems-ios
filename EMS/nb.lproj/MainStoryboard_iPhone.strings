@@ -5,11 +5,11 @@
 /* Class = "IBUILabel"; text = "Open in Safari"; ObjectID = "2hx-Ag-VRG"; */
 "2hx-Ag-VRG.text" = "Åpne i Safari";
 
-/* Class = "IBUILabel"; text = "Lorum ipsum sdflakjf lksdfjals ødkfjasdf ølkasjdf økj asødf"; ObjectID = "2rp-Pi-3ix"; */
-"2rp-Pi-3ix.text" = "Lorum ipsum sdflakjf lksdfjals ødkfjasdf ølkasjdf økj asødf";
+/* Class = "IBUILabel"; text = "Neal Ford is Director, Software Architect, and Meme Wrangler at ThoughtWorks, a global IT consultancy with an exclusive focus on end-to-end software development and delivery."; ObjectID = "2rp-Pi-3ix"; */
+"2rp-Pi-3ix.text" = "Neal Ford is Director, Software Architect, and Meme Wrangler at ThoughtWorks, a global IT consultancy with an exclusive focus on end-to-end software development and delivery.";
 
-/* Class = "IBUILabel"; text = "Title"; ObjectID = "37X-VX-diE"; */
-"37X-VX-diE.text" = "Tittel";
+/* Class = "IBUILabel"; text = "Video"; ObjectID = "37X-VX-diE"; */
+"37X-VX-diE.text" = "Video";
 
 /* Class = "IBUISegmentedControl"; 47E-mD-yuA.segmentTitles[0] = "All"; ObjectID = "47E-mD-yuA"; */
 "47E-mD-yuA.segmentTitles[0]" = "Alle";
@@ -17,8 +17,8 @@
 /* Class = "IBUISegmentedControl"; 47E-mD-yuA.segmentTitles[1] = "Favourites"; ObjectID = "47E-mD-yuA"; */
 "47E-mD-yuA.segmentTitles[1]" = "Favoritter";
 
-/* Class = "IBUILabel"; text = "Subtitle"; ObjectID = "5qT-UM-TbQ"; */
-"5qT-UM-TbQ.text" = "Subtitle";
+/* Class = "IBUILabel"; text = "11. sept - 12 sept"; ObjectID = "5qT-UM-TbQ"; */
+"5qT-UM-TbQ.text" = "11. sept - 12 sept";
 
 /* Class = "IBUINavigationItem"; title = "About"; ObjectID = "HlO-7p-Mvh"; */
 "HlO-7p-Mvh.title" = "Om";
@@ -35,17 +35,23 @@
 /* Class = "IBUILabel"; text = "Detail"; ObjectID = "MNR-Bu-CdT"; */
 "MNR-Bu-CdT.text" = "Detalj";
 
+/* Class = "IBUILabel"; accessibilityHint = "Location"; ObjectID = "O8a-bl-G72"; */
+"O8a-bl-G72.accessibilityHint" = "Location";
+
 /* Class = "IBUILabel"; text = "Room 1"; ObjectID = "O8a-bl-G72"; */
 "O8a-bl-G72.text" = "Rom 1";
 
-/* Class = "IBUILabel"; text = "Title"; ObjectID = "PxW-H1-Zj8"; */
-"PxW-H1-Zj8.text" = "Tittel";
+/* Class = "IBUILabel"; text = "Functional Programming"; ObjectID = "PxW-H1-Zj8"; */
+"PxW-H1-Zj8.text" = "Functional Programming";
 
 /* Class = "IBUIBarButtonItem"; title = "Clear"; ObjectID = "RnF-KH-VEs"; */
 "RnF-KH-VEs.title" = "Nullstill";
 
-/* Class = "IBUILabel"; text = "Title"; ObjectID = "SdI-BN-OgO"; */
-"SdI-BN-OgO.text" = "Tittel";
+/* Class = "IBUILabel"; text = "Filter Criteria"; ObjectID = "SdI-BN-OgO"; */
+"SdI-BN-OgO.text" = "Filter Criteria";
+
+/* Class = "IBUIButton"; accessibilityLabel = "Add to favorites"; ObjectID = "VVA-SA-ETl"; */
+"VVA-SA-ETl.accessibilityLabel" = "Legg til i favoritter";
 
 /* Class = "IBUIBarButtonItem"; title = "Now"; ObjectID = "Vsi-Ju-aIE"; */
 "Vsi-Ju-aIE.title" = "Nå";
@@ -56,26 +62,23 @@
 /* Class = "IBUISearchBar"; placeholder = "Search by session or speaker name"; ObjectID = "Zif-KH-RXK"; */
 "Zif-KH-RXK.placeholder" = "Søk etter tittel eller foredragsholder";
 
-/* Class = "IBUILabel"; text = "Title"; ObjectID = "aZM-X2-agk"; */
-"aZM-X2-agk.text" = "Tittel";
-
-/* Class = "IBUISearchBar"; placeholder = "Search by session or speaker name"; ObjectID = "dF3-A5-Ac0"; */
-"dF3-A5-Ac0.placeholder" = "Søk etter tittel eller foredragsholder";
-
-/* Class = "IBUISearchBar"; dF3-A5-Ac0.scopeButtonTitles[0] = "Title"; ObjectID = "dF3-A5-Ac0"; */
-"dF3-A5-Ac0.scopeButtonTitles[0]" = "Tittel";
-
-/* Class = "IBUISearchBar"; dF3-A5-Ac0.scopeButtonTitles[1] = "Title"; ObjectID = "dF3-A5-Ac0"; */
-"dF3-A5-Ac0.scopeButtonTitles[1]" = "Tittel";
+/* Class = "IBUILabel"; text = "JavaZone 2014"; ObjectID = "aZM-X2-agk"; */
+"aZM-X2-agk.text" = "JavaZone 2014";
 
 /* Class = "IBUILabel"; text = "About"; ObjectID = "dbP-wc-WIB"; */
 "dbP-wc-WIB.text" = "Om";
 
-/* Class = "IBUINavigationItem"; title = "Search/Filter"; ObjectID = "qan-0d-j9g"; */
-"qan-0d-j9g.title" = "Søk/Filtrer";
+/* Class = "IBUIButton"; accessibilityLabel = "Add to favorites"; ObjectID = "gYM-vI-9Vp"; */
+"gYM-vI-9Vp.accessibilityLabel" = "Legg til i favoritter";
+
+/* Class = "IBUINavigationItem"; title = "Filter"; ObjectID = "qan-0d-j9g"; */
+"qan-0d-j9g.title" = "Filter";
 
 /* Class = "IBUIBarButtonItem"; title = "Filter"; ObjectID = "sbU-kd-4dC"; */
-"sbU-kd-4dC.title" = "Filtrer";
+"sbU-kd-4dC.title" = "Filter";
+
+/* Class = "IBUILabel"; accessibilityHint = "Speaker"; ObjectID = "sdj-I3-IrK"; */
+"sdj-I3-IrK.accessibilityHint" = "Foredragsholder";
 
 /* Class = "IBUILabel"; text = "Speaker 1, Speaker 2, Speaker 3, Speaker 4, SPeaker 5"; ObjectID = "sdj-I3-IrK"; */
-"sdj-I3-IrK.text" = "Foredragsholder 1, Foredragsholder 2, Foredragsholder 3, Foredragsholder 4, Foredragsholder 5";
+"sdj-I3-IrK.text" = "Speaker 1, Speaker 2, Speaker 3, Speaker 4, SPeaker 5";

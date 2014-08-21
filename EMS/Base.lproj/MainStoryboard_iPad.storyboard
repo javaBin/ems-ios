@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="BvV-yo-qhr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="BvV-yo-qhr">
     <dependencies>
         <development version="5100" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -257,7 +257,8 @@
                                     <subviews>
                                         <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wYW-RC-moy">
                                             <rect key="frame" x="0.0" y="35" width="60" height="60"/>
-                                            <accessibility key="accessibilityConfiguration" hint="" label="">
+                                            <accessibility key="accessibilityConfiguration" hint="" label="Add to favorites">
+                                                <accessibilityTraits key="traits" none="YES" button="YES"/>
                                                 <bool key="isElement" value="YES"/>
                                             </accessibility>
                                             <constraints>
@@ -305,6 +306,7 @@
                                                         </imageView>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="200" contentMode="left" text="Room 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYZ-5B-fa6">
                                                             <rect key="frame" x="38" y="0.0" width="44" height="15"/>
+                                                            <accessibility key="accessibilityConfiguration" hint=""/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
@@ -373,8 +375,7 @@
                     </tableView>
                     <toolbarItems>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="GJU-RI-YVR"/>
-                        <barButtonItem image="19-gear.png" style="plain" id="O8v-RP-Sfq">
-                            <color key="tintColor" red="0.99215692280000001" green="0.52549022440000004" blue="0.29019609089999998" alpha="1" colorSpace="deviceRGB"/>
+                        <barButtonItem image="19-gear" style="plain" id="O8v-RP-Sfq">
                             <connections>
                                 <segue destination="r5V-br-gFe" kind="modal" identifier="showSettingsView" modalPresentationStyle="formSheet" id="T4c-oe-cxy"/>
                             </connections>
@@ -409,6 +410,7 @@
                         <outlet property="footer" destination="gdR-6L-bQe" id="X8M-pm-DUk"/>
                         <outlet property="footerLabel" destination="UEs-dd-Koj" id="Xl2-gL-D5v"/>
                         <outlet property="search" destination="Do0-h2-Su0" id="e4P-L7-j41"/>
+                        <outlet property="settingsButton" destination="O8v-RP-Sfq" id="P9N-Zi-n3R"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UEA-W5-dCi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -435,6 +437,7 @@
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J8L-ft-CBx">
                                     <rect key="frame" x="724" y="28" width="44" height="44"/>
+                                    <accessibility key="accessibilityConfiguration" label="Add to favorites"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="44" id="R4X-73-4IG"/>
                                         <constraint firstAttribute="height" constant="44" id="Sc5-nd-EI7"/>
@@ -474,7 +477,7 @@
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="738" id="iaP-vd-2S6">
                                             <rect key="frame" x="15" y="0.0" width="738" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -638,7 +641,7 @@
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Dlf-6V-67B">
                         <rect key="frame" x="0.0" y="808" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" red="0.98431378599999997" green="0.68627452850000004" blue="0.1960784495" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="tintColor" red="0.99215692280000001" green="0.52549022440000004" blue="0.29019609089999998" alpha="1" colorSpace="deviceRGB"/>
                     </toolbar>
                     <connections>
                         <segue destination="Tnw-1T-TNg" kind="relationship" relationship="rootViewController" id="XJI-1v-On3"/>
@@ -728,7 +731,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="19-gear.png" width="26" height="26"/>
+        <image name="19-gear" width="26" height="26"/>
         <image name="258-checkmark-grey.png" width="19" height="18"/>
         <image name="28-star-grey.png" width="26" height="26"/>
     </resources>

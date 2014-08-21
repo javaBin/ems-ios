@@ -45,10 +45,13 @@
 
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        
         dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.locale = [NSLocale autoupdatingCurrentLocale];
         dateFormatter.dateFormat = @"EEEE";
         
         timeFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.locale = [NSLocale autoupdatingCurrentLocale];
         timeFormatter.dateStyle = NSDateFormatterNoStyle;
         timeFormatter.timeStyle = NSDateFormatterShortStyle;
 

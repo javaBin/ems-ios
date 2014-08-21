@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0Ye-bN-FPt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0Ye-bN-FPt">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -253,9 +253,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="129"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gYM-vI-9Vp">
+                                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gYM-vI-9Vp" customClass="EMSFavoriteButton">
                                             <rect key="frame" x="0.0" y="35" width="60" height="60"/>
-                                            <accessibility key="accessibilityConfiguration" hint="" label="">
+                                            <accessibility key="accessibilityConfiguration" hint="" label="Add to favorites">
                                                 <bool key="isElement" value="YES"/>
                                             </accessibility>
                                             <constraints>
@@ -300,12 +300,14 @@
                                                         </imageView>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="200" contentMode="left" text="Room 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O8a-bl-G72">
                                                             <rect key="frame" x="38" y="0.0" width="44" height="15"/>
+                                                            <accessibility key="accessibilityConfiguration" hint="Location" label=""/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="300" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="Speaker 1, Speaker 2, Speaker 3, Speaker 4, SPeaker 5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sdj-I3-IrK">
                                                             <rect key="frame" x="90" y="0.0" width="137" height="15"/>
+                                                            <accessibility key="accessibilityConfiguration" hint="Speaker" label=""/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
@@ -368,8 +370,7 @@
                     </tableView>
                     <toolbarItems>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="s3S-Bp-mRb"/>
-                        <barButtonItem image="19-gear.png" style="plain" id="IHa-T0-39E">
-                            <color key="tintColor" red="0.99215692280000001" green="0.52549022440000004" blue="0.29019609089999998" alpha="1" colorSpace="deviceRGB"/>
+                        <barButtonItem image="19-gear" style="plain" id="IHa-T0-39E">
                             <connections>
                                 <segue destination="QNg-bQ-mlr" kind="modal" identifier="showSettingsView" id="mpM-Oq-YCs"/>
                             </connections>
@@ -402,6 +403,7 @@
                         <outlet property="footer" destination="5g9-P8-RVj" id="dfN-Ob-emi"/>
                         <outlet property="footerLabel" destination="Laf-bi-x96" id="376-Wq-gu6"/>
                         <outlet property="search" destination="Zif-KH-RXK" id="tq7-GP-YRY"/>
+                        <outlet property="settingsButton" destination="IHa-T0-39E" id="unA-Ll-Nzs"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dcc-le-TER" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -428,6 +430,7 @@
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VVA-SA-ETl">
                                     <rect key="frame" x="276" y="22" width="44" height="44"/>
+                                    <accessibility key="accessibilityConfiguration" label="Add to favorites"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="44" id="53f-V7-TsL"/>
                                         <constraint firstAttribute="height" constant="44" id="Jfz-oZ-x3I"/>
@@ -584,7 +587,7 @@
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Afa-Ai-Ptl">
                         <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" red="0.98431378599999997" green="0.68627452850000004" blue="0.1960784495" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="tintColor" red="0.99215692280000001" green="0.52549022440000004" blue="0.29019609089999998" alpha="1" colorSpace="deviceRGB"/>
                     </toolbar>
                     <connections>
                         <segue destination="bNB-PM-Jcs" kind="relationship" relationship="rootViewController" id="8qj-wa-maC"/>
@@ -632,7 +635,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="19-gear.png" width="26" height="26"/>
+        <image name="19-gear" width="26" height="26"/>
         <image name="258-checkmark-grey.png" width="19" height="18"/>
         <image name="28-star-grey.png" width="26" height="26"/>
     </resources>

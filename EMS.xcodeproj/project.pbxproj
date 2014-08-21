@@ -178,11 +178,11 @@
 		83F4559F177D5B5C00BC79A1 /* EMSAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSAboutViewController.h; sourceTree = "<group>"; };
 		83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSAboutViewController.m; sourceTree = "<group>"; };
 		CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		EA11337A19A65B54008D000A /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/MainStoryboard_iPhone.strings; sourceTree = "<group>"; };
+		EA11337C19A65B5F008D000A /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/MainStoryboard_iPad.strings; sourceTree = "<group>"; };
 		EA1E8F6317E782E8000F2DB7 /* JavaZone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JavaZone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA28E8CA19A422D9004AAF81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		EA28E8CB19A422D9004AAF81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		EA28E8CC19A422E3004AAF81 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/MainStoryboard_iPhone.strings; sourceTree = "<group>"; };
-		EA28E8CD19A422E3004AAF81 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/MainStoryboard_iPad.strings; sourceTree = "<group>"; };
 		EA28E8CE19A422E3004AAF81 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EA6132BA193FC35B000F54DC /* EMSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConfig.h; sourceTree = "<group>"; };
 		EA6132BB193FC35B000F54DC /* EMSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConfig.m; sourceTree = "<group>"; };
@@ -825,7 +825,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				EA28E8CA19A422D9004AAF81 /* Base */,
-				EA28E8CC19A422E3004AAF81 /* nb */,
+				EA11337A19A65B54008D000A /* nb */,
 			);
 			name = MainStoryboard_iPhone.storyboard;
 			sourceTree = "<group>";
@@ -834,7 +834,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				EA28E8CB19A422D9004AAF81 /* Base */,
-				EA28E8CD19A422E3004AAF81 /* nb */,
+				EA11337C19A65B5F008D000A /* nb */,
 			);
 			name = MainStoryboard_iPad.storyboard;
 			sourceTree = "<group>";

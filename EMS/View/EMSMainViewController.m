@@ -34,6 +34,8 @@
 @property(nonatomic, strong) IBOutlet UIView *footer;
 @property(nonatomic, strong) IBOutlet UILabel *footerLabel;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsButton;
+
 - (IBAction)toggleFavourite:(id)sender;
 
 - (IBAction)segmentChanged:(id)sender;
@@ -288,6 +290,8 @@
     [super viewDidLoad];
 
     self.title = NSLocalizedString(@"Sessions", @"Session list title");
+    
+    self.settingsButton.accessibilityLabel = NSLocalizedString(@"Settings", @"Accessibility label for settings button");
 
     self.filterFavourites = NO;
 
@@ -640,6 +644,9 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     Session *session = [_fetchedResultsController objectAtIndexPath:indexPath];
 
     EMSSessionCell *sessionCell = (EMSSessionCell *) cell;
+    sessionCell.title.accessibilityLanguage = session.language;
+    sessionCell.room.accessibilityLanguage = @"en";
+    sessionCell.speaker.accessibilityLanguage = session.language;
 
     sessionCell.title.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     sessionCell.room.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
@@ -708,7 +715,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     EMS_LOG(@"tableView:cellForRowAtIndexPath: asking for section %ld and row %ld", (long) indexPath.section, (long) indexPath.row);
 
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SessionCell"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SessionCell" forIndexPath:indexPath];
 
     [self configureCell:cell atIndexPath:indexPath];
 
