@@ -5,28 +5,76 @@
 #import "EMSSearchViewController.h"
 
 @interface EMSSearchViewController ()
-@property(nonatomic, strong) NSMutableArray *sections;
+@property(nonatomic, copy) NSArray *sections;
 @end
 
 @implementation EMSSearchViewController
 
+static NSString const * DictionaryTitleKey = @"DictionaryTitleKey";
+static NSString const * DictionaryIdKey = @"DictionaryIdKey";
+static NSString const * DictionaryPredicateKey = @"DictionaryPredicateKey";
+static NSString const * DictionaryMultiSelectKey = @"DictionaryMultiSelectKey";
+static NSString const * DictionaryCapitalized = @"DictionaryCapitalized";
+static NSString const * DictionaryCleaned = @"DictionaryCleaned";
+static NSString const * DictionaryImage = @"DictionaryImage";
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSMutableArray *sections = [NSMutableArray array];
 
-    self.sections = [@[@"Keywords", @"Levels", @"Types", @"Rooms", @"Language"] mutableCopy];
-
-    if (self.keywords == nil || [self.keywords count] == 0) {
-        [self.sections removeObject:@"Keywords"];
+    if (self.keywords && [self.keywords count] > 0) {
+        NSDictionary *keywords = @{DictionaryTitleKey: NSLocalizedString(@"Keywords", @"Filter View Keywords  section title"),
+                                   DictionaryIdKey: @(emsKeyword),
+                                   DictionaryPredicateKey: self.keywords,
+                                   DictionaryMultiSelectKey: @NO,
+                                   DictionaryCapitalized:@NO,
+                                       DictionaryCleaned:@NO,
+                                       DictionaryImage:@NO};
+        [sections addObject:keywords];
     }
-    if (self.levels == nil || [self.levels count] == 0) {
-        [self.sections removeObject:@"Levels"];
+    if (self.levels && [self.levels count] > 0) {
+        NSDictionary *levels = @{DictionaryTitleKey: NSLocalizedString(@"Levels", @"Filter View Levels section title"),
+                                 DictionaryIdKey: @(emsLevel),
+                                 DictionaryPredicateKey: self.levels,
+                                 DictionaryMultiSelectKey: @YES,
+                                 DictionaryCapitalized: @YES,
+                                     DictionaryCleaned:@NO,
+                                     DictionaryImage: @YES};
+        
+        [sections addObject:levels];
     }
-    if (self.types == nil || [self.types count] == 0) {
-        [self.sections removeObject:@"Types"];
+    if (self.types && [self.types count] > 0) {
+        NSDictionary *types = @{DictionaryTitleKey: NSLocalizedString(@"Types", @"Filter View Types section title"),
+                                DictionaryIdKey: @(emsType),
+                                DictionaryPredicateKey: self.types,
+                                DictionaryMultiSelectKey: @YES,
+                                DictionaryCapitalized: @YES,
+                                    DictionaryCleaned:@YES,
+                                    DictionaryImage:@NO };
+        [sections addObject:types];
     }
-    if (self.rooms == nil || [self.rooms count] == 0) {
-        [self.sections removeObject:@"Rooms"];
+    if (self.rooms && [self.rooms count] > 0) {
+        NSDictionary *rooms = @{DictionaryTitleKey: NSLocalizedString(@"Rooms", @"Filter View Rooms section title"),
+                                DictionaryIdKey: @(emsRoom),
+                                DictionaryPredicateKey: self.rooms,
+                                DictionaryMultiSelectKey: @YES,
+                                DictionaryCapitalized: @NO,
+                                    DictionaryCleaned:@NO,
+                                    DictionaryImage: @NO };
+        [sections addObject:rooms];
     }
+    
+    NSDictionary *language = @{DictionaryTitleKey: NSLocalizedString(@"Language", @"Filter View Language section title"),
+                               DictionaryIdKey: @(emsLang),
+                            DictionaryPredicateKey:@[@"English", @"Norwegian"],
+                               DictionaryMultiSelectKey: @YES,
+                               DictionaryCapitalized: @YES,
+                                   DictionaryCleaned: @NO,
+                                   DictionaryImage: @YES};
+    [sections addObject:language];
+    
+    self.sections = sections;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -49,97 +97,57 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex {
-    NSString *section = self.sections[(NSUInteger) sectionIndex];
-
-    if ([section isEqual:@"Keywords"]) {
-        return self.keywords.count;
-    }
-
-    if ([section isEqual:@"Levels"]) {
-        return self.levels.count;
-    }
-
-    if ([section isEqual:@"Types"]) {
-        return self.types.count;
-    }
-
-    if ([section isEqual:@"Rooms"]) {
-        return self.rooms.count;
-    }
-
-    if ([section isEqual:@"Language"]) {
-        return 2;
-    }
-
-    return 0;
-}
-
-- (void)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
-             fromList:(NSArray *)list andCurrentList:(NSSet *)currentList
-          capitalized:(BOOL)capitalized
-              cleaned:(BOOL)cleaned
-            withImage:(BOOL)imageFlag {
-    NSString *value = list[(NSUInteger) indexPath.row];
-
-    if (capitalized) {
-        value = [value capitalizedString];
-    }
-
-    if (cleaned) {
-        value = [value stringByReplacingOccurrencesOfString:@"-" withString:@" "];
-    }
-
-    cell.textLabel.text = value;
-
-    if ([currentList containsObject:list[(NSUInteger) indexPath.row]]) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    } else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
-
-    if (imageFlag) {
-        cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", list[(NSUInteger) indexPath.row]]];
-    } else {
-        cell.imageView.image = nil;
-    }
+    
+    NSArray *predicate = self.sections[sectionIndex][DictionaryPredicateKey];
+    
+    return  [predicate count];
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SearchCell" forIndexPath:indexPath];
 
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"SessionCell"];
+    NSDictionary *section = self.sections[indexPath.section];
+    
+    NSArray *predicates = section[DictionaryPredicateKey];
+    
+    NSString *value = predicates[indexPath.row];
+    
+    if (section[DictionaryCapitalized]) {
+        value = [value capitalizedString];
+    }
+    
+    if (section[DictionaryCleaned]) {
+        value = [value stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+    }
+    
+    cell.textLabel.text = value;
+    
+    
+    EMSSearchField key = (EMSSearchField) [section[DictionaryIdKey] integerValue];
+    NSSet *currentList = [self.advancedSearch fieldValuesForKey:key];
+    if ([currentList containsObject:predicates[indexPath.row]]) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    
+    if (section[DictionaryImage]) {
+        cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", predicates[indexPath.row]]];
+    } else {
+        cell.imageView.image = nil;
     }
 
-    NSString *section = self.sections[(NSUInteger) indexPath.section];
-
-    if ([section isEqual:@"Keywords"]) {
-        [self configureCell:cell forIndexPath:indexPath fromList:self.keywords andCurrentList:[self.advancedSearch fieldValuesForKey:emsKeyword] capitalized:NO cleaned:NO withImage:NO];
-    }
-
-    if ([section isEqual:@"Levels"]) {
-        [self configureCell:cell forIndexPath:indexPath fromList:self.levels andCurrentList:[self.advancedSearch fieldValuesForKey:emsLevel] capitalized:YES cleaned:NO withImage:YES];
-    }
-
-    if ([section isEqual:@"Types"]) {
-        [self configureCell:cell forIndexPath:indexPath fromList:self.types andCurrentList:[self.advancedSearch fieldValuesForKey:emsType] capitalized:YES cleaned:YES withImage:NO];
-    }
-
-    if ([section isEqual:@"Rooms"]) {
-        [self configureCell:cell forIndexPath:indexPath fromList:self.rooms andCurrentList:[self.advancedSearch fieldValuesForKey:emsRoom] capitalized:NO cleaned:NO withImage:NO];
-    }
-
-    if ([section isEqual:@"Language"]) {
-        [self configureCell:cell forIndexPath:indexPath fromList:@[@"English", @"Norwegian"] andCurrentList:[self.advancedSearch fieldValuesForKey:emsLang] capitalized:YES cleaned:NO withImage:YES];
-    }
-
+    /* We have to guess English here at the moment, since EMS doesn´t seem to support multiple languages for these values.*/
+    cell.accessibilityLanguage = @"en";
+    
     return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)sectionIndex {
-    NSString *section = self.sections[(NSUInteger) sectionIndex];
-
-    return section;
+    return self.sections[sectionIndex][DictionaryTitleKey];
 }
 
 - (void)selectRowForIndexPath:(NSIndexPath *)indexPath forList:(NSArray *)list andKey:(EMSSearchField)key {
@@ -159,57 +167,15 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *section = self.sections[(NSUInteger) indexPath.section];
-
-    if ([section isEqual:@"Keywords"]) {
-        [self selectRowForIndexPath:indexPath forList:self.keywords andKey:emsKeyword];
-    }
-
-    if ([section isEqual:@"Levels"]) {
-        [self selectRowForIndexPath:indexPath forList:self.levels andKey:emsLevel];
-    }
-
-    if ([section isEqual:@"Types"]) {
-        [self selectRowForIndexPath:indexPath forList:self.types andKey:emsType];
-    }
-
-    if ([section isEqual:@"Rooms"]) {
-        [self selectRowForIndexPath:indexPath forList:self.rooms andKey:emsRoom];
-    }
-
-    if ([section isEqual:@"Language"]) {
-        [self selectRowForIndexPath:indexPath forList:@[@"English", @"Norwegian"] andKey:emsLang];
-    }
+    NSArray *predicates = self.sections[indexPath.section][DictionaryPredicateKey];
+    EMSSearchField emsKeyword = (EMSSearchField)[self.sections[indexPath.section][DictionaryIdKey] integerValue];
+    
+    [self selectRowForIndexPath:indexPath forList:predicates andKey:emsKeyword];
+   
 
     [tableView reloadData];
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if ([searchText length] == 0) {
-        [self performSelector:@selector(hideKeyboardWithSearchBar:) withObject:searchBar afterDelay:0];
-    }
-}
-
-- (void)hideKeyboardWithSearchBar:(UISearchBar *)searchBar {
-    [searchBar setShowsCancelButton:NO animated:YES];
-    [searchBar resignFirstResponder];
-}
-
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    [searchBar setShowsCancelButton:YES animated:YES];
-}
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    searchBar.text = @"";
-
-    [searchBar setShowsCancelButton:NO animated:YES];
-    [searchBar resignFirstResponder];
-}
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [searchBar setShowsCancelButton:NO animated:YES];
-    [searchBar resignFirstResponder];
-}
 
 - (void)apply:(id)sender {
     [self.delegate advancedSearchUpdated];
