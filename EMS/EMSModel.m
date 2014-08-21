@@ -1229,6 +1229,10 @@
     Session *firstSession = sessions[0];
     NSDate *conferenceDate = firstSession.slot.start;
 
+    if (conferenceDate == nil) {
+        return nil;
+    }
+
     EMS_LOG(@"Saw conference date of %@", conferenceDate);
 
     NSCalendar *calendar = [NSCalendar currentCalendar];

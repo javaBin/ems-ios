@@ -67,7 +67,11 @@
     NSString *date = [[dateFormatter stringFromDate:[dateParser dateFromString:parts[0]]] uppercaseString];
     NSString *startTime = [timeFormatter stringFromDate:[timeParser dateFromString:parts[1]]];
     NSString *endTime = [timeFormatter stringFromDate:[timeParser dateFromString:parts[3]]];
-    
+
+    if (date == nil || startTime == nil || endTime == nil) {
+        return self.slotName;
+    }
+
     return  [NSString stringWithFormat:@"%@ %@ - %@", date, startTime, endTime];
 }
 

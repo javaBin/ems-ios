@@ -286,6 +286,13 @@
 
 #pragma  mark - Lifecycle Events
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    if (self.splitViewController) {
+        self.splitViewController.delegate = self;
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -306,10 +313,6 @@
     // This is also set in the storyboard but appears not to work.
     self.tableView.sectionIndexMinimumDisplayRowCount = 500;
 
-    if (self.splitViewController) {
-        self.splitViewController.delegate = self;
-    }
-
     self.observersInstalled = NO;
 
 }
@@ -324,15 +327,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
 
 - (void)viewDidAppear:(BOOL)animated {
-
-    //This method should have been called in viewWillAppear, but UISplitViewController
-    //does not call viewWillAppear on master view controller when app is launched in portrait mode
-    //for some reason. This has been reported as a bug to Apple, the bug id 17291466.
-    //As a workaround we call [self addObservers] again here. The addObservers method has
-    //a guard to prevent that the observers are added twice.
-    //TODO: Remove this line when Apple fixes bug 17291466.
-    [self addObservers];
-
 
     [super viewDidAppear:animated];
 
@@ -946,33 +940,44 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     for (id <NSFetchedResultsSectionInfo> sectionInfo in sections) {
         if ([sectionInfo numberOfObjects] > 0) {
             Session *session = [sectionInfo objects].firstObject;
-            [mappedObjects addObject:session.slot.end];
+            if (session != nil && session.slot != nil) {
+                [mappedObjects addObject:session.slot.end];
+            } else {
+                [mappedObjects addObject:[NSDate distantFuture]];
+            }
         }
     }
 
-    NSRange range = NSMakeRange(0, [sections count]);
+    NSDate *now = [[[EMSAppDelegate sharedAppDelegate] model] dateForConference:conference andDate:[NSDate date]];
 
-    NSArray *sortedDates = [mappedObjects sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+    if (now != nil) {
+        NSInteger index = [self getIndexForDate:now inListOfDates:mappedObjects];
+
+        if (index != NSNotFound) {
+            if (index >= [sections count]) {//scroll to end
+                index = [sections count] - 1;
+            }
+
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:index];
+
+            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+
+        }
+    }
+}
+
+- (NSInteger)getIndexForDate:(NSDate *)now inListOfDates:(NSArray *)dates {
+    NSRange range = NSMakeRange(0, [dates count]);
+
+    NSArray *sortedDates = [dates sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         return [obj1 compare:obj2];
     }];
-
-
-    NSDate *now = [[[EMSAppDelegate sharedAppDelegate] model] dateForConference:conference andDate:[NSDate date]];
 
     NSInteger index = [sortedDates indexOfObject:now inSortedRange:range options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(id obj1, id obj2) {
         return [obj1 compare:obj2];
     }];
 
-    if (index != NSNotFound) {
-        if (index >= [sections count]) {//scroll to end
-            index = [sections count] - 1;
-        }
-
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:index];
-
-        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-
-    }
+    return index;
 }
 
 

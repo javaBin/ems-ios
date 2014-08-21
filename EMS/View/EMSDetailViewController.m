@@ -153,7 +153,8 @@
         [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.body]];
     }
     if (self.session.audience != nil) {
-        [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.audience title:@"Intended Audience"]];
+        [p addObject:[[EMSDetailViewRow alloc] initWithContent:NSLocalizedString(@"Intended Audience", @"Subtitle for detail view for audience") emphasized:YES]];
+        [p addObject:[[EMSDetailViewRow alloc] initWithContent:self.session.audience title:NSLocalizedString(@"Intended Audience", @"Subtitle for detail view for audience")]];
     }
 
     if (self.session.level != nil) {
@@ -273,7 +274,12 @@
 - (void)resizeTitleHeaderHack {
     self.titleBar.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.bounds), CGRectGetHeight(self.titleBar.bounds));
 
-    self.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+
+    font = [font fontWithSize:(CGFloat) (font.pointSize * 1.2)];
+
+    self.titleLabel.font = font;
+    
     self.titleLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.tableView.bounds) - 44 - 15;
 
     [self.titleBar setNeedsLayout];
@@ -282,7 +288,6 @@
     CGFloat height = [self.titleBar systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
 
     self.tableView.tableHeaderView.frame = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.frame), height);
-
 
     self.tableView.tableHeaderView = self.tableView.tableHeaderView;
 }
@@ -551,7 +556,7 @@
         [cell setNeedsLayout];
         [cell layoutIfNeeded];
 
-        NSInteger height = [cell intrinsicContentSize].height;
+        NSInteger height = (NSInteger) [cell intrinsicContentSize].height;
 
         return height;
 
@@ -657,7 +662,7 @@
 
         if (row.emphasis) {
             UIFontDescriptor *fontD = [font.fontDescriptor
-                    fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic];
+                    fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
             font = [UIFont fontWithDescriptor:fontD size:0];
         }
 

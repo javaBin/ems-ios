@@ -3,7 +3,7 @@
 "3Fp-gm-flt.text" = "Tittel";
 
 /* Class = "IBUINavigationItem"; title = "Settings"; ObjectID = "4Ph-FC-7wj"; */
-"4Ph-FC-7wj.title" = "Instillinger";
+"4Ph-FC-7wj.title" = "Innstillinger";
 
 
 /* Class = "IBUISearchBar"; 5oR-m3-uLe.scopeButtonTitles[0] = "Title"; ObjectID = "5oR-m3-uLe"; */
@@ -13,13 +13,13 @@
 "5oR-m3-uLe.scopeButtonTitles[1]" = "Tittel";
 
 /* Class = "IBUISearchBar"; placeholder = "Search by session title, content or speaker name"; ObjectID = "Do0-h2-Su0"; */
-"Do0-h2-Su0.placeholder" = "Søk etter tittel eller foredragsholder";
+"Do0-h2-Su0.placeholder" = "Søk på tittel eller foredragsholder";
 
 /* Class = "IBUILabel"; text = "Title"; ObjectID = "Gf3-cq-Y9H"; */
 "Gf3-cq-Y9H.text" = "Tittel";
 
 /* Class = "IBUILabel"; text = "Detail"; ObjectID = "H22-EE-GZF"; */
-"H22-EE-GZF.text" = "Detalj";
+"H22-EE-GZF.text" = "Detaljer";
 
 /* Class = "IBUIBarButtonItem"; title = "Clear"; ObjectID = "HPs-pd-HUx"; */
 "HPs-pd-HUx.title" = "Nullstill";
@@ -29,10 +29,10 @@
 
 
 /* Class = "IBUIButton"; accessibilityLabel = "Add to favorites"; ObjectID = "J8L-ft-CBx"; */
-"J8L-ft-CBx.accessibilityLabel" = "Add to favorites";
+"J8L-ft-CBx.accessibilityLabel" = "Legg til i favoritter";
 
 /* Class = "IBUIBarButtonItem"; title = "Filter"; ObjectID = "Ji7-4n-uCE"; */
-"Ji7-4n-uCE.title" = "Filtrer";
+"Ji7-4n-uCE.title" = "Filter";
 
 /* Class = "IBUIBarButtonItem"; title = "Now"; ObjectID = "NpK-ch-5Qd"; */
 "NpK-ch-5Qd.title" = "Nå";
@@ -71,10 +71,10 @@
 "q2W-oB-Adh.text" = "Foredragsholder 1, Foredragsholder 2, Foredragsholder 3, Foredragsholder 4, Foredragsholder 5";
 
 /* Class = "IBUINavigationItem"; title = "Search/Filter"; ObjectID = "v4V-tk-hCi"; */
-"v4V-tk-hCi.title" = "Søk/Filtrer";
+"v4V-tk-hCi.title" = "Filter";
 
 /* Class = "IBUIButton"; accessibilityLabel = "Add to favorites"; ObjectID = "wYW-RC-moy"; */
-"wYW-RC-moy.accessibilityLabel" = "Add to favorites";
+"wYW-RC-moy.accessibilityLabel" = "Legg til i favoritter";
 
 /* Class = "IBUISegmentedControl"; xIm-NT-rXZ.segmentTitles[0] = "All"; ObjectID = "xIm-NT-rXZ"; */
 "xIm-NT-rXZ.segmentTitles[0]" = "Alle";
