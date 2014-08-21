@@ -273,7 +273,12 @@
 - (void)resizeTitleHeaderHack {
     self.titleBar.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.bounds), CGRectGetHeight(self.titleBar.bounds));
 
-    self.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+
+    font = [font fontWithSize:(CGFloat) (font.pointSize * 1.2)];
+
+    self.titleLabel.font = font;
+    
     self.titleLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.tableView.bounds) - 44 - 15;
 
     [self.titleBar setNeedsLayout];
