@@ -939,7 +939,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     for (id <NSFetchedResultsSectionInfo> sectionInfo in sections) {
         if ([sectionInfo numberOfObjects] > 0) {
             Session *session = [sectionInfo objects].firstObject;
-            if (session && session.slot) {
+            if (session != nil && session.slot != nil) {
                 [mappedObjects addObject:session.slot.end];
             } else {
                 [mappedObjects addObject:[NSDate distantFuture]];
@@ -949,17 +949,19 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
     NSDate *now = [[[EMSAppDelegate sharedAppDelegate] model] dateForConference:conference andDate:[NSDate date]];
 
-    NSInteger index = [self getIndexForDate:now inListOfDates:mappedObjects];
+    if (now != nil) {
+        NSInteger index = [self getIndexForDate:now inListOfDates:mappedObjects];
 
-    if (index != NSNotFound) {
-        if (index >= [sections count]) {//scroll to end
-            index = [sections count] - 1;
+        if (index != NSNotFound) {
+            if (index >= [sections count]) {//scroll to end
+                index = [sections count] - 1;
+            }
+
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:index];
+
+            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+
         }
-
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:index];
-
-        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-
     }
 }
 
