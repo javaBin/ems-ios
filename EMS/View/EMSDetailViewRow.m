@@ -38,6 +38,6 @@
 }
 
 - (id)initWithContent:(NSString *)content title:(NSString *)title {
-    return [self initWithContent:content body:nil image:nil link:nil title:title emphasized:nil];
+    return [self initWithContent:content body:nil image:nil link:nil title:title emphasized:NO];
 }
 @end
