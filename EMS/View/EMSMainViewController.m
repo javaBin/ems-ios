@@ -939,22 +939,17 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     for (id <NSFetchedResultsSectionInfo> sectionInfo in sections) {
         if ([sectionInfo numberOfObjects] > 0) {
             Session *session = [sectionInfo objects].firstObject;
-            [mappedObjects addObject:session.slot.end];
+            if (session && session.slot) {
+                [mappedObjects addObject:session.slot.end];
+            } else {
+                [mappedObjects addObject:[NSDate distantFuture]];
+            }
         }
     }
 
-    NSRange range = NSMakeRange(0, [sections count]);
-
-    NSArray *sortedDates = [mappedObjects sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        return [obj1 compare:obj2];
-    }];
-
-
     NSDate *now = [[[EMSAppDelegate sharedAppDelegate] model] dateForConference:conference andDate:[NSDate date]];
 
-    NSInteger index = [sortedDates indexOfObject:now inSortedRange:range options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(id obj1, id obj2) {
-        return [obj1 compare:obj2];
-    }];
+    NSInteger index = [self getIndexForDate:now inListOfDates:mappedObjects];
 
     if (index != NSNotFound) {
         if (index >= [sections count]) {//scroll to end
@@ -966,6 +961,20 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 
     }
+}
+
+- (NSInteger)getIndexForDate:(NSDate *)now inListOfDates:(NSArray *)dates {
+    NSRange range = NSMakeRange(0, [dates count]);
+
+    NSArray *sortedDates = [dates sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2];
+    }];
+
+    NSInteger index = [sortedDates indexOfObject:now inSortedRange:range options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2];
+    }];
+
+    return index;
 }
 
 
