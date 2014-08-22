@@ -36,6 +36,8 @@
 		83D5CBA417749EEA00527620 /* EMSFeatureConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */; };
 		83F455A1177D5B5C00BC79A1 /* EMSAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */; };
 		85E86E298BD74799AE57514E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C5F2910AEBD4413B205CE89 /* libPods.a */; };
+		EA11338719A7A880008D000A /* EMSLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */; };
+		EA11338819A7A880008D000A /* EMSLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */; };
 		EA6132BC193FC35B000F54DC /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
 		EA74604019A42A2500E24D04 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA74603F19A42A2500E24D04 /* EMS-Keys.plist */; };
 		EA74604219A42A3600E24D04 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA74604119A42A3600E24D04 /* EMS-Keys.plist */; };
@@ -184,6 +186,8 @@
 		CDB1071E030B4C928D0D44D6 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		EA11337A19A65B54008D000A /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/MainStoryboard_iPhone.strings; sourceTree = "<group>"; };
 		EA11337C19A65B5F008D000A /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/MainStoryboard_iPad.strings; sourceTree = "<group>"; };
+		EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSLocalNotificationManager.m; sourceTree = "<group>"; };
+		EA11338919A7A89F008D000A /* EMSLocalNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSLocalNotificationManager.h; sourceTree = "<group>"; };
 		EA1E8F6317E782E8000F2DB7 /* JavaZone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JavaZone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA28E8CA19A422D9004AAF81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		EA28E8CB19A422D9004AAF81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
@@ -385,9 +389,19 @@
 			name = EMSMO;
 			sourceTree = "<group>";
 		};
+		EA11337D19A6A49A008D000A /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				EA11338919A7A89F008D000A /* EMSLocalNotificationManager.h */,
+				EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */,
+			);
+			name = Notifications;
+			sourceTree = "<group>";
+		};
 		F35BB6B917685885009077D3 = {
 			isa = PBXGroup;
 			children = (
+				EA11337D19A6A49A008D000A /* Notifications */,
 				F394C9E117F019F600FAFBD4 /* flatMap */,
 				F394C9E017F019E400FAFBD4 /* JavaZone */,
 				839BD637176F9BD400900712 /* Config */,
@@ -534,7 +548,7 @@
 				ORGANIZATIONNAME = "Chris Searle";
 				TargetAttributes = {
 					F35BB6C117685885009077D3 = {
-						DevelopmentTeam = EL8Z296J47;
+						DevelopmentTeam = 8WE6452SWH;
 					};
 					F394C96E17F0173900FAFBD4 = {
 						DevelopmentTeam = 8WE6452SWH;
@@ -715,6 +729,7 @@
 				839BD666176F9BD400900712 /* EMSSlot.m in Sources */,
 				839BD667176F9BD400900712 /* EMSSlotsRetriever.m in Sources */,
 				839BD66B176F9BD400900712 /* EMSMainViewController.m in Sources */,
+				EA11338719A7A880008D000A /* EMSLocalNotificationManager.m in Sources */,
 				839BD66C176F9BD400900712 /* EMSSettingsViewController.m in Sources */,
 				839BD670176FA67000900712 /* EMSSpeaker.m in Sources */,
 				F31862371770340200292371 /* EMSDetailViewController.m in Sources */,
@@ -763,6 +778,7 @@
 				F394C97E17F0173900FAFBD4 /* EMSSlotsRetriever.m in Sources */,
 				F394C97F17F0173900FAFBD4 /* EMSMainViewController.m in Sources */,
 				F394C98017F0173900FAFBD4 /* EMSSettingsViewController.m in Sources */,
+				EA11338819A7A880008D000A /* EMSLocalNotificationManager.m in Sources */,
 				F394C98217F0173900FAFBD4 /* EMSSpeaker.m in Sources */,
 				F394C98317F0173900FAFBD4 /* EMSDetailViewController.m in Sources */,
 				F394C98417F0173900FAFBD4 /* EMSSessionCell.m in Sources */,

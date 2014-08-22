@@ -1113,17 +1113,21 @@
     NSComparisonResult result = [[[NSDate alloc] init] compare:sessionStart];
 
     if (result == NSOrderedAscending) {
-        [notification setFireDate:sessionStart];
-        [notification setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+        NSDateFormatter *startTimeFormatter = [[NSDateFormatter alloc] init];
+        startTimeFormatter.dateStyle = NSDateFormatterNoStyle;
+        startTimeFormatter.timeStyle = NSDateFormatterShortStyle;
+        
+        NSString *formattedStartTime = [startTimeFormatter stringFromDate:session.slot.start];
+        NSString *alertMessage = [NSString stringWithFormat:NSLocalizedString(@"\"%@\" in %@ at %@.", @"{Session title} in {Room name} at {time}. (Local notification)"),
+                                  session.title,
+                                  session.room.name, formattedStartTime];
 
-        [notification
-                setAlertBody:[NSString stringWithFormat:NSLocalizedString(@"Your next session is %@ in %@ in 5 mins", @"Your next session is {Session Title} in {5} minutes. (Local notification)"),
-                                                        session.title,
-                                                        session.room.name]];
-
-        [notification setSoundName:UILocalNotificationDefaultSoundName];
-        [notification setUserInfo:@{@"sessionhref" : session.href}];
-
+        notification.fireDate = sessionStart;
+        notification.alertBody = alertMessage;
+        notification.alertAction = NSLocalizedString(@"Open", @"Open session Local Notification action.");
+        notification.soundName = UILocalNotificationDefaultSoundName;
+        notification.userInfo = @{@"sessionhref" : session.href};
+    
         EMS_LOG(@"Adding notification %@ for session %@ to notifications", notification, session);
 
         [[UIApplication sharedApplication] scheduleLocalNotification:notification];

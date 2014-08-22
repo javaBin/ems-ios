@@ -4,6 +4,7 @@
 
 #import "EMSAppDelegate.h"
 #import "EMSMainViewController.h"
+#import "EMSLocalNotificationManager.h"
 #import "EMSTracking.h"
 
 @implementation EMSAppDelegate
@@ -58,14 +59,14 @@ int networkCount = 0;
     [self cleanup];
 
 
-    if ([EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
-        [EMSTracking trackEventWithCategory:@"system" action:@"notification" label:@"initialize"];
-
-        UILocalNotification *notification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];
-
-        [self activateWithNotification:notification];
+    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
+        tracker = [[GAI sharedInstance] trackerWithTrackingId:prefs[@"google-analytics-tracking-id"]];
+        [GAI sharedInstance].trackUncaughtExceptions = NO; //GAI runs the main runloop after a crash occured. This might lead to asyncronous events being executed which in turn can lead to serious bugs. The main reason for disabling was that it leaded to deadlock in core data.
     }
 
+    [[EMSLocalNotificationManager sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+
+    
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
         [EMSTracking trackEventWithCategory:@"system" action:@"remotenotification" label:@"initialize"];
 
@@ -134,11 +135,9 @@ int networkCount = 0;
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    if ([EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
-        [EMSTracking trackEventWithCategory:@"system" action:@"notification" label:@"receive"];
-
-        [self activateWithNotification:notification];
-    }
+    
+    [[EMSLocalNotificationManager sharedInstance] application:application didReceiveLocalNotification:notification];;
+    
 }
 
 - (void)remove:(NSString *)path {
@@ -161,42 +160,6 @@ int networkCount = 0;
     [self remove:[[[self applicationCacheDirectory] URLByAppendingPathComponent:@"EMS-Config.plist"] path]];
 }
 
-- (void)activateWithNotification:(UILocalNotification *)notification {
-    if (![EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
-        return;
-    }
-
-    if (notification != nil) {
-        NSDictionary *userInfo = [notification userInfo];
-
-        EMS_LOG(@"Starting with a notification with userInfo %@", userInfo);
-
-        if (userInfo != nil && [[userInfo allKeys] containsObject:@"sessionhref"]) {
-            NSString *url = [userInfo valueForKey:@"sessionhref"];
-
-            Conference *conference = [self.model conferenceForSessionHref:url];
-
-            [EMSAppDelegate storeCurrentConference:[NSURL URLWithString:conference.href]];
-
-            UIViewController *rootViewController = [[self window] rootViewController];
-
-            if ([rootViewController isKindOfClass:[UINavigationController class]]) {
-                UINavigationController *navController = (UINavigationController *) rootViewController;
-
-                [navController popToRootViewControllerAnimated:YES];
-
-                UIViewController *controller = [navController visibleViewController];
-
-                if ([controller isKindOfClass:[EMSMainViewController class]]) {
-
-                    EMSMainViewController *emsView = (EMSMainViewController *) controller;
-
-                    [emsView pushDetailViewForHref:url];
-                }
-            }
-        }
-    }
-}
 
 - (EMSModel *)model {
     if (__model != nil) {
