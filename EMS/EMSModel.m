@@ -1025,28 +1025,6 @@
                                       [dateFormatterTime stringFromDate:slot.end]];
 }
 
-- (NSSet *)slotsForSessionsWithPredicate:(NSPredicate *)predicate forConference:(Conference *)conference {
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"start" ascending:YES];
-
-    NSArray *slots = [self slotsForPredicate:predicate andSort:@[sort]];
-
-    NSMutableSet *results = [[NSMutableSet alloc] init];
-
-    if (slots != nil && [slots count] > 0) {
-        NSString *slotName = [self getSlotNameForSlot:slots[0]];
-
-        NSArray *sessions = [self sessionsForPredicate:[NSPredicate predicateWithFormat:@"slotName = %@ AND conference == %@ AND state == %@", slotName, conference, @"approved"] andSort:nil];
-
-        [sessions enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            Session *session = (Session *) obj;
-
-            [results addObject:session.slot];
-        }];
-    }
-
-    return [NSSet setWithSet:results];
-}
-
 - (BOOL)conferencesWithDataAvailable {
     NSArray *conferences = [self conferencesForPredicate:[NSPredicate predicateWithFormat:@"sessions.@count > 0"] andSort:nil];
 
