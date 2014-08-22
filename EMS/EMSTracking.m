@@ -1,12 +1,10 @@
 //
-// Created by Chris Searle on 22/08/14.
-// Copyright (c) 2014 Chris Searle. All rights reserved.
+// EMSTracking.m
 //
 
 #import "EMSTracking.h"
 
 #import "GAI.h"
-#import "GAITracker.h"
 #import "GAIDictionaryBuilder.h"
 #import "GAIFields.h"
 

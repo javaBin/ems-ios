@@ -1,10 +1,8 @@
 //
-// Created by Chris Searle on 22/08/14.
-// Copyright (c) 2014 Chris Searle. All rights reserved.
+// EMSTracking.h
 //
 
 #import <Foundation/Foundation.h>
-
 
 @interface EMSTracking : NSObject
 
