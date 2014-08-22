@@ -11,6 +11,7 @@
 #import "CJCollection.h"
 #import "CJItem.h"
 #import "CJLink.h"
+#import "EMSTracking.h"
 
 
 @interface EMSSession (JsonParser)
@@ -129,16 +130,8 @@ NSDate *timer;
 
     [[EMSAppDelegate sharedAppDelegate] stopNetwork];
 
-    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-        NSNumber *interval = @([[NSDate date] timeIntervalSinceDate:timer]);
-        [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"retrieval"
-                                                             interval:interval
-                                                                 name:@"sessions"
-                                                                label:nil] build]];
-
-        [[GAI sharedInstance] dispatch];
-    }
+    [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"sessions"];
+    [EMSTracking dispatch];
 
     [self.delegate finishedSessions:collection forHref:href];
 }

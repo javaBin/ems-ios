@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		15204C1F18DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */; };
 		15204C2018DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */; };
+		4E1AD00E5B0570877570A148 /* EMSTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */; };
+		4E1AD35397D90DE204F516F2 /* EMSTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */; };
 		4E1AD52D6C458D6D36CECFBA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4E1AD0EE5411335585333A2F /* README.md */; };
 		4E1AD738AAB8C89E2FF89CB1 /* ChangeLog in Resources */ = {isa = PBXBuildFile; fileRef = 4E1ADFF5906ECB18F85E943C /* ChangeLog */; };
 		4E1AD77617AC893954D9A3D7 /* EMS-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4E1ADCA4A8B28565D66D9816 /* EMS-Config.plist */; };
@@ -138,6 +140,8 @@
 		4E1AD00D04FA079A848CDAE5 /* JavaZone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "JavaZone-Info.plist"; sourceTree = "<group>"; };
 		4E1AD0E07B70D148B519768B /* flatMap-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "flatMap-Info.plist"; sourceTree = "<group>"; };
 		4E1AD0EE5411335585333A2F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; path = README.md; sourceTree = "<group>"; };
+		4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSTracking.m; sourceTree = "<group>"; };
+		4E1AD6B14458A2997A59456D /* EMSTracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSTracking.h; sourceTree = "<group>"; };
 		4E1ADCA4A8B28565D66D9816 /* EMS-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = "EMS-Config.plist"; sourceTree = "<group>"; };
 		4E1ADFF5906ECB18F85E943C /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
 		830C7D78176F8B4900D38B46 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -433,6 +437,8 @@
 				83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */,
 				F37953C917797E41000B7CDD /* EMSAdvancedSearch.h */,
 				F37953CA17797E41000B7CDD /* EMSAdvancedSearch.m */,
+				4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */,
+				4E1AD6B14458A2997A59456D /* EMSTracking.h */,
 			);
 			name = App;
 			path = EMS;
@@ -732,6 +738,7 @@
 				83F455A1177D5B5C00BC79A1 /* EMSAboutViewController.m in Sources */,
 				F3CEA3CF17B224170092776F /* AddVideoLinkMapping.xcmappingmodel in Sources */,
 				F399B73917CF42CC004DE2EC /* EMSConferenceDetailViewController.m in Sources */,
+				4E1AD35397D90DE204F516F2 /* EMSTracking.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -779,6 +786,7 @@
 				F394C99217F0173900FAFBD4 /* EMSAboutViewController.m in Sources */,
 				F394C99317F0173900FAFBD4 /* AddVideoLinkMapping.xcmappingmodel in Sources */,
 				F394C99417F0173900FAFBD4 /* EMSConferenceDetailViewController.m in Sources */,
+				4E1AD00E5B0570877570A148 /* EMSTracking.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

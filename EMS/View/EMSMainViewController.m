@@ -16,6 +16,7 @@
 #import "ConferenceType.h"
 #import "Speaker.h"
 #import "Room.h"
+#import "EMSTracking.h"
 
 
 @interface EMSMainViewController () <UISplitViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate>
@@ -34,7 +35,7 @@
 @property(nonatomic, strong) IBOutlet UIView *footer;
 @property(nonatomic, strong) IBOutlet UILabel *footerLabel;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsButton;
+@property(weak, nonatomic) IBOutlet UIBarButtonItem *settingsButton;
 
 - (IBAction)toggleFavourite:(id)sender;
 
@@ -297,7 +298,7 @@
     [super viewDidLoad];
 
     self.title = NSLocalizedString(@"Sessions", @"Session list title");
-    
+
     self.settingsButton.accessibilityLabel = NSLocalizedString(@"Settings", @"Accessibility label for settings button");
 
     self.filterFavourites = NO;
@@ -330,11 +331,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
     [super viewDidAppear:animated];
 
-    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-        [tracker set:kGAIScreenName value:@"Main Screen"];
-        [tracker send:[[GAIDictionaryBuilder createAppView] build]];
-    }
+    [EMSTracking trackScreen:@"Main Screen"];
 
     Conference *conference = [self activeConference];
 
@@ -430,12 +427,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     [self.search setShowsCancelButton:NO animated:YES];
     [self.search resignFirstResponder];
 
-    id <GAITracker> tracker = nil;
-
-    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-        tracker = [[GAI sharedInstance] defaultTracker];
-    }
-
     if ([[segue identifier] isEqualToString:@"showDetailsView"]) {
         UIViewController *tmpDestination = [segue destinationViewController];
         if ([tmpDestination isKindOfClass:[UINavigationController class]]) {
@@ -457,12 +448,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
                 [Crashlytics setObjectValue:session.href forKey:@"lastDetailSessionFromNotification"];
             }
 
-            if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-                [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
-                                                                      action:@"detailFromNotification"
-                                                                       label:session.href
-                                                                       value:nil] build]];
-            }
+            [EMSTracking trackEventWithCategory:@"listView" action:@"detailFromNotification" label:session.href];
         } else {
             Session *session = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
 
@@ -474,12 +460,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
                 [Crashlytics setObjectValue:session.href forKey:@"lastDetailSession"];
             }
 
-            if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-                [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
-                                                                      action:@"detail"
-                                                                       label:session.href
-                                                                       value:nil] build]];
-            }
+            [EMSTracking trackEventWithCategory:@"listView" action:@"detail" label:session.href];
         }
 
         destination.indexPath = [[self tableView] indexPathForSelectedRow];
@@ -547,12 +528,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
         destination.delegate = self;
 
-        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
-                                                                  action:@"search"
-                                                                   label:nil
-                                                                   value:nil] build]];
-        }
+        [EMSTracking trackEventWithCategory:@"listView" action:@"search" label:nil];
     }
 }
 
@@ -698,13 +674,12 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     }];
 
     sessionCell.speaker.text = [speakerNames componentsJoinedByString:@", "];
-    
-    
-    
+
+
     sessionCell.title.accessibilityLanguage = session.language;
-    
+
     sessionCell.accessibilityLabel = [NSString stringWithFormat:NSLocalizedString(@"%@, Location: %@, Speakers: %@", @"{Session title}, Location: {Session Location}, Speakers: {Session speakers}"),
-                                      sessionCell.title.text, sessionCell.room.text, sessionCell.speaker.text];
+                                                                sessionCell.title.text, sessionCell.room.text, sessionCell.speaker.text];
     sessionCell.accessibilityLanguage = session.language;
 
     sessionCell.session = session;
@@ -891,31 +866,15 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
     UISegmentedControl *segment = (UISegmentedControl *) sender;
 
-    id <GAITracker> tracker = nil;
-
-    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-        tracker = [[GAI sharedInstance] defaultTracker];
-    }
-
     switch ([segment selectedSegmentIndex]) {
         case 0: {
             // All
-            if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-                [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
-                                                                      action:@"all"
-                                                                       label:nil
-                                                                       value:nil] build]];
-            }
+            [EMSTracking trackEventWithCategory:@"listView" action:@"all" label:nil];
             break;
         }
         case 1: {
             // My
-            if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-                [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
-                                                                      action:@"favourites"
-                                                                       label:nil
-                                                                       value:nil] build]];
-            }
+            [EMSTracking trackEventWithCategory:@"listView" action:@"favourites" label:nil];
             self.filterFavourites = YES;
             break;
         }

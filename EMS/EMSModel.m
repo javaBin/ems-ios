@@ -18,6 +18,7 @@
 #import "Keyword.h"
 #import "Room.h"
 #import "Speaker.h"
+#import "EMSTracking.h"
 
 @implementation EMSModel
 
@@ -1063,23 +1064,12 @@
 
     BOOL isFavourite = [session.favourite boolValue];
 
-    id <GAITracker> tracker = nil;
-
-    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-        tracker = [[GAI sharedInstance] defaultTracker];
-    }
-
     if (isFavourite) {
         session.favourite = @NO;
 
         [self removeNotification:session];
 
-        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"favourite"
-                                                                  action:@"remove"
-                                                                   label:session.href
-                                                                   value:nil] build]];
-        }
+        [EMSTracking trackEventWithCategory:@"favourite" action:@"remove" label:session.href];
 
         if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
             PFInstallation *currentInstallation = [PFInstallation currentInstallation];
@@ -1091,13 +1081,7 @@
             }
             [currentInstallation saveEventually:^(BOOL succeeded, NSError *error) {
                 if (!succeeded) {
-                    NSString *log = [NSString stringWithFormat:@"Unable to save adding of channel due to Code: %ld, Domain: %@, Info: %@", (long)error.code, [error domain], [error userInfo]];
-
-                    EMS_LOG(@"%@", log);
-
-                    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-                        [tracker send:[[GAIDictionaryBuilder createExceptionWithDescription:log withFatal:@NO] build]];
-                    }
+                    [EMSTracking trackException:[NSString stringWithFormat:@"Unable to save adding of channel due to Code: %ld, Domain: %@, Info: %@", (long) error.code, [error domain], [error userInfo]]];
                 }
             }];
         }
@@ -1106,12 +1090,7 @@
 
         [self addNotification:session];
 
-        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"favourite"
-                                                                  action:@"add"
-                                                                   label:session.href
-                                                                   value:nil] build]];
-        }
+        [EMSTracking trackEventWithCategory:@"favourite" action:@"add" label:session.href];
 
         if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
             PFInstallation *currentInstallation = [PFInstallation currentInstallation];
@@ -1121,13 +1100,7 @@
             EMS_LOG(@"Updated channels %@", [currentInstallation channels]);
             [currentInstallation saveEventually:^(BOOL succeeded, NSError *error) {
                 if (!succeeded) {
-                    NSString *log = [NSString stringWithFormat:@"Unable to save removing of channel due to Code: %ld, Domain: %@, Info: %@", (long)error.code, [error domain], [error userInfo]];
-
-                    EMS_LOG(@"%@", log);
-
-                    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-                        [tracker send:[[GAIDictionaryBuilder createExceptionWithDescription:log withFatal:@NO] build]];
-                    }
+                    [EMSTracking trackException:[NSString stringWithFormat:@"Unable to save removing of channel due to Code: %ld, Domain: %@, Info: %@", (long) error.code, [error domain], [error userInfo]]];
                 }
             }];
         }
@@ -1288,26 +1261,11 @@
 }
 
 - (void)analyticsWarningForType:(NSString *)type andHref:(NSString *)href withCount:(NSNumber *)count {
-
-    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-
-        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"warning"
-                                                              action:type
-                                                               label:href
-                                                               value:count] build]];
-    }
+    [EMSTracking trackEventWithCategory:@"warning" action:type label:href value:count];
 }
 
 - (void)clearConference:(Conference *)conference {
-    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-
-        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"clearing"
-                                                              action:@"deleting"
-                                                               label:conference.href
-                                                               value:nil] build]];
-    }
+    [EMSTracking trackEventWithCategory:@"clearing" action:@"deleting" label:conference.href];
 
     [conference.sessions enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         NSManagedObject *dbObj = (NSManagedObject *) obj;

@@ -22,6 +22,7 @@
 #import "EMSTopAlignCellTableViewCell.h"
 
 #import "EMSDefaultTableViewCell.h"
+#import "EMSTracking.h"
 
 
 @interface EMSDetailViewController () <UIPopoverControllerDelegate, EMSRetrieverDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -254,11 +255,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
-    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-        [tracker set:kGAIScreenName value:@"Detail Screen"];
-        [tracker send:[[GAIDictionaryBuilder createAppView] build]];
-    }
+    [EMSTracking trackScreen:@"Detail Screen"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -499,13 +496,7 @@
 
         self.shareButton.enabled = YES;
         if (completed) {
-            if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-                id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-
-                [tracker send:[[GAIDictionaryBuilder createSocialWithNetwork:activityType
-                                                                      action:@"Share"
-                                                                      target:self.session.href] build]];
-            }
+            [EMSTracking trackSocialWithNetwork:activityType action:@"Share" target:self.session.href];
         }
     }];
 
@@ -597,14 +588,7 @@
     EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
 
     if (row.link) {
-        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-            id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"web"
-                                                                  action:@"open link"
-                                                                   label:[row.link absoluteString]
-                                                                   value:nil] build]];
-        }
+        [EMSTracking trackEventWithCategory:@"web" action:@"open link" label:[row.link absoluteString]];
 
         [[UIApplication sharedApplication] openURL:row.link];
     }
@@ -772,9 +756,7 @@
 
             [[EMSAppDelegate sharedAppDelegate] stopNetwork];
 
-            if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-                [[GAI sharedInstance] dispatch];
-            }
+            [EMSTracking dispatch];
 
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (needToSave) {

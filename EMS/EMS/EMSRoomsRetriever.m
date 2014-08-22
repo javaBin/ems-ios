@@ -9,6 +9,7 @@
 
 #import "CJCollection.h"
 #import "CJItem.h"
+#import "EMSTracking.h"
 
 @implementation EMSRoomsRetriever
 
@@ -56,16 +57,8 @@ NSDate *timer;
 
     [[EMSAppDelegate sharedAppDelegate] stopNetwork];
 
-    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-        NSNumber *interval = @([[NSDate date] timeIntervalSinceDate:timer]);
-        [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"retrieval"
-                                                             interval:interval
-                                                                 name:@"rooms"
-                                                                label:nil] build]];
-
-        [[GAI sharedInstance] dispatch];
-    }
+    [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"rooms"];
+    [EMSTracking dispatch];
 
     [self.delegate finishedRooms:collection forHref:href];
 }

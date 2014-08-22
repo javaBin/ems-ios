@@ -11,6 +11,7 @@
 #import "CJItem.h"
 
 #import "EMSDateConverter.h"
+#import "EMSTracking.h"
 
 @implementation EMSSlotsRetriever
 
@@ -61,16 +62,8 @@ NSDate *timer;
 
     [[EMSAppDelegate sharedAppDelegate] stopNetwork];
 
-    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-        NSNumber *interval = @([[NSDate date] timeIntervalSinceDate:timer]);
-        [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"retrieval"
-                                                             interval:interval
-                                                                 name:@"slots"
-                                                                label:nil] build]];
-
-        [[GAI sharedInstance] dispatch];
-    }
+    [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"slots"];
+    [EMSTracking dispatch];
 
     [self.delegate finishedSlots:collection forHref:href];
 }

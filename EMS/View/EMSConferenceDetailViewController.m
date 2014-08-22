@@ -5,6 +5,7 @@
 #import "EMSConferenceDetailViewController.h"
 
 #import "EMSAppDelegate.h"
+#import "EMSTracking.h"
 
 @interface EMSConferenceDetailViewController ()
 
@@ -32,11 +33,9 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-        [tracker set:kGAIScreenName value:@"Conference Detail Screen"];
-        [tracker send:[[GAIDictionaryBuilder createAppView] build]];
-    }
+    [super viewDidAppear:animated];
+
+    [EMSTracking trackScreen:@"Conference Detail Screen"];
 }
 
 #pragma mark - Table view data source

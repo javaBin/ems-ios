@@ -4,6 +4,7 @@
 
 #import "EMSAppDelegate.h"
 #import "EMSMainViewController.h"
+#import "EMSTracking.h"
 
 @implementation EMSAppDelegate
 
@@ -37,13 +38,7 @@ int networkCount = 0;
         [Crashlytics startWithAPIKey:prefs[@"crashlytics-api-key"] delegate:self];
     }
 
-
-    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-        [GAI sharedInstance].trackUncaughtExceptions = YES;
-#ifdef DEBUG
-        [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
-#endif
-    }
+    [EMSTracking initializeTrackerWithKey:prefs[@"google-analytics-tracking-id"]];
 
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
 #ifdef DEBUG
@@ -62,20 +57,9 @@ int networkCount = 0;
 
     [self cleanup];
 
-    id <GAITracker> tracker = nil;
-
-    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-        tracker = [[GAI sharedInstance] trackerWithTrackingId:prefs[@"google-analytics-tracking-id"]];
-        [GAI sharedInstance].trackUncaughtExceptions = NO; //GAI runs the main runloop after a crash occured. This might lead to asyncronous events being executed which in turn can lead to serious bugs. The main reason for disabling was that it leaded to deadlock in core data.
-    }
 
     if ([EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
-        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
-                                                                  action:@"notification"
-                                                                   label:@"initialize"
-                                                                   value:nil] build]];
-        }
+        [EMSTracking trackEventWithCategory:@"system" action:@"notification" label:@"initialize"];
 
         UILocalNotification *notification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];
 
@@ -83,24 +67,14 @@ int networkCount = 0;
     }
 
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
-        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
-                                                                  action:@"remotenotification"
-                                                                   label:@"initialize"
-                                                                   value:nil] build]];
-        }
+        [EMSTracking trackEventWithCategory:@"system" action:@"remotenotification" label:@"initialize"];
 
         [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert];
 
         if (launchOptions != nil) {
             NSDictionary *dictionary = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
             if (dictionary != nil) {
-                if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-                    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
-                                                                          action:@"remotenotification"
-                                                                           label:@"init-receive"
-                                                                           value:nil] build]];
-                }
+                [EMSTracking trackEventWithCategory:@"system" action:@"remotenotification" label:@"init-receive"];
 
                 EMS_LOG(@"Launched from push notification: %@", dictionary);
                 [self handleIncomingRemoteNotification:dictionary];
@@ -122,16 +96,8 @@ int networkCount = 0;
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
-        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-            id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
-                                                                  action:@"remotenotification"
-                                                                   label:@"receive"
-                                                                   value:nil] build]];
-
-            [[GAI sharedInstance] dispatch];
-        }
+        [EMSTracking trackEventWithCategory:@"system" action:@"remotenotification" label:@"receive"];
+        [EMSTracking dispatch];
 
         [self handleIncomingRemoteNotification:userInfo];
     }
@@ -139,18 +105,8 @@ int networkCount = 0;
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
-        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-            id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-
-
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
-                                                                  action:@"remotenotification"
-                                                                   label:@"register"
-                                                                   value:nil] build]];
-
-            [[GAI sharedInstance] dispatch];
-        }
-
+        [EMSTracking trackEventWithCategory:@"system" action:@"remotenotification" label:@"register"];
+        [EMSTracking dispatch];
 
         EMS_LOG(@"My token is: %@", deviceToken);
 
@@ -160,17 +116,8 @@ int networkCount = 0;
 
         [currentInstallation saveEventually:^(BOOL succeeded, NSError *error) {
             if (!succeeded) {
-                NSString *log = [NSString stringWithFormat:@"Unable to save Conference channel due to Code: %ld, Domain: %@, Info: %@", (long)error.code, [error domain], [error userInfo]];
-
-                EMS_LOG(@"%@", log);
-
-                if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-                    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-                        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-                        
-                        [tracker send:[[GAIDictionaryBuilder createExceptionWithDescription:log withFatal:@NO] build]];
-                    }
-                }
+                [EMSTracking trackException:[NSString stringWithFormat:@"Unable to save Conference channel due to Code: %ld, Domain: %@, Info: %@",
+                                                                       (long) error.code, [error domain], [error userInfo]]];
             }
         }];
     }
@@ -188,16 +135,7 @@ int networkCount = 0;
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     if ([EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
-        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-            id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
-                                                                  action:@"notification"
-                                                                   label:@"receive"
-                                                                   value:nil] build]];
-
-            [[GAI sharedInstance] dispatch];
-        }
+        [EMSTracking trackEventWithCategory:@"system" action:@"notification" label:@"receive"];
 
         [self activateWithNotification:notification];
     }

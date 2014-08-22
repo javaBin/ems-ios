@@ -10,6 +10,7 @@
 #import "EMSConferenceDetailViewController.h"
 
 #import "EMSAdvancedSearch.h"
+#import "EMSTracking.h"
 
 @implementation EMSSettingsViewController
 
@@ -65,11 +66,7 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
-    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-        [tracker set:kGAIScreenName value:@"Settings Screen"];
-        [tracker send:[[GAIDictionaryBuilder createAppView] build]];
-    }
+    [EMSTracking trackScreen:@"Settings Screen"];
 
     [self updateRefreshControl];
     
@@ -254,15 +251,7 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
 
     [self.tableView reloadData];
 
-
-    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-
-        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"settingsView"
-                                                              action:@"selectConference"
-                                                               label:@"conference.href"
-                                                               value:nil] build]];
-    }
+    [EMSTracking trackEventWithCategory:@"settingsView" action:@"selectConference" label:conference.href];
 }
 
 

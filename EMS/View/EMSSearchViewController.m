@@ -3,6 +3,7 @@
 //
 
 #import "EMSSearchViewController.h"
+#import "EMSTracking.h"
 
 @interface EMSSearchViewController ()
 @property(nonatomic, copy) NSArray *sections;
@@ -78,11 +79,9 @@ static NSString *const  DictionaryImage = @"DictionaryImage";
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-        id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-        [tracker set:kGAIScreenName value:@"Search Screen"];
-        [tracker send:[[GAIDictionaryBuilder createAppView] build]];
-    }
+    [super viewDidAppear:animated];
+
+    [EMSTracking trackScreen:@"Search Screen"];
 }
 
 - (void)didReceiveMemoryWarning {
