@@ -1131,12 +1131,13 @@
         EMS_LOG(@"Adding notification %@ for session %@ to notifications", notification, session);
 
         [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-
-        NSMutableArray *storedNotifications = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"notificationDatabase"]];
-
-        [storedNotifications addObject:[NSKeyedArchiver archivedDataWithRootObject:notification]];
-
-        [[NSUserDefaults standardUserDefaults] setValue:storedNotifications forKey:@"notificationDatabase"];
+    }
+    
+    
+    NSArray *localNotifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    
+    for (UILocalNotification *notification in localNotifications) {
+        NSLog(@"localNotification: %@", notification.alertBody);
     }
 }
 
@@ -1145,32 +1146,16 @@
         return;
     }
 
-    EMS_LOG(@"Looking for session %@ with ID %@", session, session.href);
+    EMS_LOG(@"Trying to remove notification for session %@ with ID %@", session, session.href);
 
-    NSArray *notifications = [[NSUserDefaults standardUserDefaults] objectForKey:@"notificationDatabase"];;
-
-    NSMutableArray *remaining = [NSMutableArray arrayWithArray:notifications];
-
-    [notifications enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSData *data = (NSData *) obj;
-        UILocalNotification *notification = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-
-        NSDictionary *userInfo = [notification userInfo];
-
-        EMS_LOG(@"Saw a notification for %@", userInfo);
-
-        if (userInfo != nil && [[userInfo allKeys] containsObject:@"sessionhref"]) {
-            if ([userInfo[@"sessionhref"] isEqual:session.href]) {
-                EMS_LOG(@"Removing notification at %@ from notifications", notification);
-
-                [remaining removeObjectAtIndex:[notifications indexOfObject:obj]];
-
-                [[UIApplication sharedApplication] cancelLocalNotification:notification];
-            }
+    NSArray *notifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    
+    for (UILocalNotification *notification in notifications) {
+        if ([notification.userInfo[@"sessionhref"] isEqualToString:session.href]) {
+            EMS_LOG(@"Removing notification at %@ from notifications", notification);
+            [[UIApplication sharedApplication] cancelLocalNotification:notification];
         }
-    }];
-
-    [[NSUserDefaults standardUserDefaults] setValue:remaining forKey:@"notificationDatabase"];
+    }
 }
 
 - (NSDate *)dateForConference:(Conference *)conference andDate:(NSDate *)date {
