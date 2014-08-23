@@ -9,7 +9,7 @@
 		<key>speaker-thumbnails</key>
 		<true/>
 		<key>local-notifications</key>
-		<false/>
+		<true/>
 		<key>remote-notifications</key>
 		<true/>
 	</dict>

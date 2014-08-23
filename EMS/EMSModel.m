@@ -1044,9 +1044,7 @@
 
     if (isFavourite) {
         session.favourite = @NO;
-
-        [self removeNotification:session];
-
+        
         [EMSTracking trackEventWithCategory:@"favourite" action:@"remove" label:session.href];
 
         if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
@@ -1065,9 +1063,7 @@
         }
     } else {
         session.favourite = @YES;
-
-        [self addNotification:session];
-
+        
         [EMSTracking trackEventWithCategory:@"favourite" action:@"add" label:session.href];
 
         if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
@@ -1094,63 +1090,6 @@
     return session;
 }
 
-- (NSDate *)fiveMinutesBefore:(NSDate *)date {
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *offsetComponents = [[NSDateComponents alloc] init];
-    [offsetComponents setMinute:-5];
-    return [calendar dateByAddingComponents:offsetComponents toDate:date options:0];
-}
-
-- (void)addNotification:(Session *)session {
-    if (![EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
-        return;
-    }
-
-    UILocalNotification *notification = [[UILocalNotification alloc] init];
-
-    NSDate *sessionStart = [self fiveMinutesBefore:[self dateForSession:session]];
-
-    NSComparisonResult result = [[[NSDate alloc] init] compare:sessionStart];
-
-    if (result == NSOrderedAscending) {
-        NSDateFormatter *startTimeFormatter = [[NSDateFormatter alloc] init];
-        startTimeFormatter.dateStyle = NSDateFormatterNoStyle;
-        startTimeFormatter.timeStyle = NSDateFormatterShortStyle;
-        
-        NSString *formattedStartTime = [startTimeFormatter stringFromDate:session.slot.start];
-        NSString *alertMessage = [NSString stringWithFormat:NSLocalizedString(@"\"%@\" in %@ at %@.", @"{Session title} in {Room name} at {time}. (Local notification)"),
-                                  session.title,
-                                  session.room.name, formattedStartTime];
-
-        notification.fireDate = sessionStart;
-        notification.alertBody = alertMessage;
-        notification.alertAction = NSLocalizedString(@"Open", @"Open session Local Notification action.");
-        notification.soundName = UILocalNotificationDefaultSoundName;
-        notification.userInfo = @{@"sessionhref" : session.href};
-    
-        EMS_LOG(@"Adding notification %@ for session %@ to notifications", notification, session);
-
-        [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-    }
-   
-}
-
-- (void)removeNotification:(Session *)session {
-    if (![EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
-        return;
-    }
-
-    EMS_LOG(@"Trying to remove notification for session %@ with ID %@", session, session.href);
-
-    NSArray *notifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
-    
-    for (UILocalNotification *notification in notifications) {
-        if ([notification.userInfo[@"sessionhref"] isEqualToString:session.href]) {
-            EMS_LOG(@"Removing notification at %@ from notifications", notification);
-            [[UIApplication sharedApplication] cancelLocalNotification:notification];
-        }
-    }
-}
 
 - (NSDate *)dateForConference:(Conference *)conference andDate:(NSDate *)date {
 #ifdef USE_TEST_DATE
@@ -1181,31 +1120,6 @@
     return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04ld-%02ld-%02ld %02ld:%02ld:00 +0200", (long) [dateComp year], (long) [dateComp month], (long) [dateComp day], (long) [timeComp hour], (long) [timeComp minute]]];
 #else
     return date;
-#endif
-}
-
-- (NSDate *)dateForSession:(Session *)session {
-#ifdef USE_TEST_DATE
-    EMS_LOG(@"WARNING - RUNNING IN USE_TEST_DATE mode");
-
-    // In debug mode we will use the current day but always the start time of the slot. Otherwise we couldn't test until JZ started ;)
-
-    NSDate *sessionDate = session.slot.start;
-
-    EMS_LOG(@"Saw session date of %@", sessionDate);
-
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-
-    NSDateComponents *timeComp = [calendar components:NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:sessionDate];
-    NSDateComponents *dateComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:[[NSDate alloc] init]];
-
-    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
-    [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
-    [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-
-    return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04ld-%02ld-%02ld %02ld:%02ld:00 +0200", (long) [dateComp year], (long) [dateComp month], (long) [dateComp day], (long) [timeComp hour], (long) [timeComp minute]]];
-#else
-    return session.slot.start;
 #endif
 }
 
