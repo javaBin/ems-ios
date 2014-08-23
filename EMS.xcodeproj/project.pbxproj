@@ -62,8 +62,6 @@
 		F35BB6D017685885009077D3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6CE17685885009077D3 /* InfoPlist.strings */; };
 		F35BB6D217685885009077D3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6D117685885009077D3 /* main.m */; };
 		F35BB6D617685885009077D3 /* EMSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6D517685885009077D3 /* EMSAppDelegate.m */; };
-		F35BB6DF17685885009077D3 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6DD17685885009077D3 /* MainStoryboard_iPhone.storyboard */; };
-		F35BB6E217685885009077D3 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6E017685885009077D3 /* MainStoryboard_iPad.storyboard */; };
 		F37953CB17797E41000B7CDD /* EMSAdvancedSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = F37953CA17797E41000B7CDD /* EMSAdvancedSearch.m */; };
 		F3939E50176887090078C709 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3939E4F176887090078C709 /* CoreData.framework */; };
 		F3939E531768879C0078C709 /* EMSCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */; };
@@ -112,8 +110,6 @@
 		F394C99C17F0173900FAFBD4 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830C7D78176F8B4900D38B46 /* Crashlytics.framework */; };
 		F394C99E17F0173900FAFBD4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C5F2910AEBD4413B205CE89 /* libPods.a */; };
 		F394C9A017F0173900FAFBD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6CE17685885009077D3 /* InfoPlist.strings */; };
-		F394C9A117F0173900FAFBD4 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6DD17685885009077D3 /* MainStoryboard_iPhone.storyboard */; };
-		F394C9A217F0173900FAFBD4 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6E017685885009077D3 /* MainStoryboard_iPad.storyboard */; };
 		F394C9B517F0173900FAFBD4 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = F3D5E2C31770946100888A7E /* style.css */; };
 		F394C9C817F0173900FAFBD4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83BF8B6917ECDA4D0093242C /* Images.xcassets */; };
 		F394C9CE17F0173900FAFBD4 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = F354B0B81781AA1D007F7B01 /* iTunesArtwork.png */; };
@@ -581,8 +577,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F35BB6D017685885009077D3 /* InfoPlist.strings in Resources */,
-				F35BB6DF17685885009077D3 /* MainStoryboard_iPhone.storyboard in Resources */,
-				F35BB6E217685885009077D3 /* MainStoryboard_iPad.storyboard in Resources */,
 				F3D5E2C41770946100888A7E /* style.css in Resources */,
 				EAE4330B19A52F75002C3EBA /* about.html in Resources */,
 				83BF8B6A17ECDA4D0093242C /* Images.xcassets in Resources */,
@@ -601,8 +595,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F394C9A017F0173900FAFBD4 /* InfoPlist.strings in Resources */,
-				F394C9A117F0173900FAFBD4 /* MainStoryboard_iPhone.storyboard in Resources */,
-				F394C9A217F0173900FAFBD4 /* MainStoryboard_iPad.storyboard in Resources */,
 				F394C9B517F0173900FAFBD4 /* style.css in Resources */,
 				EAE4330F19A52FA5002C3EBA /* about.html in Resources */,
 				F394C9E717F01C0300FAFBD4 /* EMS-Config.plist in Resources */,
