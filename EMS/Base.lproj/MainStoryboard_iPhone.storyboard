@@ -253,7 +253,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="129"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gYM-vI-9Vp" customClass="EMSFavoriteButton">
+                                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gYM-vI-9Vp">
                                             <rect key="frame" x="0.0" y="35" width="60" height="60"/>
                                             <accessibility key="accessibilityConfiguration" hint="" label="Add to favorites">
                                                 <bool key="isElement" value="YES"/>
