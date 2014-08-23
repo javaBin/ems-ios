@@ -329,12 +329,28 @@
     
     Session *session = anObject;
     
-    if ([session.favourite boolValue]) {
-        [self addNotification:session];
-    } else {
-        [self removeNotification:session];
+    switch (type) {
+        case NSFetchedResultsChangeDelete:
+            [self removeNotification:session];
+            break;
+        case NSFetchedResultsChangeInsert:
+            [self addNotification:session];
+            break;
+        case NSFetchedResultsChangeMove:
+            //Change in slot. 
+            [self removeNotification:session];
+            [self addNotification:session];
+            break;
+        case NSFetchedResultsChangeUpdate:
+            //I´m not sure this matter, as an change to favorite status
+            //would result in either delete or insert and change to slot would
+            //result in a move.
+            [self removeNotification:session];
+            [self addNotification:session];
+            break;
+        default:
+            break;
     }
-    
 }
 
 @end
