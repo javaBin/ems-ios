@@ -10,6 +10,7 @@
 #import "EMSAppDelegate.h"
 #import "EMSMainViewController.h"
 #import "EMSDetailViewController.h"
+#import "EMSTracking.h"
 
 // This class is not Thread safe. Call all methods on main Thread.
 
@@ -49,12 +50,7 @@
 
 - (void)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     if ([EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
-        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-            [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
-                                                                  action:@"notification"
-                                                                   label:@"initialize"
-                                                                   value:nil] build]];
-        }
+        [EMSTracking trackEventWithCategory:@"system" action:@"notification" label:@"initialize"];
         
         UILocalNotification *notification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];
         if (notification) {
@@ -66,15 +62,8 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     if ([EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
-        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-            [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"system"
-                                                                  action:@"notification"
-                                                                   label:@"receive"
-                                                                   value:nil] build]];
-            
-            [[GAI sharedInstance] dispatch];
-        }
         
+        [EMSTracking trackEventWithCategory:@"system" action:@"notification" label:@"receive"];
         
         NSString *sessionUrl = [notification userInfo][@"sessionhref"];
         
@@ -135,15 +124,8 @@
             [Crashlytics setObjectValue:sessionUrl forKey:@"lastDetailSessionFromNotification"];
         }
         
-        if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-            
-            [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:@"listView"
-                                                                  action:@"detailFromNotification"
-                                                                   label:sessionUrl
-                                                                   value:nil] build]];
-        }
       
-        
+        [EMSTracking trackEventWithCategory:@"listView" action:@"detailFromNotification" label:sessionUrl];
         
         
         Session *session = [[[EMSAppDelegate sharedAppDelegate] model] sessionForHref:sessionUrl];

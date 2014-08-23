@@ -58,12 +58,7 @@ int networkCount = 0;
 
     [self cleanup];
 
-
-    if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
-        tracker = [[GAI sharedInstance] trackerWithTrackingId:prefs[@"google-analytics-tracking-id"]];
-        [GAI sharedInstance].trackUncaughtExceptions = NO; //GAI runs the main runloop after a crash occured. This might lead to asyncronous events being executed which in turn can lead to serious bugs. The main reason for disabling was that it leaded to deadlock in core data.
-    }
-
+    
     [[EMSLocalNotificationManager sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 
     
