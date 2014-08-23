@@ -1132,13 +1132,7 @@
 
         [[UIApplication sharedApplication] scheduleLocalNotification:notification];
     }
-    
-    
-    NSArray *localNotifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
-    
-    for (UILocalNotification *notification in localNotifications) {
-        NSLog(@"localNotification: %@", notification.alertBody);
-    }
+   
 }
 
 - (void)removeNotification:(Session *)session {
