@@ -426,17 +426,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="4bL-a5-jfp" userLabel="Titlebar">
-                            <rect key="frame" x="0.0" y="64" width="768" height="90"/>
+                            <rect key="frame" x="0.0" y="64" width="768" height="84"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="709" translatesAutoresizingMaskIntoConstraints="NO" id="Vgz-59-1fo">
-                                    <rect key="frame" x="15" y="25" width="709" height="50"/>
+                                    <rect key="frame" x="15" y="25" width="709" height="37"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J8L-ft-CBx">
-                                    <rect key="frame" x="724" y="28" width="44" height="44"/>
+                                    <rect key="frame" x="724" y="22" width="44" height="44"/>
                                     <accessibility key="accessibilityConfiguration" label="Add to favorites"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="44" id="R4X-73-4IG"/>
@@ -454,6 +454,13 @@
                                         <action selector="toggleFavourite:" destination="JSy-21-LO2" eventType="touchUpInside" id="fiU-5w-v5T"/>
                                     </connections>
                                 </button>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tuesday 09/10/2014 10:00 - 11:00, Room 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eJR-kL-28d">
+                                    <rect key="frame" x="15" y="70" width="224" height="14"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="Vgz-59-1fo" firstAttribute="leading" secondItem="4bL-a5-jfp" secondAttribute="leading" constant="15" id="5sd-vu-d2x"/>
@@ -462,13 +469,15 @@
                                 <constraint firstItem="Vgz-59-1fo" firstAttribute="top" secondItem="4bL-a5-jfp" secondAttribute="top" constant="25" id="Vl2-x9-7RM"/>
                                 <constraint firstItem="J8L-ft-CBx" firstAttribute="leading" secondItem="Vgz-59-1fo" secondAttribute="trailing" id="f0l-4K-CDP"/>
                                 <constraint firstAttribute="trailing" secondItem="J8L-ft-CBx" secondAttribute="trailing" id="in5-G8-0Th"/>
-                                <constraint firstAttribute="bottom" secondItem="Vgz-59-1fo" secondAttribute="bottom" constant="15" id="po5-TE-7Lu"/>
+                                <constraint firstItem="Vgz-59-1fo" firstAttribute="leading" secondItem="eJR-kL-28d" secondAttribute="leading" id="kWi-yI-enD"/>
+                                <constraint firstItem="eJR-kL-28d" firstAttribute="top" secondItem="Vgz-59-1fo" secondAttribute="bottom" constant="8" id="ryY-m7-nLV"/>
                                 <constraint firstItem="J8L-ft-CBx" firstAttribute="top" relation="greaterThanOrEqual" secondItem="4bL-a5-jfp" secondAttribute="top" id="vEA-Qr-5oO"/>
+                                <constraint firstAttribute="bottom" secondItem="eJR-kL-28d" secondAttribute="bottom" id="wAw-rc-OsR"/>
                             </constraints>
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailBodyCell" textLabel="iaP-vd-2S6" style="IBUITableViewCellStyleDefault" id="HyB-5z-CQt" customClass="EMSDefaultTableViewCell">
-                                <rect key="frame" x="0.0" y="176" width="768" height="44"/>
+                                <rect key="frame" x="0.0" y="170" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HyB-5z-CQt" id="18H-p8-OPq">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
@@ -485,7 +494,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailLinkCell" textLabel="3Fp-gm-flt" detailTextLabel="IeW-os-Ivn" style="IBUITableViewCellStyleValue1" id="Qme-GL-gXk" customClass="EMSDefaultTableViewCell">
-                                <rect key="frame" x="0.0" y="220" width="768" height="44"/>
+                                <rect key="frame" x="0.0" y="214" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qme-GL-gXk" id="LvY-V4-lvO">
                                     <rect key="frame" x="0.0" y="0.0" width="735" height="44"/>
@@ -509,7 +518,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SpeakerCell" rowHeight="124" id="l6n-2U-T5Q" customClass="EMSTopAlignCellTableViewCell">
-                                <rect key="frame" x="0.0" y="264" width="768" height="124"/>
+                                <rect key="frame" x="0.0" y="258" width="768" height="124"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l6n-2U-T5Q" id="roc-86-4g8">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="124"/>
@@ -569,6 +578,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="favoriteButton" destination="J8L-ft-CBx" id="OX7-HK-7rR"/>
+                        <outlet property="timeAndLocationLabel" destination="eJR-kL-28d" id="W21-jX-8LD"/>
                         <outlet property="titleBar" destination="4bL-a5-jfp" id="Wam-gX-d8b"/>
                         <outlet property="titleLabel" destination="Vgz-59-1fo" id="4tp-bc-KFx"/>
                     </connections>

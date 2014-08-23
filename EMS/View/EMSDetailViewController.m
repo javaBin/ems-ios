@@ -36,6 +36,7 @@
 @property(weak, nonatomic) IBOutlet UIView *titleBar;
 
 @property(nonatomic, strong) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeAndLocationLabel;
 
 @property(nonatomic, strong) IBOutlet UIButton *favoriteButton;
 
@@ -56,12 +57,15 @@
 - (void)setupWithSession:(Session *)session {
     if (session) {
 
-
-        self.title = [EMSDetailViewController createControllerTitle:session];
-
         self.titleLabel.text = session.title;
         self.titleLabel.accessibilityLanguage = session.language;
-
+        
+        
+        self.timeAndLocationLabel.text = [EMSDetailViewController createControllerTitle:session];
+        self.timeAndLocationLabel.accessibilityLabel = [EMSDetailViewController createControllerAccessibilityTitle:session];
+        
+        
+        
         [self initFavoriteButton:session];
 
         [self initSpeakerCache:session];
@@ -83,17 +87,23 @@
 }
 
 + (NSString *)createControllerTitle:(Session *)session {
-    NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
 
-    [dateFormatterTime setDateStyle:NSDateFormatterNoStyle];
-    [dateFormatterTime setTimeStyle:NSDateFormatterShortStyle];
+    
+    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+
+    [timeFormatter setDateStyle:NSDateFormatterNoStyle];
+    [timeFormatter setTimeStyle:NSDateFormatterShortStyle];
 
     NSMutableString *title = [[NSMutableString alloc] init];
 
     if (session.slot) {
-        [title appendString:[NSString stringWithFormat:@"%@ - %@",
-                                                       [dateFormatterTime stringFromDate:session.slot.start],
-                                                       [dateFormatterTime stringFromDate:session.slot.end]]];
+        [title appendString:[NSString stringWithFormat:@"%@ %@ - %@",
+                             [dateFormatter stringFromDate:session.slot.start],
+                             [timeFormatter stringFromDate:session.slot.start],
+                             [timeFormatter stringFromDate:session.slot.end]]];
     } else {
         if (session.slotName != nil) {
             [title appendString:session.slotName];
@@ -105,6 +115,37 @@
     }
     return [title copy];
 }
+
++ (NSString *)createControllerAccessibilityTitle:(Session *)session {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+    
+    
+    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+    
+    [timeFormatter setDateStyle:NSDateFormatterNoStyle];
+    [timeFormatter setTimeStyle:NSDateFormatterShortStyle];
+    
+    NSMutableString *title = [[NSMutableString alloc] init];
+    
+    if (session.slot) {
+        [title appendString:[NSString stringWithFormat:NSLocalizedString(@"%@ at %@ to %@", @"{Session date} at {Session start time} to {Session end time}"),
+                             [dateFormatter stringFromDate:session.slot.start],
+                             [timeFormatter stringFromDate:session.slot.start],
+                             [timeFormatter stringFromDate:session.slot.end]]];
+    } else {
+        if (session.slotName != nil) {
+            [title appendString:session.slotName];
+        }
+    }
+    
+    if (session.roomName != nil) {
+        [title appendString:[NSString stringWithFormat:NSLocalizedString(@" in %@", @" in {Room name}"), session.roomName]];
+    }
+    return [title copy];
+}
+
 
 - (void)initFavoriteButton:(Session *)session {
     NSString *imageBaseName = [session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star";
