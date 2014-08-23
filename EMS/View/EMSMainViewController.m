@@ -17,7 +17,7 @@
 #import "Speaker.h"
 #import "Room.h"
 #import "EMSTracking.h"
-
+#import "EMSLocalNotificationManager.h"
 
 @interface EMSMainViewController () <UISplitViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate>
 
@@ -315,6 +315,9 @@
     self.tableView.sectionIndexMinimumDisplayRowCount = 500;
 
     self.observersInstalled = NO;
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionRequested:) name:EMSUserRequestedSessionNotification object:[EMSLocalNotificationManager sharedInstance]];
 
 }
 
@@ -370,6 +373,10 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Key Value Observing
@@ -437,31 +444,19 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
         self.detailViewController = destination;
 
-        if ([sender isKindOfClass:[NSString class]]) {
-            Session *session = [[[EMSAppDelegate sharedAppDelegate] model] sessionForHref:(NSString *) sender];
-
-            EMS_LOG(@"Preparing detail view from passed href %@", session);
-
-            destination.session = session;
-
-            if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-                [Crashlytics setObjectValue:session.href forKey:@"lastDetailSessionFromNotification"];
-            }
-
-            [EMSTracking trackEventWithCategory:@"listView" action:@"detailFromNotification" label:session.href];
-        } else {
-            Session *session = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
-
-            EMS_LOG(@"Preparing detail view with %@", session);
-
-            destination.session = session;
-
-            if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-                [Crashlytics setObjectValue:session.href forKey:@"lastDetailSession"];
-            }
-
-            [EMSTracking trackEventWithCategory:@"listView" action:@"detail" label:session.href];
+        
+        Session *session = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
+        
+        EMS_LOG(@"Preparing detail view with %@", session);
+        
+        destination.session = session;
+        
+        if ([EMSFeatureConfig isCrashlyticsEnabled]) {
+            [Crashlytics setObjectValue:session.href forKey:@"lastDetailSession"];
         }
+        
+        [EMSTracking trackEventWithCategory:@"listView" action:@"detail" label:session.href];
+        
 
         destination.indexPath = [[self tableView] indexPathForSelectedRow];
     }
@@ -830,10 +825,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     [[EMSRetriever sharedInstance] refreshActiveConference];
 }
 
-- (void)pushDetailViewForHref:(NSString *)href {
-    [self performSegueWithIdentifier:@"showDetailsView" sender:href];
-}
-
 - (void)toggleFavourite:(id)sender {
     UIButton *button = (UIButton *) sender;
 
@@ -950,5 +941,65 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 - (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation {
     return NO;
 }
+
+#pragma mark - Responding to user opening sessions from notifications
+
+
+- (void) sessionRequested:(NSNotification *) notification {
+    NSDictionary *userInfo = [notification userInfo];
+    
+    EMS_LOG(@"Starting with a notification with userInfo %@", userInfo);
+    
+    NSString *sessionUrl = userInfo[EMSUserRequestedSessionNotificationSessionKey];
+    
+    if (sessionUrl) {
+        
+        if ([EMSFeatureConfig isCrashlyticsEnabled]) {
+            [Crashlytics setObjectValue:sessionUrl forKey:@"lastDetailSessionFromNotification"];
+        }
+        
+        
+        [EMSTracking trackEventWithCategory:@"listView" action:@"detailFromNotification" label:sessionUrl];
+        
+        
+        Session *session = [[[EMSAppDelegate sharedAppDelegate] model] sessionForHref:sessionUrl];
+        
+        if (session) {//If we don´t find session, assume database have been deleted together with favorite, so don´t show alert.
+            if (![session.conference.href isEqualToString:[[EMSAppDelegate currentConference] absoluteString]]) {
+                [EMSAppDelegate storeCurrentConference:[NSURL URLWithString:session.conference.href]];
+            }
+            
+            EMS_LOG(@"Preparing detail view from passed href %@", session);
+            
+            
+            EMSDetailViewController *detailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EMSDetailViewController"];
+            
+            detailViewController.session = session;
+            
+            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+            
+            detailViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissModalDetailView:)];
+            
+            if (self.splitViewController) {
+                navController.modalPresentationStyle = UIModalPresentationFormSheet;
+            }
+            
+            if (self.presentedViewController) {
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [self presentViewController:navController animated:YES completion:nil];
+                }];
+            } else {
+                [self presentViewController:navController animated:YES completion:nil];
+            }
+            
+        }
+        
+    }
+}
+
+- (void) dismissModalDetailView:(id) sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 @end

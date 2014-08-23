@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString *const EMSUserRequestedSessionNotification;
+extern NSString *const EMSUserRequestedSessionNotificationSessionKey;
+
 @interface EMSLocalNotificationManager : NSObject
 
 + (EMSLocalNotificationManager *) sharedInstance;

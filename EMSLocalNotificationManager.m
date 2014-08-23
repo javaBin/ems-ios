@@ -16,6 +16,10 @@
 
 // This class is not Thread safe. Call all methods on main Thread.
 
+NSString *const EMSUserRequestedSessionNotification = @"EMSUserRequestedSessionNotification";
+NSString *const EMSUserRequestedSessionNotificationSessionKey = @"EMSUserRequestedSessionNotificationSessionKey";
+
+
 @interface EMSLocalNotificationManager ()<UIAlertViewDelegate, NSFetchedResultsControllerDelegate>
 @property(nonatomic) NSFetchedResultsController *fetchedResultsController;
 @end
@@ -90,73 +94,17 @@
 
 #pragma mark - Present Session
 
-- (void)navigationController:(UINavigationController *)navController presentSessionUrl:(NSString *)sessionUrl {
-    [navController popToRootViewControllerAnimated:NO];
-
-    
-    UIViewController *controller = navController.viewControllers[0];
-    
-    
-    
-    if ([controller isKindOfClass:[EMSMainViewController class]]) {
-        
-        EMSMainViewController *emsView = (EMSMainViewController *) controller;
-        
-        [emsView pushDetailViewForHref:sessionUrl];
-    }
-}
-
 - (void)activateWithNotification:(UILocalNotification *)notification {
     
     if (![EMSFeatureConfig isFeatureEnabled:fLocalNotifications]) {
         return;
     }
     
-    NSAssert(notification, @"notification was nil");
     
-    NSDictionary *userInfo = [notification userInfo];
+    NSDictionary *userInfo = @{EMSUserRequestedSessionNotificationSessionKey: notification.userInfo[@"sessionhref"]};
+    [[NSNotificationCenter defaultCenter] postNotificationName:EMSUserRequestedSessionNotification object:self userInfo:userInfo];
     
-    EMS_LOG(@"Starting with a notification with userInfo %@", userInfo);
-    
-    NSString *sessionUrl = userInfo[@"sessionhref"];
-    
-    if (sessionUrl) {
-
-        if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-            [Crashlytics setObjectValue:sessionUrl forKey:@"lastDetailSessionFromNotification"];
-        }
-        
-      
-        [EMSTracking trackEventWithCategory:@"listView" action:@"detailFromNotification" label:sessionUrl];
-        
-        
-        Session *session = [[[EMSAppDelegate sharedAppDelegate] model] sessionForHref:sessionUrl];
-        
-        if (session) {//If we don´t find session, assume database have been deleted together with favorite, so don´t show alert.
-            if (![session.conference.href isEqualToString:[[EMSAppDelegate currentConference] absoluteString]]) {
-                [EMSAppDelegate storeCurrentConference:[NSURL URLWithString:session.conference.href]];
-            }
-            
-            EMS_LOG(@"Preparing detail view from passed href %@", session);
-            
-            UIViewController *rootViewController = [[[EMSAppDelegate sharedAppDelegate] window] rootViewController];
-            
-            if ([rootViewController isKindOfClass:[UINavigationController class]]) {
-                UINavigationController *navController = (UINavigationController *) rootViewController;
-    
-                if (navController.visibleViewController.presentingViewController) {
-                    [navController dismissViewControllerAnimated:YES completion:^{
-                        [self navigationController:navController presentSessionUrl:sessionUrl];
-                    }];
-                } else {
-                    [self navigationController:navController presentSessionUrl:sessionUrl];
-                }
-                
-            }
-        }
     }
-    
-}
 
 
 

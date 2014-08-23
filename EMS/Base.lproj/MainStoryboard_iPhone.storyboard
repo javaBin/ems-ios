@@ -213,7 +213,7 @@
         <!--Main View Controller-->
         <scene sceneID="C5v-Jb-6FW">
             <objects>
-                <tableViewController id="bNB-PM-Jcs" customClass="EMSMainViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="EMSMainViewController" id="bNB-PM-Jcs" customClass="EMSMainViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" sectionIndexMinimumDisplayRowCount="500" rowHeight="130" sectionHeaderHeight="22" sectionFooterHeight="22" id="gDK-VA-ggF">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -413,7 +413,7 @@
         <!--Detail View Controller-->
         <scene sceneID="ZdT-W9-7lI">
             <objects>
-                <tableViewController id="59y-vp-WBf" customClass="EMSDetailViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="EMSDetailViewController" id="59y-vp-WBf" customClass="EMSDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="B4J-Xx-3xL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

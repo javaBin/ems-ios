@@ -215,7 +215,7 @@
         <!--Main View Controller-->
         <scene sceneID="qKq-Nh-HI0">
             <objects>
-                <tableViewController id="Tnw-1T-TNg" customClass="EMSMainViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="EMSMainViewController" id="Tnw-1T-TNg" customClass="EMSMainViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" sectionIndexMinimumDisplayRowCount="500" rowHeight="66" sectionHeaderHeight="22" sectionFooterHeight="22" id="qnG-lf-1av">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -420,7 +420,7 @@
         <!--Detail View Controller-->
         <scene sceneID="aJF-Fr-zwQ">
             <objects>
-                <tableViewController id="JSy-21-LO2" customClass="EMSDetailViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="EMSDetailViewController" id="JSy-21-LO2" customClass="EMSDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="wl0-iX-2Ht">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
