@@ -430,13 +430,13 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="709" translatesAutoresizingMaskIntoConstraints="NO" id="Vgz-59-1fo">
-                                    <rect key="frame" x="15" y="25" width="709" height="37"/>
+                                    <rect key="frame" x="15" y="25" width="709" height="22"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J8L-ft-CBx">
-                                    <rect key="frame" x="724" y="22" width="44" height="44"/>
+                                    <rect key="frame" x="724" y="14" width="44" height="44"/>
                                     <accessibility key="accessibilityConfiguration" label="Add to favorites"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="44" id="R4X-73-4IG"/>
@@ -455,7 +455,7 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tuesday 09/10/2014 10:00 - 11:00, Room 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eJR-kL-28d">
-                                    <rect key="frame" x="15" y="70" width="224" height="14"/>
+                                    <rect key="frame" x="15" y="55" width="224" height="14"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -472,7 +472,7 @@
                                 <constraint firstItem="Vgz-59-1fo" firstAttribute="leading" secondItem="eJR-kL-28d" secondAttribute="leading" id="kWi-yI-enD"/>
                                 <constraint firstItem="eJR-kL-28d" firstAttribute="top" secondItem="Vgz-59-1fo" secondAttribute="bottom" constant="8" id="ryY-m7-nLV"/>
                                 <constraint firstItem="J8L-ft-CBx" firstAttribute="top" relation="greaterThanOrEqual" secondItem="4bL-a5-jfp" secondAttribute="top" id="vEA-Qr-5oO"/>
-                                <constraint firstAttribute="bottom" secondItem="eJR-kL-28d" secondAttribute="bottom" id="wAw-rc-OsR"/>
+                                <constraint firstAttribute="bottom" secondItem="eJR-kL-28d" secondAttribute="bottom" constant="15" id="wAw-rc-OsR"/>
                             </constraints>
                         </view>
                         <prototypes>

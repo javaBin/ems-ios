@@ -423,13 +423,13 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Continuous Delivery for Architects" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="261" translatesAutoresizingMaskIntoConstraints="NO" id="JPV-gd-4e9">
-                                    <rect key="frame" x="15" y="25" width="261" height="51"/>
+                                    <rect key="frame" x="15" y="25" width="261" height="36"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VVA-SA-ETl">
-                                    <rect key="frame" x="276" y="29" width="44" height="44"/>
+                                    <rect key="frame" x="276" y="21" width="44" height="44"/>
                                     <accessibility key="accessibilityConfiguration" label="Add to favorites"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="44" id="53f-V7-TsL"/>
@@ -448,7 +448,7 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tuesday 09/10/2014 10:00 - 11:00, Room 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWG-ng-tnr">
-                                    <rect key="frame" x="15" y="84" width="224" height="14"/>
+                                    <rect key="frame" x="15" y="69" width="224" height="14"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -456,7 +456,7 @@
                                 </label>
                             </subviews>
                             <constraints>
-                                <constraint firstAttribute="bottom" secondItem="TWG-ng-tnr" secondAttribute="bottom" id="HVj-vd-xBL"/>
+                                <constraint firstAttribute="bottom" secondItem="TWG-ng-tnr" secondAttribute="bottom" constant="15" id="HVj-vd-xBL"/>
                                 <constraint firstAttribute="trailing" secondItem="VVA-SA-ETl" secondAttribute="trailing" id="Lck-aH-9gb"/>
                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="VVA-SA-ETl" secondAttribute="bottom" id="SLu-su-ubi"/>
                                 <constraint firstItem="JPV-gd-4e9" firstAttribute="centerY" secondItem="VVA-SA-ETl" secondAttribute="centerY" id="UZK-Hc-gKd"/>
