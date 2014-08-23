@@ -386,7 +386,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
         [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions)) options:0 context:kRefreshActiveConferenceContext];
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTableViewRowHeightReload) name:UIContentSizeCategoryDidChangeNotification object:nil];
-        [self updateTableViewRowHeightReload];
+        [self updateTableViewRowHeight];
 
         self.observersInstalled = YES;
     }
@@ -556,6 +556,8 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
 - (void)updateTableViewRowHeightReload {
     [self updateTableViewRowHeight];
+    
+    [self.tableView reloadData];
 
 }
 
@@ -581,7 +583,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
     self.tableView.rowHeight = height + 1;
 
-    [self.tableView reloadData];
+    
 }
 
 
