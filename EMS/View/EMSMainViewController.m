@@ -965,9 +965,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
         Session *session = [[[EMSAppDelegate sharedAppDelegate] model] sessionForHref:sessionUrl];
         
         if (session) {//If we don´t find session, assume database have been deleted together with favorite, so don´t show alert.
-            if (![session.conference.href isEqualToString:[[EMSAppDelegate currentConference] absoluteString]]) {
-                [EMSAppDelegate storeCurrentConference:[NSURL URLWithString:session.conference.href]];
-            }
+           
             
             EMS_LOG(@"Preparing detail view from passed href %@", session);
             
