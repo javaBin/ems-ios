@@ -208,7 +208,7 @@ NSString *const EMSUserRequestedSessionNotificationSessionKey = @"EMSUserRequest
 - (void)addNotification:(Session *)session {
     UILocalNotification *notification = [[UILocalNotification alloc] init];
     
-    NSDate *sessionStart = [NSDate dateWithTimeIntervalSinceNow:5];//[self fiveMinutesBefore:[self dateForSession:session]];
+    NSDate *sessionStart = [self fiveMinutesBefore:[self dateForSession:session]];
     
     NSComparisonResult result = [[[NSDate alloc] init] compare:sessionStart];
     
