@@ -44,7 +44,20 @@ NSString *const PrefsSearchField = @"searchFields";
     NSNumber *k = @(key);
 
     if ([self.fields.allKeys containsObject:k]) {
-        return [NSSet setWithSet:self.fields[k]];
+
+        NSSet *fieldsForKey = self.fields[k];
+
+        // This handles data saved with multiple values when we allowed it that now is no longer allowed - remove this
+        // when we have proper keying for many-to-many field sets like keyword
+        if (key == emsKeyword) {
+            if (fieldsForKey.count > 1) {
+                NSArray *items = [[fieldsForKey allObjects] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+
+                fieldsForKey = [NSSet setWithArray:@[items[0]]];
+            }
+        }
+
+        return [NSSet setWithSet:fieldsForKey];
     }
 
     return [NSSet set];
