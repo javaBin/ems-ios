@@ -185,7 +185,7 @@ NSString *const EMSUserRequestedSessionNotificationSessionKey = @"EMSUserRequest
     
     NSFetchedResultsController *theFetchedResultsController =
     [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                        managedObjectContext:managedObjectContext sectionNameKeyPath:@"sectionTitle"
+                                        managedObjectContext:managedObjectContext sectionNameKeyPath:nil
                                                    cacheName:nil];
     
     theFetchedResultsController.delegate = self;
