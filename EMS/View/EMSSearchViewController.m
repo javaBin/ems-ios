@@ -97,9 +97,9 @@ static NSString *const DictionaryImage = @"DictionaryImage";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex {
 
-    NSArray *predicate = self.sections[sectionIndex][DictionaryPredicateKey];
+    NSArray *predicate = self.sections[(NSUInteger) sectionIndex][DictionaryPredicateKey];
 
-    return [predicate count];
+    return [predicate count] + 1;
 
 }
 
@@ -109,36 +109,46 @@ static NSString *const DictionaryImage = @"DictionaryImage";
 
     NSDictionary *section = self.sections[(NSUInteger) indexPath.section];
 
-    NSArray *predicates = section[DictionaryPredicateKey];
-
-    NSString *value = predicates[(NSUInteger) indexPath.row];
-
-    if (section[DictionaryCapitalized]) {
-        value = [value capitalizedString];
-    }
-
-    if (section[DictionaryCleaned]) {
-        value = [value stringByReplacingOccurrencesOfString:@"-" withString:@" "];
-    }
-
-    cell.textLabel.text = value;
-
-
     EMSSearchField key = (EMSSearchField) [section[DictionaryIdKey] integerValue];
 
     NSSet *currentList = [self.advancedSearch fieldValuesForKey:key];
 
-    if ([currentList containsObject:predicates[(NSUInteger) indexPath.row]]) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    if (indexPath.row == 0) {
+        cell.textLabel.text = NSLocalizedString(@"All", @"All filter");
 
-    } else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
+        if ([currentList count] == 0) {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
 
-    if (section[DictionaryImage]) {
-        cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", predicates[(NSUInteger) indexPath.row]]];
-    } else {
         cell.imageView.image = nil;
+    } else {
+        NSArray *predicates = section[DictionaryPredicateKey];
+
+        NSString *value = predicates[(NSUInteger) indexPath.row - 1];
+
+        if (section[DictionaryCapitalized]) {
+            value = [value capitalizedString];
+        }
+
+        if (section[DictionaryCleaned]) {
+            value = [value stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+        }
+
+        cell.textLabel.text = value;
+
+        if ([currentList containsObject:predicates[(NSUInteger) indexPath.row - 1]]) {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+
+        if (section[DictionaryImage]) {
+            cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", predicates[(NSUInteger) indexPath.row - 1]]];
+        } else {
+            cell.imageView.image = nil;
+        }
     }
 
     /* We have to guess English here at the moment, since EMS doesn´t seem to support multiple languages for these values.*/
@@ -152,18 +162,23 @@ static NSString *const DictionaryImage = @"DictionaryImage";
 }
 
 - (void)selectRowForIndexPath:(NSIndexPath *)indexPath forList:(NSArray *)list andKey:(EMSSearchField)key {
-    NSString *value = list[(NSUInteger) indexPath.row];
-
     NSMutableSet *values = [NSMutableSet setWithSet:[self.advancedSearch fieldValuesForKey:key]];
 
-    if (![self.sections[(NSUInteger) indexPath.section][DictionaryMultiSelectKey] boolValue]) {
+    if (indexPath.row == 0) {
         [values removeAllObjects];
-    }
-
-    if ([[self.advancedSearch fieldValuesForKey:key] containsObject:value]) {
-        [values removeObject:value];
     } else {
-        [values addObject:value];
+        NSString *value = list[(NSUInteger) indexPath.row - 1];
+
+        if (![self.sections[(NSUInteger) indexPath.section][DictionaryMultiSelectKey] boolValue]) {
+            [values removeAllObjects];
+        }
+
+        if ([[self.advancedSearch fieldValuesForKey:key] containsObject:value]) {
+            [values removeObject:value];
+        } else {
+            [values addObject:value];
+        }
+
     }
 
     [self.advancedSearch setFieldValues:[NSSet setWithSet:values] forKey:key];
@@ -173,14 +188,13 @@ static NSString *const DictionaryImage = @"DictionaryImage";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *predicates = self.sections[(NSUInteger) indexPath.section][DictionaryPredicateKey];
+
     EMSSearchField searchField = (EMSSearchField) [self.sections[(NSUInteger) indexPath.section][DictionaryIdKey] integerValue];
 
     [self selectRowForIndexPath:indexPath forList:predicates andKey:searchField];
 
-
     [tableView reloadData];
 }
-
 
 - (void)apply:(id)sender {
     [self.delegate advancedSearchUpdated];
