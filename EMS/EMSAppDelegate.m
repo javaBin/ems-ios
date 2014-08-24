@@ -58,10 +58,10 @@ int networkCount = 0;
 
     [self cleanup];
 
-    
+
     [[EMSLocalNotificationManager sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 
-    
+
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
         [EMSTracking trackEventWithCategory:@"system" action:@"remotenotification" label:@"initialize"];
 
@@ -135,9 +135,9 @@ int networkCount = 0;
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    
+
     [[EMSLocalNotificationManager sharedInstance] application:application didReceiveLocalNotification:notification];;
-    
+
 }
 
 - (void)remove:(NSString *)path {
@@ -330,27 +330,35 @@ int networkCount = 0;
 }
 
 - (void)startNetwork {
-    networkCount++;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        networkCount++;
 
-    UIApplication *app = [UIApplication sharedApplication];
-    app.networkActivityIndicatorVisible = YES;
+        UIApplication *app = [UIApplication sharedApplication];
+        app.networkActivityIndicatorVisible = YES;
 
-    EMS_LOG(@"startNetwork finished with %d", networkCount);
+        EMS_LOG(@"startNetwork finished with %d", networkCount);
+    });
 }
 
 - (void)stopNetwork {
-    EMS_LOG(@"stopNetwork started with %d", networkCount);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        EMS_LOG(@"stopNetwork started with %d", networkCount);
 
-    networkCount--;
+        networkCount--;
 
-    if (networkCount < 0) {
-        networkCount = 0;
-    }
+        if (networkCount < 0) {
+            [EMSTracking trackEventWithCategory:@"system"
+                                         action:@"stopNetwork"
+                                          label:[NSString stringWithFormat:@"stopNetwork went negative to %d", networkCount]];
 
-    if (networkCount == 0) {
-        UIApplication *app = [UIApplication sharedApplication];
-        app.networkActivityIndicatorVisible = NO;
-    }
+            networkCount = 0;
+        }
+
+        if (networkCount == 0) {
+            UIApplication *app = [UIApplication sharedApplication];
+            app.networkActivityIndicatorVisible = NO;
+        }
+    });
 }
 
 + (void)storeCurrentConference:(NSURL *)href {
