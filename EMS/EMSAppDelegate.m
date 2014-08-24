@@ -405,6 +405,32 @@ int networkCount = 0;
 }
 
 - (BOOL)application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder {
+    NSString *archivedVersion = [coder decodeObjectForKey:UIApplicationStateRestorationBundleVersionKey];
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey];
+    
+    if (![archivedVersion isEqual:version]){ // Don´t restore across updates
+        EMS_LOG(@"Bundle version is: %@, archived version is %@. Skipping state restore.", version, archivedVersion);
+        return NO;
+    }
+
+    UIUserInterfaceIdiom archivedIdiom = [[coder decodeObjectForKey:UIApplicationStateRestorationUserInterfaceIdiomKey] integerValue];
+    
+    UIUserInterfaceIdiom idiom = UI_USER_INTERFACE_IDIOM();
+    
+    if (archivedIdiom != idiom) { // Don´t restore if idiom changed. E.g user restored from iPad to iPhone etc.
+         EMS_LOG(@"User interface idiom in bundle %ld, does not match current user interface idiom %ld. Skipping state restore.", archivedIdiom, idiom);
+        return NO;
+    }
+    
+    NSString *archivedSystemVersion = [coder decodeObjectForKey:UIApplicationStateRestorationSystemVersionKey];
+    
+    NSString *systemVersion = [UIDevice currentDevice].systemVersion;
+    
+    if(![archivedSystemVersion isEqual:systemVersion]) { // Don´t restore across system versions
+        EMS_LOG(@"System version in archive %@ does not match current system version %@. Skipping state restore.", archivedSystemVersion, systemVersion);
+        return NO;
+    }
+    
     return YES;
 }
 
