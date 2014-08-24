@@ -38,6 +38,8 @@
 
 @property(nonatomic, strong) EMSRetriever *speakerRetriever;
 
+@property(nonatomic) BOOL observersInstalled;
+
 - (IBAction)share:(id)sender;
 
 @end
@@ -54,7 +56,16 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
 - (void)setupWithSession:(Session *)session {
     if (session) {
+        
+        if (self.observersInstalled) {
+            [self.session removeObserver:self forKeyPath:@"favourite"];
+        }
+        
         self.session = session;
+        
+        if (self.observersInstalled) {
+            [self.session addObserver:self forKeyPath:@"favourite" options:0 context:nil];
+        }
 
         [self initSpeakerCache:session];
 
@@ -221,19 +232,26 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 }
 
 - (void)addObservers {
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTableViewRowHeightReload) name:UIContentSizeCategoryDidChangeNotification object:nil];
-    
-    [self.session addObserver:self forKeyPath:@"favourite" options:0 context:NULL];
-    
-    [self.tableView reloadData];
+    if (!self.observersInstalled) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTableViewRowHeightReload) name:UIContentSizeCategoryDidChangeNotification object:nil];
+        
+        [self.session addObserver:self forKeyPath:@"favourite" options:0 context:NULL];
+        
+        self.observersInstalled = YES;
+        
+        [self.tableView reloadData];
+    }
 }
 
 - (void)removeObservers {
-
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
-
-    [self.session removeObserver:self forKeyPath:@"favourite"];
+    if (self.observersInstalled) {
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
+        
+        [self.session removeObserver:self forKeyPath:@"favourite"];
+        
+        self.observersInstalled = NO;
+    }
 
 }
 
@@ -257,6 +275,8 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 
+    self.observersInstalled = NO;
+    
     [self setupWithSession:self.session];
 
 }
@@ -275,11 +295,11 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self removeObservers];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [self removeObservers];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -415,7 +435,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 #pragma mark - Actions
 
 - (IBAction)toggleFavourite:(id)sender {
-    self.session = [[[EMSAppDelegate sharedAppDelegate] model] toggleFavourite:self.session];
+    [[[EMSAppDelegate sharedAppDelegate] model] toggleFavourite:self.session];
 }
 
 - (void)share:(id)sender {
