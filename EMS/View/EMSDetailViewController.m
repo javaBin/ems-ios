@@ -238,8 +238,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         [self.session addObserver:self forKeyPath:@"favourite" options:0 context:NULL];
         
         self.observersInstalled = YES;
-        
-        [self.tableView reloadData];
+                
     }
 }
 
@@ -618,10 +617,9 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
             
             cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
             
-            [cell setNeedsLayout];
-            [cell layoutIfNeeded];
             
-            NSInteger height = (NSInteger) [cell intrinsicContentSize].height;
+            CGFloat height = (NSInteger) [cell intrinsicContentSize].height;
+            
             
             return height;
             

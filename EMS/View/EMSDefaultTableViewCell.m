@@ -6,16 +6,17 @@
 
 @implementation EMSDefaultTableViewCell
 
-- (void)layoutSubviews {
-    
-    self.textLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.bounds) - 20;
-    
-    [super layoutSubviews];
-}
-
 - (CGSize)intrinsicContentSize {
-    [self.textLabel sizeToFit];
-    return CGSizeMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.textLabel.frame) + 20);
+
+    CGFloat prefferedWidth = CGRectGetWidth(self.bounds) - 20;
+    
+    
+    UIFont *cellFont = self.textLabel.font;
+    CGSize constraintSize = CGSizeMake(prefferedWidth, MAXFLOAT);
+    CGSize labelSize = [self.textLabel.text sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:NSLineBreakByWordWrapping];
+    
+    
+    return CGSizeMake(CGRectGetWidth(self.frame), labelSize.height + 20);
 }
 
 @end
