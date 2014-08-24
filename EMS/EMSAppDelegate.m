@@ -125,6 +125,11 @@ int networkCount = 0;
     }
 }
 
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    [self syncManagedObjectContext];
+}
+
 - (void)applicationWillTerminate:(UIApplication *)application {
     [self syncManagedObjectContext];
 }
@@ -391,6 +396,16 @@ int networkCount = 0;
 
     EMSAdvancedSearch *advancedSearch = [[EMSAdvancedSearch alloc] init];
     [advancedSearch clear];
+}
+
+#pragma mark - State restoration
+
+- (BOOL)application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder {
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder {
+    return YES;
 }
 
 @end

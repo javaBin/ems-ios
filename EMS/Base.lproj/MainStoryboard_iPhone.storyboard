@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0Ye-bN-FPt">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
@@ -213,8 +212,8 @@
         <!--Main View Controller-->
         <scene sceneID="C5v-Jb-6FW">
             <objects>
-                <tableViewController storyboardIdentifier="EMSMainViewController" id="bNB-PM-Jcs" customClass="EMSMainViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" sectionIndexMinimumDisplayRowCount="500" rowHeight="130" sectionHeaderHeight="22" sectionFooterHeight="22" id="gDK-VA-ggF">
+                <tableViewController storyboardIdentifier="EMSMainViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bNB-PM-Jcs" customClass="EMSMainViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" restorationIdentifier="Sessions Table View" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" sectionIndexMinimumDisplayRowCount="500" rowHeight="130" sectionHeaderHeight="22" sectionFooterHeight="22" id="gDK-VA-ggF">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -403,6 +402,7 @@
                         <outlet property="footer" destination="5g9-P8-RVj" id="dfN-Ob-emi"/>
                         <outlet property="footerLabel" destination="Laf-bi-x96" id="376-Wq-gu6"/>
                         <outlet property="search" destination="Zif-KH-RXK" id="tq7-GP-YRY"/>
+                        <outlet property="segmentedControl" destination="47E-mD-yuA" id="T0N-6j-beh"/>
                         <outlet property="settingsButton" destination="IHa-T0-39E" id="unA-Ll-Nzs"/>
                     </connections>
                 </tableViewController>
@@ -413,8 +413,8 @@
         <!--Detail View Controller-->
         <scene sceneID="ZdT-W9-7lI">
             <objects>
-                <tableViewController storyboardIdentifier="EMSDetailViewController" id="59y-vp-WBf" customClass="EMSDetailViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="B4J-Xx-3xL">
+                <tableViewController storyboardIdentifier="EMSDetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="59y-vp-WBf" customClass="EMSDetailViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="Session Detail Table View" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="B4J-Xx-3xL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -585,12 +585,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x1W-5S-LYd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1522" y="423"/>
+            <point key="canvasLocation" x="1528" y="514"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gjw-7g-8aF">
             <objects>
-                <navigationController definesPresentationContext="YES" hidesBottomBarWhenPushed="YES" toolbarHidden="NO" id="0Ye-bN-FPt" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Sessions Navigation Controller" definesPresentationContext="YES" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" toolbarHidden="NO" id="0Ye-bN-FPt" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="3xP-vF-lf2">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

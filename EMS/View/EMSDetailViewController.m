@@ -56,7 +56,8 @@
 
 - (void)setupWithSession:(Session *)session {
     if (session) {
-
+        self.session = session;
+        
         self.titleLabel.text = session.title;
         self.titleLabel.accessibilityLanguage = session.language;
         
@@ -81,7 +82,7 @@
         self.titleLabel.text = @"";
         self.favoriteButton.hidden = YES;
 
-        self.shareButton.enabled = false;
+        self.shareButton.enabled = NO;
     }
 
 }
@@ -275,6 +276,7 @@
 
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -282,6 +284,9 @@
     if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
         self.automaticallyAdjustsScrollViewInsets = YES;
     }
+    
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
 
     [self setupWithSession:self.session];
 
@@ -816,5 +821,28 @@
     return [[[[EMSAppDelegate sharedAppDelegate] applicationCacheDirectory] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.png", safeFilename]] path];
 }
 
+
+#pragma mark - State restoration
+
+static NSString *const EMSDetailViewControllerRestorationIdentifierSessionHref = @"EMSDetailViewControllerRestorationIdentifierSessionHref";
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder {
+    [super encodeRestorableStateWithCoder:coder];
+    
+    [coder encodeObject:self.session.href forKey:EMSDetailViewControllerRestorationIdentifierSessionHref];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder {
+    [super decodeRestorableStateWithCoder:coder];
+    
+    
+    NSString *sessionHref = [coder decodeObjectForKey:EMSDetailViewControllerRestorationIdentifierSessionHref];
+    
+    if (sessionHref) {
+        Session *session = [[[EMSAppDelegate sharedAppDelegate] model] sessionForHref:sessionHref];
+        [self setupWithSession:session];
+    }
+    
+}
 
 @end

@@ -19,7 +19,7 @@
 #import "EMSTracking.h"
 #import "EMSLocalNotificationManager.h"
 
-@interface EMSMainViewController () <UISplitViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate>
+@interface EMSMainViewController () <UISplitViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate, UIDataSourceModelAssociation>
 
 @property(nonatomic, strong) EMSDetailViewController *detailViewController;
 
@@ -36,6 +36,8 @@
 @property(nonatomic, strong) IBOutlet UILabel *footerLabel;
 
 @property(weak, nonatomic) IBOutlet UIBarButtonItem *settingsButton;
+
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 
 - (IBAction)toggleFavourite:(id)sender;
 
@@ -245,12 +247,6 @@
     [fetchRequest setSortDescriptors:@[sortSlot, sortRoom, sortTime, sortTitle]];
     [fetchRequest setFetchBatchSize:20];
 
-    NSPredicate *conferencePredicate = [self currentConferencePredicate];
-
-    if (conferencePredicate != nil) {
-        [fetchRequest setPredicate:conferencePredicate];
-    }
-
     NSFetchedResultsController *theFetchedResultsController =
             [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                 managedObjectContext:managedObjectContext sectionNameKeyPath:@"sectionTitle"
@@ -291,7 +287,11 @@
     [super awakeFromNib];
     if (self.splitViewController) {
         self.splitViewController.delegate = self;
+        self.clearsSelectionOnViewWillAppear = NO;
     }
+    
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
 }
 
 - (void)viewDidLoad {
@@ -316,6 +316,16 @@
 
     self.observersInstalled = NO;
     
+    [self updateTableViewRowHeight];
+    
+
+    Conference *conference = [self activeConference];
+    
+    if (conference) {
+        EMS_LOG(@"Conference found - initialize");
+        
+        [self initializeFetchedResultsController];
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionRequested:) name:EMSUserRequestedSessionNotification object:[EMSLocalNotificationManager sharedInstance]];
 
@@ -326,7 +336,15 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
+    if (!self.splitViewController) {
+       [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow]  animated:YES];
+    }
+    
     [self addObservers];
+    
+    if (self.splitViewController && ![self.tableView indexPathForSelectedRow]) {
+        [self performSegueWithIdentifier:@"noSessionSelectedSegue" sender:self];
+    }
 }
 
 
@@ -336,25 +354,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
     [EMSTracking trackScreen:@"Main Screen"];
 
-    Conference *conference = [self activeConference];
-
-    if (conference) {
-        EMS_LOG(@"Conference found - initialize");
-
-        [self initializeFetchedResultsController];
-    }
-
     [self updateRefreshControl];
-
-    if (self.splitViewController) {
-        if (self.tableView.numberOfSections > 0 && [self.tableView numberOfRowsInSection:0] > 0) {
-            if ([self.tableView indexPathForSelectedRow] == nil) {
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionTop];
-                [self performSegueWithIdentifier:@"showDetailsView" sender:self];
-            }
-        }
-    }
 
     [self initializeFooter];
 }
@@ -855,7 +855,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 }
 
 - (void)segmentChanged:(id)sender {
-    self.filterFavourites = NO;
+    
 
     UISegmentedControl *segment = (UISegmentedControl *) sender;
 
@@ -863,6 +863,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
         case 0: {
             // All
             [EMSTracking trackEventWithCategory:@"listView" action:@"all" label:nil];
+            self.filterFavourites = NO;
             break;
         }
         case 1: {
@@ -1001,5 +1002,55 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - State restoration
+
+static NSString *const EMSMainViewControllerRestorationIdentifierSegmentControlIndex = @"EMSMainViewControllerRestorationIdentifierSegmentControlIndex";
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder {
+    
+    
+    [super encodeRestorableStateWithCoder:coder];
+    
+    [coder encodeInteger:self.segmentedControl.selectedSegmentIndex forKey:EMSMainViewControllerRestorationIdentifierSegmentControlIndex];
+    
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder {
+    [super decodeRestorableStateWithCoder:coder];
+    
+    NSInteger selectedIndex = [coder decodeIntegerForKey:EMSMainViewControllerRestorationIdentifierSegmentControlIndex];
+    
+    self.segmentedControl.selectedSegmentIndex = selectedIndex;
+    
+    if (selectedIndex == 1) {
+        self.filterFavourites = YES;
+    }
+    
+    [self initializeFetchedResultsController];
+    
+}
+
+#pragma mark - UIDataSourceModelAssociation
+
+-(NSString *)modelIdentifierForElementAtIndexPath:(NSIndexPath *)idx inView:(UIView *)view {
+    NSString *sessionHref = nil;
+    if ([view isEqual:self.tableView]) {
+        
+        Session *session = [self.fetchedResultsController objectAtIndexPath:idx];
+        sessionHref =  session.href;
+    }
+    return sessionHref;
+}
+
+-(NSIndexPath *)indexPathForElementWithModelIdentifier:(NSString *)identifier inView:(UIView *)view {
+    NSIndexPath *indexPath = nil;
+    if ([view isEqual:self.tableView]) {
+        Session *session = [[[EMSAppDelegate sharedAppDelegate] model] sessionForHref:identifier];
+        if (session) {
+            indexPath = [self.fetchedResultsController indexPathForObject:session];
+        }
+    }
+    return indexPath;
+}
 
 @end

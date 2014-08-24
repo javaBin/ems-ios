@@ -12,8 +12,6 @@
 
 #import "EMSModel.h"
 
-@interface EMSMainViewController : UITableViewController
-
-- (void)pushDetailViewForHref:(NSString *)href;
+@interface EMSMainViewController : UITableViewController<UIDataSourceModelAssociation>
 
 @end
