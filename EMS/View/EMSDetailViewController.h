@@ -11,9 +11,4 @@
 
 @property(nonatomic, strong) Session *session;
 
-@property(nonatomic, strong) NSIndexPath *indexPath;
-
-
-- (void)refreshFavourite;
-
 @end

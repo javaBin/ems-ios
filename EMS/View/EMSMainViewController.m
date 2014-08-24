@@ -21,8 +21,6 @@
 
 @interface EMSMainViewController () <UISplitViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate, UIDataSourceModelAssociation>
 
-@property(nonatomic, strong) EMSDetailViewController *detailViewController;
-
 @property(nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @property(nonatomic, assign) BOOL filterFavourites;
@@ -441,9 +439,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
         }
 
         EMSDetailViewController *destination = (EMSDetailViewController *) tmpDestination;
-
-        self.detailViewController = destination;
-
         
         Session *session = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
         
@@ -457,8 +452,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
         
         [EMSTracking trackEventWithCategory:@"listView" action:@"detail" label:session.href];
         
-
-        destination.indexPath = [[self tableView] indexPathForSelectedRow];
     }
 
     if ([[segue identifier] isEqualToString:@"showSearchView"]) {
@@ -540,13 +533,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
         [self initializeFetchedResultsController];
         [self dismissViewControllerAnimated:YES completion:nil];
-    }
-
-    if ([[self.fetchedResultsController sections] count] > 0) {
-        if ([segue.identifier isEqualToString:@"popDetailSegue"]) {
-            EMSDetailViewController *detail = (EMSDetailViewController *) segue.sourceViewController;
-            [self.tableView scrollToRowAtIndexPath:detail.indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-        }
     }
 }
 
@@ -746,6 +732,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
         case NSFetchedResultsChangeUpdate:
             break;
     }
+    [self initializeFooter];
 }
 
 
@@ -837,13 +824,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
         view = [view superview];
     }
-
-    if (self.detailViewController != nil) {
-        [self.detailViewController refreshFavourite];
-    }
-
-    [self initializeFooter];
-    [self.tableView reloadData];
 }
 
 - (void)segmentChanged:(id)sender {
