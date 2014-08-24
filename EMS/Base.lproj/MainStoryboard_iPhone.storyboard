@@ -468,21 +468,21 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cnd-Yz-p5s">
-                                            <rect key="frame" x="10" y="10" width="80" height="80"/>
+                                            <rect key="frame" x="10" y="10" width="60" height="60"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="80" id="QVU-GG-hAh"/>
-                                                <constraint firstAttribute="width" constant="80" id="b1g-7T-tqt"/>
+                                                <constraint firstAttribute="height" constant="60" id="QVU-GG-hAh"/>
+                                                <constraint firstAttribute="width" constant="60" id="b1g-7T-tqt"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Neal Ford" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KgL-ev-KHv">
-                                            <rect key="frame" x="100" y="38" width="210" height="20"/>
+                                            <rect key="frame" x="80" y="28" width="230" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="2rp-Pi-3ix">
-                                            <rect key="frame" x="10" y="100" width="300" height="95"/>
+                                            <rect key="frame" x="10" y="80" width="300" height="115"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <string key="text">Neal Ford is Director, Software Architect, and Meme Wrangler at ThoughtWorks, a global IT consultancy with an exclusive focus on end-to-end software development and delivery.</string>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>

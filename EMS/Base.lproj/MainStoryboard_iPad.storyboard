@@ -477,21 +477,21 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0oJ-23-AUx">
-                                            <rect key="frame" x="10" y="10" width="50" height="50"/>
+                                            <rect key="frame" x="10" y="10" width="60" height="60"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="50" id="63u-pp-jWO"/>
-                                                <constraint firstAttribute="height" constant="50" id="OLE-Mf-a8l"/>
+                                                <constraint firstAttribute="width" constant="60" id="63u-pp-jWO"/>
+                                                <constraint firstAttribute="height" constant="60" id="OLE-Mf-a8l"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Speaker Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jKb-GC-Pnd">
-                                            <rect key="frame" x="70" y="23" width="688" height="20"/>
+                                            <rect key="frame" x="80" y="28" width="678" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorum ipsum sdflakjf lksdfjals ødkfjasdf ølkasjdf økj asødf" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="748" translatesAutoresizingMaskIntoConstraints="NO" id="VOx-dt-H7Q">
-                                            <rect key="frame" x="10" y="70" width="748" height="49"/>
+                                            <rect key="frame" x="10" y="80" width="748" height="39"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="highlightedColor"/>
