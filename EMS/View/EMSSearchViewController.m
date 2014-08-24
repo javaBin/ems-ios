@@ -138,7 +138,7 @@ static NSString *const DictionaryImage = @"DictionaryImage";
 
         cell.textLabel.text = value;
 
-        if ([currentList containsObject:predicates[(NSUInteger) indexPath.row - 1]]) {
+        if (([currentList count] == 0) || ([currentList containsObject:predicates[(NSUInteger) indexPath.row - 1]])) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         } else {
             cell.accessoryType = UITableViewCellAccessoryNone;
