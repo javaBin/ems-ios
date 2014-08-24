@@ -42,6 +42,8 @@
 		EA74604019A42A2500E24D04 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA74603F19A42A2500E24D04 /* EMS-Keys.plist */; };
 		EA74604219A42A3600E24D04 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA74604119A42A3600E24D04 /* EMS-Keys.plist */; };
 		EA8F2C831944CCB7002EAE1F /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
+		EA9ACCBD19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */; };
+		EA9ACCBE19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */; };
 		EACB2E9B199EBD1700557D82 /* EMSDefaultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */; };
 		EACB2E9C199EBD1700557D82 /* EMSDefaultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */; };
 		EAE2CF4F19A934B0002F44FC /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6DD17685885009077D3 /* MainStoryboard_iPhone.storyboard */; };
@@ -196,6 +198,8 @@
 		EA6132BB193FC35B000F54DC /* EMSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConfig.m; sourceTree = "<group>"; };
 		EA74603F19A42A2500E24D04 /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
 		EA74604119A42A3600E24D04 /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
+		EA9ACCBB19A9764500D369C6 /* EMSSessionTitleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSessionTitleTableViewCell.h; sourceTree = "<group>"; };
+		EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSessionTitleTableViewCell.m; sourceTree = "<group>"; };
 		EACB2E99199EBD1700557D82 /* EMSDefaultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSDefaultTableViewCell.h; sourceTree = "<group>"; };
 		EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDefaultTableViewCell.m; sourceTree = "<group>"; };
 		EAE4330719A52F1C002C3EBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -359,6 +363,8 @@
 				F30A8CE4192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m */,
 				EACB2E99199EBD1700557D82 /* EMSDefaultTableViewCell.h */,
 				EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */,
+				EA9ACCBB19A9764500D369C6 /* EMSSessionTitleTableViewCell.h */,
+				EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */,
 			);
 			name = View;
 			path = EMS/View;
@@ -748,6 +754,7 @@
 				F30A8CDB192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */,
 				F3AE33DC1772EA94000EE4A9 /* ConferenceType.m in Sources */,
 				F3AE33DF1772EA94000EE4A9 /* Session.m in Sources */,
+				EA9ACCBD19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */,
 				83D5CBA417749EEA00527620 /* EMSFeatureConfig.m in Sources */,
 				F37953CB17797E41000B7CDD /* EMSAdvancedSearch.m in Sources */,
 				83F455A1177D5B5C00BC79A1 /* EMSAboutViewController.m in Sources */,
@@ -797,6 +804,7 @@
 				F394C98E17F0173900FAFBD4 /* ConferenceType.m in Sources */,
 				F394C98F17F0173900FAFBD4 /* Session.m in Sources */,
 				EA8F2C831944CCB7002EAE1F /* EMSConfig.m in Sources */,
+				EA9ACCBE19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */,
 				F394C99017F0173900FAFBD4 /* EMSFeatureConfig.m in Sources */,
 				F394C99117F0173900FAFBD4 /* EMSAdvancedSearch.m in Sources */,
 				F394C99217F0173900FAFBD4 /* EMSAboutViewController.m in Sources */,

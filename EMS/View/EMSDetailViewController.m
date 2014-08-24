@@ -24,6 +24,7 @@
 #import "EMSDefaultTableViewCell.h"
 #import "EMSTracking.h"
 
+#import "EMSSessionTitleTableViewCell.h"
 
 @interface EMSDetailViewController () <UIPopoverControllerDelegate, EMSRetrieverDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -33,22 +34,19 @@
 
 @property(nonatomic, strong) NSDictionary *cachedSpeakerBios;
 
-@property(weak, nonatomic) IBOutlet UIView *titleBar;
-
-@property(nonatomic, strong) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *timeAndLocationLabel;
-
-@property(nonatomic, strong) IBOutlet UIButton *favoriteButton;
-
 @property(nonatomic, strong) IBOutlet UIBarButtonItem *shareButton;
 
 @property(nonatomic, strong) EMSRetriever *speakerRetriever;
 
 - (IBAction)share:(id)sender;
 
-- (IBAction)toggleFavourite:(id)sender;
-
 @end
+
+typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
+    EMSDetailViewControllerSectionInfo,
+    EMSDetailViewControllerSectionLegacy,
+
+};
 
 @implementation EMSDetailViewController
 
@@ -57,17 +55,6 @@
 - (void)setupWithSession:(Session *)session {
     if (session) {
         self.session = session;
-        
-        self.titleLabel.text = session.title;
-        self.titleLabel.accessibilityLanguage = session.language;
-        
-        
-        self.timeAndLocationLabel.text = [EMSDetailViewController createControllerTitle:session];
-        self.timeAndLocationLabel.accessibilityLabel = [EMSDetailViewController createControllerAccessibilityTitle:session];
-        
-        
-        
-        [self initFavoriteButton:session];
 
         [self initSpeakerCache:session];
 
@@ -77,14 +64,7 @@
 
         self.shareButton.enabled = YES;
 
-    } else {
-        self.title = @"";
-        self.titleLabel.text = @"";
-        self.favoriteButton.hidden = YES;
-
-        self.shareButton.enabled = NO;
     }
-
 }
 
 + (NSString *)createControllerTitle:(Session *)session {
@@ -145,25 +125,6 @@
         [title appendString:[NSString stringWithFormat:NSLocalizedString(@" in %@", @" in {Room name}"), session.roomName]];
     }
     return [title copy];
-}
-
-
-- (void)initFavoriteButton:(Session *)session {
-    NSString *imageBaseName = [session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star";
-    NSString *imageNameFormat = @"%@-%@";
-
-    UIImage *normalImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"grey"]];
-    UIImage *selectedImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"yellow"]];
-
-    if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
-        normalImage = [normalImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    }
-
-    [self.favoriteButton setImage:normalImage forState:UIControlStateNormal];
-    [self.favoriteButton setImage:selectedImage forState:UIControlStateSelected];
-
-    [self refreshFavourite];
 }
 
 - (void)initSpeakerCache:(Session *)session {
@@ -256,24 +217,32 @@
 #pragma mark - Lifecycle
 
 - (void)updateTableViewRowHeightReload {
-    [self resizeTitleHeaderHack];
     [self.tableView reloadData];
 }
 
 - (void)addObservers {
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTableViewRowHeightReload) name:UIContentSizeCategoryDidChangeNotification object:nil];
+    
+    [self.session addObserver:self forKeyPath:@"favourite" options:0 context:NULL];
+    
     [self.tableView reloadData];
-
-    [self resizeTitleHeaderHack];
-
 }
 
 - (void)removeObservers {
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
 
+    [self.session removeObserver:self forKeyPath:@"favourite"];
 
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([object isEqual:self.session] && [keyPath isEqual:@"favourite"]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+    }
 }
 
 
@@ -294,7 +263,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.navigationController setToolbarHidden:YES];
+    
     [self addObservers];
 }
 
@@ -306,38 +275,11 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.navigationController setToolbarHidden:NO];
-    [self removeObservers];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-}
-
-- (void)resizeTitleHeaderHack {
-    self.titleBar.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.bounds), CGRectGetHeight(self.titleBar.bounds));
-
-    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
-
-    font = [font fontWithSize:(CGFloat) (font.pointSize * 1.2)];
-
-    self.titleLabel.font = font;
-    
-    self.titleLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.tableView.bounds) - 44 - 15;
-
-    [self.titleBar setNeedsLayout];
-    [self.titleBar layoutIfNeeded];
-
-    CGFloat height = [self.titleBar systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-
-    self.tableView.tableHeaderView.frame = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.frame), height);
-
-    self.tableView.tableHeaderView = self.tableView.tableHeaderView;
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    [self resizeTitleHeaderHack];
-    [self.tableView reloadData];
+    [self removeObservers];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -472,29 +414,8 @@
 
 #pragma mark - Actions
 
-- (void)refreshFavourite {
-    [self.favoriteButton setSelected:[self.session.favourite boolValue]];
-
-    if (self.favoriteButton.selected) {
-        self.favoriteButton.tintColor = nil;
-    } else {
-        self.favoriteButton.tintColor = [UIColor lightGrayColor];
-    }
-
-}
-
 - (IBAction)toggleFavourite:(id)sender {
     self.session = [[[EMSAppDelegate sharedAppDelegate] model] toggleFavourite:self.session];
-
-    [self.favoriteButton setSelected:[self.session.favourite boolValue]];
-
-    if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
-        if (self.favoriteButton.selected) {
-            self.favoriteButton.tintColor = nil;
-        } else {
-            self.favoriteButton.tintColor = [UIColor lightGrayColor];
-        }
-    }
 }
 
 - (void)share:(id)sender {
@@ -568,78 +489,173 @@
 
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.parts count];
+    NSInteger rows = 0;
+    
+    if (section == EMSDetailViewControllerSectionInfo) {
+        rows = 1;
+    } else if (section == EMSDetailViewControllerSectionLegacy) {
+        rows = [self.parts count];
+    }
+    
+    return rows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
+    
+    UITableViewCell *cell = nil;
+    
+    if (indexPath.section == EMSDetailViewControllerSectionInfo) {
 
-    UITableViewCell *cell = [self tableView:tableView buildCellForRow:row];
-
+        cell = [self tableView:tableView buildCellForIndexPath:indexPath];
+        
+    } else if (indexPath.section == EMSDetailViewControllerSectionLegacy) {
+        EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
+        cell = [self tableView:tableView buildCellForRow:row];
+    }
+    
     return cell;
+
+}
+
+- (EMSSessionTitleTableViewCell *) tableView:(UITableView *) tableView buildCellForIndexPath:(NSIndexPath *) indexPath {
+    EMSSessionTitleTableViewCell *titleCell = [self.tableView dequeueReusableCellWithIdentifier:@"SessionTitleTableViewCell"];
+    titleCell.titleLabel.text = self.session.title;
+    titleCell.titleLabel.accessibilityLanguage = self.session.language;
+    
+    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    
+    font = [font fontWithSize:(CGFloat) (font.pointSize * 1.2)];
+    
+    titleCell.titleLabel.font = font;
+    
+    
+    
+    titleCell.timeAndRoomLabel.text = [EMSDetailViewController createControllerTitle:self.session];
+    titleCell.timeAndRoomLabel.accessibilityLabel = [EMSDetailViewController createControllerAccessibilityTitle:self.session];
+    
+    
+    
+    
+    NSString *imageBaseName = [self.session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star";
+    NSString *imageNameFormat = @"%@-%@";
+    
+    UIImage *normalImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"grey"]];
+    UIImage *selectedImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"yellow"]];
+    
+    if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
+        normalImage = [normalImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    }
+    
+    [titleCell.favoriteButton setImage:normalImage forState:UIControlStateNormal];
+    [titleCell.favoriteButton setImage:selectedImage forState:UIControlStateSelected];
+    
+    if ([self.session.favourite boolValue]) {
+        titleCell.favoriteButton.tintColor = nil;
+    } else {
+        titleCell.favoriteButton.tintColor = [UIColor lightGrayColor];
+    }
+    
+    
+    
+    [titleCell setNeedsLayout];
+    [titleCell layoutIfNeeded];
+    
+    return titleCell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
-    UITableViewCell *cell = [self tableView:tableView buildCellForRow:row];
-
-
-    if ([cell isKindOfClass:[EMSDefaultTableViewCell class]]) {
-
-        cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-
-        [cell setNeedsLayout];
-        [cell layoutIfNeeded];
-
-        NSInteger height = (NSInteger) [cell intrinsicContentSize].height;
-
-        return height;
-
-    } else if ([cell isKindOfClass:[EMSTopAlignCellTableViewCell class]]) {
-
-        cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-
-
-        [cell setNeedsLayout];
-        [cell layoutIfNeeded];
-
-        // Get the actual height required for the cell's contentView
-        CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-
-
-        if (row.link && height < 48) {
-            height = 48;
+    if (indexPath.section == EMSDetailViewControllerSectionInfo) {
+        
+        EMSSessionTitleTableViewCell *cell = [self tableView:tableView buildCellForIndexPath:indexPath];
+        
+        if ([cell isKindOfClass:[EMSSessionTitleTableViewCell class]]) {
+            
+            cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
+            
+            
+            [cell setNeedsLayout];
+            [cell layoutIfNeeded];
+            
+            // Get the actual height required for the cell's contentView
+            CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+            
+            
+            return height;
         }
-
-        return height;
     } else {
-        return 48;
+        EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
+        
+        UITableViewCell *cell = [self tableView:tableView buildCellForRow:row];
+        
+        if ([cell isKindOfClass:[EMSDefaultTableViewCell class]]) {
+            
+            cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
+            
+            [cell setNeedsLayout];
+            [cell layoutIfNeeded];
+            
+            NSInteger height = (NSInteger) [cell intrinsicContentSize].height;
+            
+            return height;
+            
+        } else if ([cell isKindOfClass:[EMSTopAlignCellTableViewCell class]] || [cell isKindOfClass:[EMSSessionTitleTableViewCell class]]) {
+            
+            cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
+            
+            
+            [cell setNeedsLayout];
+            [cell layoutIfNeeded];
+            
+            // Get the actual height required for the cell's contentView
+            CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+            
+        
+           
+            if (row.link && height < 48) {
+                height = 48;
+            }
+            
+            return height;
+        } 
     }
+    
+    
+    return 48;
 
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
-
-    if (row.link) {
-        return indexPath;
+    if (indexPath.section == EMSDetailViewControllerSectionLegacy) {
+        EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
+        
+        if (row.link) {
+            return indexPath;
+        }
     }
-
+    
     return nil;
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
-
-    if (row.link) {
-        [EMSTracking trackEventWithCategory:@"web" action:@"open link" label:[row.link absoluteString]];
-
-        [[UIApplication sharedApplication] openURL:row.link];
+    if (indexPath.section == EMSDetailViewControllerSectionLegacy) {
+        EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
+        
+        if (row.link) {
+            [EMSTracking trackEventWithCategory:@"web" action:@"open link" label:[row.link absoluteString]];
+            
+            [[UIApplication sharedApplication] openURL:row.link];
+        }
+        
+        [tableView deselectRowAtIndexPath:indexPath animated:false];        
     }
-
-    [tableView deselectRowAtIndexPath:indexPath animated:false];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView buildCellForRow:(EMSDetailViewRow *)row {
