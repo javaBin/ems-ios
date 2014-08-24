@@ -676,7 +676,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         cell.thumbnailView.layer.borderColor = [UIColor grayColor].CGColor;
         cell.thumbnailView.layer.masksToBounds = NO;
         cell.thumbnailView.clipsToBounds = YES;
-        cell.thumbnailView.layer.cornerRadius = 10;
+        cell.thumbnailView.layer.cornerRadius = CGRectGetWidth(cell.thumbnailView.frame)/2;
 
         [cell setNeedsLayout];
         [cell layoutIfNeeded];
