@@ -62,7 +62,13 @@ NSString *const EMSUserRequestedSessionNotificationSessionKey = @"EMSUserRequest
         
         UILocalNotification *notification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];
         if (notification) {
-            [self activateWithNotification:notification];
+            
+            //Lets wait until view application:didFinishLauncingWithOptions: is done before
+            //we try to install new views in the hierarchy.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self activateWithNotification:notification];
+            });
+            
         }
     }
 }
@@ -202,7 +208,7 @@ NSString *const EMSUserRequestedSessionNotificationSessionKey = @"EMSUserRequest
 - (void)addNotification:(Session *)session {
     UILocalNotification *notification = [[UILocalNotification alloc] init];
     
-    NSDate *sessionStart = [self fiveMinutesBefore:[self dateForSession:session]];
+    NSDate *sessionStart = [NSDate dateWithTimeIntervalSinceNow:5];//[self fiveMinutesBefore:[self dateForSession:session]];
     
     NSComparisonResult result = [[[NSDate alloc] init] compare:sessionStart];
     
