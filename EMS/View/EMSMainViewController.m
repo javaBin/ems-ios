@@ -590,8 +590,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSUInteger count = [[_fetchedResultsController sections] count];
 
-    EMS_LOG(@"numberOfSectionsInTableView: Found %lu sections", (unsigned long) count);
-
     return count;
 }
 
@@ -600,14 +598,10 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
     NSUInteger count = [sectionInfo numberOfObjects];
 
-    EMS_LOG(@"tableView:numberOfRowsInSection: %ld: Found %lu rows", (long) section, (unsigned long) count);
-
     return count;
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    EMS_LOG(@"configureCell:atIndexPath: asking for section %ld and row %ld", (long) indexPath.section, (long) indexPath.row);
-
     Session *session = [_fetchedResultsController objectAtIndexPath:indexPath];
 
     EMSSessionCell *sessionCell = (EMSSessionCell *) cell;
@@ -684,8 +678,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    EMS_LOG(@"tableView:cellForRowAtIndexPath: asking for section %ld and row %ld", (long) indexPath.section, (long) indexPath.row);
-
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SessionCell" forIndexPath:indexPath];
 
     [self configureCell:cell atIndexPath:indexPath];
