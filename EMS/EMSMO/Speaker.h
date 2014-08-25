@@ -9,10 +9,11 @@
 
 @interface Speaker : NSManagedObject
 
-@property(nonatomic, retain) NSString *bio;
-@property(nonatomic, retain) NSString *href;
-@property(nonatomic, retain) NSString *name;
-@property(nonatomic, retain) NSString *thumbnailUrl;
-@property(nonatomic, retain) Session *session;
+@property (nonatomic, retain) NSString * bio;
+@property (nonatomic, retain) NSString * href;
+@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * thumbnailUrl;
+@property (nonatomic, retain) NSDate * lastUpdated;
+@property (nonatomic, retain) Session *session;
 
 @end

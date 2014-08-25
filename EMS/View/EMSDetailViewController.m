@@ -194,7 +194,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
     [self.session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         Speaker *speaker = (Speaker *) obj;
-
+        
         EMSDetailViewRow *row = [[EMSDetailViewRow alloc] initWithContent:speaker.name];
 
         if ([EMSFeatureConfig isFeatureEnabled:fBioPics]) {

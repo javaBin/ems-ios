@@ -432,6 +432,11 @@
     speaker.name = ems.name;
     speaker.bio = ems.bio;
     speaker.thumbnailUrl = [ems.thumbnailUrl absoluteString];
+    if (ems.lastUpdated != nil) {
+        speaker.lastUpdated = ems.lastUpdated;
+    } else {
+        speaker.lastUpdated = [NSDate date];
+    }
 
     speaker.session = session;
 }

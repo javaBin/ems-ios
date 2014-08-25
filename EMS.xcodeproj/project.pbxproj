@@ -93,7 +93,6 @@
 		F394C98417F0173900FAFBD4 /* EMSSessionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F31862411770501800292371 /* EMSSessionCell.m */; };
 		F394C98517F0173900FAFBD4 /* EMSSpeakersRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = F3D5E2C617709CD000888A7E /* EMSSpeakersRetriever.m */; };
 		F394C98617F0173900FAFBD4 /* EMSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836331311770DD2B000F8D95 /* EMSSearchViewController.m */; };
-		F394C98717F0173900FAFBD4 /* Speaker.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C61772EA93000EE4A9 /* Speaker.m */; };
 		F394C98817F0173900FAFBD4 /* Conference.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C91772EA93000EE4A9 /* Conference.m */; };
 		F394C98917F0173900FAFBD4 /* Keyword.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33CC1772EA93000EE4A9 /* Keyword.m */; };
 		F394C98A17F0173900FAFBD4 /* ConferenceLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33CF1772EA94000EE4A9 /* ConferenceLevel.m */; };
@@ -122,7 +121,10 @@
 		F394C9CF17F0173900FAFBD4 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F354B0B91781AA1D007F7B01 /* iTunesArtwork@2x.png */; };
 		F394C9E717F01C0300FAFBD4 /* EMS-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = F394C9E617F01C0300FAFBD4 /* EMS-Config.plist */; };
 		F399B73917CF42CC004DE2EC /* EMSConferenceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F399B73817CF42CC004DE2EC /* EMSConferenceDetailViewController.m */; };
-		F3AE33C71772EA93000EE4A9 /* Speaker.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C61772EA93000EE4A9 /* Speaker.m */; };
+		F3AABDE619AB1676003D1D1C /* Speaker.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AABDE519AB1676003D1D1C /* Speaker.m */; };
+		F3AABDE719AB1676003D1D1C /* Speaker.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AABDE519AB1676003D1D1C /* Speaker.m */; };
+		F3AABDE919AB16C6003D1D1C /* AddTimestampToSpeaker.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F3AABDE819AB16C5003D1D1C /* AddTimestampToSpeaker.xcmappingmodel */; };
+		F3AABDEA19AB16C6003D1D1C /* AddTimestampToSpeaker.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F3AABDE819AB16C5003D1D1C /* AddTimestampToSpeaker.xcmappingmodel */; };
 		F3AE33CA1772EA93000EE4A9 /* Conference.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C91772EA93000EE4A9 /* Conference.m */; };
 		F3AE33CD1772EA93000EE4A9 /* Keyword.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33CC1772EA93000EE4A9 /* Keyword.m */; };
 		F3AE33D01772EA94000EE4A9 /* ConferenceLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33CF1772EA94000EE4A9 /* ConferenceLevel.m */; };
@@ -237,6 +239,10 @@
 		F394C9E617F01C0300FAFBD4 /* EMS-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Config.plist"; sourceTree = "<group>"; };
 		F399B73717CF42CC004DE2EC /* EMSConferenceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConferenceDetailViewController.h; sourceTree = "<group>"; };
 		F399B73817CF42CC004DE2EC /* EMSConferenceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConferenceDetailViewController.m; sourceTree = "<group>"; };
+		F3AABDDD19AB1434003D1D1C /* EMSCoreDataModel 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "EMSCoreDataModel 4.xcdatamodel"; sourceTree = "<group>"; };
+		F3AABDE419AB1676003D1D1C /* Speaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Speaker.h; path = EMSMO/Speaker.h; sourceTree = "<group>"; };
+		F3AABDE519AB1676003D1D1C /* Speaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Speaker.m; path = EMSMO/Speaker.m; sourceTree = "<group>"; };
+		F3AABDE819AB16C5003D1D1C /* AddTimestampToSpeaker.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = AddTimestampToSpeaker.xcmappingmodel; sourceTree = "<group>"; };
 		F3AE33C51772EA93000EE4A9 /* Speaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Speaker.h; path = EMS/EMSMO/Speaker.h; sourceTree = "<group>"; };
 		F3AE33C61772EA93000EE4A9 /* Speaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Speaker.m; path = EMS/EMSMO/Speaker.m; sourceTree = "<group>"; };
 		F3AE33C81772EA93000EE4A9 /* Conference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Conference.h; path = EMS/EMSMO/Conference.h; sourceTree = "<group>"; };
@@ -444,6 +450,8 @@
 			children = (
 				83BF8B6917ECDA4D0093242C /* Images.xcassets */,
 				F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */,
+				F3AABDE419AB1676003D1D1C /* Speaker.h */,
+				F3AABDE519AB1676003D1D1C /* Speaker.m */,
 				15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */,
 				F3CEA3CE17B224170092776F /* AddVideoLinkMapping.xcmappingmodel */,
 				F35BB6D417685885009077D3 /* EMSAppDelegate.h */,
@@ -459,6 +467,7 @@
 				F37953CA17797E41000B7CDD /* EMSAdvancedSearch.m */,
 				4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */,
 				4E1AD6B14458A2997A59456D /* EMSTracking.h */,
+				F3AABDE819AB16C5003D1D1C /* AddTimestampToSpeaker.xcmappingmodel */,
 			);
 			name = App;
 			path = EMS;
@@ -743,10 +752,11 @@
 				F3D5E2C717709CD100888A7E /* EMSSpeakersRetriever.m in Sources */,
 				F30A8CE5192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m in Sources */,
 				836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */,
-				F3AE33C71772EA93000EE4A9 /* Speaker.m in Sources */,
 				EACB2E9B199EBD1700557D82 /* EMSDefaultTableViewCell.m in Sources */,
 				F3AE33CA1772EA93000EE4A9 /* Conference.m in Sources */,
+				F3AABDE919AB16C6003D1D1C /* AddTimestampToSpeaker.xcmappingmodel in Sources */,
 				F3AE33CD1772EA93000EE4A9 /* Keyword.m in Sources */,
+				F3AABDE619AB1676003D1D1C /* Speaker.m in Sources */,
 				F3AE33D01772EA94000EE4A9 /* ConferenceLevel.m in Sources */,
 				F3AE33D31772EA94000EE4A9 /* Room.m in Sources */,
 				F3AE33D61772EA94000EE4A9 /* Slot.m in Sources */,
@@ -792,11 +802,12 @@
 				F394C98517F0173900FAFBD4 /* EMSSpeakersRetriever.m in Sources */,
 				F30A8CE6192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m in Sources */,
 				F394C98617F0173900FAFBD4 /* EMSSearchViewController.m in Sources */,
-				F394C98717F0173900FAFBD4 /* Speaker.m in Sources */,
 				F394C98817F0173900FAFBD4 /* Conference.m in Sources */,
 				EACB2E9C199EBD1700557D82 /* EMSDefaultTableViewCell.m in Sources */,
 				F394C98917F0173900FAFBD4 /* Keyword.m in Sources */,
+				F3AABDEA19AB16C6003D1D1C /* AddTimestampToSpeaker.xcmappingmodel in Sources */,
 				F394C98A17F0173900FAFBD4 /* ConferenceLevel.m in Sources */,
+				F3AABDE719AB1676003D1D1C /* Speaker.m in Sources */,
 				F394C98B17F0173900FAFBD4 /* Room.m in Sources */,
 				F394C98C17F0173900FAFBD4 /* Slot.m in Sources */,
 				F394C98D17F0173900FAFBD4 /* ConferenceKeyword.m in Sources */,
@@ -1194,11 +1205,12 @@
 		F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				F3AABDDD19AB1434003D1D1C /* EMSCoreDataModel 4.xcdatamodel */,
 				15204C1D18DB82C40062874A /* EMSCoreDataModel 3.xcdatamodel */,
 				F37A6ABD17B223390060634D /* EMSCoreDataModel 2.xcdatamodel */,
 				F3939E521768879C0078C709 /* EMSCoreDataModel.xcdatamodel */,
 			);
-			currentVersion = F37A6ABD17B223390060634D /* EMSCoreDataModel 2.xcdatamodel */;
+			currentVersion = F3AABDDD19AB1434003D1D1C /* EMSCoreDataModel 4.xcdatamodel */;
 			path = EMSCoreDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

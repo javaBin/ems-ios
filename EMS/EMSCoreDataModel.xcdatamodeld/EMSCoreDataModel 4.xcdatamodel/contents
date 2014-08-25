@@ -8,7 +8,6 @@
         <attribute name="roomCollection" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sessionCollection" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="slotCollection" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="slug" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="start" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="venue" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="conferenceKeywords" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ConferenceKeyword" inverseName="conference" inverseEntity="ConferenceKeyword" syncable="YES"/>
@@ -51,7 +50,6 @@
         <attribute name="level" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="roomName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="slotName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="slug" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="speakerCollection" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="summary" optional="YES" attributeType="String" syncable="YES"/>
@@ -73,19 +71,20 @@
     <entity name="Speaker" representedClassName="Speaker" syncable="YES">
         <attribute name="bio" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastUpdated" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thumbnailUrl" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="session" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Session" inverseName="speakers" inverseEntity="Session" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Conference" positionX="160" positionY="192" width="128" height="285"/>
+        <element name="Conference" positionX="160" positionY="192" width="128" height="270"/>
         <element name="ConferenceKeyword" positionX="160" positionY="192" width="128" height="75"/>
         <element name="ConferenceLevel" positionX="160" positionY="192" width="128" height="75"/>
         <element name="ConferenceType" positionX="160" positionY="192" width="128" height="75"/>
         <element name="Keyword" positionX="781" positionY="522" width="128" height="75"/>
         <element name="Room" positionX="432" positionY="153" width="128" height="105"/>
-        <element name="Session" positionX="592" positionY="324" width="128" height="360"/>
+        <element name="Session" positionX="592" positionY="324" width="128" height="345"/>
         <element name="Slot" positionX="268" positionY="584" width="128" height="120"/>
-        <element name="Speaker" positionX="783" positionY="648" width="128" height="120"/>
+        <element name="Speaker" positionX="783" positionY="648" width="128" height="135"/>
     </elements>
 </model>

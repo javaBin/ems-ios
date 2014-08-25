@@ -58,6 +58,8 @@ NSDate *timer;
             }
         }];
 
+        speaker.lastUpdated = [NSDate date];
+
         [temp addObject:speaker];
     }];
 

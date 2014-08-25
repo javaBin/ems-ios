@@ -3,6 +3,7 @@
 //
 
 #import "Speaker.h"
+#import "Session.h"
 
 
 @implementation Speaker
@@ -11,6 +12,7 @@
 @dynamic href;
 @dynamic name;
 @dynamic thumbnailUrl;
+@dynamic lastUpdated;
 @dynamic session;
 
 @end
