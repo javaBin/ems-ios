@@ -25,7 +25,11 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    self.descriptionLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.bounds) - 20;
+    CGFloat leftInset = 15;
+    CGFloat rightInset = 15;
+    self.descriptionLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.bounds) - (leftInset + rightInset);
+    
+    [super layoutSubviews];
 }
 
 

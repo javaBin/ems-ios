@@ -8,11 +8,11 @@
 
 - (CGSize)intrinsicContentSize {
 
-    CGFloat prefferedWidth = CGRectGetWidth(self.bounds) - 20;
+    CGFloat preferredWidth = CGRectGetWidth(self.bounds) - self.separatorInset.left * 2;
     
     
     UIFont *cellFont = self.textLabel.font;
-    CGSize constraintSize = CGSizeMake(prefferedWidth, MAXFLOAT);
+    CGSize constraintSize = CGSizeMake(preferredWidth, MAXFLOAT);
     CGSize labelSize = [self.textLabel.text sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:NSLineBreakByWordWrapping];
     
     

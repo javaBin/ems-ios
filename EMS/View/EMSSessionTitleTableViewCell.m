@@ -38,7 +38,14 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    self.titleLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.bounds) - 44 - 15;
+    CGFloat leftInset = 15;
+    CGFloat rightInset = 15;
+    CGFloat favoriteButtonWidth = 44;
+    CGFloat favoriteButtonSpacing = 8;
+    self.titleLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.bounds) - (leftInset + rightInset + favoriteButtonWidth + favoriteButtonSpacing);
+    
+    [super layoutSubviews];
+    
 }
 
 @end
