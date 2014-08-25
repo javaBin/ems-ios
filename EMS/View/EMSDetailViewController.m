@@ -40,6 +40,12 @@
 
 @property(nonatomic) BOOL observersInstalled;
 
+@property(nonatomic, strong) EMSSessionTitleTableViewCell *titleSizingCell;
+
+@property(nonatomic, strong) EMSTopAlignCellTableViewCell *topAlignSizingCell;
+
+@property(nonatomic, strong) EMSDefaultTableViewCell *defaultSizingCell;
+
 - (IBAction)share:(id)sender;
 
 @end
@@ -529,32 +535,39 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     UITableViewCell *cell = nil;
 
     if (indexPath.section == EMSDetailViewControllerSectionInfo) {
-
-        cell = [self buildTitleTableCell];
-
+        EMSSessionTitleTableViewCell *titleCell = [self.tableView dequeueReusableCellWithIdentifier:@"SessionTitleTableViewCell" forIndexPath:indexPath];
+        cell = [self configureTitleCell:titleCell forIndexPath:indexPath];
+        
     } else if (indexPath.section == EMSDetailViewControllerSectionLegacy) {
+        
+        
         EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
-        cell = [self tableView:tableView buildCellForRow:row];
+        
+        if (row.body) {
+            EMSTopAlignCellTableViewCell *speakerCell = [self.tableView dequeueReusableCellWithIdentifier:@"SpeakerCell" forIndexPath:indexPath];
+            cell = [self configureSpeakerCell:speakerCell forRow:row forIndexPath:indexPath];
+        } else {
+            cell = [self tableView:tableView buildCellForRow:row];
+        }
     }
 
     return cell;
 
 }
 
-- (EMSSessionTitleTableViewCell *)buildTitleTableCell {
-    EMSSessionTitleTableViewCell *titleCell = [self.tableView dequeueReusableCellWithIdentifier:@"SessionTitleTableViewCell"];
+- (EMSSessionTitleTableViewCell *) configureTitleCell:(EMSSessionTitleTableViewCell *)titleCell forIndexPath:(NSIndexPath *) indexPath {
+    
+    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    font = [font fontWithSize:(CGFloat) (font.pointSize * 1.2)];
+    titleCell.titleLabel.font = font;
+    
     titleCell.titleLabel.text = self.session.title;
     titleCell.titleLabel.accessibilityLanguage = self.session.language;
-
-    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
-
-    font = [font fontWithSize:(CGFloat) (font.pointSize * 1.2)];
-
-    titleCell.titleLabel.font = font;
-
+    
+    titleCell.timeAndRoomLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];;
     titleCell.timeAndRoomLabel.text = [EMSDetailViewController createControllerTitle:self.session];
     titleCell.timeAndRoomLabel.accessibilityLabel = [EMSDetailViewController createControllerAccessibilityTitle:self.session];
-
+    
     NSString *imageBaseName = [self.session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star";
     NSString *imageNameFormat = @"%@-%@";
 
@@ -574,71 +587,81 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     } else {
         titleCell.favoriteButton.tintColor = [UIColor lightGrayColor];
     }
-
-
-    [titleCell setNeedsLayout];
-    [titleCell layoutIfNeeded];
-
+    
     return titleCell;
 }
 
+- (UITableViewCell *) configureSpeakerCell:(EMSTopAlignCellTableViewCell *) cell forRow:(EMSDetailViewRow *)row forIndexPath:(NSIndexPath *) indexPath {
+    
+    cell.nameLabel.text = row.content;
+    cell.nameLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    cell.nameLabel.accessibilityLanguage = self.session.language;
+    
+    cell.descriptionLabel.text = row.body;
+    cell.descriptionLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    cell.descriptionLabel.accessibilityLanguage = self.session.language;
+    
+    cell.thumbnailView.image = row.image;
+    cell.thumbnailView.layer.borderWidth = 1.0f;
+    cell.thumbnailView.layer.borderColor = [UIColor grayColor].CGColor;
+    cell.thumbnailView.layer.masksToBounds = NO;
+    cell.thumbnailView.clipsToBounds = YES;
+    cell.thumbnailView.layer.cornerRadius = CGRectGetWidth(cell.thumbnailView.frame)/2;
+    
+    return cell;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    UITableViewCell *cell;
+    
+    EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
     if (indexPath.section == EMSDetailViewControllerSectionInfo) {
-
-        EMSSessionTitleTableViewCell *cell = [self buildTitleTableCell];
-
-        if ([cell isKindOfClass:[EMSSessionTitleTableViewCell class]]) {
-
-            cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-
-
-            [cell setNeedsLayout];
-            [cell layoutIfNeeded];
-
-            // Get the actual height required for the cell's contentView
-            CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-
-
-            return height;
+        if (!self.titleSizingCell) {
+            self.titleSizingCell = [self.tableView dequeueReusableCellWithIdentifier:@"SessionTitleTableViewCell"];
         }
+
+        cell = [self configureTitleCell:self.titleSizingCell forIndexPath:indexPath];
+        
+    } else if (row.body){
+        if (!self.topAlignSizingCell) {
+            self.topAlignSizingCell = [tableView dequeueReusableCellWithIdentifier:@"SpeakerCell"];
+        }
+        cell = [self configureSpeakerCell:(EMSTopAlignCellTableViewCell *)self.topAlignSizingCell forRow:row forIndexPath:indexPath];
     } else {
-        EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
-
-        UITableViewCell *cell = [self tableView:tableView buildCellForRow:row];
-
-        if ([cell isKindOfClass:[EMSDefaultTableViewCell class]]) {
-
-            cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-
-
-            CGFloat height = (NSInteger) [cell intrinsicContentSize].height;
-
-
-            return height;
-
-        } else if ([cell isKindOfClass:[EMSTopAlignCellTableViewCell class]] || [cell isKindOfClass:[EMSSessionTitleTableViewCell class]]) {
-
-            cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-
-
-            [cell setNeedsLayout];
-            [cell layoutIfNeeded];
-
-            // Get the actual height required for the cell's contentView
-            CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-
-
-            if (row.link && height < 48) {
-                height = 48;
-            }
-
-            return height;
-        }
+        cell = [self tableView:tableView buildCellForRow:row];
     }
+    
 
+    
+    if ([cell isKindOfClass:[EMSDefaultTableViewCell class]]) {
+        
+        cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
+        
+        
+        CGFloat height = (NSInteger) [cell intrinsicContentSize].height;
+        
+        
+        return height;
+        
+    } else {
+        
+        CGFloat prefWidth =CGRectGetWidth(tableView.bounds);
+        CGFloat prefHeigth = CGRectGetHeight(cell.bounds) * M_PI;
+        cell.frame = CGRectMake(0.0f, 0.0f, prefWidth, prefHeigth);
+        
+        [cell setNeedsLayout];
+        [cell layoutSubviews];
+        
+        // Get the actual height required for the cell's contentView
+        CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 2;
 
-    return 48;
+        
+        if (row.link && height < 48) {
+            height = 48;
+        }
+        
+        return height;
+    }
 
 }
 
@@ -669,31 +692,10 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     }
 }
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView buildCellForRow:(EMSDetailViewRow *)row {
 
-    if (row.body) {
-        EMSTopAlignCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SpeakerCell"];
-
-        cell.nameLabel.text = row.content;
-        cell.nameLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
-        cell.nameLabel.accessibilityLanguage = self.session.language;
-
-        cell.descriptionLabel.text = row.body;
-        cell.descriptionLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-        cell.descriptionLabel.accessibilityLanguage = self.session.language;
-
-        cell.thumbnailView.image = row.image;
-        cell.thumbnailView.layer.borderWidth = 1.0f;
-        cell.thumbnailView.layer.borderColor = [UIColor grayColor].CGColor;
-        cell.thumbnailView.layer.masksToBounds = NO;
-        cell.thumbnailView.clipsToBounds = YES;
-        cell.thumbnailView.layer.cornerRadius = CGRectGetWidth(cell.thumbnailView.frame) / 2;
-
-        [cell setNeedsLayout];
-        [cell layoutIfNeeded];
-
-        return cell;
-    } else if (row.link) {
+    if (row.link) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailLinkCell"];
 
         cell.accessibilityLanguage = self.session.language;
@@ -702,10 +704,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         cell.textLabel.text = row.content;
         cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 
-        [cell setNeedsLayout];
-        [cell layoutIfNeeded];
-
-        return cell;
+             return cell;
     } else {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailBodyCell"];
 
@@ -724,10 +723,6 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         }
 
         cell.textLabel.font = font;
-
-        [cell setNeedsLayout];
-        [cell layoutIfNeeded];
-
         return cell;
     }
 
