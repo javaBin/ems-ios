@@ -19,6 +19,7 @@
 #import "Room.h"
 #import "Speaker.h"
 #import "EMSTracking.h"
+#import "SpeakerPic.h"
 
 @implementation EMSModel
 
@@ -1127,6 +1128,54 @@
     return date;
 #endif
 }
+
+- (SpeakerPic *)speakerPicForHref:(NSString *)url {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+
+    [fetchRequest setEntity:[NSEntityDescription entityForName:@"SpeakerPic" inManagedObjectContext:[self managedObjectContext]]];
+
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"(url LIKE %@)", url]];
+
+    NSError *error;
+
+    NSArray *objects = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+
+    if (error) {
+        EMS_LOG(@"Failed to fetch speaker pic for url %@, - %@ - %@", url, error, [error userInfo]);
+    }
+
+    if ([objects count] > 0) {
+        return objects[0];
+    }
+
+    return nil;
+}
+
+- (NSDate *)dateForSpeakerPic:(NSString *)url {
+    SpeakerPic *speakerPic = [self speakerPicForHref:url];
+
+    if (speakerPic) {
+        return speakerPic.lastUpdated;
+    }
+
+    return nil;
+}
+
+- (void)setDate:(NSDate *)date ForSpeakerPic:(NSString *)url {
+    SpeakerPic *speakerPic = [self speakerPicForHref:url];
+
+    if (speakerPic == nil) {
+        speakerPic = [NSEntityDescription
+                insertNewObjectForEntityForName:NSStringFromClass([SpeakerPic class])
+                         inManagedObjectContext:[self managedObjectContext]];
+
+        speakerPic.url = url;
+    }
+
+    speakerPic.lastUpdated = date;
+
+}
+
 
 - (void)deleteAllObjectForPredicate:(NSPredicate *)predicate andType:(NSString *)type {
     NSArray *objects = [self objectsForPredicate:predicate

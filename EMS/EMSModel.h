@@ -42,4 +42,7 @@
 
 - (NSDate *)dateForConference:(Conference *)conference andDate:(NSDate *)date;
 
+- (NSDate *)dateForSpeakerPic:(NSString *)url;
+- (void)setDate:(NSDate *)date ForSpeakerPic:(NSString *)url;
+
 @end

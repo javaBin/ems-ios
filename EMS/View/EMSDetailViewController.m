@@ -800,8 +800,12 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
     [sessionConfiguration setAllowsCellularAccess:YES];
 
-    if (speaker.lastUpdated) {
-        NSString *httpFormattedDate = [httpDateFormatter stringFromDate:speaker.lastUpdated];
+    NSDate *lastModified = [[[EMSAppDelegate sharedAppDelegate] model] dateForSpeakerPic:speaker.thumbnailUrl];
+
+    if (lastModified) {
+        EMS_LOG(@"Setting last modified to %@", lastModified);
+
+        NSString *httpFormattedDate = [httpDateFormatter stringFromDate:lastModified];
         sessionConfiguration.HTTPAdditionalHeaders = @{@"If-Modified-Since" : httpFormattedDate};
         sessionConfiguration.URLCache = nil;
     }
@@ -842,6 +846,16 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
                     if (fileError != nil) {
                         EMS_LOG(@"Failed to copy thumbnail %@ - %@ - %@", location, fileError, [fileError userInfo]);
                     } else {
+                        NSString *lastModifiedHeader = [httpResponse allHeaderFields][@"Last-Modified"];
+
+                        if (lastModifiedHeader) {
+                            __block NSDate *lastModifiedDate = [httpDateFormatter dateFromString:lastModifiedHeader];
+
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [[[EMSAppDelegate sharedAppDelegate] model] setDate:lastModifiedDate ForSpeakerPic:speaker.thumbnailUrl];
+                            });
+                        }
+
                         dispatch_async(dispatch_get_main_queue(), ^{
                             if ([self.session.href isEqualToString:href]) {
                                 [self setupPartsWithThumbnailRefresh:NO];
