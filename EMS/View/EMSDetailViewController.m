@@ -75,7 +75,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
         [self initSpeakerCache:session];
 
-        [self setupParts];
+        [self setupPartsWithThumbnailRefresh:YES];
 
         [self retrieve];
 
@@ -158,7 +158,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
 }
 
-- (void)setupParts {
+- (void)setupPartsWithThumbnailRefresh:(BOOL) thumbnailRefresh {
     NSMutableArray *p = [[NSMutableArray alloc] init];
 
     if ([EMSFeatureConfig isFeatureEnabled:fLinks]) {
@@ -213,7 +213,9 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
                 row.image = img;
 
-                [self checkForNewThumbnailForSpeaker:speaker withFilename:pngFilePath withSessionHref:self.session.href];
+                if (thumbnailRefresh) {
+                    [self checkForNewThumbnailForSpeaker:speaker withFilename:pngFilePath forSessionHref:self.session.href];
+                }
             }
         }
 
@@ -766,68 +768,94 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
             if (newBios) {
                 EMS_LOG(@"Saw updated bios - updating screen");
                 self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
-                [self setupParts];
+                [self setupPartsWithThumbnailRefresh:YES];
             }
         }
     });
 }
 
-- (void)checkForNewThumbnailForSpeaker:(Speaker *)speaker withFilename:(NSString *)pngFilePath withSessionHref:(NSString *)href {
+- (void)checkForNewThumbnailForSpeaker:(Speaker *)speaker withFilename:(NSString *)pngFilePath forSessionHref:(NSString *)href {
     EMS_LOG(@"Checking for updated thumbnail %@", speaker.thumbnailUrl);
 
-    NSData *thumbData = [NSData dataWithContentsOfFile:pngFilePath];
+    static NSDateFormatter *httpDateFormatter;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        httpDateFormatter = [[NSDateFormatter alloc] init];
+        httpDateFormatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+        httpDateFormatter.dateFormat = @"EEE, dd MMM yyyy HH:mm:ss 'GMT'";
+    });
 
-    dispatch_queue_t queue = dispatch_queue_create("thumbnail_queue", DISPATCH_QUEUE_CONCURRENT);
+    NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    [sessionConfiguration setAllowsCellularAccess:YES];
+
+    NSDate *lastModified = [[[EMSAppDelegate sharedAppDelegate] model] dateForSpeakerPic:speaker.thumbnailUrl];
+
+    if (lastModified) {
+        EMS_LOG(@"Setting last modified to %@", lastModified);
+
+        NSString *httpFormattedDate = [httpDateFormatter stringFromDate:lastModified];
+        sessionConfiguration.HTTPAdditionalHeaders = @{@"If-Modified-Since" : httpFormattedDate};
+        sessionConfiguration.URLCache = nil;
+    }
+
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfiguration];
 
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
 
-    dispatch_async(queue, ^{
-        NSError *thumbnailError = nil;
-
-        NSURL *url = [NSURL URLWithString:speaker.thumbnailUrl];
-
-        NSData *data = [NSData dataWithContentsOfURL:url
-                                             options:NSDataReadingMappedIfSafe
-                                               error:&thumbnailError];
-
-        if (data == nil) {
-            EMS_LOG(@"Failed to retrieve thumbnail %@ - %@ - %@", url, thumbnailError, [thumbnailError userInfo]);
-
-            [[EMSAppDelegate sharedAppDelegate] stopNetwork];
+    [[session downloadTaskWithURL:[NSURL URLWithString:speaker.thumbnailUrl] completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+        if (error != nil) {
+            EMS_LOG(@"Failed to retrieve thumbnail %@ - %@ - %@", speaker.thumbnailUrl, error, [error userInfo]);
         } else {
-            UIImage *image = [UIImage imageWithData:data];
-
-            NSData *newThumbData = [NSData dataWithData:UIImagePNGRepresentation(image)];
-
-            __block BOOL needToSave = NO;
-
-            if (thumbData == nil) {
-                EMS_LOG(@"No existing bioPic - need to save");
-                needToSave = YES;
-            } else if (![thumbData isEqualToData:newThumbData]) {
-                EMS_LOG(@"Thumbnail data didn't match - update");
-                needToSave = YES;
-            }
-
-            if (needToSave) {
-                EMS_LOG(@"Saving image file");
-
-                [newThumbData writeToFile:pngFilePath atomically:YES];
-            }
-
-            [[EMSAppDelegate sharedAppDelegate] stopNetwork];
-
+            // Network is likely still up
             [EMSTracking dispatch];
 
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (needToSave) {
-                    if ([self.session.href isEqualToString:href]) {
-                        [self setupParts];
+            // Cast to http - safe as long as we've made a web call
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+
+            if (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) {
+
+                NSFileManager *fileManager = [NSFileManager defaultManager];
+
+                if ([fileManager isReadableFileAtPath:[location path]]) {
+                    NSError *fileError;
+
+                    if ([fileManager isDeletableFileAtPath:pngFilePath]) {
+                        [fileManager removeItemAtPath:pngFilePath error:&fileError];
+
+                        if (fileError != nil) {
+                            EMS_LOG(@"Failed to delete old thumbnail %@ - %@ - %@", pngFilePath, fileError, [fileError userInfo]);
+
+                            fileError = nil;
+                        }
+                    }
+
+                    [fileManager moveItemAtPath:[location path] toPath:pngFilePath error:&fileError];
+
+                    if (fileError != nil) {
+                        EMS_LOG(@"Failed to copy thumbnail %@ - %@ - %@", location, fileError, [fileError userInfo]);
+                    } else {
+                        NSString *lastModifiedHeader = [httpResponse allHeaderFields][@"Last-Modified"];
+
+                        if (lastModifiedHeader) {
+                            __block NSDate *lastModifiedDate = [httpDateFormatter dateFromString:lastModifiedHeader];
+
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [[[EMSAppDelegate sharedAppDelegate] model] setDate:lastModifiedDate ForSpeakerPic:speaker.thumbnailUrl];
+                            });
+                        }
+
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            if ([self.session.href isEqualToString:href]) {
+                                [self setupPartsWithThumbnailRefresh:NO];
+                            }
+                        });
                     }
                 }
-            });
+            }
         }
-    });
+
+        [[EMSAppDelegate sharedAppDelegate] stopNetwork];
+    }] resume];
 }
 
 - (NSString *)pathForCachedThumbnail:(Speaker *)speaker {
