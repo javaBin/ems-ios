@@ -56,13 +56,13 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
 - (void)setupWithSession:(Session *)session {
     if (session) {
-        
+
         if (self.observersInstalled) {
             [self.session removeObserver:self forKeyPath:@"favourite"];
         }
-        
+
         self.session = session;
-        
+
         if (self.observersInstalled) {
             [self.session addObserver:self forKeyPath:@"favourite" options:0 context:nil];
         }
@@ -83,7 +83,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
 
-    
+
     NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
 
     [timeFormatter setDateStyle:NSDateFormatterNoStyle];
@@ -93,9 +93,9 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
     if (session.slot) {
         [title appendString:[NSString stringWithFormat:@"%@ %@ - %@",
-                             [dateFormatter stringFromDate:session.slot.start],
-                             [timeFormatter stringFromDate:session.slot.start],
-                             [timeFormatter stringFromDate:session.slot.end]]];
+                                                       [dateFormatter stringFromDate:session.slot.start],
+                                                       [timeFormatter stringFromDate:session.slot.start],
+                                                       [timeFormatter stringFromDate:session.slot.end]]];
     } else {
         if (session.slotName != nil) {
             [title appendString:session.slotName];
@@ -112,26 +112,26 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
-    
-    
+
+
     NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
-    
+
     [timeFormatter setDateStyle:NSDateFormatterNoStyle];
     [timeFormatter setTimeStyle:NSDateFormatterShortStyle];
-    
+
     NSMutableString *title = [[NSMutableString alloc] init];
-    
+
     if (session.slot) {
         [title appendString:[NSString stringWithFormat:NSLocalizedString(@"%@ at %@ to %@", @"{Session date} at {Session start time} to {Session end time}"),
-                             [dateFormatter stringFromDate:session.slot.start],
-                             [timeFormatter stringFromDate:session.slot.start],
-                             [timeFormatter stringFromDate:session.slot.end]]];
+                                                       [dateFormatter stringFromDate:session.slot.start],
+                                                       [timeFormatter stringFromDate:session.slot.start],
+                                                       [timeFormatter stringFromDate:session.slot.end]]];
     } else {
         if (session.slotName != nil) {
             [title appendString:session.slotName];
         }
     }
-    
+
     if (session.roomName != nil) {
         [title appendString:[NSString stringWithFormat:NSLocalizedString(@" in %@", @" in {Room name}"), session.roomName]];
     }
@@ -194,7 +194,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
     [self.session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         Speaker *speaker = (Speaker *) obj;
-        
+
         EMSDetailViewRow *row = [[EMSDetailViewRow alloc] initWithContent:speaker.name];
 
         if ([EMSFeatureConfig isFeatureEnabled:fBioPics]) {
@@ -234,21 +234,21 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 - (void)addObservers {
     if (!self.observersInstalled) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTableViewRowHeightReload) name:UIContentSizeCategoryDidChangeNotification object:nil];
-        
+
         [self.session addObserver:self forKeyPath:@"favourite" options:0 context:NULL];
-        
+
         self.observersInstalled = YES;
-                
+
     }
 }
 
 - (void)removeObservers {
     if (self.observersInstalled) {
-        
+
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
-        
+
         [self.session removeObserver:self forKeyPath:@"favourite"];
-        
+
         self.observersInstalled = NO;
     }
 
@@ -270,19 +270,19 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
         self.automaticallyAdjustsScrollViewInsets = YES;
     }
-    
+
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 
     self.observersInstalled = NO;
-    
+
     [self setupWithSession:self.session];
 
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+
     [self addObservers];
 }
 
@@ -514,137 +514,130 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger rows = 0;
-    
+
     if (section == EMSDetailViewControllerSectionInfo) {
         rows = 1;
     } else if (section == EMSDetailViewControllerSectionLegacy) {
         rows = [self.parts count];
     }
-    
+
     return rows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+
     UITableViewCell *cell = nil;
-    
+
     if (indexPath.section == EMSDetailViewControllerSectionInfo) {
 
-        cell = [self tableView:tableView buildCellForIndexPath:indexPath];
-        
+        cell = [self buildTitleTableCell];
+
     } else if (indexPath.section == EMSDetailViewControllerSectionLegacy) {
         EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
         cell = [self tableView:tableView buildCellForRow:row];
     }
-    
+
     return cell;
 
 }
 
-- (EMSSessionTitleTableViewCell *) tableView:(UITableView *) tableView buildCellForIndexPath:(NSIndexPath *) indexPath {
+- (EMSSessionTitleTableViewCell *)buildTitleTableCell {
     EMSSessionTitleTableViewCell *titleCell = [self.tableView dequeueReusableCellWithIdentifier:@"SessionTitleTableViewCell"];
     titleCell.titleLabel.text = self.session.title;
     titleCell.titleLabel.accessibilityLanguage = self.session.language;
-    
+
     UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
-    
+
     font = [font fontWithSize:(CGFloat) (font.pointSize * 1.2)];
-    
+
     titleCell.titleLabel.font = font;
-    
-    
-    
+
     titleCell.timeAndRoomLabel.text = [EMSDetailViewController createControllerTitle:self.session];
     titleCell.timeAndRoomLabel.accessibilityLabel = [EMSDetailViewController createControllerAccessibilityTitle:self.session];
-    
-    
-    
-    
+
     NSString *imageBaseName = [self.session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star";
     NSString *imageNameFormat = @"%@-%@";
-    
+
     UIImage *normalImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"grey"]];
     UIImage *selectedImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"yellow"]];
-    
+
     if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
         normalImage = [normalImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     }
-    
+
     [titleCell.favoriteButton setImage:normalImage forState:UIControlStateNormal];
     [titleCell.favoriteButton setImage:selectedImage forState:UIControlStateSelected];
-    
+
     if ([self.session.favourite boolValue]) {
         titleCell.favoriteButton.tintColor = nil;
     } else {
         titleCell.favoriteButton.tintColor = [UIColor lightGrayColor];
     }
-    
-    
-    
+
+
     [titleCell setNeedsLayout];
     [titleCell layoutIfNeeded];
-    
+
     return titleCell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     if (indexPath.section == EMSDetailViewControllerSectionInfo) {
-        
-        EMSSessionTitleTableViewCell *cell = [self tableView:tableView buildCellForIndexPath:indexPath];
-        
+
+        EMSSessionTitleTableViewCell *cell = [self buildTitleTableCell];
+
         if ([cell isKindOfClass:[EMSSessionTitleTableViewCell class]]) {
-            
+
             cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-            
-            
+
+
             [cell setNeedsLayout];
             [cell layoutIfNeeded];
-            
+
             // Get the actual height required for the cell's contentView
             CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-            
-            
+
+
             return height;
         }
     } else {
         EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
-        
+
         UITableViewCell *cell = [self tableView:tableView buildCellForRow:row];
-        
+
         if ([cell isKindOfClass:[EMSDefaultTableViewCell class]]) {
-            
+
             cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-            
-            
+
+
             CGFloat height = (NSInteger) [cell intrinsicContentSize].height;
-            
-            
+
+
             return height;
-            
+
         } else if ([cell isKindOfClass:[EMSTopAlignCellTableViewCell class]] || [cell isKindOfClass:[EMSSessionTitleTableViewCell class]]) {
-            
+
             cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-            
-            
+
+
             [cell setNeedsLayout];
             [cell layoutIfNeeded];
-            
+
             // Get the actual height required for the cell's contentView
             CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-            
-        
-           
+
+
             if (row.link && height < 48) {
                 height = 48;
             }
-            
+
             return height;
-        } 
+        }
     }
-    
-    
+
+
     return 48;
 
 }
@@ -652,27 +645,27 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == EMSDetailViewControllerSectionLegacy) {
         EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
-        
+
         if (row.link) {
             return indexPath;
         }
     }
-    
+
     return nil;
-    
+
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == EMSDetailViewControllerSectionLegacy) {
         EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
-        
+
         if (row.link) {
             [EMSTracking trackEventWithCategory:@"web" action:@"open link" label:[row.link absoluteString]];
-            
+
             [[UIApplication sharedApplication] openURL:row.link];
         }
-        
-        [tableView deselectRowAtIndexPath:indexPath animated:false];        
+
+        [tableView deselectRowAtIndexPath:indexPath animated:false];
     }
 }
 
@@ -680,21 +673,21 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
     if (row.body) {
         EMSTopAlignCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SpeakerCell"];
-        
+
         cell.nameLabel.text = row.content;
         cell.nameLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
         cell.nameLabel.accessibilityLanguage = self.session.language;
-        
+
         cell.descriptionLabel.text = row.body;
         cell.descriptionLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
         cell.descriptionLabel.accessibilityLanguage = self.session.language;
-        
+
         cell.thumbnailView.image = row.image;
         cell.thumbnailView.layer.borderWidth = 1.0f;
         cell.thumbnailView.layer.borderColor = [UIColor grayColor].CGColor;
         cell.thumbnailView.layer.masksToBounds = NO;
         cell.thumbnailView.clipsToBounds = YES;
-        cell.thumbnailView.layer.cornerRadius = CGRectGetWidth(cell.thumbnailView.frame)/2;
+        cell.thumbnailView.layer.cornerRadius = CGRectGetWidth(cell.thumbnailView.frame) / 2;
 
         [cell setNeedsLayout];
         [cell layoutIfNeeded];
@@ -702,9 +695,9 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         return cell;
     } else if (row.link) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailLinkCell"];
-        
+
         cell.accessibilityLanguage = self.session.language;
-        
+
         cell.imageView.image = row.image;
         cell.textLabel.text = row.content;
         cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
@@ -715,13 +708,13 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         return cell;
     } else {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailBodyCell"];
-        
+
         cell.accessibilityLanguage = self.session.language;
-        
+
         cell.imageView.image = row.image;
         cell.textLabel.text = row.content;
-        
-        
+
+
         UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 
         if (row.emphasis) {
@@ -862,21 +855,21 @@ static NSString *const EMSDetailViewControllerRestorationIdentifierSessionHref =
 
 - (void)encodeRestorableStateWithCoder:(NSCoder *)coder {
     [super encodeRestorableStateWithCoder:coder];
-    
+
     [coder encodeObject:self.session.href forKey:EMSDetailViewControllerRestorationIdentifierSessionHref];
 }
 
 - (void)decodeRestorableStateWithCoder:(NSCoder *)coder {
     [super decodeRestorableStateWithCoder:coder];
-    
-    
+
+
     NSString *sessionHref = [coder decodeObjectForKey:EMSDetailViewControllerRestorationIdentifierSessionHref];
-    
+
     if (sessionHref) {
         Session *session = [[[EMSAppDelegate sharedAppDelegate] model] sessionForHref:sessionHref];
         [self setupWithSession:session];
     }
-    
+
 }
 
 @end
