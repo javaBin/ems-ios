@@ -10,13 +10,17 @@
 
     CGFloat preferredWidth = CGRectGetWidth(self.bounds) - self.separatorInset.left * 2;
     
-    
-    UIFont *cellFont = self.textLabel.font;
     CGSize constraintSize = CGSizeMake(preferredWidth, MAXFLOAT);
-    CGSize labelSize = [self.textLabel.text sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:NSLineBreakByWordWrapping];
     
+    NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineBreakMode = self.textLabel.lineBreakMode;
+    paragraphStyle.alignment = self.textLabel.textAlignment;
     
-    return CGSizeMake(CGRectGetWidth(self.frame), labelSize.height + 20);
+    NSDictionary *attributes = @{NSFontAttributeName : self.textLabel.font };
+    
+    CGRect rect = [self.textLabel.text boundingRectWithSize:constraintSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
+    
+    return CGSizeMake(CGRectGetWidth(self.frame), ceil(CGRectGetHeight(rect)) + 20);
 }
 
 @end
