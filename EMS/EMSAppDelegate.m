@@ -33,7 +33,7 @@ int networkCount = 0;
     NSDictionary *prefs = [EMSFeatureConfig getKeys];
 
     if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-#ifdef DEBUG
+#ifdef DEBUGCRASHLYTICS
         [[Crashlytics sharedInstance] setDebugMode:YES];
 #endif
         [Crashlytics startWithAPIKey:prefs[@"crashlytics-api-key"] delegate:self];

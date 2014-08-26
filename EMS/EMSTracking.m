@@ -15,7 +15,7 @@
     if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
         [[GAI sharedInstance] trackerWithTrackingId:key];
 
-#ifdef DEBUG
+#ifdef DEBUGANALYTICS
         [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
 #endif
     }
