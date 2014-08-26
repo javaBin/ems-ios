@@ -93,56 +93,15 @@ NSDate *timer;
     [self.delegate finishedConferences:collection forHref:href];
 }
 
-- (void)getEventCollection:(NSData *)data withParseQueue:(dispatch_queue_t)queue forHref:(NSURL *)url {
-    NSError *error;
-
-    CJCollection *collection = [CJCollection collectionForNSData:data error:&error];
-
-    if (!collection) {
-        EMS_LOG(@"Failed to parse conference list %@ - %@", error, [error userInfo]);
-
-        dispatch_async(queue, ^{
-            [self fetchedEventCollection:nil forHref:url];
-        });
-    }
-
-    if (collection) {
-        [collection.links enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            CJLink *link = (CJLink *) obj;
-
-            if ([link.rel isEqualToString:@"event collection"]) {
-                NSURLSession *session = [NSURLSession sharedSession];
-
-                [[EMSAppDelegate sharedAppDelegate] startNetwork];
-
-                [[session dataTaskWithURL:link.href completionHandler:^(NSData *eventData, NSURLResponse *response, NSError *eventError) {
-                    if (eventError != nil) {
-                        EMS_LOG(@"Retrieved nil root %@ - %@ - %@", link.href, eventError, [eventError userInfo]);
-                    }
-
-                    dispatch_async(queue, ^{
-                        [self fetchedEventCollection:eventData forHref:url];    
-                    });
-
-                    [[EMSAppDelegate sharedAppDelegate] stopNetwork];
-                }] resume];
-            }
-        }];
-    }
-
-}
-
 - (void)parse:(NSData *)data forHref:(NSURL *)url withParseQueue:(dispatch_queue_t)queue {
     if (url == nil) {
-        EMS_LOG(@"Asked to fetch nil conferences url");
+        EMS_LOG(@"Asked to fetch nil events url");
 
         return;
     }
-
     dispatch_async(queue, ^{
-        [self getEventCollection:data withParseQueue:queue forHref:url];
+        [self fetchedEventCollection:data forHref:url];
     });
-
 }
 
 @end

@@ -21,7 +21,7 @@
 
 @property(readonly) BOOL refreshingSpeakers;
 
-- (void)refreshConferences;
+- (void)refreshRoot;
 
 - (void)refreshActiveConference;
 

@@ -15,9 +15,11 @@
 
 #import "EMSModel.h"
 #import "EMSConference.h"
+#import "EMSRootRetriever.h"
 
 @interface EMSRetriever () <EMSRetrieverDelegate>
 
+@property(readwrite) BOOL refreshingRoot;
 @property(readwrite) BOOL refreshingConferences;
 @property(readwrite) BOOL refreshingSessions;
 @property(readwrite) BOOL refreshingSpeakers;
@@ -49,6 +51,8 @@
 
         _refreshingSlots = NO;
         _refreshingRooms = NO;
+
+        _refreshingRoot = NO;
         
         _parseQueue = dispatch_queue_create("ems-parse-queue", DISPATCH_QUEUE_CONCURRENT);
         
@@ -75,10 +79,46 @@
     return nil;
 }
 
-
-- (void)refreshConferences {
+- (void)refreshRoot {
     NSAssert([NSThread isMainThread], @"Should be called on main thread.");
 
+    if (self.refreshingRoot) {
+        return;
+    }
+
+    self.refreshingRoot = YES;
+
+    NSURLSession *session = [NSURLSession sharedSession];
+
+    [[EMSAppDelegate sharedAppDelegate] startNetwork];
+
+    NSURL *url = [EMSConfig emsRootUrl];
+
+    [[session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error != nil) {
+            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
+        }
+
+        EMSRootRetriever *retriever = [[EMSRootRetriever alloc] init];
+
+        retriever.delegate = self;
+
+        [retriever parse:data forHref:url withParseQueue:self.parseQueue];
+
+        [[EMSAppDelegate sharedAppDelegate] stopNetwork];
+    }] resume];
+}
+
+- (void)finishedRoot:(NSDictionary *)links
+                    forHref:(NSURL *)href {
+
+    if (links[@"event collection"]) {
+        [self refreshConferencesForHref:links[@"event collection"]];
+    }
+}
+
+
+- (void)refreshConferencesForHref:(NSURL *)url {
     if (self.refreshingConferences) {
         return;
     }
@@ -89,7 +129,6 @@
     
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
     
-    NSURL *url = [EMSConfig emsRootUrl];
     [[session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
             EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
@@ -103,7 +142,6 @@
         
         [[EMSAppDelegate sharedAppDelegate] stopNetwork];
     }] resume];
-
 }
 
 - (void)finishedConferences:(NSArray *)conferences

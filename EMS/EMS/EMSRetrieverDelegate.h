@@ -8,6 +8,8 @@
 
 @optional
 
+- (void)finishedRoot:(NSDictionary *)links forHref:(NSURL *)href;
+
 - (void)finishedConferences:(NSArray *)conferences forHref:(NSURL *)href;
 
 - (void)finishedSlots:(NSArray *)slots forHref:(NSURL *)href;
