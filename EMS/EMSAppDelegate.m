@@ -185,11 +185,14 @@ int networkCount = 0;
 
     EMS_LOG(@"No moc - initializing");
 
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil) {
-        __managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-        [__managedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+        if (coordinator != nil) {
+            __managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+            [__managedObjectContext setPersistentStoreCoordinator:coordinator];
+        }
+    });
 
     EMS_LOG(@"No moc - initialized");
 
@@ -203,12 +206,15 @@ int networkCount = 0;
 
     EMS_LOG(@"No UI moc - initializing");
 
-    NSManagedObjectContext *parent = [self managedObjectContext];
-    if (parent != nil) {
-        __uiManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-        [__uiManagedObjectContext setUndoManager:nil];
-        [__uiManagedObjectContext setParentContext:parent];
-    }
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSManagedObjectContext *parent = [self managedObjectContext];
+        if (parent != nil) {
+            __uiManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+            [__uiManagedObjectContext setUndoManager:nil];
+            [__uiManagedObjectContext setParentContext:parent];
+        }
+    });
 
     EMS_LOG(@"No UI moc - initialized");
 
@@ -222,12 +228,15 @@ int networkCount = 0;
 
     EMS_LOG(@"No background moc - initializing");
 
-    NSManagedObjectContext *parent = [self uiManagedObjectContext];
-    if (parent != nil) {
-        __backgroundManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-        [__backgroundManagedObjectContext setUndoManager:nil];
-        [__backgroundManagedObjectContext setParentContext:parent];
-    }
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSManagedObjectContext *parent = [self uiManagedObjectContext];
+        if (parent != nil) {
+            __backgroundManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+            [__backgroundManagedObjectContext setUndoManager:nil];
+            [__backgroundManagedObjectContext setParentContext:parent];
+        }
+    });
 
     EMS_LOG(@"No background moc - initialized");
 
