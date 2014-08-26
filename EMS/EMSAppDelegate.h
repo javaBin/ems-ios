@@ -12,6 +12,7 @@
 
 @property(nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property(nonatomic, strong) NSManagedObjectContext *uiManagedObjectContext;
+@property(nonatomic, strong) NSManagedObjectContext *backgroundManagedObjectContext;
 @property(nonatomic, strong) NSManagedObjectModel *managedObjectModel;
 @property(nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 

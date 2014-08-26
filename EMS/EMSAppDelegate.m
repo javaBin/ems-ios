@@ -12,6 +12,7 @@
 int networkCount = 0;
 
 @synthesize managedObjectContext = __managedObjectContext;
+@synthesize backgroundManagedObjectContext = __backgroundManagedObjectContext;
 @synthesize uiManagedObjectContext = __uiManagedObjectContext;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
@@ -209,10 +210,30 @@ int networkCount = 0;
         [__uiManagedObjectContext setParentContext:parent];
     }
 
-    EMS_LOG(@"No moc - initialized");
+    EMS_LOG(@"No UI moc - initialized");
 
     return __uiManagedObjectContext;
 }
+
+- (NSManagedObjectContext *)backgroundManagedObjectContext {
+    if (__backgroundManagedObjectContext != nil) {
+        return __backgroundManagedObjectContext;
+    }
+
+    EMS_LOG(@"No background moc - initializing");
+
+    NSManagedObjectContext *parent = [self uiManagedObjectContext];
+    if (parent != nil) {
+        __backgroundManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        [__backgroundManagedObjectContext setUndoManager:nil];
+        [__backgroundManagedObjectContext setParentContext:parent];
+    }
+
+    EMS_LOG(@"No background moc - initialized");
+
+    return __backgroundManagedObjectContext;
+}
+
 
 - (NSManagedObjectModel *)managedObjectModel {
     if (__managedObjectModel != nil) {
@@ -232,9 +253,7 @@ int networkCount = 0;
 - (EMSModel *)modelForBackground {
     EMS_LOG(@"Creating background model");
 
-    NSManagedObjectContext *backgroundContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
-    [backgroundContext setUndoManager:nil];
-    [backgroundContext setParentContext:self.uiManagedObjectContext];
+    NSManagedObjectContext *backgroundContext = [self backgroundManagedObjectContext];
 
     EMSModel *backgroundModel = [[EMSModel alloc] initWithManagedObjectContext:backgroundContext];
 
