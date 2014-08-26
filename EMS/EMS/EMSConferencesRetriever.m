@@ -85,7 +85,6 @@ NSDate *timer;
 - (void)fetchedEventCollection:(NSData *)responseData forHref:(NSURL *)href {
     NSArray *collection = [self processData:responseData andHref:href];
 
-    [[EMSAppDelegate sharedAppDelegate] stopNetwork];
 
     [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"conferences"];
     [EMSTracking dispatch];
