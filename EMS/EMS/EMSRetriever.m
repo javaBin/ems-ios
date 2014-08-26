@@ -108,30 +108,30 @@
         if (![backgroundModel storeConferences:conferences error:&error]) {
             EMS_LOG(@"Failed to store conferences %@ - %@", error, [error userInfo]);
         }
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
+            
+            self.refreshingConferences = NO;
+            
+            NSArray *filteredConferences = [conferences filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+                EMSConference *emsConference = evaluatedObject;
+                return [emsConference.hintCount longValue] > 0;
+            }]];
+            
+            NSArray *sortedConferences = [filteredConferences sortedArrayWithOptions:NSSortStable usingComparator:^NSComparisonResult(id obj1, id obj2) {
+                EMSConference *emsConference1 = obj1;
+                EMSConference *emsConference2 = obj2;
+                
+                return [emsConference1.start compare:emsConference2.start];
+            }];
+            EMSConference *latestConference = sortedConferences.lastObject;
+            
+            
+            [EMSAppDelegate storeCurrentConference:latestConference.href];
+            
+        });
     }];
 
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
-
-        self.refreshingConferences = NO;
-
-        NSArray *filteredConferences = [conferences filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-            EMSConference *emsConference = evaluatedObject;
-            return [emsConference.hintCount longValue] > 0;
-        }]];
-
-        NSArray *sortedConferences = [filteredConferences sortedArrayWithOptions:NSSortStable usingComparator:^NSComparisonResult(id obj1, id obj2) {
-            EMSConference *emsConference1 = obj1;
-            EMSConference *emsConference2 = obj2;
-
-            return [emsConference1.start compare:emsConference2.start];
-        }];
-        EMSConference *latestConference = sortedConferences.lastObject;
-
-
-        [EMSAppDelegate storeCurrentConference:latestConference.href];
-
-    });
 
 
 }
@@ -193,17 +193,17 @@
         if (![backgroundModel storeSpeakers:speakers forHref:[href absoluteString] error:&error]) {
             EMS_LOG(@"Failed to store speakers %@ - %@", error, [error userInfo]);
         }
+
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
+            self.refreshingSpeakers = NO;
+            
+            if ([self.delegate respondsToSelector:@selector(finishedSpeakers:forHref:)]) {
+                [self.delegate finishedSpeakers:speakers forHref:href];
+            } 
+        });
     }];
 
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
-        self.refreshingSpeakers = NO;
-
-
-    });
-    if ([self.delegate respondsToSelector:@selector(finishedSpeakers:forHref:)]) {
-        [self.delegate finishedSpeakers:speakers forHref:href];
-    }
 
 }
 
@@ -221,13 +221,15 @@
         if (![backgroundModel storeSlots:slots forHref:[href absoluteString] error:&error]) {
             EMS_LOG(@"Failed to store slots %@ - %@", error, [error userInfo]);
         }
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            _refreshingSlots = NO;
+            
+            [self retrieveSessions];
+        });
     }];
 
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        _refreshingSlots = NO;
-
-        [self retrieveSessions];
-    });
+    
 }
 
 - (void)finishedSessions:(NSArray *)sessions
@@ -243,13 +245,13 @@
         if (![backgroundModel storeSessions:sessions forHref:[href absoluteString] error:&error]) {
             EMS_LOG(@"Failed to store sessions %@ - %@", error, [error userInfo]);
         }
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
+            
+            self.refreshingSessions = NO;
+        });
     }];
 
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
-
-        self.refreshingSessions = NO;
-    });
 }
 
 - (void)finishedRooms:(NSArray *)rooms
@@ -265,13 +267,13 @@
         if (![backgroundModel storeRooms:rooms forHref:[href absoluteString] error:&error]) {
             EMS_LOG(@"Failed to store rooms %@ - %@", error, [error userInfo]);
         }
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            _refreshingRooms = NO;
+            
+            [self retrieveSessions];
+        });
     }];
 
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        _refreshingRooms = NO;
-
-        [self retrieveSessions];
-    });
 }
 
 - (void)refreshSlots:(NSURL *)slotCollection {
