@@ -69,39 +69,34 @@ NSDate *timer;
 - (void)fetchedSpeakers:(NSData *)responseData forHref:(NSURL *)href {
     NSArray *collection = [self processData:responseData forHref:href];
 
-    [[EMSAppDelegate sharedAppDelegate] stopNetwork];
-
     [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"speakers"];
     [EMSTracking dispatch];
 
     [self.delegate finishedSpeakers:collection forHref:href];
 }
 
-- (void)fetch:(NSURL *)url {
+- (void)fetch:(NSURL *)url withParseQueue:(dispatch_queue_t)queue {
     if (url == nil) {
         EMS_LOG(@"Asked to fetch nil speakers url");
 
         return;
     }
-    dispatch_queue_t queue = dispatch_queue_create("ems_speaker_queue", DISPATCH_QUEUE_CONCURRENT);
+
+    NSURLSession *session = [NSURLSession sharedSession];
 
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
 
-    timer = [NSDate date];
-
-    dispatch_async(queue, ^{
-        NSError *rootError = nil;
-
-        NSData *root = [NSData dataWithContentsOfURL:url options:NSDataReadingMappedIfSafe error:&rootError];
-
-        if (root == nil) {
-            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, rootError, [rootError userInfo]);
+    [[session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error != nil) {
+            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
         }
 
         dispatch_async(queue, ^{
-            [self fetchedSpeakers:root forHref:url];
+            [self fetchedSpeakers:data forHref:url];
         });
-    });
+
+        [[EMSAppDelegate sharedAppDelegate] stopNetwork];
+    }] resume];
 }
 
 

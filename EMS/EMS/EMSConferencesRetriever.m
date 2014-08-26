@@ -93,71 +93,67 @@ NSDate *timer;
     [self.delegate finishedConferences:collection forHref:href];
 }
 
-- (void)fetch:(NSURL *)url {
+- (void)getEventCollection:(NSData *)data withParseQueue:(dispatch_queue_t)queue forHref:(NSURL *)url {
+    NSError *error;
+
+    CJCollection *collection = [CJCollection collectionForNSData:data error:&error];
+
+    if (!collection) {
+        EMS_LOG(@"Failed to parse conference list %@ - %@", error, [error userInfo]);
+
+        dispatch_async(queue, ^{
+            [self fetchedEventCollection:nil forHref:url];
+        });
+    }
+
+    if (collection) {
+        [collection.links enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            CJLink *link = (CJLink *) obj;
+
+            if ([link.rel isEqualToString:@"event collection"]) {
+                NSURLSession *session = [NSURLSession sharedSession];
+
+                [[EMSAppDelegate sharedAppDelegate] startNetwork];
+
+                [[session dataTaskWithURL:link.href completionHandler:^(NSData *eventData, NSURLResponse *response, NSError *eventError) {
+                    if (eventError != nil) {
+                        EMS_LOG(@"Retrieved nil root %@ - %@ - %@", link.href, eventError, [eventError userInfo]);
+                    }
+
+                    dispatch_async(queue, ^{
+                        [self fetchedEventCollection:eventData forHref:url];
+                    });
+
+                    [[EMSAppDelegate sharedAppDelegate] stopNetwork];
+                }] resume];
+            }
+        }];
+    }
+
+}
+
+- (void)fetch:(NSURL *)url withParseQueue:(dispatch_queue_t)queue {
     if (url == nil) {
         EMS_LOG(@"Asked to fetch nil conferences url");
 
         return;
     }
 
-    dispatch_queue_t queue = dispatch_queue_create("ems_conference_queue", DISPATCH_QUEUE_CONCURRENT);
+    NSURLSession *session = [NSURLSession sharedSession];
 
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
 
-    timer = [NSDate date];
-
-    dispatch_async(queue, ^{
-        NSError *rootError = nil;
-
-        NSData *root = [NSData dataWithContentsOfURL:url options:NSDataReadingMappedIfSafe error:&rootError];
-
-        if (root == nil) {
-            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, rootError, [rootError userInfo]);
-
-            dispatch_async(queue, ^{
-                [self fetchedEventCollection:nil forHref:url];
-            });
+    [[session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error != nil) {
+            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
         }
 
-        if (root != nil) {
-            dispatch_async(queue, ^{
-                NSError *error = nil;
+        dispatch_async(queue, ^{
+            [self getEventCollection:data withParseQueue:queue forHref:url];
+        });
 
-                CJCollection *collection = [CJCollection collectionForNSData:root error:&error];
-
-                if (!collection) {
-                    EMS_LOG(@"Failed to retrieve root %@ - %@ - %@", url, error, [error userInfo]);
-
-                    dispatch_async(queue, ^{
-                        [self fetchedEventCollection:nil forHref:url];
-                    });
-                }
-
-                if (collection) {
-                    [collection.links enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                        CJLink *link = (CJLink *) obj;
-
-                        if ([link.rel isEqualToString:@"event collection"]) {
-                            dispatch_async(queue, ^{
-                                NSError *eventsError = nil;
-
-                                NSData *events = [NSData dataWithContentsOfURL:link.href options:NSDataReadingMappedIfSafe error:&eventsError];
-
-                                if (events == nil) {
-                                    EMS_LOG(@"Retrieved nil events %@ - %@ - %@", url, eventsError, [eventsError userInfo]);
-                                }
-
-                                dispatch_async(queue, ^{
-                                    [self fetchedEventCollection:events forHref:url];
-                                });
-                            });
-                        }
-                    }];
-                }
-            });
-        }
-    });
+        [[EMSAppDelegate sharedAppDelegate] stopNetwork];
+    }] resume];
 }
-
 
 @end
