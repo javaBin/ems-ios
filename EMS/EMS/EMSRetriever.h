@@ -25,6 +25,6 @@
 
 - (void)refreshActiveConference;
 
-- (void)refreshSpeakers:(NSURL *)speakerCollection;
+- (void)refreshSpeakers:(NSURL *)url;
 
 @end

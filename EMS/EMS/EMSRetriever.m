@@ -4,18 +4,18 @@
 
 #import "EMSRetriever.h"
 
-#import "EMSConferencesRetriever.h"
-#import "EMSSlotsRetriever.h"
-#import "EMSSessionsRetriever.h"
-#import "EMSRoomsRetriever.h"
-#import "EMSSpeakersRetriever.h"
+#import "EMSEventsParser.h"
+#import "EMSSlotsParser.h"
+#import "EMSSessionsParser.h"
+#import "EMSRoomsParser.h"
+#import "EMSSpeakersParser.h"
 #import "EMSConfig.h"
 
 #import "EMSAppDelegate.h"
 
-#import "EMSModel.h"
 #import "EMSConference.h"
-#import "EMSRootRetriever.h"
+#import "EMSRootParser.h"
+#import "EMSTracking.h"
 
 @interface EMSRetriever () <EMSRetrieverDelegate>
 
@@ -53,9 +53,9 @@
         _refreshingRooms = NO;
 
         _refreshingRoot = NO;
-        
+
         _parseQueue = dispatch_queue_create("ems-parse-queue", DISPATCH_QUEUE_CONCURRENT);
-        
+
         _session = [NSURLSession sharedSession];
     }
     return self;
@@ -92,23 +92,30 @@
 
     NSURL *url = [EMSConfig emsRootUrl];
 
+    NSDate *timer = [NSDate date];
+
     [[self.session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
             EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
         }
 
-        EMSRootRetriever *retriever = [[EMSRootRetriever alloc] init];
+        EMSRootParser *parser = [[EMSRootParser alloc] init];
 
-        retriever.delegate = self;
+        parser.delegate = self;
 
-        [retriever parse:data forHref:url withParseQueue:self.parseQueue];
+        [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"root"];
+        [EMSTracking dispatch];
+
+        dispatch_async(self.parseQueue, ^{
+            [parser parseData:data forHref:url];
+        });
 
         [[EMSAppDelegate sharedAppDelegate] stopNetwork];
     }] resume];
 }
 
 - (void)finishedRoot:(NSDictionary *)links
-                    forHref:(NSURL *)href {
+             forHref:(NSURL *)href {
 
     if (links[@"event collection"]) {
         [self refreshConferencesForHref:links[@"event collection"]];
@@ -122,60 +129,65 @@
     }
 
     self.refreshingConferences = YES;
-    
+
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
-    
+
+    NSDate *timer = [NSDate date];
+
     [[self.session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
             EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
         }
-        
-        EMSConferencesRetriever *retriever = [[EMSConferencesRetriever alloc] init];
-        
-        retriever.delegate = self;
-        
-        [retriever parse:data forHref:url withParseQueue:self.parseQueue];
-        
+
+        EMSEventsParser *parser = [[EMSEventsParser alloc] init];
+
+        parser.delegate = self;
+
+        [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"conferences"];
+        [EMSTracking dispatch];
+
+        dispatch_async(self.parseQueue, ^{
+            [parser parseData:data forHref:url];
+        });
+
         [[EMSAppDelegate sharedAppDelegate] stopNetwork];
     }] resume];
 }
 
-- (void)finishedConferences:(NSArray *)conferences
-                    forHref:
-                            (NSURL *)href {
+- (void)finishedEvents:(NSArray *)conferences
+               forHref:(NSURL *)href {
 
     EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
 
-    [backgroundModel.managedObjectContext performBlock: ^{
+    [backgroundModel.managedObjectContext performBlock:^{
         NSError *error = nil;
 
         if (![backgroundModel storeConferences:conferences error:&error]) {
             EMS_LOG(@"Failed to store conferences %@ - %@", error, [error userInfo]);
         }
-    dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
-            
+
             self.refreshingConferences = NO;
-            
+
             NSArray *filteredConferences = [conferences filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
                 EMSConference *emsConference = evaluatedObject;
                 return [emsConference.hintCount longValue] > 0;
             }]];
-            
+
             NSArray *sortedConferences = [filteredConferences sortedArrayWithOptions:NSSortStable usingComparator:^NSComparisonResult(id obj1, id obj2) {
                 EMSConference *emsConference1 = obj1;
                 EMSConference *emsConference2 = obj2;
-                
+
                 return [emsConference1.start compare:emsConference2.start];
             }];
             EMSConference *latestConference = sortedConferences.lastObject;
-            
-            
+
+
             [EMSAppDelegate storeCurrentConference:latestConference.href];
-            
+
         });
     }];
-
 
 
 }
@@ -225,13 +237,12 @@
 }
 
 - (void)finishedSpeakers:(NSArray *)speakers
-                 forHref:
-                         (NSURL *)href {
+                 forHref:(NSURL *)href {
     EMS_LOG(@"Storing speakers %lu for href %@", (unsigned long) [speakers count], href);
 
     EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
 
-    [backgroundModel.managedObjectContext performBlock: ^{
+    [backgroundModel.managedObjectContext performBlock:^{
         NSError *error = nil;
 
         if (![backgroundModel storeSpeakers:speakers forHref:[href absoluteString] error:&error]) {
@@ -241,49 +252,44 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
             self.refreshingSpeakers = NO;
-            
+
             if ([self.delegate respondsToSelector:@selector(finishedSpeakers:forHref:)]) {
                 [self.delegate finishedSpeakers:speakers forHref:href];
-            } 
+            }
         });
     }];
-
-
 }
 
-
 - (void)finishedSlots:(NSArray *)slots
-              forHref:
-                      (NSURL *)href {
+              forHref:(NSURL *)href {
     EMS_LOG(@"Storing slots %lu", (unsigned long) [slots count]);
 
     EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
 
-    [backgroundModel.managedObjectContext performBlock: ^{
+    [backgroundModel.managedObjectContext performBlock:^{
         NSError *error = nil;
 
         if (![backgroundModel storeSlots:slots forHref:[href absoluteString] error:&error]) {
             EMS_LOG(@"Failed to store slots %@ - %@", error, [error userInfo]);
         }
-        
+
         dispatch_async(dispatch_get_main_queue(), ^{
             _refreshingSlots = NO;
-            
+
             [self retrieveSessions];
         });
     }];
 
-    
+
 }
 
 - (void)finishedSessions:(NSArray *)sessions
-                 forHref:
-                         (NSURL *)href {
+                 forHref:(NSURL *)href {
     EMS_LOG(@"Storing sessions %lu", (unsigned long) [sessions count]);
 
     EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
 
-    [backgroundModel.managedObjectContext performBlock: ^{
+    [backgroundModel.managedObjectContext performBlock:^{
         NSError *error = nil;
 
         if (![backgroundModel storeSessions:sessions forHref:[href absoluteString] error:&error]) {
@@ -291,7 +297,7 @@
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
-            
+
             self.refreshingSessions = NO;
         });
     }];
@@ -299,13 +305,12 @@
 }
 
 - (void)finishedRooms:(NSArray *)rooms
-              forHref:
-                      (NSURL *)href {
+              forHref:(NSURL *)href {
     EMS_LOG(@"Storing rooms %lu", (unsigned long) [rooms count]);
 
     EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
 
-    [backgroundModel.managedObjectContext performBlock: ^{
+    [backgroundModel.managedObjectContext performBlock:^{
         NSError *error = nil;
 
         if (![backgroundModel storeRooms:rooms forHref:[href absoluteString] error:&error]) {
@@ -313,78 +318,99 @@
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             _refreshingRooms = NO;
-            
+
             [self retrieveSessions];
         });
     }];
 
 }
 
-- (void)refreshSlots:(NSURL *)slotCollection {
+- (void)refreshSlots:(NSURL *)url {
     NSAssert([NSThread isMainThread], @"Should be called from main thread.");
 
-    
+
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
-    
-    [[self.session dataTaskWithURL:slotCollection completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+
+    NSDate *timer = [NSDate date];
+
+    [[self.session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", slotCollection, error, [error userInfo]);
+            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
         }
-        
-        EMSSlotsRetriever *retriever = [[EMSSlotsRetriever alloc] init];
-        
-        retriever.delegate = self;
-        
-        [retriever parse:data forHref:slotCollection withParseQueue:self.parseQueue];
-        
+
+        EMSSlotsParser *parser = [[EMSSlotsParser alloc] init];
+
+        parser.delegate = self;
+
+        [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"slots"];
+        [EMSTracking dispatch];
+
+        dispatch_async(self.parseQueue, ^{
+            [parser parseData:data forHref:url];
+        });
+
         [[EMSAppDelegate sharedAppDelegate] stopNetwork];
     }] resume];
 }
 
-- (void)refreshSessions:(NSURL *)sessionCollection {
+- (void)refreshSessions:(NSURL *)url {
     NSAssert([NSThread isMainThread], @"Should be called from main thread.");
-    
+
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
-    
-    [[self.session dataTaskWithURL:sessionCollection completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+
+    NSDate *timer = [NSDate date];
+
+    [[self.session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", sessionCollection, error, [error userInfo]);
+            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
         }
-        
-        EMSSessionsRetriever *retriever = [[EMSSessionsRetriever alloc] init];
-        
-        retriever.delegate = self;
-        
-        [retriever parse:data forHref:sessionCollection withParseQueue:self.parseQueue];
-        
+
+        EMSSessionsParser *parser = [[EMSSessionsParser alloc] init];
+
+        parser.delegate = self;
+
+        [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"sessions"];
+        [EMSTracking dispatch];
+
+        dispatch_async(self.parseQueue, ^{
+            [parser parseData:data forHref:url];
+        });
+
         [[EMSAppDelegate sharedAppDelegate] stopNetwork];
     }] resume];
 
 }
 
-- (void)refreshRooms:(NSURL *)roomCollection {
+- (void)refreshRooms:(NSURL *)url {
     NSAssert([NSThread isMainThread], @"Should be called from main thread.");
 
-    
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
-    [[self.session dataTaskWithURL:roomCollection completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+
+    NSDate *timer = [NSDate date];
+
+    [[self.session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", roomCollection, error, [error userInfo]);
+            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
         }
-        
-        EMSRoomsRetriever *retriever = [[EMSRoomsRetriever alloc] init];
-        
-        retriever.delegate = self;
-        
-        [retriever parse:data forHref:roomCollection withParseQueue:self.parseQueue];
-        
+
+        EMSRoomsParser *parser = [[EMSRoomsParser alloc] init];
+
+        parser.delegate = self;
+
+        [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"rooms"];
+        [EMSTracking dispatch];
+
+        dispatch_async(self.parseQueue, ^{
+            [parser parseData:data forHref:url];
+        });
+
         [[EMSAppDelegate sharedAppDelegate] stopNetwork];
     }] resume];
-    
-    
+
+
 }
 
-- (void)refreshSpeakers:(NSURL *)speakerCollection {
+- (void)refreshSpeakers:(NSURL *)url {
     NSAssert([NSThread isMainThread], @"Should be called from main thread.");
 
     if (self.refreshingSpeakers) {
@@ -392,23 +418,30 @@
     }
 
     self.refreshingSpeakers = YES;
-    
+
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
-    
-    [[self.session dataTaskWithURL:speakerCollection completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+
+    NSDate *timer = [NSDate date];
+
+    [[self.session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", speakerCollection, error, [error userInfo]);
+            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
         }
-        
-        EMSSpeakersRetriever *retriever = [[EMSSpeakersRetriever alloc] init];
-        
-        retriever.delegate = self;
-        
-        [retriever parse:data forHref:speakerCollection withParseQueue:self.parseQueue];
-        
+
+        EMSSpeakersParser *parser = [[EMSSpeakersParser alloc] init];
+
+        parser.delegate = self;
+
+        [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"speakers"];
+        [EMSTracking dispatch];
+
+        dispatch_async(self.parseQueue, ^{
+            [parser parseData:data forHref:url];
+        });
+
         [[EMSAppDelegate sharedAppDelegate] stopNetwork];
     }] resume];
-    
+
 }
 
 @end

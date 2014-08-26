@@ -6,13 +6,10 @@
 #import "CJCollection.h"
 #import "CJLink.h"
 
-#import "EMSRootRetriever.h"
-#import "EMSTracking.h"
+#import "EMSRootParser.h"
 
 
-@implementation EMSRootRetriever
-
-NSDate *timer;
+@implementation EMSRootParser
 
 - (NSDictionary *)processData:(NSData *)data forHref:(NSURL *)href {
     NSError *error = nil;
@@ -35,27 +32,11 @@ NSDate *timer;
 
     return [NSDictionary dictionaryWithDictionary:temp];
 }
-- (void)fetchedRoot:(NSData *)responseData forHref:(NSURL *)href {
-    NSDictionary *collection = [self processData:responseData forHref:href];
 
-    [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"root"];
-    [EMSTracking dispatch];
+- (void)parseData:(NSData *)data forHref:(NSURL *)href {
+    NSDictionary *collection = [self processData:data forHref:href];
 
     [self.delegate finishedRoot:collection forHref:href];
-}
-
-
-- (void)parse:(NSData *)data forHref:(NSURL *)url withParseQueue:(dispatch_queue_t)queue {
-    if (url == nil) {
-        EMS_LOG(@"Asked to fetch nil root url");
-
-        return;
-    }
-
-    dispatch_async(queue, ^{
-        [self fetchedRoot:data forHref:url];
-    });
-
 }
 
 @end

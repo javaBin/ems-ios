@@ -1,18 +1,15 @@
 //
-//  EMSSpeakersRetriever.m
+//  EMSSpeakersParser.m
 //
 
-#import "EMSAppDelegate.h"
-
-#import "EMSSpeakersRetriever.h"
+#import "EMSSpeakersParser.h"
 #import "EMSSpeaker.h"
 
 #import "CJCollection.h"
 #import "CJItem.h"
 #import "CJLink.h"
-#import "EMSTracking.h"
 
-@implementation EMSSpeakersRetriever
+@implementation EMSSpeakersParser
 
 NSDate *timer;
 
@@ -66,25 +63,10 @@ NSDate *timer;
     return [NSArray arrayWithArray:temp];
 }
 
-- (void)fetchedSpeakers:(NSData *)responseData forHref:(NSURL *)href {
-    NSArray *collection = [self processData:responseData forHref:href];
-
-    [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"speakers"];
-    [EMSTracking dispatch];
+- (void)parseData:(NSData *)data forHref:(NSURL *)href {
+    NSArray *collection = [self processData:data forHref:href];
 
     [self.delegate finishedSpeakers:collection forHref:href];
 }
-
-- (void)parse:(NSData *)data forHref:(NSURL *)url withParseQueue:(dispatch_queue_t)queue {
-    if (url == nil) {
-        EMS_LOG(@"Asked to fetch nil speakers url");
-
-        return;
-    }
-    dispatch_async(queue, ^{
-        [self fetchedSpeakers:data forHref:url];
-    });
-}
-
 
 @end

@@ -1,19 +1,16 @@
 //
-//  EMSSlotsRetriever.m
+//  EMSSlotsParser.m
 //
 
-#import "EMSAppDelegate.h"
-
-#import "EMSSlotsRetriever.h"
+#import "EMSSlotsParser.h"
 #import "EMSSlot.h"
 
 #import "CJCollection.h"
 #import "CJItem.h"
 
 #import "EMSDateConverter.h"
-#import "EMSTracking.h"
 
-@implementation EMSSlotsRetriever
+@implementation EMSSlotsParser
 
 NSDate *timer;
 
@@ -57,25 +54,10 @@ NSDate *timer;
     return [NSArray arrayWithArray:temp];
 }
 
-- (void)fetchedSlots:(NSData *)responseData forHref:(NSURL *)href {
-    NSArray *collection = [self processData:responseData forHref:href];
-
-    [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"slots"];
-    [EMSTracking dispatch];
+- (void)parseData:(NSData *)data forHref:(NSURL *)href {
+    NSArray *collection = [self processData:data forHref:href];
 
     [self.delegate finishedSlots:collection forHref:href];
-}
-
-- (void)parse:(NSData *)data forHref:(NSURL *)url withParseQueue:(dispatch_queue_t)queue{
-    if (url == nil) {
-        EMS_LOG(@"Asked to fetch nil slots url");
-
-        return;
-    }
-
-    dispatch_async(queue, ^{
-        [self fetchedSlots:data forHref:url];
-    });
 }
 
 @end

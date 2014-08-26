@@ -1,10 +1,8 @@
 //
-//  EMSConferencesRetriever.m
+//  EMSEventsParser.m
 //
 
-#import "EMSAppDelegate.h"
-
-#import "EMSConferencesRetriever.h"
+#import "EMSEventsParser.h"
 #import "EMSConference.h"
 
 #import "CJCollection.h"
@@ -12,9 +10,8 @@
 #import "CJItem.h"
 
 #import "EMSDateConverter.h"
-#import "EMSTracking.h"
 
-@implementation EMSConferencesRetriever
+@implementation EMSEventsParser
 
 NSDate *timer;
 
@@ -82,25 +79,10 @@ NSDate *timer;
     return [NSArray arrayWithArray:temp];
 }
 
-- (void)fetchedEventCollection:(NSData *)responseData forHref:(NSURL *)href {
-    NSArray *collection = [self processData:responseData andHref:href];
+- (void)parseData:(NSData *)data forHref:(NSURL *)href {
+    NSArray *collection = [self processData:data andHref:href];
 
-
-    [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"conferences"];
-    [EMSTracking dispatch];
-
-    [self.delegate finishedConferences:collection forHref:href];
-}
-
-- (void)parse:(NSData *)data forHref:(NSURL *)url withParseQueue:(dispatch_queue_t)queue {
-    if (url == nil) {
-        EMS_LOG(@"Asked to fetch nil events url");
-
-        return;
-    }
-    dispatch_async(queue, ^{
-        [self fetchedEventCollection:data forHref:url];
-    });
+    [self.delegate finishedEvents:collection forHref:href];
 }
 
 @end

@@ -1,17 +1,14 @@
 //
-//  EMSSessionsRetriever.m
+//  EMSSessionsParser.m
 //
 
-#import "EMSAppDelegate.h"
-
-#import "EMSSessionsRetriever.h"
+#import "EMSSessionsParser.h"
 #import "EMSSession.h"
 #import "EMSSpeaker.h"
 
 #import "CJCollection.h"
 #import "CJItem.h"
 #import "CJLink.h"
-#import "EMSTracking.h"
 
 
 @interface EMSSession (JsonParser)
@@ -100,7 +97,7 @@
 }
 @end
 
-@implementation EMSSessionsRetriever
+@implementation EMSSessionsParser
 
 NSDate *timer;
 
@@ -125,25 +122,10 @@ NSDate *timer;
     return [NSArray arrayWithArray:temp];
 }
 
-- (void)fetchedSessions:(NSData *)responseData forHref:(NSURL *)href {
+- (void)parseData:(NSData *)responseData forHref:(NSURL *)href {
     NSArray *collection = [self processData:responseData forHref:href];
 
-    [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"sessions"];
-    [EMSTracking dispatch];
-
     [self.delegate finishedSessions:collection forHref:href];
-}
-
-- (void)parse:(NSData *)data forHref:(NSURL *)url withParseQueue:(dispatch_queue_t)queue {
-    if (url == nil) {
-        EMS_LOG(@"Asked to fetch nil sessions url");
-
-        return;
-    }
-    
-    dispatch_async(queue, ^{
-        [self fetchedSessions:data forHref:url];
-    });
 }
 
 @end

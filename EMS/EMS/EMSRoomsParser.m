@@ -1,17 +1,14 @@
 //
-//  EMSRoomsRetriever.m
+//  EMSRoomsParser.m
 //
 
-#import "EMSAppDelegate.h"
-
-#import "EMSRoomsRetriever.h"
+#import "EMSRoomsParser.h"
 #import "EMSRoom.h"
 
 #import "CJCollection.h"
 #import "CJItem.h"
-#import "EMSTracking.h"
 
-@implementation EMSRoomsRetriever
+@implementation EMSRoomsParser
 
 NSDate *timer;
 
@@ -52,26 +49,10 @@ NSDate *timer;
     return [NSArray arrayWithArray:temp];
 }
 
-- (void)fetchedRooms:(NSData *)responseData forHref:(NSURL *)href {
-    NSArray *collection = [self processData:responseData forHref:href];
-
-    [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"rooms"];
-    [EMSTracking dispatch];
+- (void)parseData:(NSData *)data forHref:(NSURL *)href {
+    NSArray *collection = [self processData:data forHref:href];
 
     [self.delegate finishedRooms:collection forHref:href];
-}
-
-
-- (void)parse:(NSData *)data forHref:(NSURL *)url withParseQueue:(dispatch_queue_t)queue; {
-    if (url == nil) {
-        EMS_LOG(@"Asked to fetch nil rooms url");
-
-        return;
-    }
-
-    dispatch_async(queue, ^{
-        [self fetchedRooms:data forHref:url];
-    });
 }
 
 @end
