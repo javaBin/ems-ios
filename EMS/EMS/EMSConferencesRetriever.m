@@ -121,7 +121,7 @@ NSDate *timer;
                     }
 
                     dispatch_async(queue, ^{
-                        [self fetchedEventCollection:eventData forHref:url];
+                        [self fetchedEventCollection:eventData forHref:url];    
                     });
 
                     [[EMSAppDelegate sharedAppDelegate] stopNetwork];
@@ -132,28 +132,17 @@ NSDate *timer;
 
 }
 
-- (void)fetch:(NSURL *)url withParseQueue:(dispatch_queue_t)queue {
+- (void)parse:(NSData *)data forHref:(NSURL *)url withParseQueue:(dispatch_queue_t)queue {
     if (url == nil) {
         EMS_LOG(@"Asked to fetch nil conferences url");
 
         return;
     }
 
-    NSURLSession *session = [NSURLSession sharedSession];
+    dispatch_async(queue, ^{
+        [self getEventCollection:data withParseQueue:queue forHref:url];
+    });
 
-    [[EMSAppDelegate sharedAppDelegate] startNetwork];
-
-    [[session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error != nil) {
-            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
-        }
-
-        dispatch_async(queue, ^{
-            [self getEventCollection:data withParseQueue:queue forHref:url];
-        });
-
-        [[EMSAppDelegate sharedAppDelegate] stopNetwork];
-    }] resume];
 }
 
 @end

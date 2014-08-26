@@ -75,28 +75,15 @@ NSDate *timer;
     [self.delegate finishedSpeakers:collection forHref:href];
 }
 
-- (void)fetch:(NSURL *)url withParseQueue:(dispatch_queue_t)queue {
+- (void)parse:(NSData *)data forHref:(NSURL *)url withParseQueue:(dispatch_queue_t)queue {
     if (url == nil) {
         EMS_LOG(@"Asked to fetch nil speakers url");
 
         return;
     }
-
-    NSURLSession *session = [NSURLSession sharedSession];
-
-    [[EMSAppDelegate sharedAppDelegate] startNetwork];
-
-    [[session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error != nil) {
-            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
-        }
-
-        dispatch_async(queue, ^{
-            [self fetchedSpeakers:data forHref:url];
-        });
-
-        [[EMSAppDelegate sharedAppDelegate] stopNetwork];
-    }] resume];
+    dispatch_async(queue, ^{
+        [self fetchedSpeakers:data forHref:url];
+    });
 }
 
 
