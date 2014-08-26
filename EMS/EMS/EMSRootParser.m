@@ -7,7 +7,6 @@
 #import "CJLink.h"
 
 #import "EMSRootParser.h"
-#import "EMSParserDelegate.h"
 
 @implementation EMSRootParser
 

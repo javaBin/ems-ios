@@ -7,7 +7,6 @@
 
 #import "CJCollection.h"
 #import "CJItem.h"
-#import "EMSParserDelegate.h"
 
 @implementation EMSRoomsParser
 

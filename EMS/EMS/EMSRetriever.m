@@ -16,8 +16,14 @@
 #import "EMSConference.h"
 #import "EMSRootParser.h"
 #import "EMSTracking.h"
+#import "EMSSlotsParserDelegate.h"
+#import "EMSSpeakersParserDelegate.h"
+#import "EMSSessionsParserDelegate.h"
+#import "EMSRoomsParserDelegate.h"
+#import "EMSEventsParserDelegate.h"
+#import "EMSRootParserDelegate.h"
 
-@interface EMSRetriever () <EMSParserDelegate>
+@interface EMSRetriever () <EMSRootParserDelegate, EMSEventsParserDelegate, EMSRoomsParserDelegate, EMSSessionsParserDelegate, EMSSpeakersParserDelegate, EMSSlotsParserDelegate>
 
 @property(readwrite) BOOL refreshingRoot;
 @property(readwrite) BOOL refreshingConferences;
