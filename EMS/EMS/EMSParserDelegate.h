@@ -1,10 +1,10 @@
 //
-//  EMSRetrieverDelegate.h
+//  EMSSpeakersRetrieverDelegate.h
 //
 
 #import <Foundation/Foundation.h>
 
-@protocol EMSRetrieverDelegate <NSObject>
+@protocol EMSParserDelegate <NSObject>
 
 @optional
 

@@ -26,7 +26,7 @@
 
 #import "EMSSessionTitleTableViewCell.h"
 
-@interface EMSDetailViewController () <UIPopoverControllerDelegate, EMSRetrieverDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface EMSDetailViewController () <UIPopoverControllerDelegate, EMSSpeakersRetrieverDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property(nonatomic) UIPopoverController *sharePopoverController;
 

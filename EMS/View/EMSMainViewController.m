@@ -19,7 +19,7 @@
 #import "EMSTracking.h"
 #import "EMSLocalNotificationManager.h"
 
-@interface EMSMainViewController () <UISplitViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate, UIDataSourceModelAssociation>
+@interface EMSMainViewController () <UISplitViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate, UIDataSourceModelAssociation>
 
 @property(nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 

@@ -3,13 +3,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "EMSRetrieverDelegate.h"
+#import "EMSSpeakersRetrieverDelegate.h"
 
 @interface EMSRetriever : NSObject
 
 + (instancetype) sharedInstance;
 
-@property(nonatomic, weak) id <EMSRetrieverDelegate> delegate;
+@property(nonatomic, weak) id <EMSSpeakersRetrieverDelegate> delegate;
 
 @property(readonly) BOOL refreshingConferences;
 

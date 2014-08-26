@@ -3,11 +3,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "EMSRetrieverDelegate.h"
+#import "EMSParserDelegate.h"
 
 @interface EMSSessionsParser : NSObject
 
-@property(nonatomic, weak) id <EMSRetrieverDelegate> delegate;
+@property(nonatomic, weak) id <EMSParserDelegate> delegate;
 
 - (void)parseData:(NSData *)data forHref:(NSURL *)url;
 

@@ -11,8 +11,6 @@
 
 @implementation EMSSpeakersParser
 
-NSDate *timer;
-
 - (NSArray *)processData:(NSData *)data forHref:(NSURL *)href {
     NSError *error = nil;
 

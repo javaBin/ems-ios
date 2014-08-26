@@ -4,10 +4,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "EMSRetrieverDelegate.h"
+#import "EMSSpeakersRetrieverDelegate.h"
 #import "EMSModel.h"
 
-@interface EMSSettingsViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, NSFetchedResultsControllerDelegate>
+@interface EMSSettingsViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
 @property(nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 

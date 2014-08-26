@@ -13,8 +13,6 @@
 
 @implementation EMSEventsParser
 
-NSDate *timer;
-
 - (NSArray *)processData:(NSData *)data andHref:(NSURL *)href {
     NSError *error = nil;
 

@@ -154,6 +154,7 @@
 		4E1AD0E07B70D148B519768B /* flatMap-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "flatMap-Info.plist"; sourceTree = "<group>"; };
 		4E1AD0EE5411335585333A2F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; path = README.md; sourceTree = "<group>"; };
 		4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSTracking.m; sourceTree = "<group>"; };
+		4E1AD3E09E57E65D2A4D9136 /* EMSParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSParserDelegate.h; sourceTree = "<group>"; };
 		4E1AD4BD3EA75DE0EA2F36CD /* EMSRootParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSRootParser.m; sourceTree = "<group>"; };
 		4E1AD63BE5285CC7F6F90AFC /* EMSRootParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSRootParser.h; sourceTree = "<group>"; };
 		4E1AD6B14458A2997A59456D /* EMSTracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSTracking.h; sourceTree = "<group>"; };
@@ -172,7 +173,7 @@
 		839BD640176F9BD400900712 /* EMSDateConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDateConverter.m; sourceTree = "<group>"; };
 		839BD641176F9BD400900712 /* EMSRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSRetriever.h; sourceTree = "<group>"; };
 		839BD642176F9BD400900712 /* EMSRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSRetriever.m; sourceTree = "<group>"; };
-		839BD643176F9BD400900712 /* EMSRetrieverDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSRetrieverDelegate.h; sourceTree = "<group>"; };
+		839BD643176F9BD400900712 /* EMSSpeakersRetrieverDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSpeakersRetrieverDelegate.h; sourceTree = "<group>"; };
 		839BD644176F9BD400900712 /* EMSRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSRoom.h; sourceTree = "<group>"; };
 		839BD645176F9BD400900712 /* EMSRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSRoom.m; sourceTree = "<group>"; };
 		839BD646176F9BD400900712 /* EMSRoomsParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSRoomsParser.h; sourceTree = "<group>"; };
@@ -329,7 +330,7 @@
 				8363313B1770F06C000F8D95 /* EMSSearchViewDelegate.h */,
 				839BD641176F9BD400900712 /* EMSRetriever.h */,
 				839BD642176F9BD400900712 /* EMSRetriever.m */,
-				839BD643176F9BD400900712 /* EMSRetrieverDelegate.h */,
+				839BD643176F9BD400900712 /* EMSSpeakersRetrieverDelegate.h */,
 				839BD644176F9BD400900712 /* EMSRoom.h */,
 				839BD645176F9BD400900712 /* EMSRoom.m */,
 				839BD646176F9BD400900712 /* EMSRoomsParser.h */,
@@ -350,6 +351,7 @@
 				EA6132BB193FC35B000F54DC /* EMSConfig.m */,
 				4E1AD4BD3EA75DE0EA2F36CD /* EMSRootParser.m */,
 				4E1AD63BE5285CC7F6F90AFC /* EMSRootParser.h */,
+				4E1AD3E09E57E65D2A4D9136 /* EMSParserDelegate.h */,
 			);
 			name = EMS;
 			path = EMS/EMS;

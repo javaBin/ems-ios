@@ -7,10 +7,9 @@
 
 #import "CJCollection.h"
 #import "CJItem.h"
+#import "EMSParserDelegate.h"
 
 @implementation EMSRoomsParser
-
-NSDate *timer;
 
 - (NSArray *)processData:(NSData *)data forHref:(NSURL *)href {
     NSError *error = nil;

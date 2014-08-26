@@ -17,7 +17,7 @@
 #import "EMSRootParser.h"
 #import "EMSTracking.h"
 
-@interface EMSRetriever () <EMSRetrieverDelegate>
+@interface EMSRetriever () <EMSParserDelegate>
 
 @property(readwrite) BOOL refreshingRoot;
 @property(readwrite) BOOL refreshingConferences;
