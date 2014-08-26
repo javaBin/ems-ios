@@ -108,7 +108,7 @@
         if (![backgroundModel storeConferences:conferences error:&error]) {
             EMS_LOG(@"Failed to store conferences %@ - %@", error, [error userInfo]);
         }
-        dispatch_sync(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
             
             self.refreshingConferences = NO;
@@ -194,7 +194,7 @@
             EMS_LOG(@"Failed to store speakers %@ - %@", error, [error userInfo]);
         }
 
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
             self.refreshingSpeakers = NO;
             
@@ -222,7 +222,7 @@
             EMS_LOG(@"Failed to store slots %@ - %@", error, [error userInfo]);
         }
         
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
             _refreshingSlots = NO;
             
             [self retrieveSessions];
@@ -245,7 +245,7 @@
         if (![backgroundModel storeSessions:sessions forHref:[href absoluteString] error:&error]) {
             EMS_LOG(@"Failed to store sessions %@ - %@", error, [error userInfo]);
         }
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
             
             self.refreshingSessions = NO;
@@ -267,7 +267,7 @@
         if (![backgroundModel storeRooms:rooms forHref:[href absoluteString] error:&error]) {
             EMS_LOG(@"Failed to store rooms %@ - %@", error, [error userInfo]);
         }
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
             _refreshingRooms = NO;
             
             [self retrieveSessions];
