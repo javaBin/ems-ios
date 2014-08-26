@@ -88,13 +88,11 @@
 
     self.refreshingRoot = YES;
 
-    NSURLSession *session = [NSURLSession sharedSession];
-
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
 
     NSURL *url = [EMSConfig emsRootUrl];
 
-    [[session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    [[self.session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
             EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
         }
@@ -125,11 +123,9 @@
 
     self.refreshingConferences = YES;
     
-    NSURLSession *session = [NSURLSession sharedSession];
-    
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
     
-    [[session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    [[self.session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
             EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
         }
