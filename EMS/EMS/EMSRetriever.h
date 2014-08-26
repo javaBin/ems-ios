@@ -13,11 +13,7 @@
 
 @property(readonly) BOOL refreshingConferences;
 
-@property(readonly) BOOL refreshingSlots;
-
 @property(readonly) BOOL refreshingSessions;
-
-@property(readonly) BOOL refreshingRooms;
 
 @property(readonly) BOOL refreshingSpeakers;
 

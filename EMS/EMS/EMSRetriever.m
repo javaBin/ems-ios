@@ -34,6 +34,12 @@
 
 @property(nonatomic) NSURLSession *session;
 
+
+@property(nonatomic) NSOperation *slotsDoneOperation;
+@property(nonatomic) NSOperation *roomsDoneOperation;
+
+@property(nonatomic) NSOperationQueue *syncOperationQueue;
+
 @end
 
 
@@ -55,14 +61,13 @@
         _refreshingConferences = NO;
         _refreshingSessions = NO;
 
-        _refreshingSlots = NO;
-        _refreshingRooms = NO;
-
         _refreshingRoot = NO;
 
         _parseQueue = dispatch_queue_create("ems-parse-queue", DISPATCH_QUEUE_CONCURRENT);
 
         _session = [NSURLSession sharedSession];
+        
+        _syncOperationQueue = [[NSOperationQueue alloc] init];
     }
     return self;
 }
@@ -211,34 +216,39 @@
     self.refreshingSessions = YES;
 
     Conference *activeConference = [self activeConference];
+    
+    
+    NSOperation *slotsDoneOperation = [NSBlockOperation blockOperationWithBlock:^{
+        NSLog(@"Slots is done saving");
+    }];
+    self.slotsDoneOperation = slotsDoneOperation;
+    
+    NSOperation *roomsDoneOperation = [NSBlockOperation blockOperationWithBlock:^{
+        NSLog(@"Rooms is done saving");
+    }];
+    self.roomsDoneOperation = roomsDoneOperation;
 
     EMS_LOG(@"Starting retrieval");
 
     if (activeConference != nil) {
         EMS_LOG(@"Starting retrieval - saw conf");
 
+        //TODO: Check this logic?
         if (activeConference.slotCollection != nil) {
             EMS_LOG(@"Starting retrieval - saw slot collection");
-            _refreshingSlots = YES;
             [self refreshSlots:[NSURL URLWithString:activeConference.slotCollection]];
         }
+        
         if (activeConference.roomCollection != nil) {
             EMS_LOG(@"Starting retrieval - saw room collection");
-            _refreshingRooms = YES;
             [self refreshRooms:[NSURL URLWithString:activeConference.roomCollection]];
         }
-    }
-}
-
-- (void)retrieveSessions {
-    NSAssert([NSThread isMainThread], @"Should be called from main thread.");
-
-    EMS_LOG(@"Starting retrieval of sessions");
-    // Fetch sessions once rooms and slots are done. Don't want to get into a state when trying to persist sessions that it refers to non-existing room or slot
-    if (!_refreshingRooms && !_refreshingSlots) {
-        EMS_LOG(@"Starting retrieval of sessions - clear to go");
-        Conference *activeConference = [self activeConference];
-        [self refreshSessions:[NSURL URLWithString:activeConference.sessionCollection]];
+        
+        if (activeConference.sessionCollection != nil) {
+            EMS_LOG(@"Starting retrieval - saw session collection");
+            [self refreshSessions:[NSURL URLWithString:activeConference.sessionCollection]];
+        }
+        
     }
 }
 
@@ -268,67 +278,77 @@
 
 - (void)finishedSlots:(NSArray *)slots
               forHref:(NSURL *)href {
-    EMS_LOG(@"Storing slots %lu", (unsigned long) [slots count]);
-
-    EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
-
-    [backgroundModel.managedObjectContext performBlock:^{
-        NSError *error = nil;
-
-        if (![backgroundModel storeSlots:slots forHref:[href absoluteString] error:&error]) {
-            EMS_LOG(@"Failed to store slots %@ - %@", error, [error userInfo]);
-        }
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-            _refreshingSlots = NO;
-
-            [self retrieveSessions];
-        });
+    
+    NSOperation *saveSlotsOperation = [NSBlockOperation blockOperationWithBlock:^{
+        EMS_LOG(@"Storing slots %lu", (unsigned long) [slots count]);
+        EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
+        [backgroundModel.managedObjectContext performBlock:^{
+            NSError *error = nil;
+            
+            if (![backgroundModel storeSlots:slots forHref:[href absoluteString] error:&error]) {
+                EMS_LOG(@"Failed to store slots %@ - %@", error, [error userInfo]);
+            }
+        }];
     }];
-
+    saveSlotsOperation.completionBlock = ^{
+        [self.syncOperationQueue addOperation:self.slotsDoneOperation];
+    };
+    
+    [self.syncOperationQueue addOperation:saveSlotsOperation];
 
 }
 
 - (void)finishedSessions:(NSArray *)sessions
                  forHref:(NSURL *)href {
     EMS_LOG(@"Storing sessions %lu", (unsigned long) [sessions count]);
-
-    EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
-
-    [backgroundModel.managedObjectContext performBlock:^{
-        NSError *error = nil;
-
-        if (![backgroundModel storeSessions:sessions forHref:[href absoluteString] error:&error]) {
-            EMS_LOG(@"Failed to store sessions %@ - %@", error, [error userInfo]);
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
-
-            self.refreshingSessions = NO;
-        });
+    
+    NSOperation *saveSessionsOperation = [NSBlockOperation blockOperationWithBlock:^{
+        EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
+        
+        [backgroundModel.managedObjectContext performBlock:^{
+            NSError *error = nil;
+            
+            if (![backgroundModel storeSessions:sessions forHref:[href absoluteString] error:&error]) {
+                EMS_LOG(@"Failed to store sessions %@ - %@", error, [error userInfo]);
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
+                
+                self.refreshingSessions = NO;
+                self.slotsDoneOperation = nil;
+                self.roomsDoneOperation = nil;
+            });
+        }];
     }];
 
+    [saveSessionsOperation addDependency:self.slotsDoneOperation];
+    [saveSessionsOperation addDependency:self.roomsDoneOperation];
+    
+    [self.syncOperationQueue addOperation:saveSessionsOperation];
+    
 }
 
 - (void)finishedRooms:(NSArray *)rooms
               forHref:(NSURL *)href {
     EMS_LOG(@"Storing rooms %lu", (unsigned long) [rooms count]);
-
-    EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
-
-    [backgroundModel.managedObjectContext performBlock:^{
-        NSError *error = nil;
-
-        if (![backgroundModel storeRooms:rooms forHref:[href absoluteString] error:&error]) {
-            EMS_LOG(@"Failed to store rooms %@ - %@", error, [error userInfo]);
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            _refreshingRooms = NO;
-
-            [self retrieveSessions];
-        });
+    
+    NSOperation *saveRoomsOperation = [NSBlockOperation blockOperationWithBlock:^{
+        EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
+        
+        [backgroundModel.managedObjectContext performBlock:^{
+            NSError *error = nil;
+            
+            if (![backgroundModel storeRooms:rooms forHref:[href absoluteString] error:&error]) {
+                EMS_LOG(@"Failed to store rooms %@ - %@", error, [error userInfo]);
+            }
+        }];
     }];
-
+    
+    saveRoomsOperation.completionBlock = ^{
+        [self.syncOperationQueue addOperation:self.roomsDoneOperation];
+    };
+    
+    [self.syncOperationQueue addOperation:saveRoomsOperation];
 }
 
 - (void)refreshSlots:(NSURL *)url {
