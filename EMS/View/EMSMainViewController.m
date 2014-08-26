@@ -959,6 +959,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
             detailViewController.session = session;
             
             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+            navController.navigationBar.tintColor = self.navigationController.navigationBar.tintColor;
             
             detailViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissModalDetailView:)];
             
