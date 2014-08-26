@@ -42,7 +42,9 @@
     CGFloat rightInset = 15;
     CGFloat favoriteButtonWidth = 44;
     CGFloat favoriteButtonSpacing = 8;
-    self.titleLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.bounds) - (leftInset + rightInset + favoriteButtonWidth + favoriteButtonSpacing);
+    CGFloat preferredWidth = CGRectGetWidth(self.bounds) - (leftInset + rightInset + favoriteButtonWidth + favoriteButtonSpacing);
+    
+    self.titleLabel.preferredMaxLayoutWidth = preferredWidth;
     
     [super layoutSubviews];
     

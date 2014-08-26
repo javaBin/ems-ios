@@ -37,6 +37,8 @@
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 
+@property (strong, nonatomic) EMSSessionCell *sizingCell;
+
 - (IBAction)toggleFavourite:(id)sender;
 
 - (IBAction)segmentChanged:(id)sender;
@@ -355,6 +357,9 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     [self updateRefreshControl];
 
     [self initializeFooter];
+    
+    // In case text size was changed while we were gone. 
+    [self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -384,6 +389,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
         [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions)) options:0 context:kRefreshActiveConferenceContext];
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTableViewRowHeightReload) name:UIContentSizeCategoryDidChangeNotification object:nil];
+       
         [self updateTableViewRowHeight];
 
         self.observersInstalled = YES;
@@ -548,7 +554,10 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 }
 
 - (void)updateTableViewRowHeight {
-    EMSSessionCell *sessionCell = [self.tableView dequeueReusableCellWithIdentifier:@"SessionCell"];
+    if (!self.sizingCell) {
+        self.sizingCell = [self.tableView dequeueReusableCellWithIdentifier:@"SessionCell"];
+    }
+    EMSSessionCell *sessionCell = self.sizingCell;
 
     sessionCell.title.text = @"We want it to always be the size of two lines, so we put in a really long title before we calculate size.";
     sessionCell.room.text = @"Room";
