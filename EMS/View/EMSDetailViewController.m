@@ -34,7 +34,7 @@
 
 @property(nonatomic, strong) NSDictionary *cachedSpeakerBios;
 
-@property(nonatomic, strong) IBOutlet UIBarButtonItem *shareButton;
+@property(nonatomic, weak) IBOutlet UIBarButtonItem *shareButton;
 
 @property(nonatomic, strong) EMSRetriever *speakerRetriever;
 
@@ -219,9 +219,9 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
         NSString *bio = self.cachedSpeakerBios[speaker.name];
 
-        if (bio && ![bio isEqualToString:@""]) {
+        //if (bio && ![bio isEqualToString:@""]) {
             row.body = bio;
-        }
+        //}
 
         [p addObject:row];
     }];
@@ -537,15 +537,12 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     if (indexPath.section == EMSDetailViewControllerSectionInfo) {
         EMSSessionTitleTableViewCell *titleCell = [self.tableView dequeueReusableCellWithIdentifier:@"SessionTitleTableViewCell" forIndexPath:indexPath];
         cell = [self configureTitleCell:titleCell forIndexPath:indexPath];
-        
     } else if (indexPath.section == EMSDetailViewControllerSectionLegacy) {
-        
-        
         EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
-        
         if (row.body) {
             EMSTopAlignCellTableViewCell *speakerCell = [self.tableView dequeueReusableCellWithIdentifier:@"SpeakerCell" forIndexPath:indexPath];
             cell = [self configureSpeakerCell:speakerCell forRow:row forIndexPath:indexPath];
+            
         } else {
             cell = [self tableView:tableView buildCellForRow:row];
         }
@@ -619,19 +616,17 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         if (!self.titleSizingCell) {
             self.titleSizingCell = [self.tableView dequeueReusableCellWithIdentifier:@"SessionTitleTableViewCell"];
         }
-
+        
         cell = [self configureTitleCell:self.titleSizingCell forIndexPath:indexPath];
         
     } else if (row.body){
         if (!self.topAlignSizingCell) {
             self.topAlignSizingCell = [tableView dequeueReusableCellWithIdentifier:@"SpeakerCell"];
         }
-        cell = [self configureSpeakerCell:(EMSTopAlignCellTableViewCell *)self.topAlignSizingCell forRow:row forIndexPath:indexPath];
+        cell = [self configureSpeakerCell:self.topAlignSizingCell forRow:row forIndexPath:indexPath];
     } else {
         cell = [self tableView:tableView buildCellForRow:row];
     }
-    
-
     
     if ([cell isKindOfClass:[EMSDefaultTableViewCell class]]) {
         
@@ -640,27 +635,25 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         
         CGFloat height = (NSInteger) [cell intrinsicContentSize].height;
         
+        if (row.link && height < 48) {
+            height = 48;
+        }
         
         return height;
         
     } else {
         
         CGFloat prefWidth =CGRectGetWidth(tableView.bounds);
-        CGFloat prefHeigth = CGRectGetHeight(cell.bounds) * M_PI;
-        cell.frame = CGRectMake(0.0f, 0.0f, prefWidth, prefHeigth);
+        CGFloat prefHeigth = 400;
+        cell.bounds = CGRectMake(0.0f, 0.0f, prefWidth, prefHeigth);
         
         [cell setNeedsLayout];
         [cell layoutSubviews];
         
         // Get the actual height required for the cell's contentView
-        CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 2;
+        CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
 
-        
-        if (row.link && height < 48) {
-            height = 48;
-        }
-        
-        return height;
+        return height + 1;
     }
 
 }
