@@ -650,7 +650,7 @@
     return [defaults objectForKey:@"conferencesLastUpdate"];
 }
 
-- (NSDate *)lastUpdateActiveConference {
+- (NSDate *)lastUpdatedActiveConference {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[NSDate date] forKey:[NSString stringWithFormat:@"sessionsLastUpdate-%@", [[self activeConference] href]]];
 

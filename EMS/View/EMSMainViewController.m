@@ -55,11 +55,26 @@
 
 #pragma mark - Convenience methods
 
+- (NSAttributedString *)titleForRefreshControl {
+    NSDate *lastUpdate = [[EMSRetriever sharedInstance] lastUpdatedActiveConference];
+    if (lastUpdate != nil) {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateStyle = NSDateFormatterShortStyle;
+        dateFormatter.timeStyle = NSDateFormatterShortStyle;
+        dateFormatter.doesRelativeDateFormatting = YES;
+        NSAttributedString *title = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:NSLocalizedString(@"Last updated: %@", @"Last updated: {last updated}"), [dateFormatter stringFromDate:lastUpdate]]];
+        return title;
+    } else {
+        NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Refresh available sessions", @"Title for session list refresh control.")];
+        return title;
+    }
+}
+
 - (void)setUpRefreshControl {
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
 
     refreshControl.tintColor = [UIColor grayColor];
-    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Refresh available sessions", @"Session RefreshControl title")];
+    refreshControl.attributedTitle = [self titleForRefreshControl];
     refreshControl.backgroundColor = self.tableView.backgroundColor;
     [refreshControl addTarget:self action:@selector(retrieve) forControlEvents:UIControlEventValueChanged];
 
@@ -70,11 +85,13 @@
     UIRefreshControl *refreshControl = self.refreshControl;
     if ([EMSRetriever sharedInstance].refreshingSessions) {
         if (!refreshControl.refreshing) {
+            refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Refreshing", @"Refreshing available sessions")];
             [refreshControl beginRefreshing];
         }
     } else {
         if (refreshControl.refreshing) {
             [refreshControl endRefreshing];
+            refreshControl.attributedTitle = [self titleForRefreshControl];
         }
     }
 

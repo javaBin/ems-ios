@@ -27,7 +27,6 @@
         NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Refresh available conferences", @"Title for conference list refresh control.")];
         return title;
     }
-
 }
 
 - (void)setUpRefreshControl {

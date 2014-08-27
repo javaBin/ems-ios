@@ -28,7 +28,7 @@
 - (void)refreshSpeakers:(NSURL *)url;
 
 - (NSDate *)lastUpdatedAllConferences;
-- (NSDate *)lastUpdateActiveConference;
+- (NSDate *)lastUpdatedActiveConference;
 
 
 @end
