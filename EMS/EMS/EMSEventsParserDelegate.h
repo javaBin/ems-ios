@@ -8,6 +8,6 @@
 
 @optional
 
-- (void)finishedEvents:(NSArray *)conferences forHref:(NSURL *)href error:(NSError **)error;
+- (void)finishedEvents:(NSArray *)conferences forHref:(NSURL *)href error:(NSError *)error;
 
 @end

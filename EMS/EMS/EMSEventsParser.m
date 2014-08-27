@@ -84,7 +84,7 @@
 
     NSArray *collection = [self processData:data andHref:href error:&error];
 
-    [self.delegate finishedEvents:collection forHref:href error:&error];
+    [self.delegate finishedEvents:collection forHref:href error:error];
 }
 
 @end

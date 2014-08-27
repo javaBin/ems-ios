@@ -39,7 +39,7 @@
 
     NSDictionary *collection = [self processData:data forHref:href error:&error];
 
-    [self.delegate finishedRoot:collection forHref:href error:&error];
+    [self.delegate finishedRoot:collection forHref:href error:error];
 }
 
 @end

@@ -28,11 +28,12 @@
 
 @property(nonatomic) NSURLSession *session;
 
-
 @property(nonatomic) NSOperation *slotsDoneOperation;
 @property(nonatomic) NSOperation *roomsDoneOperation;
 
 @property(nonatomic) NSOperationQueue *syncOperationQueue;
+
+@property(nonatomic, strong) NSError *conferenceError;
 
 @end
 
@@ -60,7 +61,7 @@
         _parseQueue = dispatch_queue_create("ems-parse-queue", DISPATCH_QUEUE_CONCURRENT);
 
         _session = [NSURLSession sharedSession];
-        
+
         _syncOperationQueue = [[NSOperationQueue alloc] init];
     }
     return self;
@@ -84,6 +85,13 @@
     return nil;
 }
 
+- (void)finishedConferencesWithError:(NSError *)error {
+    self.refreshingRoot = NO;
+    self.refreshingConferences = NO;
+
+    self.conferenceError = error;
+}
+
 - (void)refreshRoot {
     NSAssert([NSThread isMainThread], @"Should be called on main thread.");
 
@@ -102,18 +110,20 @@
     [[self.session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
             EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
+
+            [self finishedConferencesWithError:error];
+        } else {
+            EMSRootParser *parser = [[EMSRootParser alloc] init];
+
+            parser.delegate = self;
+
+            [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"root"];
+            [EMSTracking dispatch];
+
+            dispatch_async(self.parseQueue, ^{
+                [parser parseData:data forHref:url];
+            });
         }
-
-        EMSRootParser *parser = [[EMSRootParser alloc] init];
-
-        parser.delegate = self;
-
-        [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"root"];
-        [EMSTracking dispatch];
-
-        dispatch_async(self.parseQueue, ^{
-            [parser parseData:data forHref:url];
-        });
 
         [[EMSAppDelegate sharedAppDelegate] stopNetwork];
     }] resume];
@@ -121,7 +131,15 @@
 
 - (void)finishedRoot:(NSDictionary *)links
              forHref:(NSURL *)href
-               error:(NSError **)error {
+               error:(NSError *)error {
+
+    if (error != nil) {
+        EMS_LOG(@"Retrieved error for root %@ - %@", error, [error userInfo]);
+
+        [self finishedConferencesWithError:error];
+
+        return;
+    }
 
     if (links[@"event collection"]) {
         [self refreshConferencesForHref:links[@"event collection"]];
@@ -143,24 +161,34 @@
     [[self.session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
             EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
+
+            [self finishedConferencesWithError:error];
+        } else {
+            EMSEventsParser *parser = [[EMSEventsParser alloc] init];
+
+            parser.delegate = self;
+
+            [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"conferences"];
+            [EMSTracking dispatch];
+
+            dispatch_async(self.parseQueue, ^{
+                [parser parseData:data forHref:url];
+            });
         }
-
-        EMSEventsParser *parser = [[EMSEventsParser alloc] init];
-
-        parser.delegate = self;
-
-        [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"conferences"];
-        [EMSTracking dispatch];
-
-        dispatch_async(self.parseQueue, ^{
-            [parser parseData:data forHref:url];
-        });
 
         [[EMSAppDelegate sharedAppDelegate] stopNetwork];
     }] resume];
 }
 
-- (void)finishedEvents:(NSArray *)conferences forHref:(NSURL *)href error:(NSError **)error {
+- (void)finishedEvents:(NSArray *)conferences forHref:(NSURL *)href error:(NSError *)error {
+
+    if (error != nil) {
+        EMS_LOG(@"Retrieved error for events %@ - %@", error, [error userInfo]);
+
+        [self finishedConferencesWithError:error];
+
+        return;
+    }
 
     EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
 
@@ -169,32 +197,32 @@
 
         if (![backgroundModel storeConferences:conferences error:&saveError]) {
             EMS_LOG(@"Failed to store conferences %@ - %@", saveError, [saveError userInfo]);
+
+            [self finishedConferencesWithError:error];
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
+
+                self.refreshingConferences = NO;
+
+                NSArray *filteredConferences = [conferences filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+                    EMSConference *emsConference = evaluatedObject;
+                    return [emsConference.hintCount longValue] > 0;
+                }]];
+
+                NSArray *sortedConferences = [filteredConferences sortedArrayWithOptions:NSSortStable usingComparator:^NSComparisonResult(id obj1, id obj2) {
+                    EMSConference *emsConference1 = obj1;
+                    EMSConference *emsConference2 = obj2;
+
+                    return [emsConference1.start compare:emsConference2.start];
+                }];
+
+                EMSConference *latestConference = sortedConferences.lastObject;
+
+                [EMSAppDelegate storeCurrentConference:latestConference.href];
+            });
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
-
-            self.refreshingConferences = NO;
-
-            NSArray *filteredConferences = [conferences filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-                EMSConference *emsConference = evaluatedObject;
-                return [emsConference.hintCount longValue] > 0;
-            }]];
-
-            NSArray *sortedConferences = [filteredConferences sortedArrayWithOptions:NSSortStable usingComparator:^NSComparisonResult(id obj1, id obj2) {
-                EMSConference *emsConference1 = obj1;
-                EMSConference *emsConference2 = obj2;
-
-                return [emsConference1.start compare:emsConference2.start];
-            }];
-            EMSConference *latestConference = sortedConferences.lastObject;
-
-
-            [EMSAppDelegate storeCurrentConference:latestConference.href];
-
-        });
     }];
-
-
 }
 
 #pragma mark - retrieval
@@ -210,13 +238,13 @@
     self.refreshingSessions = YES;
 
     Conference *activeConference = [self activeConference];
-    
-    
+
+
     NSOperation *slotsDoneOperation = [NSBlockOperation blockOperationWithBlock:^{
         NSLog(@"Slots is done saving");
     }];
     self.slotsDoneOperation = slotsDoneOperation;
-    
+
     NSOperation *roomsDoneOperation = [NSBlockOperation blockOperationWithBlock:^{
         NSLog(@"Rooms is done saving");
     }];
@@ -232,17 +260,17 @@
             EMS_LOG(@"Starting retrieval - saw slot collection");
             [self refreshSlots:[NSURL URLWithString:activeConference.slotCollection]];
         }
-        
+
         if (activeConference.roomCollection != nil) {
             EMS_LOG(@"Starting retrieval - saw room collection");
             [self refreshRooms:[NSURL URLWithString:activeConference.roomCollection]];
         }
-        
+
         if (activeConference.sessionCollection != nil) {
             EMS_LOG(@"Starting retrieval - saw session collection");
             [self refreshSessions:[NSURL URLWithString:activeConference.sessionCollection]];
         }
-        
+
     }
 }
 
@@ -270,13 +298,13 @@
 }
 
 - (void)finishedSlots:(NSArray *)slots forHref:(NSURL *)href error:(NSError **)error {
-    
+
     NSOperation *saveSlotsOperation = [NSBlockOperation blockOperationWithBlock:^{
         EMS_LOG(@"Storing slots %lu", (unsigned long) [slots count]);
         EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
         [backgroundModel.managedObjectContext performBlock:^{
             NSError *saveError = nil;
-            
+
             if (![backgroundModel storeSlots:slots forHref:[href absoluteString] error:&saveError]) {
                 EMS_LOG(@"Failed to store slots %@ - %@", saveError, [saveError userInfo]);
             }
@@ -285,26 +313,26 @@
     saveSlotsOperation.completionBlock = ^{
         [self.syncOperationQueue addOperation:self.slotsDoneOperation];
     };
-    
+
     [self.syncOperationQueue addOperation:saveSlotsOperation];
 
 }
 
 - (void)finishedSessions:(NSArray *)sessions forHref:(NSURL *)href error:(NSError **)error {
     EMS_LOG(@"Storing sessions %lu", (unsigned long) [sessions count]);
-    
+
     NSOperation *saveSessionsOperation = [NSBlockOperation blockOperationWithBlock:^{
         EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
-        
+
         [backgroundModel.managedObjectContext performBlock:^{
             NSError *saveError = nil;
-            
+
             if (![backgroundModel storeSessions:sessions forHref:[href absoluteString] error:&saveError]) {
                 EMS_LOG(@"Failed to store sessions %@ - %@", saveError, [saveError userInfo]);
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
-                
+
                 self.refreshingSessions = NO;
                 self.slotsDoneOperation = nil;
                 self.roomsDoneOperation = nil;
@@ -314,30 +342,30 @@
 
     [saveSessionsOperation addDependency:self.slotsDoneOperation];
     [saveSessionsOperation addDependency:self.roomsDoneOperation];
-    
+
     [self.syncOperationQueue addOperation:saveSessionsOperation];
-    
+
 }
 
 - (void)finishedRooms:(NSArray *)rooms forHref:(NSURL *)href error:(NSError **)error {
     EMS_LOG(@"Storing rooms %lu", (unsigned long) [rooms count]);
-    
+
     NSOperation *saveRoomsOperation = [NSBlockOperation blockOperationWithBlock:^{
         EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
-        
+
         [backgroundModel.managedObjectContext performBlock:^{
             NSError *saveError = nil;
-            
+
             if (![backgroundModel storeRooms:rooms forHref:[href absoluteString] error:&saveError]) {
                 EMS_LOG(@"Failed to store rooms %@ - %@", saveError, [saveError userInfo]);
             }
         }];
     }];
-    
+
     saveRoomsOperation.completionBlock = ^{
         [self.syncOperationQueue addOperation:self.roomsDoneOperation];
     };
-    
+
     [self.syncOperationQueue addOperation:saveRoomsOperation];
 }
 
