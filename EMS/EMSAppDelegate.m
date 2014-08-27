@@ -83,7 +83,7 @@ int networkCount = 0;
 
         if (![[[EMSAppDelegate sharedAppDelegate] model] conferencesWithDataAvailable]) {
             EMS_LOG(@"Retrieving conferences");
-            [[EMSRetriever sharedInstance] refreshRoot];
+            [[EMSRetriever sharedInstance] refreshAllConferences];
         }
 
     });

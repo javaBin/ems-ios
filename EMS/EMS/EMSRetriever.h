@@ -21,10 +21,12 @@
 
 @property(nonatomic, strong) NSError *sessionError;
 
-- (void)refreshRoot;
+- (void)refreshAllConferences;
 
 - (void)refreshActiveConference;
 
 - (void)refreshSpeakers:(NSURL *)url;
+
+
 
 @end

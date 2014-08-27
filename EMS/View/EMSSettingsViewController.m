@@ -147,8 +147,8 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
     EMSRetriever *retriever = [EMSRetriever sharedInstance];
     
     EMS_LOG(@"Retrieving conferences");
-    
-    [retriever refreshRoot];
+
+    [retriever refreshAllConferences];
 }
 
 - (void)didReceiveMemoryWarning {

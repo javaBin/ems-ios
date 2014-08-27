@@ -197,7 +197,7 @@
     });
 }
 
-- (void)refreshRoot {
+- (void)refreshAllConferences {
     NSAssert([NSThread isMainThread], @"Should be called on main thread.");
 
     if (self.refreshingConferences) {
@@ -334,7 +334,7 @@
     }
     
     if (![self activeConference]) {
-        [self refreshRoot];
+        [self refreshAllConferences];
         return;
     }
 
