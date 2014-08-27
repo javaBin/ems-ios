@@ -16,17 +16,18 @@
 
 - (NSAttributedString *)titleForRefreshControl {
     NSDate *lastUpdate = [[EMSRetriever sharedInstance] lastUpdatedAllConferences];
-
-    NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Refresh available conferences", @"Title for conference list refresh control.")];
-
     if (lastUpdate != nil) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.dateStyle = NSDateFormatterShortStyle;
         dateFormatter.timeStyle = NSDateFormatterShortStyle;
-        [title appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:NSLocalizedString(@"\nLast updated: %@", @"Last updated: {last updated}"), [dateFormatter stringFromDate:lastUpdate]]]];
+        dateFormatter.doesRelativeDateFormatting = YES;
+        NSAttributedString *title = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:NSLocalizedString(@"Last updated: %@", @"Last updated: {last updated}"), [dateFormatter stringFromDate:lastUpdate]]];
+        return title;
+    } else {
+        NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Refresh available conferences", @"Title for conference list refresh control.")];
+        return title;
     }
 
-    return [[NSAttributedString alloc] initWithAttributedString:title];
 }
 
 - (void)setUpRefreshControl {
