@@ -105,7 +105,8 @@
         }
         
         if (!error) {
-            self.conferenceLastUpdate = [NSDate date];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setObject:[NSDate date] forKey:@"conferencesLastUpdate"];
 
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
         } else {
@@ -154,7 +155,8 @@
         }
         
         if (!error) {
-            self.sessionLastUpdate = [NSDate date];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setObject:[NSDate date] forKey:@"sessionsLastUpdate"];
 
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
         } else {
