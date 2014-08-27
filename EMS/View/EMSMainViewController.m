@@ -84,15 +84,12 @@
 - (void)updateRefreshControl {
     UIRefreshControl *refreshControl = self.refreshControl;
     if ([EMSRetriever sharedInstance].refreshingSessions) {
-        if (!refreshControl.refreshing) {
-            refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Refreshing", @"Refreshing available sessions")];
-            [refreshControl beginRefreshing];
-        }
+        refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Refreshing sessions...", @"Refreshing available sessions")];
+        [refreshControl beginRefreshing];
+       
     } else {
-        if (refreshControl.refreshing) {
-            [refreshControl endRefreshing];
-            refreshControl.attributedTitle = [self titleForRefreshControl];
-        }
+        [refreshControl endRefreshing];
+        refreshControl.attributedTitle = [self titleForRefreshControl];
     }
 
 }

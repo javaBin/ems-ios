@@ -43,7 +43,7 @@
 - (void) updateRefreshControl {
     UIRefreshControl *refreshControl = self.refreshControl;
     if ([EMSRetriever sharedInstance].refreshingConferences) {
-        refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Refreshing", @"Refreshing available conferences")];
+        refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Refreshing conferences...", @"Refreshing available conferences")];
         [refreshControl beginRefreshing];
     } else {
         [refreshControl endRefreshing];
