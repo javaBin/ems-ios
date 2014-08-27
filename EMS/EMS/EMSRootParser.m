@@ -10,13 +10,15 @@
 
 @implementation EMSRootParser
 
-- (NSDictionary *)processData:(NSData *)data forHref:(NSURL *)href {
-    NSError *error = nil;
+- (NSDictionary *)processData:(NSData *)data forHref:(NSURL *)href error:(NSError **)error {
+    NSError *parseError = nil;
 
     CJCollection *collection = [CJCollection collectionForNSData:data error:&error];
 
     if (!collection) {
-        EMS_LOG(@"Failed to retrieve root %@ - %@ - %@", href, error, [error userInfo]);
+        EMS_LOG(@"Failed to retrieve root %@ - %@ - %@", href, parseError, [parseError userInfo]);
+
+        error = &parseError;
 
         return [NSDictionary dictionary];
     }
@@ -33,9 +35,11 @@
 }
 
 - (void)parseData:(NSData *)data forHref:(NSURL *)href {
-    NSDictionary *collection = [self processData:data forHref:href];
+    NSError *error = nil;
 
-    [self.delegate finishedRoot:collection forHref:href];
+    NSDictionary *collection = [self processData:data forHref:href error:&error];
+
+    [self.delegate finishedRoot:collection forHref:href error:&error];
 }
 
 @end

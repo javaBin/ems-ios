@@ -126,7 +126,8 @@
 }
 
 - (void)finishedRoot:(NSDictionary *)links
-             forHref:(NSURL *)href {
+             forHref:(NSURL *)href
+               error:(NSError **)error {
 
     if (links[@"event collection"]) {
         [self refreshConferencesForHref:links[@"event collection"]];
