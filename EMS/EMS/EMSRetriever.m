@@ -333,8 +333,19 @@
         return;
     }
     
+    //Trigger a refresh of all conferences in the rare case a user has no selected conference and tries
+    //to refresh by pulling down the session list.
+    //This relies in the fact that refreshConferences will automatically select latest conference when done syncing.
     if (![self activeConference]) {
+        
+        
         [self refreshAllConferences];
+        
+        //Set to NO to trigger KVO so that the observers can stop
+        //any progress indicators. This is a workaround on the fact that
+        //a UIRefreshControl will start spinning automatically, so a call to this method must always trigger a KVO. If we did not do this the UIRefreshControl listening for changes to refreshingSessions would never stop spinning in the case that the above refreshAllConferences call fails.
+        //I understand this is a code smell, so will revisit this...
+        self.refreshingSessions = NO;
         return;
     }
 
