@@ -422,8 +422,14 @@
             }
         }];
     }];
+    
+    __weak NSOperation *weakSaveSlot = saveSlotsOperation;
     saveSlotsOperation.completionBlock = ^{
-        [self.sessionSaveCoordinationOperationQueue addOperation:self.slotsDoneOperation];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (![weakSaveSlot isCancelled] && self.slotsDoneOperation) {
+                [self.sessionSaveCoordinationOperationQueue addOperation:self.slotsDoneOperation];
+            }
+        });
     };
 
     [self.sessionSaveCoordinationOperationQueue addOperation:saveSlotsOperation];
@@ -456,10 +462,16 @@
         }];
     }];
 
-    [saveSessionsOperation addDependency:self.slotsDoneOperation];
-    [saveSessionsOperation addDependency:self.roomsDoneOperation];
-
-    [self.sessionSaveCoordinationOperationQueue addOperation:saveSessionsOperation];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.slotsDoneOperation && self.roomsDoneOperation) {
+            //If slotsDoneOperation or roomsDoneOperation is not set we are likely cancelled,
+            //so don´t try to save sessions either.
+            [saveSessionsOperation addDependency:self.slotsDoneOperation];
+            [saveSessionsOperation addDependency:self.roomsDoneOperation];
+            
+            [self.sessionSaveCoordinationOperationQueue addOperation:saveSessionsOperation];
+        }
+    });
 
 }
 
@@ -488,8 +500,13 @@
         }];
     }];
 
+    __weak NSOperation *weakSaveOperation = saveRoomsOperation;
     saveRoomsOperation.completionBlock = ^{
-        [self.sessionSaveCoordinationOperationQueue addOperation:self.roomsDoneOperation];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (![weakSaveOperation isCancelled] && self.roomsDoneOperation) {
+                [self.sessionSaveCoordinationOperationQueue addOperation:self.roomsDoneOperation];
+            }            
+        });
     };
 
     [self.sessionSaveCoordinationOperationQueue addOperation:saveRoomsOperation];
