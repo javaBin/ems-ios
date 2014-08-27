@@ -68,7 +68,7 @@
 
     NSArray *collection = [self processData:data forHref:href error:&error];
 
-    [self.delegate finishedSpeakers:collection forHref:href error:&error];
+    [self.delegate finishedSpeakers:collection forHref:href error:error];
 }
 
 @end

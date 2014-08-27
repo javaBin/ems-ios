@@ -8,6 +8,6 @@
 
 @optional
 
-- (void)finishedSlots:(NSArray *)slots forHref:(NSURL *)href error:(NSError **)error;
+- (void)finishedSlots:(NSArray *)slots forHref:(NSURL *)href error:(NSError *)error;
 
 @end

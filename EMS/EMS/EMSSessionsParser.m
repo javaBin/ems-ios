@@ -127,7 +127,7 @@
 
     NSArray *collection = [self processData:responseData forHref:href error:&error];
 
-    [self.delegate finishedSessions:collection forHref:href error:&error];
+    [self.delegate finishedSessions:collection forHref:href error:error];
 }
 
 @end

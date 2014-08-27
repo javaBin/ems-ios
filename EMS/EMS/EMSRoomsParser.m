@@ -54,7 +54,7 @@
 
     NSArray *collection = [self processData:data forHref:href error:&error];
 
-    [self.delegate finishedRooms:collection forHref:href error:&error];
+    [self.delegate finishedRooms:collection forHref:href error:error];
 }
 
 @end

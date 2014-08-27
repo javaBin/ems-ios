@@ -17,6 +17,11 @@
 
 @property(readonly) BOOL refreshingSpeakers;
 
+@property(nonatomic, strong) NSError *conferenceError;
+
+@property(nonatomic, strong) NSError *sessionError;
+
+
 - (void)refreshRoot;
 
 - (void)refreshActiveConference;
