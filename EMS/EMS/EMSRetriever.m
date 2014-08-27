@@ -214,9 +214,9 @@
 
     [[self.conferenceURLSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
-
             [self finishedConferencesWithError:error];
+        } else if (![self hasSuccessfulStatus:response]) {
+            [self finishedConferencesWithError:[self errorForStatus:response]];
         } else {
             EMSRootParser *parser = [[EMSRootParser alloc] init];
 
@@ -259,9 +259,9 @@
 
     [[self.conferenceURLSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
-
             [self finishedConferencesWithError:error];
+        } else if (![self hasSuccessfulStatus:response]) {
+            [self finishedConferencesWithError:[self errorForStatus:response]];
         } else {
             EMSEventsParser *parser = [[EMSEventsParser alloc] init];
 
@@ -527,9 +527,9 @@
 
     [[self.sessionsURLSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
-
             [self finishedSessionsWithError:error];
+        } else if (![self hasSuccessfulStatus:response]) {
+            [self finishedSessionsWithError:[self errorForStatus:response]];
         } else {
             EMSSlotsParser *parser = [[EMSSlotsParser alloc] init];
 
@@ -556,9 +556,9 @@
 
     [[self.sessionsURLSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
-
             [self finishedSessionsWithError:error];
+        } else if (![self hasSuccessfulStatus:response]) {
+            [self finishedSessionsWithError:[self errorForStatus:response]];
         } else {
             EMSSessionsParser *parser = [[EMSSessionsParser alloc] init];
 
@@ -587,9 +587,9 @@
 
     [[self.sessionsURLSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
-
             [self finishedSessionsWithError:error];
+        } else if (![self hasSuccessfulStatus:response]) {
+            [self finishedSessionsWithError:[self errorForStatus:response]];
         } else {
             EMSRoomsParser *parser = [[EMSRoomsParser alloc] init];
 
@@ -657,5 +657,23 @@
     return [defaults objectForKey:[NSString stringWithFormat:@"sessionsLastUpdate-%@", [[self activeConference] href]]];
 }
 
+- (NSError *)errorForStatus:(NSURLResponse *) response {
+    NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
 
+    [errorDetail setValue:NSLocalizedString(@"Refresh failed", @"Error message when an HTTP error occured when refreshing.") forKey:NSLocalizedDescriptionKey];
+
+    return [NSError errorWithDomain:@"EMSRetriever" code:[self statusCodeForResponse:response] userInfo:errorDetail];
+}
+
+- (BOOL)hasSuccessfulStatus:(NSURLResponse *) response {
+    NSInteger status = [self statusCodeForResponse:response];
+
+    return status >= 200 && status < 300;
+}
+
+- (NSInteger)statusCodeForResponse:(NSURLResponse *) response {
+    NSHTTPURLResponse *httpUrlResponse = (NSHTTPURLResponse *)response;
+
+    return httpUrlResponse.statusCode;
+}
 @end
