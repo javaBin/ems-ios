@@ -13,13 +13,15 @@
 
 @implementation EMSEventsParser
 
-- (NSArray *)processData:(NSData *)data andHref:(NSURL *)href {
-    NSError *error = nil;
+- (NSArray *)processData:(NSData *)data andHref:(NSURL *)href error:(NSError **)error {
+    NSError *parseError = nil;
 
-    CJCollection *collection = [CJCollection collectionForNSData:data error:&error];
+    CJCollection *collection = [CJCollection collectionForNSData:data error:&parseError];
 
     if (!collection) {
-        EMS_LOG(@"Failed to retrieve conferences %@ - %@ - %@", href, error, [error userInfo]);
+        EMS_LOG(@"Failed to retrieve conferences %@ - %@ - %@", href, parseError, [parseError userInfo]);
+
+        *error = parseError;
 
         return [NSArray array];
     }
@@ -78,9 +80,11 @@
 }
 
 - (void)parseData:(NSData *)data forHref:(NSURL *)href {
-    NSArray *collection = [self processData:data andHref:href];
+    NSError *error = nil;
 
-    [self.delegate finishedEvents:collection forHref:href];
+    NSArray *collection = [self processData:data andHref:href error:&error];
+
+    [self.delegate finishedEvents:collection forHref:href error:&error];
 }
 
 @end

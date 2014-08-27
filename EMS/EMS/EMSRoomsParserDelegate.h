@@ -8,6 +8,6 @@
 
 @optional
 
-- (void)finishedRooms:(NSArray *)rooms forHref:(NSURL *)href;
+- (void)finishedRooms:(NSArray *)rooms forHref:(NSURL *)href error:(NSError **)error;
 
 @end

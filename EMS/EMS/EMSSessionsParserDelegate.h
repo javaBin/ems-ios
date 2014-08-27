@@ -8,6 +8,6 @@
 
 @optional
 
-- (void)finishedSessions:(NSArray *)sessions forHref:(NSURL *)href;
+- (void)finishedSessions:(NSArray *)sessions forHref:(NSURL *)href error:(NSError **)error;
 
 @end

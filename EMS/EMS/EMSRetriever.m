@@ -16,12 +16,6 @@
 #import "EMSConference.h"
 #import "EMSRootParser.h"
 #import "EMSTracking.h"
-#import "EMSSlotsParserDelegate.h"
-#import "EMSSpeakersParserDelegate.h"
-#import "EMSSessionsParserDelegate.h"
-#import "EMSRoomsParserDelegate.h"
-#import "EMSEventsParserDelegate.h"
-#import "EMSRootParserDelegate.h"
 
 @interface EMSRetriever () <EMSRootParserDelegate, EMSEventsParserDelegate, EMSRoomsParserDelegate, EMSSessionsParserDelegate, EMSSpeakersParserDelegate, EMSSlotsParserDelegate>
 
@@ -166,16 +160,15 @@
     }] resume];
 }
 
-- (void)finishedEvents:(NSArray *)conferences
-               forHref:(NSURL *)href {
+- (void)finishedEvents:(NSArray *)conferences forHref:(NSURL *)href error:(NSError **)error {
 
     EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
 
     [backgroundModel.managedObjectContext performBlock:^{
-        NSError *error = nil;
+        NSError *saveError = nil;
 
-        if (![backgroundModel storeConferences:conferences error:&error]) {
-            EMS_LOG(@"Failed to store conferences %@ - %@", error, [error userInfo]);
+        if (![backgroundModel storeConferences:conferences error:&saveError]) {
+            EMS_LOG(@"Failed to store conferences %@ - %@", saveError, [saveError userInfo]);
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
@@ -253,41 +246,39 @@
     }
 }
 
-- (void)finishedSpeakers:(NSArray *)speakers
-                 forHref:(NSURL *)href {
+- (void)finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href error:(NSError **)error {
     EMS_LOG(@"Storing speakers %lu for href %@", (unsigned long) [speakers count], href);
 
     EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
 
     [backgroundModel.managedObjectContext performBlock:^{
-        NSError *error = nil;
+        NSError *saveError = nil;
 
-        if (![backgroundModel storeSpeakers:speakers forHref:[href absoluteString] error:&error]) {
-            EMS_LOG(@"Failed to store speakers %@ - %@", error, [error userInfo]);
+        if (![backgroundModel storeSpeakers:speakers forHref:[href absoluteString] error:&saveError]) {
+            EMS_LOG(@"Failed to store speakers %@ - %@", saveError, [saveError userInfo]);
         }
 
         dispatch_async(dispatch_get_main_queue(), ^{
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
             self.refreshingSpeakers = NO;
 
-            if ([self.delegate respondsToSelector:@selector(finishedSpeakers:forHref:)]) {
-                [self.delegate finishedSpeakers:speakers forHref:href];
+            if ([self.delegate respondsToSelector:@selector(finishedSpeakers:forHref:error:)]) {
+                [self.delegate finishedSpeakers:speakers forHref:href error:NULL];
             }
         });
     }];
 }
 
-- (void)finishedSlots:(NSArray *)slots
-              forHref:(NSURL *)href {
+- (void)finishedSlots:(NSArray *)slots forHref:(NSURL *)href error:(NSError **)error {
     
     NSOperation *saveSlotsOperation = [NSBlockOperation blockOperationWithBlock:^{
         EMS_LOG(@"Storing slots %lu", (unsigned long) [slots count]);
         EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
         [backgroundModel.managedObjectContext performBlock:^{
-            NSError *error = nil;
+            NSError *saveError = nil;
             
-            if (![backgroundModel storeSlots:slots forHref:[href absoluteString] error:&error]) {
-                EMS_LOG(@"Failed to store slots %@ - %@", error, [error userInfo]);
+            if (![backgroundModel storeSlots:slots forHref:[href absoluteString] error:&saveError]) {
+                EMS_LOG(@"Failed to store slots %@ - %@", saveError, [saveError userInfo]);
             }
         }];
     }];
@@ -299,18 +290,17 @@
 
 }
 
-- (void)finishedSessions:(NSArray *)sessions
-                 forHref:(NSURL *)href {
+- (void)finishedSessions:(NSArray *)sessions forHref:(NSURL *)href error:(NSError **)error {
     EMS_LOG(@"Storing sessions %lu", (unsigned long) [sessions count]);
     
     NSOperation *saveSessionsOperation = [NSBlockOperation blockOperationWithBlock:^{
         EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
         
         [backgroundModel.managedObjectContext performBlock:^{
-            NSError *error = nil;
+            NSError *saveError = nil;
             
-            if (![backgroundModel storeSessions:sessions forHref:[href absoluteString] error:&error]) {
-                EMS_LOG(@"Failed to store sessions %@ - %@", error, [error userInfo]);
+            if (![backgroundModel storeSessions:sessions forHref:[href absoluteString] error:&saveError]) {
+                EMS_LOG(@"Failed to store sessions %@ - %@", saveError, [saveError userInfo]);
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
@@ -329,18 +319,17 @@
     
 }
 
-- (void)finishedRooms:(NSArray *)rooms
-              forHref:(NSURL *)href {
+- (void)finishedRooms:(NSArray *)rooms forHref:(NSURL *)href error:(NSError **)error {
     EMS_LOG(@"Storing rooms %lu", (unsigned long) [rooms count]);
     
     NSOperation *saveRoomsOperation = [NSBlockOperation blockOperationWithBlock:^{
         EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
         
         [backgroundModel.managedObjectContext performBlock:^{
-            NSError *error = nil;
+            NSError *saveError = nil;
             
-            if (![backgroundModel storeRooms:rooms forHref:[href absoluteString] error:&error]) {
-                EMS_LOG(@"Failed to store rooms %@ - %@", error, [error userInfo]);
+            if (![backgroundModel storeRooms:rooms forHref:[href absoluteString] error:&saveError]) {
+                EMS_LOG(@"Failed to store rooms %@ - %@", saveError, [saveError userInfo]);
             }
         }];
     }];

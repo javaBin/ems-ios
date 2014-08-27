@@ -10,13 +10,15 @@
 
 @implementation EMSRoomsParser
 
-- (NSArray *)processData:(NSData *)data forHref:(NSURL *)href {
-    NSError *error = nil;
+- (NSArray *)processData:(NSData *)data forHref:(NSURL *)href error:(NSError **)error {
+    NSError *parseError = nil;
 
-    CJCollection *collection = [CJCollection collectionForNSData:data error:&error];
+    CJCollection *collection = [CJCollection collectionForNSData:data error:&parseError];
 
     if (!collection) {
-        EMS_LOG(@"Failed to retrieve rooms %@ - %@ - %@", href, error, [error userInfo]);
+        EMS_LOG(@"Failed to retrieve rooms %@ - %@ - %@", href, parseError, [parseError userInfo]);
+
+        *error = parseError;
 
         return [NSArray array];
     }
@@ -48,9 +50,11 @@
 }
 
 - (void)parseData:(NSData *)data forHref:(NSURL *)href {
-    NSArray *collection = [self processData:data forHref:href];
+    NSError *error;
 
-    [self.delegate finishedRooms:collection forHref:href];
+    NSArray *collection = [self processData:data forHref:href error:&error];
+
+    [self.delegate finishedRooms:collection forHref:href error:&error];
 }
 
 @end

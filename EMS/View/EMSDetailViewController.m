@@ -740,7 +740,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     [self.speakerRetriever refreshSpeakers:[NSURL URLWithString:self.session.speakerCollection]];
 }
 
-- (void)finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href {
+- (void)finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href error:(NSError **)error {
     // Check we haven't navigated to a new session
     if ([[href absoluteString] isEqualToString:self.session.speakerCollection]) {
         __block BOOL newBios = NO;

@@ -8,6 +8,6 @@
 
 @optional
 
-- (void)finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href;
+- (void)finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href error:(NSError **)error;
 
 @end
