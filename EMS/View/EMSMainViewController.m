@@ -39,6 +39,8 @@
 
 @property (strong, nonatomic) EMSSessionCell *sizingCell;
 
+@property(nonatomic) BOOL retrieveStartedByUser;
+
 - (IBAction)toggleFavourite:(id)sender;
 
 - (IBAction)segmentChanged:(id)sender;
@@ -76,21 +78,34 @@
     refreshControl.tintColor = [UIColor grayColor];
     refreshControl.attributedTitle = [self titleForRefreshControl];
     refreshControl.backgroundColor = self.tableView.backgroundColor;
-    [refreshControl addTarget:self action:@selector(retrieve) forControlEvents:UIControlEventValueChanged];
+    [refreshControl addTarget:self action:@selector(refreshControlPulled:) forControlEvents:UIControlEventValueChanged];
 
     self.refreshControl = refreshControl;
+}
+
+- (void) refreshControlPulled:(id) sender {
+    self.retrieveStartedByUser = YES;
+    [self retrieve];
 }
 
 - (void)updateRefreshControl {
     UIRefreshControl *refreshControl = self.refreshControl;
     if ([EMSRetriever sharedInstance].refreshingSessions) {
+
         refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Refreshing sessions...", @"Refreshing available sessions")];
         [refreshControl beginRefreshing];
-       
+        
+        if ([self.fetchedResultsController.fetchedObjects count] == 0 && !self.retrieveStartedByUser) {
+            CGRect rect = [self.tableView convertRect:refreshControl.frame fromView:refreshControl];
+            [self.tableView scrollRectToVisible:rect animated:YES];
+        }
+        
     } else {
         [refreshControl endRefreshing];
         refreshControl.attributedTitle = [self titleForRefreshControl];
     }
+    
+    self.retrieveStartedByUser = NO;
 
 }
 
@@ -321,6 +336,8 @@
 
     self.search.text = [self.advancedSearch search];
 
+    self.retrieveStartedByUser = NO;
+    
     [self setUpRefreshControl];
 
     // All sections start with the same year name - so the index is meaningless.
@@ -825,7 +842,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     [self.advancedSearch setSearch:self.search.text];
 }
 
-- (void)retrieve {
+- (void)retrieve {    
     [[EMSRetriever sharedInstance] refreshActiveConference];
 }
 
