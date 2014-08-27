@@ -14,11 +14,26 @@
 
 @implementation EMSSettingsViewController
 
+- (NSAttributedString *)titleForRefreshControl {
+    NSDate *lastUpdate = [[EMSRetriever sharedInstance] lastUpdatedAllConferences];
+
+    NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Refresh available conferences", @"Title for conference list refresh control.")];
+
+    if (lastUpdate != nil) {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateStyle = NSDateFormatterShortStyle;
+        dateFormatter.timeStyle = NSDateFormatterShortStyle;
+        [title appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:NSLocalizedString(@"\nLast updated: %@", @"Last updated: {last updated}"), [dateFormatter stringFromDate:lastUpdate]]]];
+    }
+
+    return [[NSAttributedString alloc] initWithAttributedString:title];
+}
+
 - (void)setUpRefreshControl {
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
 
     refreshControl.tintColor = [UIColor grayColor];
-    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Refresh available conferences", @"Title for conference list refresh control.")];
+    refreshControl.attributedTitle = [self titleForRefreshControl];
     refreshControl.backgroundColor = self.tableView.backgroundColor;
     [refreshControl addTarget:self action:@selector(retrieve) forControlEvents:UIControlEventValueChanged];
 
@@ -28,9 +43,11 @@
 - (void) updateRefreshControl {
     UIRefreshControl *refreshControl = self.refreshControl;
     if ([EMSRetriever sharedInstance].refreshingConferences) {
+        refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Refreshing", @"Refreshing available conferences")];
         [refreshControl beginRefreshing];
     } else {
         [refreshControl endRefreshing];
+        refreshControl.attributedTitle = [self titleForRefreshControl];
     }
     
 }

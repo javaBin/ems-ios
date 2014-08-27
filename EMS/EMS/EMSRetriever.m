@@ -156,7 +156,7 @@
         
         if (!error) {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setObject:[NSDate date] forKey:@"sessionsLastUpdate"];
+            [defaults setObject:[NSDate date] forKey:[NSString stringWithFormat:@"sessionsLastUpdate-%@", [[self activeConference] href]]];
 
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
         } else {
@@ -643,5 +643,19 @@
     }] resume];
 
 }
+
+- (NSDate *)lastUpdatedAllConferences {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    return [defaults objectForKey:@"conferencesLastUpdate"];
+}
+
+- (NSDate *)lastUpdateActiveConference {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[NSDate date] forKey:[NSString stringWithFormat:@"sessionsLastUpdate-%@", [[self activeConference] href]]];
+
+    return [defaults objectForKey:[NSString stringWithFormat:@"sessionsLastUpdate-%@", [[self activeConference] href]]];
+}
+
 
 @end
