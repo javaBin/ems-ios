@@ -292,6 +292,11 @@
     if (self.refreshingSessions) {
         return;
     }
+    
+    if (![self activeConference]) {
+        [self refreshRoot];
+        return;
+    }
 
     self.refreshingSessions = YES;
 
