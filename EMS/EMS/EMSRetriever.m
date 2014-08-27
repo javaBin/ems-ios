@@ -30,7 +30,7 @@
 
 @property(nonatomic) NSOperation *slotsDoneOperation;
 @property(nonatomic) NSOperation *roomsDoneOperation;
-@property(nonatomic) NSOperationQueue *syncOperationQueue;
+@property(nonatomic) NSOperationQueue *sessionSaveCoordinationOperationQueue;
 
 
 
@@ -66,7 +66,7 @@
         _sessionsURLSession = [NSURLSession sessionWithConfiguration:sessionConfiguration];
         _sessionsParseQueue = [[NSOperationQueue alloc] init];
         
-        _syncOperationQueue = [[NSOperationQueue alloc] init];
+        _sessionSaveCoordinationOperationQueue = [[NSOperationQueue alloc] init];
         
         
         _refreshingSpeakers =NO;
@@ -99,11 +99,17 @@
    
     dispatch_async(dispatch_get_main_queue(), ^{
         
+        if (!self.refreshingConferences) {
+            //Already reported an error.
+            return;
+        }
+        
         if (!error) {
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
         } else {
             EMS_LOG(@"Failed to sync conferences %@ - %@", error, [error userInfo]);
-            
+        
+            //Cancel all pending network tasks
             [self.conferenceURLSession getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
                 for (NSURLSessionTask *task in dataTasks) {
                     [task cancel];
@@ -114,8 +120,15 @@
                 for (NSURLSessionTask *task in uploadTasks) {
                     [task cancel];
                 }
+                
+                //Cancel all pending parsing operations
                 [self.conferenceParseQueue cancelAllOperations];
+                
+                //TODO: Cancel changes to model object context
             }];
+            
+            [self presentError:error];
+           
         }
         
         self.refreshingConferences = NO;
@@ -124,15 +137,26 @@
 
 }
 
+- (void) presentError:(NSError *) error {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Download failed", @"Conference download failed error dialog title.") message:[error localizedDescription] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"Error dialog dismiss button.") otherButtonTitles:nil];
+    [alertView show];
+}
+
 - (void)finishedSessionsWithError:(NSError *)error {
     
     dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if (!self.refreshingSessions) {
+            //Already reported an error.
+            return;
+        }
         
         if (!error) {
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
         } else {
             EMS_LOG(@"Failed to sync sessions %@ - %@", error, [error userInfo]);
             
+            //Cancel all pending network tasks.
             [self.sessionsURLSession getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
                 for (NSURLSessionTask *task in dataTasks) {
                     [task cancel];
@@ -144,9 +168,19 @@
                     [task cancel];
                 }
                 
+                //Cancel all pending parsing tasks.
                 [self.sessionsParseQueue cancelAllOperations];
-                [self.syncOperationQueue cancelAllOperations];
+                
+                //Do not enqueue more network tasks.
+                [self.sessionSaveCoordinationOperationQueue cancelAllOperations];
+                
+                //TODO: Cancel changes to model object context
+                
+                
             }];
+            
+            
+            [self presentError:error];
         }
         
         self.sessionError = error;
@@ -389,10 +423,10 @@
         }];
     }];
     saveSlotsOperation.completionBlock = ^{
-        [self.syncOperationQueue addOperation:self.slotsDoneOperation];
+        [self.sessionSaveCoordinationOperationQueue addOperation:self.slotsDoneOperation];
     };
 
-    [self.syncOperationQueue addOperation:saveSlotsOperation];
+    [self.sessionSaveCoordinationOperationQueue addOperation:saveSlotsOperation];
 
 }
 
@@ -425,7 +459,7 @@
     [saveSessionsOperation addDependency:self.slotsDoneOperation];
     [saveSessionsOperation addDependency:self.roomsDoneOperation];
 
-    [self.syncOperationQueue addOperation:saveSessionsOperation];
+    [self.sessionSaveCoordinationOperationQueue addOperation:saveSessionsOperation];
 
 }
 
@@ -455,10 +489,10 @@
     }];
 
     saveRoomsOperation.completionBlock = ^{
-        [self.syncOperationQueue addOperation:self.roomsDoneOperation];
+        [self.sessionSaveCoordinationOperationQueue addOperation:self.roomsDoneOperation];
     };
 
-    [self.syncOperationQueue addOperation:saveRoomsOperation];
+    [self.sessionSaveCoordinationOperationQueue addOperation:saveRoomsOperation];
 }
 
 - (void)refreshSlots:(NSURL *)url {
