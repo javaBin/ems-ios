@@ -21,6 +21,10 @@
 
 @property(nonatomic, strong) NSError *sessionError;
 
+@property(nonatomic, strong) NSDate *conferenceLastUpdate;
+
+@property(nonatomic, strong) NSDate *sessionLastUpdate;
+
 
 - (void)refreshRoot;
 

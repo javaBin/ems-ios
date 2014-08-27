@@ -105,6 +105,8 @@
         }
         
         if (!error) {
+            self.conferenceLastUpdate = [NSDate date];
+
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
         } else {
             EMS_LOG(@"Failed to sync conferences %@ - %@", error, [error userInfo]);
@@ -152,6 +154,8 @@
         }
         
         if (!error) {
+            self.sessionLastUpdate = [NSDate date];
+
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
         } else {
             EMS_LOG(@"Failed to sync sessions %@ - %@", error, [error userInfo]);
