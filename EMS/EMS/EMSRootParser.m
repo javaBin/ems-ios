@@ -13,12 +13,12 @@
 - (NSDictionary *)processData:(NSData *)data forHref:(NSURL *)href error:(NSError **)error {
     NSError *parseError = nil;
 
-    CJCollection *collection = [CJCollection collectionForNSData:data error:&error];
+    CJCollection *collection = [CJCollection collectionForNSData:data error:&parseError];
 
     if (!collection) {
         EMS_LOG(@"Failed to retrieve root %@ - %@ - %@", href, parseError, [parseError userInfo]);
 
-        error = &parseError;
+        *error = parseError;
 
         return [NSDictionary dictionary];
     }
