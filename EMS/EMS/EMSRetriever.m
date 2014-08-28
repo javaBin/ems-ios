@@ -32,7 +32,9 @@
 @property(nonatomic, strong) NSSet *seenConferences;
 
 @property(nonatomic, strong) EMSConferenceRetriever *currentSessionsRetriever;
-@property(readwrite) BOOL refreshingSessions;
+
+@property(nonatomic, readwrite) BOOL fullSync;
+@property(nonatomic, readwrite) BOOL sessionSync;
 
 @end
 
@@ -48,6 +50,17 @@
     return instance;
 }
 
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
+    
+    NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
+    
+    if ([key isEqualToString:@"refreshingSessions"]) {
+        NSArray *affectingKeys = @[@"fullSync", @"sessionSync"];
+        keyPaths = [keyPaths setByAddingObjectsFromArray:affectingKeys];
+    }
+    return keyPaths;
+}
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -57,7 +70,8 @@
         _conferenceURLSession = [NSURLSession sessionWithConfiguration:conferenceConfiguration];
         _conferenceParseQueue = [[NSOperationQueue alloc] init];
         
-        _refreshingSessions = NO;
+        _sessionSync = NO;
+        _fullSync = NO;
 
         _refreshingSpeakers = NO;
         NSURLSessionConfiguration *speakersConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -65,6 +79,10 @@
         _speakersParseQueue = [[NSOperationQueue alloc] init];
     }
     return self;
+}
+
+- (BOOL)refreshingSessions {
+    return _fullSync || _sessionSync;
 }
 
 - (Conference *)conferenceForHref:(NSString *)href {
@@ -119,7 +137,7 @@
     
         if (![[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:[[self currentConference] absoluteString]]) {
             EMS_LOG(@"Checking for existing data found no data - forced refresh");
-            [self refreshActiveConference];
+            [self refreshSessions];
             
         }
     }];
@@ -163,17 +181,24 @@
             [defaults setObject:[NSDate date] forKey:@"conferencesLastUpdate"];
 
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
+            
+            if (self.fullSync) {
+                [self refreshSessions];
+            }
+            
         } else {
             EMS_LOG(@"Failed to sync conferences %@ - %@", error, [error userInfo]);
 
             [self cancelConferenceRefresh];
 
             [self presentError:error];
-
+            
+            if (self.fullSync) {
+                self.fullSync = NO;
+            }
         }
 
         self.refreshingConferences = NO;
-        self.conferenceError = error;
     });
 
 }
@@ -343,11 +368,42 @@
 
 #pragma mark - retrieval
 
-- (void)refreshActiveConference {
+- (BOOL)shouldUpdateAllConferences {
+    if (![self activeConference]) {
+        return YES;
+    }
+    
+    if (![self lastUpdatedAllConferences]) {
+        return YES;
+    }
+    
+    NSDate *now = [NSDate new];
+    NSDate *yesterday = [NSDate dateWithTimeInterval:-24*3600 sinceDate:now];
+    if ([[[self lastUpdatedAllConferences] earlierDate:yesterday] isEqual:now]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (void) refreshActiveConference {
+    NSAssert([NSThread isMainThread], @"Should be called from main thread.");
+    
+    if ([self shouldUpdateAllConferences]) {
+        self.fullSync = YES;
+        if (!self.refreshingConferences) {
+            [self refreshAllConferences];
+        }
+    } else {
+        [self refreshSessions];
+    }
+}
+
+- (void)refreshSessions {
 
     NSAssert([NSThread isMainThread], @"Should be called from main thread.");
 
-    if (self.refreshingSessions) {
+    if (self.sessionSync) {
         
         [self.currentSessionsRetriever cancel];
         
@@ -355,23 +411,7 @@
     
     }
 
-    //Trigger a refresh of all conferences in the rare case a user has no selected conference and tries
-    //to refresh by pulling down the session list.
-    //This relies in the fact that refreshConferences will automatically select latest conference when done syncing.
-    if (![self activeConference]) {
-
-
-        [self refreshAllConferences];
-
-        //Set to NO to trigger KVO so that the observers can stop
-        //any progress indicators. This is a workaround on the fact that
-        //a UIRefreshControl will start spinning automatically, so a call to this method must always trigger a KVO. If we did not do this the UIRefreshControl listening for changes to refreshingSessions would never stop spinning in the case that the above refreshAllConferences call fails.
-        //I understand this is a code smell, so will revisit this...
-        self.refreshingSessions = NO;
-        return;
-    }
-
-    self.refreshingSessions = YES;
+    self.sessionSync = YES;
 
     Conference *activeConference = [self activeConference];
 
@@ -457,7 +497,9 @@
         [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
     }
     
-    self.refreshingSessions = NO;
+    self.fullSync = NO;
+    
+    self.sessionSync = NO;
 }
 
 #pragma mark - Utilities

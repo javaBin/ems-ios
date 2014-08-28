@@ -12,15 +12,11 @@
 
 @property(nonatomic, weak) id <EMSSpeakersRetrieverDelegate> delegate;
 
-@property(readonly) BOOL refreshingConferences;
+@property(nonatomic, readonly) BOOL refreshingConferences;
 
-@property(readonly) BOOL refreshingSessions;
+@property(nonatomic, readonly) BOOL refreshingSessions;
 
-@property(readonly) BOOL refreshingSpeakers;
-
-@property(nonatomic, strong) NSError *conferenceError;
-
-@property(nonatomic, strong) NSError *sessionError;
+@property(nonatomic, readonly) BOOL refreshingSpeakers;
 
 - (void)refreshAllConferences;
 
