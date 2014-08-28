@@ -550,12 +550,13 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
         self.search.text = [self.advancedSearch search];
 
         [self initializeFetchedResultsController];
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{            
+            if ([[self.fetchedResultsController fetchedObjects] count] == 0) {
+                [self retrieve];
+            }
+        }];
         
         
-        if ([[self.fetchedResultsController fetchedObjects] count] == 0) {
-            [self retrieve];
-        }
     }
 }
 
