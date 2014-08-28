@@ -59,6 +59,7 @@
     } else {
         [refreshControl endRefreshing];
         refreshControl.attributedTitle = [self titleForRefreshControl];
+        [self.tableView reloadData];
     }
 
     self.retrieveStartedByUser = NO;
