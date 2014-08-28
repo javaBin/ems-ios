@@ -127,21 +127,6 @@
     
     [defaults synchronize];
     
-    
-    
-    // Refresh sessions for conference if neccesary.
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        if (![self currentConference]) {
-            return;
-        }
-    
-        if (![[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:[[self currentConference] absoluteString]]) {
-            EMS_LOG(@"Checking for existing data found no data - forced refresh");
-            [self refreshSessions];
-            
-        }
-    }];
-    
     if ([EMSFeatureConfig isCrashlyticsEnabled]) {
         [Crashlytics setObjectValue:href forKey:@"lastStoredConference"];
     }
@@ -183,6 +168,7 @@
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
             
             if (self.fullSync) {
+                
                 [self refreshSessions];
             }
             
@@ -321,8 +307,6 @@
         if (![backgroundModel storeConferences:conferences error:&saveError]) {
             [self finishedConferencesWithError:error];
         } else {
-            [self finishedConferencesWithError:nil];
-
             NSArray *activeConferences = [backgroundModel activeConferences];
 
             NSMutableSet *activeUrls = [[NSMutableSet alloc] init];
@@ -361,6 +345,8 @@
                 if (currentConference) {
                     [self storeCurrentConference:currentConference];
                 }
+                
+                [self finishedConferencesWithError:nil];
             });
         }
     }];

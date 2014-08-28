@@ -79,15 +79,6 @@ int networkCount = 0;
         }
     }
 
-    dispatch_async(dispatch_get_main_queue(), ^{
-
-        if (![[[EMSAppDelegate sharedAppDelegate] model] conferencesWithDataAvailable]) {
-            EMS_LOG(@"Retrieving conferences");
-            [[EMSRetriever sharedInstance] refreshAllConferences];
-        }
-
-    });
-
     return YES;
 }
 

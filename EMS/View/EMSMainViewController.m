@@ -341,6 +341,10 @@
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionRequested:) name:EMSUserRequestedSessionNotification object:[EMSLocalNotificationManager sharedInstance]];
+    
+    if ([[self.fetchedResultsController fetchedObjects] count] == 0) {
+        [self retrieve];
+    }
 
 }
 
@@ -547,6 +551,11 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
         [self initializeFetchedResultsController];
         [self dismissViewControllerAnimated:YES completion:nil];
+        
+        
+        if ([[self.fetchedResultsController fetchedObjects] count] == 0) {
+            [self retrieve];
+        }
     }
 }
 
