@@ -20,6 +20,8 @@
 
 - (Conference *)mostRecentConference;
 
+- (NSArray *)activeConferences;
+
 + (NSArray *)conferenceListSortDescriptors;
 
 - (BOOL)storeConferences:(NSArray *)conferences error:(NSError **)error;

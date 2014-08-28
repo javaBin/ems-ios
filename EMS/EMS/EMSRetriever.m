@@ -13,7 +13,6 @@
 
 #import "EMSAppDelegate.h"
 
-#import "EMSConference.h"
 #import "EMSRootParser.h"
 #import "EMSTracking.h"
 
@@ -33,10 +32,11 @@
 @property(nonatomic) NSOperationQueue *sessionSaveCoordinationOperationQueue;
 
 
-
 @property(readwrite) BOOL refreshingSpeakers;
 @property(nonatomic) NSURLSession *speakersURLSession;
 @property(nonatomic) NSOperationQueue *speakersParseQueue;
+
+@property(nonatomic, strong) NSArray *seenConferenceList;
 
 @end
 
@@ -56,20 +56,20 @@
     self = [super init];
     if (self) {
         _refreshingConferences = NO;
-        
+
         NSURLSessionConfiguration *conferenceConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
         _conferenceURLSession = [NSURLSession sessionWithConfiguration:conferenceConfiguration];
         _conferenceParseQueue = [[NSOperationQueue alloc] init];
-        
+
         _refreshingSessions = NO;
         NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
         _sessionsURLSession = [NSURLSession sessionWithConfiguration:sessionConfiguration];
         _sessionsParseQueue = [[NSOperationQueue alloc] init];
-        
+
         _sessionSaveCoordinationOperationQueue = [[NSOperationQueue alloc] init];
-        
-        
-        _refreshingSpeakers =NO;
+
+
+        _refreshingSpeakers = NO;
         NSURLSessionConfiguration *speakersConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
         _speakersURLSession = [NSURLSession sessionWithConfiguration:speakersConfiguration];
         _speakersParseQueue = [[NSOperationQueue alloc] init];
@@ -96,14 +96,14 @@
 }
 
 - (void)finishedConferencesWithError:(NSError *)error {
-   
+
     dispatch_async(dispatch_get_main_queue(), ^{
-        
+
         if (!self.refreshingConferences) {
             //Already reported an error.
             return;
         }
-        
+
         if (!error) {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:[NSDate date] forKey:@"conferencesLastUpdate"];
@@ -111,7 +111,7 @@
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
         } else {
             EMS_LOG(@"Failed to sync conferences %@ - %@", error, [error userInfo]);
-        
+
             //Cancel all pending network tasks
             [self.conferenceURLSession getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
                 for (NSURLSessionTask *task in dataTasks) {
@@ -123,37 +123,37 @@
                 for (NSURLSessionTask *task in uploadTasks) {
                     [task cancel];
                 }
-                
+
                 //Cancel all pending parsing operations
                 [self.conferenceParseQueue cancelAllOperations];
-                
+
                 //TODO: Cancel changes to model object context
             }];
-            
+
             [self presentError:error];
-           
+
         }
-        
+
         self.refreshingConferences = NO;
         self.conferenceError = error;
     });
 
 }
 
-- (void) presentError:(NSError *) error {
+- (void)presentError:(NSError *)error {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Download failed", @"Conference download failed error dialog title.") message:[error localizedDescription] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"Error dialog dismiss button.") otherButtonTitles:nil];
     [alertView show];
 }
 
 - (void)finishedSessionsWithError:(NSError *)error {
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
-        
+
         if (!self.refreshingSessions) {
             //Already reported an error.
             return;
         }
-        
+
         if (!error) {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:[NSDate date] forKey:[NSString stringWithFormat:@"sessionsLastUpdate-%@", [[self activeConference] href]]];
@@ -161,7 +161,7 @@
             [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
         } else {
             EMS_LOG(@"Failed to sync sessions %@ - %@", error, [error userInfo]);
-            
+
             //Cancel all pending network tasks.
             [self.sessionsURLSession getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
                 for (NSURLSessionTask *task in dataTasks) {
@@ -173,24 +173,24 @@
                 for (NSURLSessionTask *task in uploadTasks) {
                     [task cancel];
                 }
-                
+
                 //Cancel all pending parsing tasks.
                 [self.sessionsParseQueue cancelAllOperations];
-                
+
                 //Do not enqueue more network tasks.
                 [self.sessionSaveCoordinationOperationQueue cancelAllOperations];
-                
+
                 //TODO: Cancel changes to model object context
-                
-                
+
+
             }];
-            
-            
+
+
             [self presentError:error];
         }
-        
+
         self.sessionError = error;
-        
+
         self.refreshingSessions = NO;
         self.slotsDoneOperation = nil;
         self.roomsDoneOperation = nil;
@@ -205,6 +205,8 @@
     }
 
     self.refreshingConferences = YES;
+
+    self.seenConferenceList = [[[EMSAppDelegate sharedAppDelegate] model] activeConferences];
 
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
 
@@ -298,15 +300,33 @@
             [self finishedConferencesWithError:error];
         } else {
             [self finishedConferencesWithError:nil];
-            
-            
+
+            NSArray *activeConferences = [backgroundModel activeConferences];
+
             dispatch_async(dispatch_get_main_queue(), ^{
-                //TODO: Below is a dirty hack to auto select latest session.
                 [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
 
-                Conference *latestConference = [backgroundModel mostRecentConference];
+                NSMutableArray *newConferences = [[NSMutableArray alloc] init];
 
-                [EMSAppDelegate storeCurrentConference:[NSURL URLWithString:latestConference.href]];
+                [activeConferences enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    Conference *conference = (Conference *) obj;
+
+                    NSArray *matched = [self.seenConferenceList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"href == %@", conference.href]];
+
+                    if (matched.count == 0) {
+                        [newConferences addObject:conference];
+                    }
+                }];
+
+                if (newConferences.count > 0) {
+                    [newConferences sortUsingDescriptors:[EMSModel conferenceListSortDescriptors]];
+
+                    Conference *latestConference = [newConferences firstObject];
+
+                    if (latestConference) {
+                        [EMSAppDelegate storeCurrentConference:[NSURL URLWithString:latestConference.href]];
+                    }
+                }
             });
         }
     }];
@@ -321,15 +341,15 @@
     if (self.refreshingSessions) {
         return;
     }
-    
+
     //Trigger a refresh of all conferences in the rare case a user has no selected conference and tries
     //to refresh by pulling down the session list.
     //This relies in the fact that refreshConferences will automatically select latest conference when done syncing.
     if (![self activeConference]) {
-        
-        
+
+
         [self refreshAllConferences];
-        
+
         //Set to NO to trigger KVO so that the observers can stop
         //any progress indicators. This is a workaround on the fact that
         //a UIRefreshControl will start spinning automatically, so a call to this method must always trigger a KVO. If we did not do this the UIRefreshControl listening for changes to refreshingSessions would never stop spinning in the case that the above refreshAllConferences call fails.
@@ -428,7 +448,7 @@
             }
         }];
     }];
-    
+
     __weak NSOperation *weakSaveSlot = saveSlotsOperation;
     saveSlotsOperation.completionBlock = ^{
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -463,7 +483,7 @@
                 [self finishedSessionsWithError:saveError];
             } else {
                 [self finishedSessionsWithError:nil];
-                
+
             }
         }];
     }];
@@ -474,7 +494,7 @@
             //so don´t try to save sessions either.
             [saveSessionsOperation addDependency:self.slotsDoneOperation];
             [saveSessionsOperation addDependency:self.roomsDoneOperation];
-            
+
             [self.sessionSaveCoordinationOperationQueue addOperation:saveSessionsOperation];
         }
     });
@@ -511,7 +531,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (![weakSaveOperation isCancelled] && self.roomsDoneOperation) {
                 [self.sessionSaveCoordinationOperationQueue addOperation:self.roomsDoneOperation];
-            }            
+            }
         });
     };
 
@@ -567,7 +587,7 @@
             [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"sessions"];
             [EMSTracking dispatch];
 
-            
+
             [self.sessionsParseQueue addOperationWithBlock:^{
                 [parser parseData:data forHref:url];
             }];
@@ -601,7 +621,7 @@
             [self.sessionsParseQueue addOperationWithBlock:^{
                 [parser parseData:data forHref:url];
             }];
-            
+
         }
 
         [[EMSAppDelegate sharedAppDelegate] stopNetwork];
@@ -638,7 +658,7 @@
         [self.speakersParseQueue addOperationWithBlock:^{
             [parser parseData:data forHref:url];
         }];
-       
+
         [[EMSAppDelegate sharedAppDelegate] stopNetwork];
     }] resume];
 
@@ -656,7 +676,7 @@
     return [defaults objectForKey:[NSString stringWithFormat:@"sessionsLastUpdate-%@", [[self activeConference] href]]];
 }
 
-- (NSError *)errorForStatus:(NSURLResponse *) response {
+- (NSError *)errorForStatus:(NSURLResponse *)response {
     NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
 
     [errorDetail setValue:NSLocalizedString(@"Refresh failed", @"Error message when an HTTP error occured when refreshing.") forKey:NSLocalizedDescriptionKey];
@@ -664,14 +684,14 @@
     return [NSError errorWithDomain:@"EMSRetriever" code:[self statusCodeForResponse:response] userInfo:errorDetail];
 }
 
-- (BOOL)hasSuccessfulStatus:(NSURLResponse *) response {
+- (BOOL)hasSuccessfulStatus:(NSURLResponse *)response {
     NSInteger status = [self statusCodeForResponse:response];
 
     return status >= 200 && status < 300;
 }
 
-- (NSInteger)statusCodeForResponse:(NSURLResponse *) response {
-    NSHTTPURLResponse *httpUrlResponse = (NSHTTPURLResponse *)response;
+- (NSInteger)statusCodeForResponse:(NSURLResponse *)response {
+    NSHTTPURLResponse *httpUrlResponse = (NSHTTPURLResponse *) response;
 
     return httpUrlResponse.statusCode;
 }

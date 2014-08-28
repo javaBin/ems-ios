@@ -445,9 +445,12 @@
 #pragma mark - public interface
 
 - (Conference *)mostRecentConference {
-    NSArray *conferences = [self conferencesForPredicate:[NSPredicate predicateWithFormat:@"hintCount > 0"] andSort:[EMSModel conferenceListSortDescriptors]];
 
-    return [conferences firstObject];
+    return [[self activeConferences] firstObject];
+}
+
+- (NSArray *)activeConferences {
+    return [self conferencesForPredicate:[NSPredicate predicateWithFormat:@"hintCount > 0"] andSort:[EMSModel conferenceListSortDescriptors]];
 }
 
 + (NSArray *)conferenceListSortDescriptors {
