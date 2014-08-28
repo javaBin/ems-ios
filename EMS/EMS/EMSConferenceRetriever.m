@@ -89,14 +89,15 @@
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:[NSDate date] forKey:[NSString stringWithFormat:@"sessionsLastUpdate-%@", [self.conference href]]];
         }
+
+        self.refreshingSessions = NO;
+        self.slotsDoneOperation = nil;
+        self.roomsDoneOperation = nil;
         
         if (self.delegate) {
             [self.delegate conferenceRetriever:self finishedWithError:error];
         }
         
-        self.refreshingSessions = NO;
-        self.slotsDoneOperation = nil;
-        self.roomsDoneOperation = nil;
     });
 }
 
@@ -355,13 +356,6 @@
 }
 
 #pragma mark - TODO: Duplicated code below
-
-- (void)presentError:(NSError *)error {
-    NSAssert([NSThread isMainThread], @"Can only be called on main thread.");
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Download failed", @"Conference download failed error dialog title.") message:[error localizedDescription] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"Error dialog dismiss button.") otherButtonTitles:nil];
-    [alertView show];
-}
 
 - (NSError *)errorForStatus:(NSURLResponse *)response {
     NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
