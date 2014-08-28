@@ -36,7 +36,7 @@
 @property(nonatomic) NSURLSession *speakersURLSession;
 @property(nonatomic) NSOperationQueue *speakersParseQueue;
 
-@property(nonatomic, strong) NSArray *seenConferenceList;
+@property(nonatomic, strong) NSSet *seenConferences;
 
 @end
 
@@ -206,7 +206,15 @@
 
     self.refreshingConferences = YES;
 
-    self.seenConferenceList = [[[EMSAppDelegate sharedAppDelegate] model] activeConferences];
+    NSArray *activeConferences = [[[EMSAppDelegate sharedAppDelegate] model] activeConferences];
+
+    NSMutableSet *activeUrls = [[NSMutableSet alloc] init];
+
+    for (Conference *c in activeConferences) {
+        [activeUrls addObject:c.href];
+    }
+
+    self.seenConferences = [NSSet setWithSet:activeUrls];
 
     [[EMSAppDelegate sharedAppDelegate] startNetwork];
 
@@ -303,22 +311,26 @@
 
             NSArray *activeConferences = [backgroundModel activeConferences];
 
+            NSMutableSet *activeUrls = [[NSMutableSet alloc] init];
+
+            for (Conference *c in activeConferences) {
+                [activeUrls addObject:c.href];
+            }
+
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
 
-                NSMutableArray *newConferences = [[NSMutableArray alloc] init];
+                [activeUrls minusSet:self.seenConferences];
 
-                [activeConferences enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    Conference *conference = (Conference *) obj;
+                if (activeUrls.count > 0) {
+                    NSMutableArray *newConferences = [[NSMutableArray alloc] init];
 
-                    NSArray *matched = [self.seenConferenceList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"href == %@", conference.href]];
-
-                    if (matched.count == 0) {
-                        [newConferences addObject:conference];
+                    for (Conference *c in activeConferences) {
+                        if ([activeUrls containsObject:c.href]) {
+                            [newConferences addObject:c];
+                        }
                     }
-                }];
 
-                if (newConferences.count > 0) {
                     [newConferences sortUsingDescriptors:[EMSModel conferenceListSortDescriptors]];
 
                     Conference *latestConference = [newConferences firstObject];
