@@ -45,8 +45,9 @@
 		EA11338719A7A880008D000A /* EMSLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */; };
 		EA11338819A7A880008D000A /* EMSLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */; };
 		EA6132BC193FC35B000F54DC /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
-		EA74604019A42A2500E24D04 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA74603F19A42A2500E24D04 /* EMS-Keys.plist */; };
 		EA74604219A42A3600E24D04 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA74604119A42A3600E24D04 /* EMS-Keys.plist */; };
+		EA81CDDE19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = EA81CDDD19AF8F0400FE43A2 /* EMSConferenceRetriever.m */; };
+		EA81CDDF19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = EA81CDDD19AF8F0400FE43A2 /* EMSConferenceRetriever.m */; };
 		EA8F2C831944CCB7002EAE1F /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
 		EA9ACCBD19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */; };
 		EA9ACCBE19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */; };
@@ -213,8 +214,9 @@
 		EA28E8CE19A422E3004AAF81 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EA6132BA193FC35B000F54DC /* EMSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConfig.h; sourceTree = "<group>"; };
 		EA6132BB193FC35B000F54DC /* EMSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConfig.m; sourceTree = "<group>"; };
-		EA74603F19A42A2500E24D04 /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
 		EA74604119A42A3600E24D04 /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
+		EA81CDDC19AF8F0400FE43A2 /* EMSConferenceRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConferenceRetriever.h; sourceTree = "<group>"; };
+		EA81CDDD19AF8F0400FE43A2 /* EMSConferenceRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConferenceRetriever.m; sourceTree = "<group>"; };
 		EA9ACCBB19A9764500D369C6 /* EMSSessionTitleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSessionTitleTableViewCell.h; sourceTree = "<group>"; };
 		EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSessionTitleTableViewCell.m; sourceTree = "<group>"; };
 		EACB2E99199EBD1700557D82 /* EMSDefaultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSDefaultTableViewCell.h; sourceTree = "<group>"; };
@@ -335,6 +337,8 @@
 				8363313B1770F06C000F8D95 /* EMSSearchViewDelegate.h */,
 				839BD641176F9BD400900712 /* EMSRetriever.h */,
 				839BD642176F9BD400900712 /* EMSRetriever.m */,
+				EA81CDDC19AF8F0400FE43A2 /* EMSConferenceRetriever.h */,
+				EA81CDDD19AF8F0400FE43A2 /* EMSConferenceRetriever.m */,
 				839BD643176F9BD400900712 /* EMSSpeakersRetrieverDelegate.h */,
 				839BD644176F9BD400900712 /* EMSRoom.h */,
 				839BD645176F9BD400900712 /* EMSRoom.m */,
@@ -514,7 +518,6 @@
 				F354B0B91781AA1D007F7B01 /* iTunesArtwork@2x.png */,
 				4E1AD00D04FA079A848CDAE5 /* JavaZone-Info.plist */,
 				4E1ADCA4A8B28565D66D9816 /* EMS-Config.plist */,
-				EA74603F19A42A2500E24D04 /* EMS-Keys.plist */,
 			);
 			path = JavaZone;
 			sourceTree = "<group>";
@@ -584,7 +587,7 @@
 				ORGANIZATIONNAME = "Chris Searle";
 				TargetAttributes = {
 					F35BB6C117685885009077D3 = {
-						DevelopmentTeam = EL8Z296J47;
+						DevelopmentTeam = 8WE6452SWH;
 					};
 					F394C96E17F0173900FAFBD4 = {
 						DevelopmentTeam = 8WE6452SWH;
@@ -623,7 +626,6 @@
 				EAE4330B19A52F75002C3EBA /* about.html in Resources */,
 				83BF8B6A17ECDA4D0093242C /* Images.xcassets in Resources */,
 				EAE4330819A52F1C002C3EBA /* Localizable.strings in Resources */,
-				EA74604019A42A2500E24D04 /* EMS-Keys.plist in Resources */,
 				F354B0BA1781AA1D007F7B01 /* iTunesArtwork.png in Resources */,
 				F354B0BB1781AA1D007F7B01 /* iTunesArtwork@2x.png in Resources */,
 				4E1ADFF1BCEBD89ABF3ACAE4 /* README.md in Resources */,
@@ -794,6 +796,7 @@
 				F399B73917CF42CC004DE2EC /* EMSConferenceDetailViewController.m in Sources */,
 				4E1AD35397D90DE204F516F2 /* EMSTracking.m in Sources */,
 				4E1AD544AAC6B214D51DD9BC /* EMSRootParser.m in Sources */,
+				EA81CDDE19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -847,6 +850,7 @@
 				F394C99417F0173900FAFBD4 /* EMSConferenceDetailViewController.m in Sources */,
 				4E1AD00E5B0570877570A148 /* EMSTracking.m in Sources */,
 				4E1AD3DC51344037FDC2CFFC /* EMSRootParser.m in Sources */,
+				EA81CDDF19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
