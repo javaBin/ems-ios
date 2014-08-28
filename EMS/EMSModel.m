@@ -447,11 +447,7 @@
 - (Conference *)mostRecentConference {
     NSArray *conferences = [self conferencesForPredicate:[NSPredicate predicateWithFormat:@"hintCount > 0"] andSort:[EMSModel conferenceListSortDescriptors]];
 
-    if (conferences.count > 0) {
-        return conferences[0];
-    }
-
-    return nil;
+    return [conferences firstObject];
 }
 
 + (NSArray *)conferenceListSortDescriptors {
