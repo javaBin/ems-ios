@@ -152,13 +152,7 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
             entityForName:@"Conference" inManagedObjectContext:managedObjectContext];
     [fetchRequest setEntity:entity];
 
-    NSSortDescriptor *startSort = [[NSSortDescriptor alloc]
-            initWithKey:@"start" ascending:NO];
-
-    NSSortDescriptor *nameSort = [[NSSortDescriptor alloc]
-            initWithKey:@"name" ascending:NO];
-
-    [fetchRequest setSortDescriptors:@[startSort, nameSort]];
+    [fetchRequest setSortDescriptors:[EMSModel conferenceListSortDescriptors]];
 
     [fetchRequest setFetchBatchSize:20];
 

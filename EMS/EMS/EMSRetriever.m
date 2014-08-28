@@ -303,21 +303,10 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //TODO: Below is a dirty hack to auto select latest session.
                 [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
-                NSArray *filteredConferences = [conferences filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-                    EMSConference *emsConference = evaluatedObject;
-                    return [emsConference.hintCount longValue] > 0;
-                }]];
-                
-                NSArray *sortedConferences = [filteredConferences sortedArrayWithOptions:NSSortStable usingComparator:^NSComparisonResult(id obj1, id obj2) {
-                    EMSConference *emsConference1 = obj1;
-                    EMSConference *emsConference2 = obj2;
-                    
-                    return [emsConference1.start compare:emsConference2.start];
-                }];
-                
-                EMSConference *latestConference = sortedConferences.lastObject;
-                
-                [EMSAppDelegate storeCurrentConference:latestConference.href];
+
+                Conference *latestConference = [backgroundModel mostRecentConference];
+
+                [EMSAppDelegate storeCurrentConference:[NSURL URLWithString:latestConference.href]];
             });
         }
     }];

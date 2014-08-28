@@ -444,6 +444,26 @@
 
 #pragma mark - public interface
 
+- (Conference *)mostRecentConference {
+    NSArray *conferences = [self conferencesForPredicate:[NSPredicate predicateWithFormat:@"hintCount > 0"] andSort:[EMSModel conferenceListSortDescriptors]];
+
+    if (conferences.count > 0) {
+        return conferences[0];
+    }
+
+    return nil;
+}
+
++ (NSArray *)conferenceListSortDescriptors {
+    NSSortDescriptor *startSort = [[NSSortDescriptor alloc]
+            initWithKey:@"start" ascending:NO];
+
+    NSSortDescriptor *nameSort = [[NSSortDescriptor alloc]
+            initWithKey:@"name" ascending:NO];
+
+    return @[startSort, nameSort];
+}
+
 - (BOOL)storeConferences:(NSArray *)conferences error:(NSError **)error {
     if (conferences == nil || conferences.count == 0) {
         if (error != NULL) {
