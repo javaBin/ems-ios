@@ -18,16 +18,6 @@
 
 @implementation EMSSpeakersRetriever
 
-+ (instancetype)sharedInstance {
-    static EMSSpeakersRetriever *instance = nil;
-
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        instance = [[EMSSpeakersRetriever alloc] init];
-    });
-    return instance;
-}
-
 - (instancetype)init {
     self = [super init];
     if (self) {
