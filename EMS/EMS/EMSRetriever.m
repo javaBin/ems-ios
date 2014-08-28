@@ -317,31 +317,35 @@
                 [activeUrls addObject:c.href];
             }
 
+            NSURL *currentConference;
+
+            if (![EMSAppDelegate currentConference]) {
+                currentConference = [NSURL URLWithString:[[backgroundModel mostRecentConference] href]];
+            } else {
+                [activeUrls minusSet:self.seenConferences];
+
+                if (activeUrls.count > 0) {
+                    NSMutableArray *newConferences = [[NSMutableArray alloc] init];
+
+                    for (Conference *c in activeConferences) {
+                        if ([activeUrls containsObject:c.href]) {
+                            [newConferences addObject:c];
+                        }
+                    }
+
+                    [newConferences sortUsingDescriptors:[EMSModel conferenceListSortDescriptors]];
+
+                    Conference *latestConference = [newConferences firstObject];
+
+                    currentConference = [NSURL URLWithString:latestConference.href];
+                }
+            }
+
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
 
-                if (![EMSAppDelegate currentConference]) {
-                    [EMSAppDelegate storeCurrentConference:[NSURL URLWithString:[[backgroundModel mostRecentConference] href]]];
-                } else {
-                    [activeUrls minusSet:self.seenConferences];
-
-                    if (activeUrls.count > 0) {
-                        NSMutableArray *newConferences = [[NSMutableArray alloc] init];
-
-                        for (Conference *c in activeConferences) {
-                            if ([activeUrls containsObject:c.href]) {
-                                [newConferences addObject:c];
-                            }
-                        }
-
-                        [newConferences sortUsingDescriptors:[EMSModel conferenceListSortDescriptors]];
-
-                        Conference *latestConference = [newConferences firstObject];
-
-                        if (latestConference) {
-                            [EMSAppDelegate storeCurrentConference:[NSURL URLWithString:latestConference.href]];
-                        }
-                    }
+                if (currentConference) {
+                    [EMSAppDelegate storeCurrentConference:currentConference];
                 }
             });
         }
