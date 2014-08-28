@@ -25,6 +25,7 @@
 #import "EMSTracking.h"
 
 #import "EMSSessionTitleTableViewCell.h"
+#import "EMSSpeakersRetriever.h"
 
 @interface EMSDetailViewController () <UIPopoverControllerDelegate, EMSSpeakersRetrieverDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -36,7 +37,7 @@
 
 @property(nonatomic, weak) IBOutlet UIBarButtonItem *shareButton;
 
-@property(nonatomic, strong) EMSRetriever *speakerRetriever;
+@property(nonatomic, strong) EMSSpeakersRetriever *speakerRetriever;
 
 @property(nonatomic) BOOL observersInstalled;
 
@@ -729,7 +730,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 - (void)retrieve {
 
     if (!self.speakerRetriever) {
-        self.speakerRetriever = [[EMSRetriever alloc] init];
+        self.speakerRetriever = [[EMSSpeakersRetriever alloc] init];
 
         self.speakerRetriever.delegate = self;
     }
