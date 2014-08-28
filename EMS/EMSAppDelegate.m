@@ -389,44 +389,6 @@ int networkCount = 0;
     });
 }
 
-+ (void)storeCurrentConference:(NSURL *)href {
-
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setURL:href forKey:@"activeConference"];
-
-    [defaults synchronize];
-
-
-    // Refresh sessions for conference if neccesary.
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        if (![EMSAppDelegate currentConference]) {
-            return;
-        }
-
-        if (![[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:[[EMSAppDelegate currentConference] absoluteString]]) {
-            EMS_LOG(@"Checking for existing data found no data - forced refresh");
-            [[EMSRetriever sharedInstance] refreshActiveConference];
-
-        }
-    }];
-
-    if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-        [Crashlytics setObjectValue:href forKey:@"lastStoredConference"];
-    }
-}
-
-+ (NSURL *)currentConference {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
-    NSURL *href = [defaults URLForKey:@"activeConference"];
-
-    if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-        [Crashlytics setObjectValue:href forKey:@"lastRetrievedConference"];
-    }
-
-    return href;
-}
-
 - (void)crashlyticsDidDetectCrashDuringPreviousExecution:(Crashlytics *)crashlytics {
     EMS_LOG(@"Crash detected - clearing advanced search");
 

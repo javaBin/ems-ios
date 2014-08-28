@@ -15,28 +15,24 @@
 
 #import "EMSRootParser.h"
 #import "EMSTracking.h"
+#import "EMSConferenceRetriever.h"
 
-@interface EMSRetriever () <EMSRootParserDelegate, EMSEventsParserDelegate, EMSRoomsParserDelegate, EMSSessionsParserDelegate, EMSSpeakersParserDelegate, EMSSlotsParserDelegate>
+@interface EMSRetriever () <EMSRootParserDelegate, EMSEventsParserDelegate, EMSSpeakersParserDelegate, EMSConferenceRetrieverDelegate>
 
 @property(readwrite) BOOL refreshingConferences;
 @property(nonatomic) NSURLSession *conferenceURLSession;
 @property(nonatomic) NSOperationQueue *conferenceParseQueue;
 
 
-@property(readwrite) BOOL refreshingSessions;
-@property(nonatomic) NSURLSession *sessionsURLSession;
-@property(nonatomic) NSOperationQueue *sessionsParseQueue;
-
-@property(nonatomic) NSOperation *slotsDoneOperation;
-@property(nonatomic) NSOperation *roomsDoneOperation;
-@property(nonatomic) NSOperationQueue *sessionSaveCoordinationOperationQueue;
-
-
 @property(readwrite) BOOL refreshingSpeakers;
 @property(nonatomic) NSURLSession *speakersURLSession;
 @property(nonatomic) NSOperationQueue *speakersParseQueue;
 
+
 @property(nonatomic, strong) NSSet *seenConferences;
+
+@property(nonatomic, strong) EMSConferenceRetriever *currentSessionsRetriever;
+@property(readwrite) BOOL refreshingSessions;
 
 @end
 
@@ -60,14 +56,8 @@
         NSURLSessionConfiguration *conferenceConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
         _conferenceURLSession = [NSURLSession sessionWithConfiguration:conferenceConfiguration];
         _conferenceParseQueue = [[NSOperationQueue alloc] init];
-
+        
         _refreshingSessions = NO;
-        NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        _sessionsURLSession = [NSURLSession sessionWithConfiguration:sessionConfiguration];
-        _sessionsParseQueue = [[NSOperationQueue alloc] init];
-
-        _sessionSaveCoordinationOperationQueue = [[NSOperationQueue alloc] init];
-
 
         _refreshingSpeakers = NO;
         NSURLSessionConfiguration *speakersConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -78,21 +68,85 @@
 }
 
 - (Conference *)conferenceForHref:(NSString *)href {
+    NSAssert([NSThread isMainThread], @"Can only be called on main thread.");
+    
     EMS_LOG(@"Getting conference for %@", href);
 
     return [[[EMSAppDelegate sharedAppDelegate] model] conferenceForHref:href];
 }
 
 - (Conference *)activeConference {
+    NSAssert([NSThread isMainThread], @"Can only be called on main thread.");
+    
     EMS_LOG(@"Getting current conference");
 
-    NSString *activeConference = [[EMSAppDelegate currentConference] absoluteString];
+    NSString *activeConference = [[self currentConference] absoluteString];
 
     if (activeConference != nil) {
         return [self conferenceForHref:activeConference];
     }
 
     return nil;
+}
+
+- (NSURL *)currentConference {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSURL *href = [defaults URLForKey:@"activeConference"];
+    
+    if ([EMSFeatureConfig isCrashlyticsEnabled]) {
+        [Crashlytics setObjectValue:href forKey:@"lastRetrievedConference"];
+    }
+    
+    return href;
+}
+
+- (void)storeCurrentConference:(NSURL *)href {
+    NSAssert([NSThread isMainThread], @"Can only be called on main thread.");
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setURL:href forKey:@"activeConference"];
+    
+    [defaults synchronize];
+    
+    
+    
+    // Refresh sessions for conference if neccesary.
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        if (![self currentConference]) {
+            return;
+        }
+    
+        if (![[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:[[self currentConference] absoluteString]]) {
+            EMS_LOG(@"Checking for existing data found no data - forced refresh");
+            [self refreshActiveConference];
+            
+        }
+    }];
+    
+    if ([EMSFeatureConfig isCrashlyticsEnabled]) {
+        [Crashlytics setObjectValue:href forKey:@"lastStoredConference"];
+    }
+}
+
+- (void)cancelConferenceRefresh {
+    //Cancel all pending network tasks
+    [self.conferenceURLSession getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
+        for (NSURLSessionTask *task in dataTasks) {
+            [task cancel];
+        }
+        for (NSURLSessionTask *task in downloadTasks) {
+            [task cancel];
+        }
+        for (NSURLSessionTask *task in uploadTasks) {
+            [task cancel];
+        }
+        
+        //Cancel all pending parsing operations
+        [self.conferenceParseQueue cancelAllOperations];
+        
+        //TODO: Cancel changes to model object context
+    }];
 }
 
 - (void)finishedConferencesWithError:(NSError *)error {
@@ -112,23 +166,7 @@
         } else {
             EMS_LOG(@"Failed to sync conferences %@ - %@", error, [error userInfo]);
 
-            //Cancel all pending network tasks
-            [self.conferenceURLSession getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
-                for (NSURLSessionTask *task in dataTasks) {
-                    [task cancel];
-                }
-                for (NSURLSessionTask *task in downloadTasks) {
-                    [task cancel];
-                }
-                for (NSURLSessionTask *task in uploadTasks) {
-                    [task cancel];
-                }
-
-                //Cancel all pending parsing operations
-                [self.conferenceParseQueue cancelAllOperations];
-
-                //TODO: Cancel changes to model object context
-            }];
+            [self cancelConferenceRefresh];
 
             [self presentError:error];
 
@@ -141,61 +179,12 @@
 }
 
 - (void)presentError:(NSError *)error {
+    NSAssert([NSThread isMainThread], @"Can only be called on main thread.");
+    
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Download failed", @"Conference download failed error dialog title.") message:[error localizedDescription] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"Error dialog dismiss button.") otherButtonTitles:nil];
     [alertView show];
 }
 
-- (void)finishedSessionsWithError:(NSError *)error {
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-
-        if (!self.refreshingSessions) {
-            //Already reported an error.
-            return;
-        }
-
-        if (!error) {
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setObject:[NSDate date] forKey:[NSString stringWithFormat:@"sessionsLastUpdate-%@", [[self activeConference] href]]];
-
-            [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
-        } else {
-            EMS_LOG(@"Failed to sync sessions %@ - %@", error, [error userInfo]);
-
-            //Cancel all pending network tasks.
-            [self.sessionsURLSession getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
-                for (NSURLSessionTask *task in dataTasks) {
-                    [task cancel];
-                }
-                for (NSURLSessionTask *task in downloadTasks) {
-                    [task cancel];
-                }
-                for (NSURLSessionTask *task in uploadTasks) {
-                    [task cancel];
-                }
-
-                //Cancel all pending parsing tasks.
-                [self.sessionsParseQueue cancelAllOperations];
-
-                //Do not enqueue more network tasks.
-                [self.sessionSaveCoordinationOperationQueue cancelAllOperations];
-
-                //TODO: Cancel changes to model object context
-
-
-            }];
-
-
-            [self presentError:error];
-        }
-
-        self.sessionError = error;
-
-        self.refreshingSessions = NO;
-        self.slotsDoneOperation = nil;
-        self.roomsDoneOperation = nil;
-    });
-}
 
 - (void)refreshAllConferences {
     NSAssert([NSThread isMainThread], @"Should be called on main thread.");
@@ -319,7 +308,7 @@
 
             NSURL *currentConference;
 
-            if (![EMSAppDelegate currentConference]) {
+            if (![self currentConference]) {
                 currentConference = [NSURL URLWithString:[[backgroundModel mostRecentConference] href]];
             } else {
                 [activeUrls minusSet:self.seenConferences];
@@ -345,7 +334,7 @@
                 [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
 
                 if (currentConference) {
-                    [EMSAppDelegate storeCurrentConference:currentConference];
+                    [self storeCurrentConference:currentConference];
                 }
             });
         }
@@ -359,7 +348,11 @@
     NSAssert([NSThread isMainThread], @"Should be called from main thread.");
 
     if (self.refreshingSessions) {
-        return;
+        
+        [self.currentSessionsRetriever cancel];
+        
+        self.currentSessionsRetriever = nil;
+    
     }
 
     //Trigger a refresh of all conferences in the rare case a user has no selected conference and tries
@@ -383,38 +376,12 @@
     Conference *activeConference = [self activeConference];
 
 
-    NSOperation *slotsDoneOperation = [NSBlockOperation blockOperationWithBlock:^{
-        NSLog(@"Slots is done saving");
-    }];
-    self.slotsDoneOperation = slotsDoneOperation;
-
-    NSOperation *roomsDoneOperation = [NSBlockOperation blockOperationWithBlock:^{
-        NSLog(@"Rooms is done saving");
-    }];
-    self.roomsDoneOperation = roomsDoneOperation;
-
-    EMS_LOG(@"Starting retrieval");
-
-    if (activeConference != nil) {
-        EMS_LOG(@"Starting retrieval - saw conf");
-
-        //TODO: Check this logic?
-        if (activeConference.slotCollection != nil) {
-            EMS_LOG(@"Starting retrieval - saw slot collection");
-            [self refreshSlots:[NSURL URLWithString:activeConference.slotCollection]];
-        }
-
-        if (activeConference.roomCollection != nil) {
-            EMS_LOG(@"Starting retrieval - saw room collection");
-            [self refreshRooms:[NSURL URLWithString:activeConference.roomCollection]];
-        }
-
-        if (activeConference.sessionCollection != nil) {
-            EMS_LOG(@"Starting retrieval - saw session collection");
-            [self refreshSessions:[NSURL URLWithString:activeConference.sessionCollection]];
-        }
-
-    }
+    EMSConferenceRetriever *conferenceRetriever = [[EMSConferenceRetriever alloc] init];
+    conferenceRetriever.conference = activeConference; //TODO: Might be smarter to send href only.
+    conferenceRetriever.delegate = self;
+    self.currentSessionsRetriever = conferenceRetriever;
+    
+    [conferenceRetriever refresh];
 }
 
 - (void)finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href error:(NSError *)error {
@@ -444,210 +411,6 @@
             }
         });
     }];
-}
-
-- (void)finishedSlots:(NSArray *)slots forHref:(NSURL *)href error:(NSError *)error {
-    if (error != nil) {
-        EMS_LOG(@"Retrieved error for slots %@ - %@", error, [error userInfo]);
-
-        [self finishedSessionsWithError:error];
-
-        return;
-    }
-
-    NSOperation *saveSlotsOperation = [NSBlockOperation blockOperationWithBlock:^{
-        EMS_LOG(@"Storing slots %lu", (unsigned long) [slots count]);
-        EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
-        [backgroundModel.managedObjectContext performBlock:^{
-            NSError *saveError = nil;
-
-            if (![backgroundModel storeSlots:slots forHref:[href absoluteString] error:&saveError]) {
-                EMS_LOG(@"Failed to store slots %@ - %@", saveError, [saveError userInfo]);
-
-                [self finishedSessionsWithError:saveError];
-            }
-        }];
-    }];
-
-    __weak NSOperation *weakSaveSlot = saveSlotsOperation;
-    saveSlotsOperation.completionBlock = ^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (![weakSaveSlot isCancelled] && self.slotsDoneOperation) {
-                [self.sessionSaveCoordinationOperationQueue addOperation:self.slotsDoneOperation];
-            }
-        });
-    };
-
-    [self.sessionSaveCoordinationOperationQueue addOperation:saveSlotsOperation];
-
-}
-
-- (void)finishedSessions:(NSArray *)sessions forHref:(NSURL *)href error:(NSError *)error {
-    if (error != nil) {
-        EMS_LOG(@"Retrieved error for sessions %@ - %@", error, [error userInfo]);
-
-        [self finishedSessionsWithError:error];
-
-        return;
-    }
-
-    EMS_LOG(@"Storing sessions %lu", (unsigned long) [sessions count]);
-
-    NSOperation *saveSessionsOperation = [NSBlockOperation blockOperationWithBlock:^{
-        EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
-
-        [backgroundModel.managedObjectContext performBlock:^{
-            NSError *saveError = nil;
-
-            if (![backgroundModel storeSessions:sessions forHref:[href absoluteString] error:&saveError]) {
-                [self finishedSessionsWithError:saveError];
-            } else {
-                [self finishedSessionsWithError:nil];
-
-            }
-        }];
-    }];
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (self.slotsDoneOperation && self.roomsDoneOperation) {
-            //If slotsDoneOperation or roomsDoneOperation is not set we are likely cancelled,
-            //so don´t try to save sessions either.
-            [saveSessionsOperation addDependency:self.slotsDoneOperation];
-            [saveSessionsOperation addDependency:self.roomsDoneOperation];
-
-            [self.sessionSaveCoordinationOperationQueue addOperation:saveSessionsOperation];
-        }
-    });
-
-}
-
-- (void)finishedRooms:(NSArray *)rooms forHref:(NSURL *)href error:(NSError *)error {
-    if (error != nil) {
-        EMS_LOG(@"Retrieved error for rooms %@ - %@", error, [error userInfo]);
-
-        [self finishedSessionsWithError:error];
-
-        return;
-    }
-
-    EMS_LOG(@"Storing rooms %lu", (unsigned long) [rooms count]);
-
-    NSOperation *saveRoomsOperation = [NSBlockOperation blockOperationWithBlock:^{
-        EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
-
-        [backgroundModel.managedObjectContext performBlock:^{
-            NSError *saveError = nil;
-
-            if (![backgroundModel storeRooms:rooms forHref:[href absoluteString] error:&saveError]) {
-                EMS_LOG(@"Failed to store rooms %@ - %@", saveError, [saveError userInfo]);
-
-                [self finishedSessionsWithError:error];
-            }
-        }];
-    }];
-
-    __weak NSOperation *weakSaveOperation = saveRoomsOperation;
-    saveRoomsOperation.completionBlock = ^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (![weakSaveOperation isCancelled] && self.roomsDoneOperation) {
-                [self.sessionSaveCoordinationOperationQueue addOperation:self.roomsDoneOperation];
-            }
-        });
-    };
-
-    [self.sessionSaveCoordinationOperationQueue addOperation:saveRoomsOperation];
-}
-
-- (void)refreshSlots:(NSURL *)url {
-    NSAssert([NSThread isMainThread], @"Should be called from main thread.");
-
-    [[EMSAppDelegate sharedAppDelegate] startNetwork];
-
-    NSDate *timer = [NSDate date];
-
-    [[self.sessionsURLSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error != nil) {
-            [self finishedSessionsWithError:error];
-        } else if (![self hasSuccessfulStatus:response]) {
-            [self finishedSessionsWithError:[self errorForStatus:response]];
-        } else {
-            EMSSlotsParser *parser = [[EMSSlotsParser alloc] init];
-
-            parser.delegate = self;
-
-            [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"slots"];
-            [EMSTracking dispatch];
-
-            [self.sessionsParseQueue addOperationWithBlock:^{
-                [parser parseData:data forHref:url];
-            }];
-        }
-
-        [[EMSAppDelegate sharedAppDelegate] stopNetwork];
-    }] resume];
-}
-
-- (void)refreshSessions:(NSURL *)url {
-    NSAssert([NSThread isMainThread], @"Should be called from main thread.");
-
-    [[EMSAppDelegate sharedAppDelegate] startNetwork];
-
-    NSDate *timer = [NSDate date];
-
-    [[self.sessionsURLSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error != nil) {
-            [self finishedSessionsWithError:error];
-        } else if (![self hasSuccessfulStatus:response]) {
-            [self finishedSessionsWithError:[self errorForStatus:response]];
-        } else {
-            EMSSessionsParser *parser = [[EMSSessionsParser alloc] init];
-
-            parser.delegate = self;
-
-            [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"sessions"];
-            [EMSTracking dispatch];
-
-
-            [self.sessionsParseQueue addOperationWithBlock:^{
-                [parser parseData:data forHref:url];
-            }];
-        }
-
-        [[EMSAppDelegate sharedAppDelegate] stopNetwork];
-    }] resume];
-
-}
-
-- (void)refreshRooms:(NSURL *)url {
-    NSAssert([NSThread isMainThread], @"Should be called from main thread.");
-
-    [[EMSAppDelegate sharedAppDelegate] startNetwork];
-
-    NSDate *timer = [NSDate date];
-
-    [[self.sessionsURLSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error != nil) {
-            [self finishedSessionsWithError:error];
-        } else if (![self hasSuccessfulStatus:response]) {
-            [self finishedSessionsWithError:[self errorForStatus:response]];
-        } else {
-            EMSRoomsParser *parser = [[EMSRoomsParser alloc] init];
-
-            parser.delegate = self;
-
-            [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"rooms"];
-            [EMSTracking dispatch];
-
-            [self.sessionsParseQueue addOperationWithBlock:^{
-                [parser parseData:data forHref:url];
-            }];
-
-        }
-
-        [[EMSAppDelegate sharedAppDelegate] stopNetwork];
-    }] resume];
-
-
 }
 
 - (void)refreshSpeakers:(NSURL *)url {
@@ -683,6 +446,21 @@
     }] resume];
 
 }
+
+#pragma mark - EMSConferenceRetrieverDelegate
+
+- (void)conferenceRetriever:(EMSConferenceRetriever *)conferenceRetriever finishedWithError:(NSError *)error {
+    NSAssert([conferenceRetriever isEqual:self.currentSessionsRetriever], @"Got callback from conference retriever that is not current. This should not happen. Try cancelling the old before starting a new. ");
+    if (error) {
+        [self presentError:error];
+    } else {
+        [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
+    }
+    
+    self.refreshingSessions = NO;
+}
+
+#pragma mark - Utilities
 
 - (NSDate *)lastUpdatedAllConferences {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

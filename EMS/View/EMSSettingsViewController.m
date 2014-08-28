@@ -229,7 +229,7 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
 
     cell.detailTextLabel.text = [dates componentsJoinedByString:@" - "];
 
-    NSString *activeConference = [[EMSAppDelegate currentConference] absoluteString];
+    NSString *activeConference = [[[EMSRetriever sharedInstance] currentConference] absoluteString];
 
     if ([conference.href isEqualToString:activeConference]) {
         cell.imageView.image = [UIImage imageNamed:@"258-checkmark-grey"];
@@ -268,7 +268,7 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
 
 
 - (void)selectConference:(Conference *)conference {
-    NSURL *currentConference = [EMSAppDelegate currentConference];
+    NSURL *currentConference = [[EMSRetriever sharedInstance] currentConference];
     NSURL *selectedConference = [NSURL URLWithString:conference.href];
 
     if (![[currentConference absoluteString] isEqualToString:[selectedConference absoluteString]]) {
@@ -277,7 +277,7 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
         [advancedSearch setSearch:@""];
     }
 
-    [EMSAppDelegate storeCurrentConference:selectedConference];
+    [[EMSRetriever sharedInstance] storeCurrentConference:selectedConference];
 
     [self.tableView reloadData];
 

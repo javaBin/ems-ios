@@ -109,24 +109,6 @@
 
 }
 
-- (Conference *)conferenceForHref:(NSString *)href {
-    EMS_LOG(@"Getting conference for %@", href);
-
-    return [[[EMSAppDelegate sharedAppDelegate] model] conferenceForHref:href];
-}
-
-- (Conference *)activeConference {
-    EMS_LOG(@"Getting current conference");
-
-    NSString *activeConference = [[EMSAppDelegate currentConference] absoluteString];
-
-    if (activeConference != nil) {
-        return [self conferenceForHref:activeConference];
-    }
-
-    return nil;
-}
-
 - (void)initializeFooter {
     if ([[self.fetchedResultsController sections] count] == 0) {
         self.footerLabel.text = NSLocalizedString(@"No sessions.", @"Message in main session list when no sessions is found for current search.");
@@ -160,7 +142,7 @@
 }
 
 - (NSPredicate *)currentConferencePredicate {
-    Conference *activeConference = [self activeConference];
+    Conference *activeConference = [[EMSRetriever sharedInstance] activeConference];
 
     if (activeConference != nil) {
         NSMutableArray *predicates = [[NSMutableArray alloc] init];
@@ -289,7 +271,7 @@
 }
 
 - (void)setDefaultTypeSearch {
-    Conference *conference = [self activeConference];
+    Conference *conference = [[EMSRetriever sharedInstance] activeConference];
 
     if (conference) {
         if ([[self.advancedSearch fieldValuesForKey:emsType] count] == 0) {
@@ -350,7 +332,7 @@
     [self updateTableViewRowHeight];
     
 
-    Conference *conference = [self activeConference];
+    Conference *conference = [[EMSRetriever sharedInstance] activeConference];
     
     if (conference) {
         EMS_LOG(@"Conference found - initialize");
@@ -442,7 +424,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
             [self updateRefreshControl];
 
             if (![EMSRetriever sharedInstance].refreshingSessions) {
-                if ([self activeConference]) {
+                if ([[EMSRetriever sharedInstance] activeConference]) {
                     [self initializeFetchedResultsController];
                 }
             }
@@ -495,11 +477,10 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
         UINavigationController *navigationController = [segue destinationViewController];
         EMSSearchViewController *destination = (EMSSearchViewController *) navigationController.childViewControllers[0];
 
-        EMS_LOG(@"Preparing search view with %@ and conference %@", self.search.text, [self activeConference]);
+        Conference *conference = [[EMSRetriever sharedInstance] activeConference];
+        EMS_LOG(@"Preparing search view with %@ and conference %@", self.search.text, conference);
 
         destination.advancedSearch = self.advancedSearch;
-
-        Conference *conference = [self activeConference];
 
         NSMutableArray *levels = [[NSMutableArray alloc] init];
 
@@ -890,7 +871,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
 - (IBAction)scrollToNow:(id)sender {
 
-    Conference *conference = [self activeConference];
+    Conference *conference = [[EMSRetriever sharedInstance] activeConference];
     if (!conference) {
         return;
     }

@@ -4,6 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import "EMSSpeakersRetrieverDelegate.h"
+#import "Conference.h"
 
 @interface EMSRetriever : NSObject
 
@@ -30,5 +31,8 @@
 - (NSDate *)lastUpdatedAllConferences;
 - (NSDate *)lastUpdatedActiveConference;
 
+- (Conference *)activeConference;
+- (NSURL *)currentConference;
+- (void)storeCurrentConference:(NSURL *)href;
 
 @end
