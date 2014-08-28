@@ -26,7 +26,7 @@
 
 #import "EMSSessionTitleTableViewCell.h"
 
-@interface EMSDetailViewController () <UIPopoverControllerDelegate, EMSRetrieverDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface EMSDetailViewController () <UIPopoverControllerDelegate, EMSSpeakersRetrieverDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property(nonatomic) UIPopoverController *sharePopoverController;
 
@@ -740,38 +740,35 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     [self.speakerRetriever refreshSpeakers:[NSURL URLWithString:self.session.speakerCollection]];
 }
 
-- (void)finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href {
-
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        // Check we haven't navigated to a new session
-        if ([[href absoluteString] isEqualToString:self.session.speakerCollection]) {
-            __block BOOL newBios = NO;
-
-            NSMutableDictionary *speakerBios = [NSMutableDictionary dictionaryWithDictionary:self.cachedSpeakerBios];
-
-            [self.cachedSpeakerBios enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stopCached) {
-                NSString *name = (NSString *) key;
-                NSString *bio = (NSString *) obj;
-
-                for (Speaker *speaker in self.session.speakers) {
-                    if ([speaker.name isEqualToString:name]) {
-                        if (![speaker.bio isEqualToString:bio]) {
-                            if (speaker.bio != nil) {
-                                speakerBios[speaker.name] = speaker.bio;
-                                newBios = YES;
-                            }
+- (void)finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href error:(NSError **)error {
+    // Check we haven't navigated to a new session
+    if ([[href absoluteString] isEqualToString:self.session.speakerCollection]) {
+        __block BOOL newBios = NO;
+        
+        NSMutableDictionary *speakerBios = [NSMutableDictionary dictionaryWithDictionary:self.cachedSpeakerBios];
+        
+        [self.cachedSpeakerBios enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stopCached) {
+            NSString *name = (NSString *) key;
+            NSString *bio = (NSString *) obj;
+            
+            for (Speaker *speaker in self.session.speakers) {
+                if ([speaker.name isEqualToString:name]) {
+                    if (![speaker.bio isEqualToString:bio]) {
+                        if (speaker.bio != nil) {
+                            speakerBios[speaker.name] = speaker.bio;
+                            newBios = YES;
                         }
                     }
                 }
-            }];
-
-            if (newBios) {
-                EMS_LOG(@"Saw updated bios - updating screen");
-                self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
-                [self setupPartsWithThumbnailRefresh:YES];
             }
+        }];
+        
+        if (newBios) {
+            EMS_LOG(@"Saw updated bios - updating screen");
+            self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
+            [self setupPartsWithThumbnailRefresh:YES];
         }
-    });
+    }
 }
 
 - (void)checkForNewThumbnailForSpeaker:(Speaker *)speaker withFilename:(NSString *)pngFilePath forSessionHref:(NSString *)href {

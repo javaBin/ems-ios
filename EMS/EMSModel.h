@@ -18,6 +18,12 @@
 
 - (Conference *)conferenceForSessionHref:(NSString *)url;
 
+- (Conference *)mostRecentConference;
+
+- (NSArray *)activeConferences;
+
++ (NSArray *)conferenceListSortDescriptors;
+
 - (BOOL)storeConferences:(NSArray *)conferences error:(NSError **)error;
 
 - (BOOL)storeSlots:(NSArray *)slots forHref:(NSString *)href error:(NSError **)error;

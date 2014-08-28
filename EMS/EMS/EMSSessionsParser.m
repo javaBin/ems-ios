@@ -1,17 +1,14 @@
 //
-//  EMSSessionsRetriever.m
+//  EMSSessionsParser.m
 //
 
-#import "EMSAppDelegate.h"
-
-#import "EMSSessionsRetriever.h"
+#import "EMSSessionsParser.h"
 #import "EMSSession.h"
 #import "EMSSpeaker.h"
 
 #import "CJCollection.h"
 #import "CJItem.h"
 #import "CJLink.h"
-#import "EMSTracking.h"
 
 
 @interface EMSSession (JsonParser)
@@ -100,17 +97,17 @@
 }
 @end
 
-@implementation EMSSessionsRetriever
+@implementation EMSSessionsParser
 
-NSDate *timer;
+- (NSArray *)processData:(NSData *)data forHref:(NSURL *)href error:(NSError **)error {
+    NSError *parseError = nil;
 
-- (NSArray *)processData:(NSData *)data forHref:(NSURL *)href {
-    NSError *error = nil;
-
-    CJCollection *collection = [CJCollection collectionForNSData:data error:&error];
+    CJCollection *collection = [CJCollection collectionForNSData:data error:&parseError];
 
     if (!collection) {
-        EMS_LOG(@"Failed to retrieve sessions %@ - %@ - %@", href, error, [error userInfo]);
+        EMS_LOG(@"Failed to retrieve sessions %@ - %@ - %@", href, parseError, [parseError userInfo]);
+
+        *error = parseError;
 
         return [NSArray array];
     }
@@ -125,37 +122,12 @@ NSDate *timer;
     return [NSArray arrayWithArray:temp];
 }
 
-- (void)fetchedSessions:(NSData *)responseData forHref:(NSURL *)href {
-    NSArray *collection = [self processData:responseData forHref:href];
+- (void)parseData:(NSData *)responseData forHref:(NSURL *)href {
+    NSError *error;
 
-    [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"sessions"];
-    [EMSTracking dispatch];
+    NSArray *collection = [self processData:responseData forHref:href error:&error];
 
-    [self.delegate finishedSessions:collection forHref:href];
-}
-
-- (void)fetch:(NSURL *)url withParseQueue:(dispatch_queue_t)queue {
-    if (url == nil) {
-        EMS_LOG(@"Asked to fetch nil sessions url");
-
-        return;
-    }
-
-    NSURLSession *session = [NSURLSession sharedSession];
-
-    [[EMSAppDelegate sharedAppDelegate] startNetwork];
-
-    [[session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error != nil) {
-            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
-        }
-
-        dispatch_async(queue, ^{
-            [self fetchedSessions:data forHref:url];
-        });
-
-        [[EMSAppDelegate sharedAppDelegate] stopNetwork];
-    }] resume];
+    [self.delegate finishedSessions:collection forHref:href error:error];
 }
 
 @end

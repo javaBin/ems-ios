@@ -12,31 +12,69 @@
 #import "EMSAdvancedSearch.h"
 #import "EMSTracking.h"
 
+@interface EMSSettingsViewController ()
+
+@property(nonatomic) BOOL retrieveStartedByUser;
+
+@end
+
 @implementation EMSSettingsViewController
+
+- (NSAttributedString *)titleForRefreshControl {
+    NSDate *lastUpdate = [[EMSRetriever sharedInstance] lastUpdatedAllConferences];
+    if (lastUpdate != nil) {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateStyle = NSDateFormatterShortStyle;
+        dateFormatter.timeStyle = NSDateFormatterShortStyle;
+        dateFormatter.doesRelativeDateFormatting = YES;
+        NSAttributedString *title = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:NSLocalizedString(@"Last updated: %@", @"Last updated: {last updated}"), [dateFormatter stringFromDate:lastUpdate]]];
+        return title;
+    } else {
+        NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Refresh available conferences", @"Title for conference list refresh control.")];
+        return title;
+    }
+}
 
 - (void)setUpRefreshControl {
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
 
     refreshControl.tintColor = [UIColor grayColor];
-    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Refresh available conferences", @"Title for conference list refresh control.")];
+    refreshControl.attributedTitle = [self titleForRefreshControl];
     refreshControl.backgroundColor = self.tableView.backgroundColor;
-    [refreshControl addTarget:self action:@selector(retrieve) forControlEvents:UIControlEventValueChanged];
+    [refreshControl addTarget:self action:@selector(refreshControlPulled:) forControlEvents:UIControlEventValueChanged];
 
     self.refreshControl = refreshControl;
 }
 
-- (void) updateRefreshControl {
+- (void)updateRefreshControl {
     UIRefreshControl *refreshControl = self.refreshControl;
     if ([EMSRetriever sharedInstance].refreshingConferences) {
+        refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Refreshing conferences...", @"Refreshing available conferences")];
         [refreshControl beginRefreshing];
+
+        if ([self.fetchedResultsController.fetchedObjects count] == 0 && !self.retrieveStartedByUser) {
+            CGRect rect = [self.tableView convertRect:refreshControl.frame fromView:refreshControl];
+            [self.tableView scrollRectToVisible:rect animated:YES];
+        }
     } else {
         [refreshControl endRefreshing];
+        refreshControl.attributedTitle = [self titleForRefreshControl];
+        [self.tableView reloadData];
     }
-    
+
+    self.retrieveStartedByUser = NO;
 }
+
+- (void) refreshControlPulled:(id) sender {
+    self.retrieveStartedByUser = YES;
+    [self retrieve];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.retrieveStartedByUser = NO;
 
     [self setUpRefreshControl];
 
@@ -53,7 +91,7 @@
 
         EMS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
     }
-    
+
 }
 
 static void *refreshingConferencesContext = &refreshingConferencesContext;
@@ -69,7 +107,7 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
     [EMSTracking trackScreen:@"Settings Screen"];
 
     [self updateRefreshControl];
-    
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -81,24 +119,24 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
     [super viewDidDisappear:animated];
 }
 
-- (void) addObservers {
+- (void)addObservers {
     [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingConferences)) options:0 context:refreshingConferencesContext];
 }
 
-- (void) removeObservers {
+- (void)removeObservers {
     [[EMSRetriever sharedInstance] removeObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingConferences))];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (context == refreshingConferencesContext) {
-        
+
         __weak EMSSettingsViewController *weakSelf = self;
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             __strong EMSSettingsViewController *strongSelf = weakSelf;
-            
+
             [strongSelf updateRefreshControl];
         }];
-        
+
     }
 }
 
@@ -115,13 +153,7 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
             entityForName:@"Conference" inManagedObjectContext:managedObjectContext];
     [fetchRequest setEntity:entity];
 
-    NSSortDescriptor *startSort = [[NSSortDescriptor alloc]
-            initWithKey:@"start" ascending:NO];
-
-    NSSortDescriptor *nameSort = [[NSSortDescriptor alloc]
-            initWithKey:@"name" ascending:NO];
-
-    [fetchRequest setSortDescriptors:@[startSort, nameSort]];
+    [fetchRequest setSortDescriptors:[EMSModel conferenceListSortDescriptors]];
 
     [fetchRequest setFetchBatchSize:20];
 
@@ -137,18 +169,17 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
 
     _fetchedResultsController.delegate = self;
 
-    
-    
+
     return _fetchedResultsController;
 }
 
 - (void)retrieve {
-    
+
     EMSRetriever *retriever = [EMSRetriever sharedInstance];
-    
+
     EMS_LOG(@"Retrieving conferences");
-    
-    [retriever refreshConferences];
+
+    [retriever refreshAllConferences];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -199,7 +230,7 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
 
     cell.detailTextLabel.text = [dates componentsJoinedByString:@" - "];
 
-    NSString *activeConference = [[EMSAppDelegate currentConference] absoluteString];
+    NSString *activeConference = [[[EMSRetriever sharedInstance] currentConference] absoluteString];
 
     if ([conference.href isEqualToString:activeConference]) {
         cell.imageView.image = [UIImage imageNamed:@"258-checkmark-grey"];
@@ -238,16 +269,16 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
 
 
 - (void)selectConference:(Conference *)conference {
-    NSURL *currentConference = [EMSAppDelegate currentConference];
+    NSURL *currentConference = [[EMSRetriever sharedInstance] currentConference];
     NSURL *selectedConference = [NSURL URLWithString:conference.href];
-    
+
     if (![[currentConference absoluteString] isEqualToString:[selectedConference absoluteString]]) {
         EMSAdvancedSearch *advancedSearch = [[EMSAdvancedSearch alloc] init];
         [advancedSearch clear];
         [advancedSearch setSearch:@""];
     }
-    
-    [EMSAppDelegate storeCurrentConference:selectedConference];
+
+    [[EMSRetriever sharedInstance] storeCurrentConference:selectedConference];
 
     [self.tableView reloadData];
 
@@ -329,7 +360,6 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
         destination.conference = conference;
     }
 }
-
 
 
 @end

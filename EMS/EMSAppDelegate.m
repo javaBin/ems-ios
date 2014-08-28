@@ -12,6 +12,7 @@
 int networkCount = 0;
 
 @synthesize managedObjectContext = __managedObjectContext;
+@synthesize backgroundManagedObjectContext = __backgroundManagedObjectContext;
 @synthesize uiManagedObjectContext = __uiManagedObjectContext;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
@@ -77,15 +78,6 @@ int networkCount = 0;
             }
         }
     }
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-
-        if (![[[EMSAppDelegate sharedAppDelegate] model] conferencesWithDataAvailable]) {
-            EMS_LOG(@"Retrieving conferences");
-            [[EMSRetriever sharedInstance] refreshConferences];
-        }
-
-    });
 
     return YES;
 }
@@ -184,11 +176,14 @@ int networkCount = 0;
 
     EMS_LOG(@"No moc - initializing");
 
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil) {
-        __managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-        [__managedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+        if (coordinator != nil) {
+            __managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+            [__managedObjectContext setPersistentStoreCoordinator:coordinator];
+        }
+    });
 
     EMS_LOG(@"No moc - initialized");
 
@@ -202,17 +197,43 @@ int networkCount = 0;
 
     EMS_LOG(@"No UI moc - initializing");
 
-    NSManagedObjectContext *parent = [self managedObjectContext];
-    if (parent != nil) {
-        __uiManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-        [__uiManagedObjectContext setUndoManager:nil];
-        [__uiManagedObjectContext setParentContext:parent];
-    }
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSManagedObjectContext *parent = [self managedObjectContext];
+        if (parent != nil) {
+            __uiManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+            [__uiManagedObjectContext setUndoManager:nil];
+            [__uiManagedObjectContext setParentContext:parent];
+        }
+    });
 
-    EMS_LOG(@"No moc - initialized");
+    EMS_LOG(@"No UI moc - initialized");
 
     return __uiManagedObjectContext;
 }
+
+- (NSManagedObjectContext *)backgroundManagedObjectContext {
+    if (__backgroundManagedObjectContext != nil) {
+        return __backgroundManagedObjectContext;
+    }
+
+    EMS_LOG(@"No background moc - initializing");
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSManagedObjectContext *parent = [self uiManagedObjectContext];
+        if (parent != nil) {
+            __backgroundManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+            [__backgroundManagedObjectContext setUndoManager:nil];
+            [__backgroundManagedObjectContext setParentContext:parent];
+        }
+    });
+
+    EMS_LOG(@"No background moc - initialized");
+
+    return __backgroundManagedObjectContext;
+}
+
 
 - (NSManagedObjectModel *)managedObjectModel {
     if (__managedObjectModel != nil) {
@@ -232,9 +253,7 @@ int networkCount = 0;
 - (EMSModel *)modelForBackground {
     EMS_LOG(@"Creating background model");
 
-    NSManagedObjectContext *backgroundContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
-    [backgroundContext setUndoManager:nil];
-    [backgroundContext setParentContext:self.uiManagedObjectContext];
+    NSManagedObjectContext *backgroundContext = [self backgroundManagedObjectContext];
 
     EMSModel *backgroundModel = [[EMSModel alloc] initWithManagedObjectContext:backgroundContext];
 
@@ -359,44 +378,6 @@ int networkCount = 0;
             app.networkActivityIndicatorVisible = NO;
         }
     });
-}
-
-+ (void)storeCurrentConference:(NSURL *)href {
-
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setURL:href forKey:@"activeConference"];
-
-    [defaults synchronize];
-
-
-    // Refresh sessions for conference if neccesary.
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        if (![EMSAppDelegate currentConference]) {
-            return;
-        }
-
-        if (![[[EMSAppDelegate sharedAppDelegate] model] sessionsAvailableForConference:[[EMSAppDelegate currentConference] absoluteString]]) {
-            EMS_LOG(@"Checking for existing data found no data - forced refresh");
-            [[EMSRetriever sharedInstance] refreshActiveConference];
-
-        }
-    }];
-
-    if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-        [Crashlytics setObjectValue:href forKey:@"lastStoredConference"];
-    }
-}
-
-+ (NSURL *)currentConference {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
-    NSURL *href = [defaults URLForKey:@"activeConference"];
-
-    if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-        [Crashlytics setObjectValue:href forKey:@"lastRetrievedConference"];
-    }
-
-    return href;
 }
 
 - (void)crashlyticsDidDetectCrashDuringPreviousExecution:(Crashlytics *)crashlytics {

@@ -3,7 +3,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "EMSRetrieverDelegate.h"
+#import "EMSSpeakersRetrieverDelegate.h"
 
 #import "Session.h"
 

@@ -4,7 +4,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "EMSRetrieverDelegate.h"
+#import "EMSSpeakersRetrieverDelegate.h"
 #import "EMSSearchViewDelegate.h"
 #import "EMSRetriever.h"
 

@@ -19,7 +19,7 @@
 #import "EMSTracking.h"
 #import "EMSLocalNotificationManager.h"
 
-@interface EMSMainViewController () <UISplitViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, EMSRetrieverDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate, UIDataSourceModelAssociation>
+@interface EMSMainViewController () <UISplitViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate, UIDataSourceModelAssociation>
 
 @property(nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
@@ -39,6 +39,8 @@
 
 @property (strong, nonatomic) EMSSessionCell *sizingCell;
 
+@property(nonatomic) BOOL retrieveStartedByUser;
+
 - (IBAction)toggleFavourite:(id)sender;
 
 - (IBAction)segmentChanged:(id)sender;
@@ -55,47 +57,56 @@
 
 #pragma mark - Convenience methods
 
+- (NSAttributedString *)titleForRefreshControl {
+    NSDate *lastUpdate = [[EMSRetriever sharedInstance] lastUpdatedActiveConference];
+    if (lastUpdate != nil) {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateStyle = NSDateFormatterShortStyle;
+        dateFormatter.timeStyle = NSDateFormatterShortStyle;
+        dateFormatter.doesRelativeDateFormatting = YES;
+        NSAttributedString *title = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:NSLocalizedString(@"Last updated: %@", @"Last updated: {last updated}"), [dateFormatter stringFromDate:lastUpdate]]];
+        return title;
+    } else {
+        NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Refresh available sessions", @"Title for session list refresh control.")];
+        return title;
+    }
+}
+
 - (void)setUpRefreshControl {
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
 
     refreshControl.tintColor = [UIColor grayColor];
-    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Refresh available sessions", @"Session RefreshControl title")];
+    refreshControl.attributedTitle = [self titleForRefreshControl];
     refreshControl.backgroundColor = self.tableView.backgroundColor;
-    [refreshControl addTarget:self action:@selector(retrieve) forControlEvents:UIControlEventValueChanged];
+    [refreshControl addTarget:self action:@selector(refreshControlPulled:) forControlEvents:UIControlEventValueChanged];
 
     self.refreshControl = refreshControl;
+}
+
+- (void) refreshControlPulled:(id) sender {
+    self.retrieveStartedByUser = YES;
+    [self retrieve];
 }
 
 - (void)updateRefreshControl {
     UIRefreshControl *refreshControl = self.refreshControl;
     if ([EMSRetriever sharedInstance].refreshingSessions) {
-        if (!refreshControl.refreshing) {
-            [refreshControl beginRefreshing];
+
+        refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Refreshing sessions...", @"Refreshing available sessions")];
+        [refreshControl beginRefreshing];
+        
+        if ([self.fetchedResultsController.fetchedObjects count] == 0 && !self.retrieveStartedByUser) {
+            CGRect rect = [refreshControl convertRect:refreshControl.frame fromView:self.tableView];
+            [self.tableView scrollRectToVisible:rect animated:YES];
         }
+        
     } else {
-        if (refreshControl.refreshing) {
-            [refreshControl endRefreshing];
-        }
+        [refreshControl endRefreshing];
+        refreshControl.attributedTitle = [self titleForRefreshControl];
     }
+    
+    self.retrieveStartedByUser = NO;
 
-}
-
-- (Conference *)conferenceForHref:(NSString *)href {
-    EMS_LOG(@"Getting conference for %@", href);
-
-    return [[[EMSAppDelegate sharedAppDelegate] model] conferenceForHref:href];
-}
-
-- (Conference *)activeConference {
-    EMS_LOG(@"Getting current conference");
-
-    NSString *activeConference = [[EMSAppDelegate currentConference] absoluteString];
-
-    if (activeConference != nil) {
-        return [self conferenceForHref:activeConference];
-    }
-
-    return nil;
 }
 
 - (void)initializeFooter {
@@ -131,7 +142,7 @@
 }
 
 - (NSPredicate *)currentConferencePredicate {
-    Conference *activeConference = [self activeConference];
+    Conference *activeConference = [[EMSRetriever sharedInstance] activeConference];
 
     if (activeConference != nil) {
         NSMutableArray *predicates = [[NSMutableArray alloc] init];
@@ -260,7 +271,7 @@
 }
 
 - (void)setDefaultTypeSearch {
-    Conference *conference = [self activeConference];
+    Conference *conference = [[EMSRetriever sharedInstance] activeConference];
 
     if (conference) {
         if ([[self.advancedSearch fieldValuesForKey:emsType] count] == 0) {
@@ -307,6 +318,8 @@
 
     self.search.text = [self.advancedSearch search];
 
+    self.retrieveStartedByUser = NO;
+    
     [self setUpRefreshControl];
 
     // All sections start with the same year name - so the index is meaningless.
@@ -319,7 +332,7 @@
     [self updateTableViewRowHeight];
     
 
-    Conference *conference = [self activeConference];
+    Conference *conference = [[EMSRetriever sharedInstance] activeConference];
     
     if (conference) {
         EMS_LOG(@"Conference found - initialize");
@@ -328,6 +341,10 @@
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionRequested:) name:EMSUserRequestedSessionNotification object:[EMSLocalNotificationManager sharedInstance]];
+    
+    if ([[self.fetchedResultsController fetchedObjects] count] == 0) {
+        [self retrieve];
+    }
 
 }
 
@@ -411,7 +428,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
             [self updateRefreshControl];
 
             if (![EMSRetriever sharedInstance].refreshingSessions) {
-                if ([self activeConference]) {
+                if ([[EMSRetriever sharedInstance] activeConference]) {
                     [self initializeFetchedResultsController];
                 }
             }
@@ -464,11 +481,10 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
         UINavigationController *navigationController = [segue destinationViewController];
         EMSSearchViewController *destination = (EMSSearchViewController *) navigationController.childViewControllers[0];
 
-        EMS_LOG(@"Preparing search view with %@ and conference %@", self.search.text, [self activeConference]);
+        Conference *conference = [[EMSRetriever sharedInstance] activeConference];
+        EMS_LOG(@"Preparing search view with %@ and conference %@", self.search.text, conference);
 
         destination.advancedSearch = self.advancedSearch;
-
-        Conference *conference = [self activeConference];
 
         NSMutableArray *levels = [[NSMutableArray alloc] init];
 
@@ -533,12 +549,13 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
         self.search.text = [self.advancedSearch search];
 
-        if ([self activeConference] && [[[self activeConference] sessions] count] == 0) {
-            [self retrieve];
-        }
-
         [self initializeFetchedResultsController];
         [self dismissViewControllerAnimated:YES completion:nil];
+        
+        
+        if ([[self.fetchedResultsController fetchedObjects] count] == 0) {
+            [self retrieve];
+        }
     }
 }
 
@@ -811,7 +828,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     [self.advancedSearch setSearch:self.search.text];
 }
 
-- (void)retrieve {
+- (void)retrieve {    
     [[EMSRetriever sharedInstance] refreshActiveConference];
 }
 
@@ -863,7 +880,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
 - (IBAction)scrollToNow:(id)sender {
 
-    Conference *conference = [self activeConference];
+    Conference *conference = [[EMSRetriever sharedInstance] activeConference];
     if (!conference) {
         return;
     }

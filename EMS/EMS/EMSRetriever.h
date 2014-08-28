@@ -3,28 +3,32 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "EMSRetrieverDelegate.h"
+#import "EMSSpeakersRetrieverDelegate.h"
+#import "Conference.h"
 
 @interface EMSRetriever : NSObject
 
 + (instancetype) sharedInstance;
 
-@property(nonatomic, weak) id <EMSRetrieverDelegate> delegate;
+@property(nonatomic, weak) id <EMSSpeakersRetrieverDelegate> delegate;
 
-@property(readonly) BOOL refreshingConferences;
+@property(nonatomic, readonly) BOOL refreshingConferences;
 
-@property(readonly) BOOL refreshingSlots;
+@property(nonatomic, readonly) BOOL refreshingSessions;
 
-@property(readonly) BOOL refreshingSessions;
+@property(nonatomic, readonly) BOOL refreshingSpeakers;
 
-@property(readonly) BOOL refreshingRooms;
-
-@property(readonly) BOOL refreshingSpeakers;
-
-- (void)refreshConferences;
+- (void)refreshAllConferences;
 
 - (void)refreshActiveConference;
 
-- (void)refreshSpeakers:(NSURL *)speakerCollection;
+- (void)refreshSpeakers:(NSURL *)url;
+
+- (NSDate *)lastUpdatedAllConferences;
+- (NSDate *)lastUpdatedActiveConference;
+
+- (Conference *)activeConference;
+- (NSURL *)currentConference;
+- (void)storeCurrentConference:(NSURL *)href;
 
 @end
