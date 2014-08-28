@@ -320,23 +320,27 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
 
-                [activeUrls minusSet:self.seenConferences];
+                if (![EMSAppDelegate currentConference]) {
+                    [EMSAppDelegate storeCurrentConference:[NSURL URLWithString:[[backgroundModel mostRecentConference] href]]];
+                } else {
+                    [activeUrls minusSet:self.seenConferences];
 
-                if (activeUrls.count > 0) {
-                    NSMutableArray *newConferences = [[NSMutableArray alloc] init];
+                    if (activeUrls.count > 0) {
+                        NSMutableArray *newConferences = [[NSMutableArray alloc] init];
 
-                    for (Conference *c in activeConferences) {
-                        if ([activeUrls containsObject:c.href]) {
-                            [newConferences addObject:c];
+                        for (Conference *c in activeConferences) {
+                            if ([activeUrls containsObject:c.href]) {
+                                [newConferences addObject:c];
+                            }
                         }
-                    }
 
-                    [newConferences sortUsingDescriptors:[EMSModel conferenceListSortDescriptors]];
+                        [newConferences sortUsingDescriptors:[EMSModel conferenceListSortDescriptors]];
 
-                    Conference *latestConference = [newConferences firstObject];
+                        Conference *latestConference = [newConferences firstObject];
 
-                    if (latestConference) {
-                        [EMSAppDelegate storeCurrentConference:[NSURL URLWithString:latestConference.href]];
+                        if (latestConference) {
+                            [EMSAppDelegate storeCurrentConference:[NSURL URLWithString:latestConference.href]];
+                        }
                     }
                 }
             });
