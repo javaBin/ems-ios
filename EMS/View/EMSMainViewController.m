@@ -564,10 +564,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
         self.search.text = [self.advancedSearch search];
 
-        if ([self activeConference] && [[[self activeConference] sessions] count] == 0) {
-            [self retrieve];
-        }
-
         [self initializeFetchedResultsController];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
