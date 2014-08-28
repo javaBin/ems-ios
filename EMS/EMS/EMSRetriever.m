@@ -26,6 +26,8 @@
 @property(nonatomic, readwrite) BOOL fullSync;
 @property(nonatomic, readwrite) BOOL sessionSync;
 
+@property(nonatomic) UIBackgroundTaskIdentifier refreshAllConferencesBackroundIdentifier;
+
 @end
 
 @implementation EMSRetriever
@@ -168,8 +170,14 @@
                 self.fullSync = NO;
             }
         }
-
+        
         self.refreshingConferences = NO;
+
+        
+        [[UIApplication sharedApplication] endBackgroundTask:self.refreshAllConferencesBackroundIdentifier];
+        
+        self.refreshAllConferencesBackroundIdentifier = UIBackgroundTaskInvalid;
+        
     });
 
 }
@@ -188,6 +196,11 @@
     if (self.refreshingConferences) {
         return;
     }
+    
+    self.refreshAllConferencesBackroundIdentifier = [[UIApplication sharedApplication] beginBackgroundTaskWithName:@"Refreshing All Conferences" expirationHandler:^{
+        
+        [[UIApplication sharedApplication] endBackgroundTask:self.refreshAllConferencesBackroundIdentifier];
+    }];
 
     self.refreshingConferences = YES;
 

@@ -28,9 +28,13 @@
 
 @property(nonatomic) BOOL refreshingSessions;
 
+@property(nonatomic) UIBackgroundTaskIdentifier backgroundTaskIdentifier;
+
 @end
 
 @implementation EMSConferenceRetriever
+
+#pragma mark - Public API
 
 - (instancetype)init {
     self = [super init];
@@ -44,6 +48,69 @@
     }
     return self;
 }
+
+- (void)cancel {
+    self.cancelled = YES;
+    
+    [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskIdentifier];
+    self.backgroundTaskIdentifier = UIBackgroundTaskInvalid;
+    
+    [self cancelSessionRefresh];
+}
+
+- (void)refresh {
+    
+    NSAssert([NSThread isMainThread], @"Should be called from main thread.");
+    NSAssert(!self.refreshingSessions, @"Already refreshing!!!!");
+  
+    
+    self.backgroundTaskIdentifier =  [[UIApplication sharedApplication] beginBackgroundTaskWithName:@"Sync Conference" expirationHandler:^{
+        
+        [self cancel];
+        
+        [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskIdentifier];
+    }];
+
+    self.refreshingSessions = YES;
+    
+    
+    NSOperation *slotsDoneOperation = [NSBlockOperation blockOperationWithBlock:^{
+        NSLog(@"Slots is done saving");
+    }];
+    self.slotsDoneOperation = slotsDoneOperation;
+    
+    NSOperation *roomsDoneOperation = [NSBlockOperation blockOperationWithBlock:^{
+        NSLog(@"Rooms is done saving");
+    }];
+    self.roomsDoneOperation = roomsDoneOperation;
+    
+    EMS_LOG(@"Starting retrieval");
+    
+    
+    Conference *conference = self.conference;
+    if (conference != nil) {
+        EMS_LOG(@"Starting retrieval - saw conf");
+        
+        //TODO: Check this logic?
+        if (conference.slotCollection != nil) {
+            EMS_LOG(@"Starting retrieval - saw slot collection");
+            [self refreshSlots:[NSURL URLWithString:conference.slotCollection]];
+        }
+        
+        if (conference.roomCollection != nil) {
+            EMS_LOG(@"Starting retrieval - saw room collection");
+            [self refreshRooms:[NSURL URLWithString:conference.roomCollection]];
+        }
+        
+        if (conference.sessionCollection != nil) {
+            EMS_LOG(@"Starting retrieval - saw session collection");
+            [self refreshSessions:[NSURL URLWithString:conference.sessionCollection]];
+        }
+        
+    }
+}
+
+#pragma mark - Private API
 
 - (void)cancelSessionRefresh {
     //Cancel all pending network tasks.
@@ -89,66 +156,20 @@
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:[NSDate date] forKey:[NSString stringWithFormat:@"sessionsLastUpdate-%@", [self.conference href]]];
         }
-
+        
         self.refreshingSessions = NO;
         self.slotsDoneOperation = nil;
         self.roomsDoneOperation = nil;
+        
+        [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskIdentifier];
+        
+        self.backgroundTaskIdentifier = UIBackgroundTaskInvalid;
         
         if (self.delegate) {
             [self.delegate conferenceRetriever:self finishedWithError:error];
         }
         
     });
-}
-
-- (void)refresh {
-    
-    NSAssert([NSThread isMainThread], @"Should be called from main thread.");
-    NSAssert(!self.refreshingSessions, @"Already refreshing!!!!");
-  
-
-    self.refreshingSessions = YES;
-    
-    
-    NSOperation *slotsDoneOperation = [NSBlockOperation blockOperationWithBlock:^{
-        NSLog(@"Slots is done saving");
-    }];
-    self.slotsDoneOperation = slotsDoneOperation;
-    
-    NSOperation *roomsDoneOperation = [NSBlockOperation blockOperationWithBlock:^{
-        NSLog(@"Rooms is done saving");
-    }];
-    self.roomsDoneOperation = roomsDoneOperation;
-    
-    EMS_LOG(@"Starting retrieval");
-    
-    
-    Conference *conference = self.conference;
-    if (conference != nil) {
-        EMS_LOG(@"Starting retrieval - saw conf");
-        
-        //TODO: Check this logic?
-        if (conference.slotCollection != nil) {
-            EMS_LOG(@"Starting retrieval - saw slot collection");
-            [self refreshSlots:[NSURL URLWithString:conference.slotCollection]];
-        }
-        
-        if (conference.roomCollection != nil) {
-            EMS_LOG(@"Starting retrieval - saw room collection");
-            [self refreshRooms:[NSURL URLWithString:conference.roomCollection]];
-        }
-        
-        if (conference.sessionCollection != nil) {
-            EMS_LOG(@"Starting retrieval - saw session collection");
-            [self refreshSessions:[NSURL URLWithString:conference.sessionCollection]];
-        }
-        
-    }
-}
-
-- (void)cancel {
-    self.cancelled = YES;
-    [self cancelSessionRefresh];
 }
 
 - (void)finishedSlots:(NSArray *)slots forHref:(NSURL *)href error:(NSError *)error {
