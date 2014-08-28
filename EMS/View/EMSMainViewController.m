@@ -96,7 +96,7 @@
         [refreshControl beginRefreshing];
         
         if ([self.fetchedResultsController.fetchedObjects count] == 0 && !self.retrieveStartedByUser) {
-            CGRect rect = [self.tableView convertRect:refreshControl.frame fromView:refreshControl];
+            CGRect rect = [refreshControl convertRect:refreshControl.frame fromView:self.tableView];
             [self.tableView scrollRectToVisible:rect animated:YES];
         }
         
