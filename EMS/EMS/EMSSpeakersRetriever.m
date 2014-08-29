@@ -7,6 +7,7 @@
 #import "EMSAppDelegate.h"
 #import "EMSSpeakersParser.h"
 #import "EMSTracking.h"
+#import "NSURLResponse+EMSExtensions.h"
 
 @interface EMSSpeakersRetriever () <EMSSpeakersParserDelegate>
 
@@ -29,33 +30,45 @@
     return self;
 }
 
-- (void)finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href error:(NSError *)error {
-    if (error != nil) {
-        EMS_LOG(@"Retrieved error for speakers %@ - %@", error, [error userInfo]);
-
+- (void)finishedWithError:(NSError *)error {
+    if (!self.refreshingSpeakers) {
+        //Already reported an error.
         return;
     }
 
-    EMS_LOG(@"Storing speakers %lu for href %@", (unsigned long) [speakers count], href);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        EMS_LOG(@"Error for speakers %@ - %@", error, [error userInfo]);
 
-    EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
+        self.refreshingSpeakers = NO;
+    });
+}
 
-    [backgroundModel.managedObjectContext performBlock:^{
-        NSError *saveError = nil;
+- (void)finishedSpeakers:(NSArray *)speakers forHref:(NSURL *)href error:(NSError *)error {
+    if (error != nil) {
+        [self finishedWithError:error];
+    } else {
+        EMS_LOG(@"Storing speakers %lu for href %@", (unsigned long) [speakers count], href);
 
-        if (![backgroundModel storeSpeakers:speakers forHref:[href absoluteString] error:&saveError]) {
-            EMS_LOG(@"Failed to store speakers %@ - %@", saveError, [saveError userInfo]);
-        }
+        EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
 
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
-            self.refreshingSpeakers = NO;
+        [backgroundModel.managedObjectContext performBlock:^{
+            NSError *saveError = nil;
 
-            if ([self.delegate respondsToSelector:@selector(finishedSpeakers:forHref:error:)]) {
-                [self.delegate finishedSpeakers:speakers forHref:href error:NULL];
+            if (![backgroundModel storeSpeakers:speakers forHref:[href absoluteString] error:&saveError]) {
+                [self finishedWithError:saveError];
+            } else {
+
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
+                    self.refreshingSpeakers = NO;
+
+                    if ([self.delegate respondsToSelector:@selector(finishedSpeakers:forHref:error:)]) {
+                        [self.delegate finishedSpeakers:speakers forHref:href error:NULL];
+                    }
+                });
             }
-        });
-    }];
+        }];
+    }
 }
 
 - (void)refreshSpeakers:(NSURL *)url {
@@ -73,19 +86,21 @@
 
     [[self.speakersURLSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            EMS_LOG(@"Retrieved nil root %@ - %@ - %@", url, error, [error userInfo]);
+            [self finishedWithError:error];
+        } else if (![response ems_hasSuccessfulStatus]) {
+            [self finishedWithError:[response ems_error]];
+        } else {
+            EMSSpeakersParser *parser = [[EMSSpeakersParser alloc] init];
+
+            parser.delegate = self;
+
+            [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"speakers"];
+            [EMSTracking dispatch];
+
+            [self.speakersParseQueue addOperationWithBlock:^{
+                [parser parseData:data forHref:url];
+            }];
         }
-
-        EMSSpeakersParser *parser = [[EMSSpeakersParser alloc] init];
-
-        parser.delegate = self;
-
-        [EMSTracking trackTimingWithCategory:@"retrieval" interval:@([[NSDate date] timeIntervalSinceDate:timer]) name:@"speakers"];
-        [EMSTracking dispatch];
-
-        [self.speakersParseQueue addOperationWithBlock:^{
-            [parser parseData:data forHref:url];
-        }];
 
         [[EMSAppDelegate sharedAppDelegate] stopNetwork];
     }] resume];

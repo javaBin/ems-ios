@@ -24,6 +24,8 @@
 		4E1ADC3468CFC054FD549975 /* ChangeLog in Resources */ = {isa = PBXBuildFile; fileRef = 4E1ADFF5906ECB18F85E943C /* ChangeLog */; };
 		4E1ADE290D991D1633B27066 /* EMSSpeakersRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1AD7801B1EF0B9E87AAF57 /* EMSSpeakersRetriever.m */; };
 		4E1ADFF1BCEBD89ABF3ACAE4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4E1AD0EE5411335585333A2F /* README.md */; };
+		72A8D23A0F61EBA5DD99D33D /* NSURLResponse+EMSExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 72A8DE57C7743D16672B2213 /* NSURLResponse+EMSExtensions.m */; };
+		72A8D4AB9F0401AEED460AE7 /* NSURLResponse+EMSExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 72A8DE57C7743D16672B2213 /* NSURLResponse+EMSExtensions.m */; };
 		830C7D79176F8B4900D38B46 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830C7D78176F8B4900D38B46 /* Crashlytics.framework */; };
 		833EF2DB1774E49F005E24A3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */; };
 		836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836331311770DD2B000F8D95 /* EMSSearchViewController.m */; };
@@ -170,6 +172,8 @@
 		4E1ADB362D500AD385CAFA9D /* EMSSlotsParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSlotsParserDelegate.h; sourceTree = "<group>"; };
 		4E1ADCA4A8B28565D66D9816 /* EMS-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = "EMS-Config.plist"; sourceTree = "<group>"; };
 		4E1ADFF5906ECB18F85E943C /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
+		72A8D87D677DB805A5EADFAA /* NSURLResponse+EMSExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLResponse+EMSExtensions.h"; sourceTree = "<group>"; };
+		72A8DE57C7743D16672B2213 /* NSURLResponse+EMSExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLResponse+EMSExtensions.m"; sourceTree = "<group>"; };
 		830C7D78176F8B4900D38B46 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		836331301770DD2B000F8D95 /* EMSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSearchViewController.h; sourceTree = "<group>"; };
@@ -372,6 +376,8 @@
 				4E1AD3429BD33789CEAB8981 /* EMSSpeakersParserDelegate.h */,
 				4E1AD7801B1EF0B9E87AAF57 /* EMSSpeakersRetriever.m */,
 				4E1AD432868D01852ACE1A04 /* EMSSpeakersRetriever.h */,
+				72A8D87D677DB805A5EADFAA /* NSURLResponse+EMSExtensions.h */,
+				72A8DE57C7743D16672B2213 /* NSURLResponse+EMSExtensions.m */,
 			);
 			name = EMS;
 			path = EMS/EMS;
@@ -804,6 +810,7 @@
 				4E1AD544AAC6B214D51DD9BC /* EMSRootParser.m in Sources */,
 				EA81CDDE19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */,
 				4E1ADE290D991D1633B27066 /* EMSSpeakersRetriever.m in Sources */,
+				72A8D4AB9F0401AEED460AE7 /* NSURLResponse+EMSExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -859,6 +866,7 @@
 				4E1AD3DC51344037FDC2CFFC /* EMSRootParser.m in Sources */,
 				EA81CDDF19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */,
 				4E1AD032EC53C9E396CAD414 /* EMSSpeakersRetriever.m in Sources */,
+				72A8D23A0F61EBA5DD99D33D /* NSURLResponse+EMSExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
