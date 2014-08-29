@@ -43,24 +43,22 @@
     static NSDateFormatter *dateParser;
     static NSDateFormatter *timeParser;
 
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        
-        dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.locale = [NSLocale autoupdatingCurrentLocale];
-        dateFormatter.dateFormat = @"EEEE";
-        
-        timeFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.locale = [NSLocale autoupdatingCurrentLocale];
-        timeFormatter.dateStyle = NSDateFormatterNoStyle;
-        timeFormatter.timeStyle = NSDateFormatterShortStyle;
-
-        dateParser = [[NSDateFormatter alloc] init];
-        [dateParser setDateFormat:@"yyyy-MM-dd"];
-
-        timeParser = [[NSDateFormatter alloc] init];
-        [timeParser setDateFormat:@"HH:mm"];
-    });
+    
+    dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.locale = [NSLocale autoupdatingCurrentLocale];
+    dateFormatter.dateFormat = @"EEEE";
+    
+    timeFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.locale = [NSLocale autoupdatingCurrentLocale];
+    timeFormatter.dateStyle = NSDateFormatterNoStyle;
+    timeFormatter.timeStyle = NSDateFormatterShortStyle;
+    
+    dateParser = [[NSDateFormatter alloc] init];
+    [dateParser setDateFormat:@"yyyy-MM-dd"];
+    
+    timeParser = [[NSDateFormatter alloc] init];
+    [timeParser setDateFormat:@"HH:mm"];
+    
 
     NSArray *parts = [self.slotName componentsSeparatedByString:@" "];
 
