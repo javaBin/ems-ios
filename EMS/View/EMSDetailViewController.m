@@ -47,6 +47,10 @@
 
 @property(nonatomic, strong) EMSDefaultTableViewCell *defaultSizingCell;
 
+@property(nonatomic) BOOL shouldReloadOnScrollDidEnd;
+
+@property(nonatomic) BOOL shouldRefreshThumbnail;
+
 - (IBAction)share:(id)sender;
 
 @end
@@ -730,6 +734,24 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
 }
 
+#pragma mark - UITableViewDelegate
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (!decelerate && self.shouldReloadOnScrollDidEnd) {
+        [self setupPartsWithThumbnailRefresh:self.shouldRefreshThumbnail];
+        self.shouldReloadOnScrollDidEnd = NO;
+        self.shouldRefreshThumbnail = NO;
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    if (self.shouldReloadOnScrollDidEnd) {
+        [self setupPartsWithThumbnailRefresh:self.shouldRefreshThumbnail];
+        self.shouldReloadOnScrollDidEnd = NO;
+        self.shouldRefreshThumbnail = NO;
+    }
+}
+
 #pragma mark - Load Speakers
 
 - (void)retrieve {
@@ -772,7 +794,13 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         if (newBios) {
             EMS_LOG(@"Saw updated bios - updating screen");
             self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
-            [self setupPartsWithThumbnailRefresh:YES];
+            
+            if (!self.tableView.isDragging && !self.tableView.isDecelerating) {
+                [self setupPartsWithThumbnailRefresh:YES];
+            } else {
+                self.shouldReloadOnScrollDidEnd = YES;
+                self.shouldRefreshThumbnail = YES;
+            }
         }
     }
 }
@@ -849,7 +877,14 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
                         dispatch_async(dispatch_get_main_queue(), ^{
                             if ([self.session.href isEqualToString:href]) {
-                                [self setupPartsWithThumbnailRefresh:NO];
+                                
+                                if (!self.tableView.dragging && !self.tableView.decelerating) {
+                                    [self setupPartsWithThumbnailRefresh:NO];
+                                    
+                                } else {
+                                    self.shouldRefreshThumbnail = NO;
+                                    self.shouldReloadOnScrollDidEnd = YES;
+                                }
                             }
                         });
                     }

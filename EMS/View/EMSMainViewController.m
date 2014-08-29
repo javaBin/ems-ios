@@ -41,6 +41,8 @@
 
 @property(nonatomic) BOOL retrieveStartedByUser;
 
+@property(nonatomic) BOOL shouldReloadOnScrollDidEnd;
+
 - (IBAction)toggleFavourite:(id)sender;
 
 - (IBAction)segmentChanged:(id)sender;
@@ -429,7 +431,12 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
             if (![EMSRetriever sharedInstance].refreshingSessions) {
                 if ([[EMSRetriever sharedInstance] activeConference]) {
-                    [self initializeFetchedResultsController];
+                    
+                    if (!self.tableView.isDragging && !self.tableView.isDecelerating) {
+                        [self initializeFetchedResultsController];
+                    } else {
+                        self.shouldReloadOnScrollDidEnd = YES;
+                    }
                 }
             }
         });
@@ -709,6 +716,22 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
     return [_fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (!decelerate && self.shouldReloadOnScrollDidEnd) {
+        [self initializeFetchedResultsController];
+        self.shouldReloadOnScrollDidEnd = NO;
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    if (self.shouldReloadOnScrollDidEnd) {
+        [self initializeFetchedResultsController];
+        self.shouldReloadOnScrollDidEnd = NO;
+    }
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
