@@ -382,7 +382,7 @@
             // Generate lightning slot names on first fetch - so that calculation is based on more correct data
             session.slotName = nil;
         } else {
-            session.slotName = [self getSlotNameForSlot:slot];
+            session.slotName = [self slotNameForSlot:slot];
         }
     } else {
         session.slotName = @"Time slot not yet allocated";
@@ -1022,44 +1022,39 @@
     if (found) {
         EMS_LOG(@"GSNFLS: Returning %@ - %@ for %@ - %@", found.start, found.end, slot.start, slot.end);
 
-        return [self getSlotNameForSlot:found];
+        return [self slotNameForSlot:found];
     }
 
     EMS_LOG(@"GSNFLS: Returning self for %@ - %@", slot.start, slot.end);
 
     // Default to our own name
-    return [self getSlotNameForSlot:slot];
+    return [self slotNameForSlot:slot];
 }
 
-- (NSString *)getSlotNameForSlot:(Slot *)slot {
+- (NSString *)slotNameForSlot:(Slot *)slot {
     if (slot == nil || slot.start == nil || slot.end == nil) {
         EMS_LOG(@"GSNFS: Slot data looks strange, %@, %@, %@", slot, slot.start, slot.end);
 
         return nil;
     }
 
-    NSDateFormatter *dateFormatterDate = [[NSDateFormatter alloc] init];
-    NSDateFormatter *dateFormatterTime = [[NSDateFormatter alloc] init];
 
-    [dateFormatterDate setDateFormat:@"yyyy-MM-dd"];
-    [dateFormatterTime setDateFormat:@"HH:mm"];
+    static NSDateFormatter *dateFormatterDate;
+    static NSDateFormatter *dateFormatterTime;
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        dateFormatterDate = [[NSDateFormatter alloc] init];
+        dateFormatterTime = [[NSDateFormatter alloc] init];
+
+        [dateFormatterDate setDateFormat:@"yyyy-MM-dd"];
+        [dateFormatterTime setDateFormat:@"HH:mm"];
+    });
 
     return [NSString stringWithFormat:@"%@ %@ - %@",
                                       [dateFormatterDate stringFromDate:slot.start],
                                       [dateFormatterTime stringFromDate:slot.start],
                                       [dateFormatterTime stringFromDate:slot.end]];
-}
-
-- (BOOL)conferencesWithDataAvailable {
-    NSArray *conferences = [self conferencesForPredicate:[NSPredicate predicateWithFormat:@"sessions.@count > 0"] andSort:nil];
-
-    return [conferences count] > 0;
-}
-
-- (BOOL)sessionsAvailableForConference:(NSString *)href {
-    Conference *conference = [self conferenceForHref:href];
-
-    return [conference.sessions count] > 0;
 }
 
 - (Session *)toggleFavourite:(Session *)session {
@@ -1138,9 +1133,14 @@
     NSDateComponents *timeComp = [calendar components:NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:date];
     NSDateComponents *dateComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:conferenceDate];
 
-    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
-    [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
-    [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    static NSDateFormatter *inputFormatter;
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        inputFormatter = [[NSDateFormatter alloc] init];
+        [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
+        [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    });
 
     return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04ld-%02ld-%02ld %02ld:%02ld:00 +0200", (long) [dateComp year], (long) [dateComp month], (long) [dateComp day], (long) [timeComp hour], (long) [timeComp minute]]];
 #else

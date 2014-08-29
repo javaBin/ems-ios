@@ -38,10 +38,6 @@
 
 - (Slot *)slotForHref:(NSString *)url;
 
-- (BOOL)conferencesWithDataAvailable;
-
-- (BOOL)sessionsAvailableForConference:(NSString *)href;
-
 - (Session *)toggleFavourite:(Session *)session;
 
 - (void)clearConference:(Conference *)conference;

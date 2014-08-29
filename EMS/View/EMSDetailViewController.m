@@ -430,9 +430,14 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     NSDateComponents *timeComp = [calendar components:NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:date];
     NSDateComponents *dateComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:[[NSDate alloc] init]];
 
-    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
-    [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
-    [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    static NSDateFormatter *inputFormatter;
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        inputFormatter = [[NSDateFormatter alloc] init];
+        [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
+        [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    });
 
     return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04ld-%02ld-%02ld %02ld:%02ld:00 +0200", (long) [dateComp year], (long) [dateComp month], (long) [dateComp day], (long) [timeComp hour], (long) [timeComp minute]]];
 #else

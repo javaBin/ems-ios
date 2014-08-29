@@ -7,14 +7,16 @@
 @implementation EMSDateConverter
 
 + (NSDate *)dateFromString:(NSString *)dateString {
-    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
+    static NSDateFormatter *inputFormatter;
 
-    [inputFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
-    [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        inputFormatter = [[NSDateFormatter alloc] init];
+        [inputFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
+        [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    });
 
-    NSDate *date = [inputFormatter dateFromString:dateString];
-
-    return date;
+    return [inputFormatter dateFromString:dateString];
 }
 
 @end
