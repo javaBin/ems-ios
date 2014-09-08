@@ -13,6 +13,7 @@
 		1504125319ABE19200051E04 /* Speaker.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C61772EA93000EE4A9 /* Speaker.m */; };
 		15204C1F18DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */; };
 		15204C2018DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */; };
+		15A735D219BDB7F5001AAC7C /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15A735D119BDB7F5001AAC7C /* EMS-Keys.plist */; };
 		4E1AD00E5B0570877570A148 /* EMSTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */; };
 		4E1AD032EC53C9E396CAD414 /* EMSSpeakersRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1AD7801B1EF0B9E87AAF57 /* EMSSpeakersRetriever.m */; };
 		4E1AD35397D90DE204F516F2 /* EMSTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */; };
@@ -155,6 +156,7 @@
 		1504124F19ABDDA500051E04 /* SpeakerPic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeakerPic.m; path = EMS/EMSMO/SpeakerPic.m; sourceTree = "<group>"; };
 		15204C1D18DB82C40062874A /* EMSCoreDataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "EMSCoreDataModel 3.xcdatamodel"; sourceTree = "<group>"; };
 		15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = RemoveSlugMapping.xcmappingmodel; sourceTree = "<group>"; };
+		15A735D119BDB7F5001AAC7C /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
 		4E1AD00D04FA079A848CDAE5 /* JavaZone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "JavaZone-Info.plist"; sourceTree = "<group>"; };
 		4E1AD0E07B70D148B519768B /* flatMap-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "flatMap-Info.plist"; sourceTree = "<group>"; };
 		4E1AD0EE5411335585333A2F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; path = README.md; sourceTree = "<group>"; };
@@ -525,6 +527,7 @@
 		F394C9E017F019E400FAFBD4 /* JavaZone */ = {
 			isa = PBXGroup;
 			children = (
+				15A735D119BDB7F5001AAC7C /* EMS-Keys.plist */,
 				EAE4330D19A52F75002C3EBA /* about.html */,
 				F354B0B81781AA1D007F7B01 /* iTunesArtwork.png */,
 				F354B0B91781AA1D007F7B01 /* iTunesArtwork@2x.png */,
@@ -638,6 +641,7 @@
 				EAE4330B19A52F75002C3EBA /* about.html in Resources */,
 				83BF8B6A17ECDA4D0093242C /* Images.xcassets in Resources */,
 				EAE4330819A52F1C002C3EBA /* Localizable.strings in Resources */,
+				15A735D219BDB7F5001AAC7C /* EMS-Keys.plist in Resources */,
 				F354B0BA1781AA1D007F7B01 /* iTunesArtwork.png in Resources */,
 				F354B0BB1781AA1D007F7B01 /* iTunesArtwork@2x.png in Resources */,
 				4E1ADFF1BCEBD89ABF3ACAE4 /* README.md in Resources */,
