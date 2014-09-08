@@ -27,21 +27,20 @@ int networkCount = 0;
     }
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     EMS_LOG(@"WE STARTED");
-
+    
     NSDictionary *prefs = [EMSFeatureConfig getKeys];
-
+    
     if ([EMSFeatureConfig isCrashlyticsEnabled]) {
 #ifdef DEBUGCRASHLYTICS
         [[Crashlytics sharedInstance] setDebugMode:YES];
 #endif
         [Crashlytics startWithAPIKey:prefs[@"crashlytics-api-key"] delegate:self];
     }
-
+    
     [EMSTracking initializeTrackerWithKey:prefs[@"google-analytics-tracking-id"]];
-
+    
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
 #ifdef DEBUG
 #ifdef TEST_PROD_NOTIFICATIONS
@@ -52,10 +51,15 @@ int networkCount = 0;
                       clientKey:prefs[@"parse-client-key"]];
 #endif
 #else
-    [Parse setApplicationId:prefs[@"parse-app-id-prod"]
-                  clientKey:prefs[@"parse-client-key-prod"]];
+        [Parse setApplicationId:prefs[@"parse-app-id-prod"]
+                      clientKey:prefs[@"parse-client-key-prod"]];
 #endif
     }
+    
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     [self cleanup];
 
