@@ -71,9 +71,9 @@
 		EA9ACCBE19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */; };
 		EACB2E9B199EBD1700557D82 /* EMSDefaultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */; };
 		EACB2E9C199EBD1700557D82 /* EMSDefaultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */; };
-		EAE2CF4F19A934B0002F44FC /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6DD17685885009077D3 /* MainStoryboard_iPhone.storyboard */; };
+		EAD69E4F19D31DAD00CB9AF7 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAD69E4E19D31DAD00CB9AF7 /* Launch Screen.xib */; };
+		EAD69E5019D31DAD00CB9AF7 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAD69E4E19D31DAD00CB9AF7 /* Launch Screen.xib */; };
 		EAE2CF5019A934B3002F44FC /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6E017685885009077D3 /* MainStoryboard_iPad.storyboard */; };
-		EAE2CF5119A934D2002F44FC /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6DD17685885009077D3 /* MainStoryboard_iPhone.storyboard */; };
 		EAE2CF5219A934DD002F44FC /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6E017685885009077D3 /* MainStoryboard_iPad.storyboard */; };
 		EAE4330819A52F1C002C3EBA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAE4330619A52F1C002C3EBA /* Localizable.strings */; };
 		EAE4330919A52F1C002C3EBA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAE4330619A52F1C002C3EBA /* Localizable.strings */; };
@@ -259,7 +259,6 @@
 		EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSLocalNotificationManager.m; sourceTree = "<group>"; };
 		EA11338919A7A89F008D000A /* EMSLocalNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSLocalNotificationManager.h; sourceTree = "<group>"; };
 		EA1E8F6317E782E8000F2DB7 /* JavaZone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JavaZone.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		EA28E8CA19A422D9004AAF81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		EA28E8CB19A422D9004AAF81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		EA28E8CE19A422E3004AAF81 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EA6132BA193FC35B000F54DC /* EMSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConfig.h; sourceTree = "<group>"; };
@@ -271,6 +270,7 @@
 		EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSessionTitleTableViewCell.m; sourceTree = "<group>"; };
 		EACB2E99199EBD1700557D82 /* EMSDefaultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSDefaultTableViewCell.h; sourceTree = "<group>"; };
 		EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDefaultTableViewCell.m; sourceTree = "<group>"; };
+		EAD69E4E19D31DAD00CB9AF7 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		EAE4330719A52F1C002C3EBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EAE4330A19A52F28002C3EBA /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EAE4330C19A52F75002C3EBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = en; path = en.lproj/about.html; sourceTree = "<group>"; };
@@ -592,7 +592,6 @@
 				F3CEA3CE17B224170092776F /* AddVideoLinkMapping.xcmappingmodel */,
 				F35BB6D417685885009077D3 /* EMSAppDelegate.h */,
 				F35BB6D517685885009077D3 /* EMSAppDelegate.m */,
-				F35BB6DD17685885009077D3 /* MainStoryboard_iPhone.storyboard */,
 				F35BB6E017685885009077D3 /* MainStoryboard_iPad.storyboard */,
 				F35BB6CC17685885009077D3 /* Supporting Files */,
 				F3939E5F1769C3CD0078C709 /* EMSModel.h */,
@@ -604,6 +603,7 @@
 				4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */,
 				4E1AD6B14458A2997A59456D /* EMSTracking.h */,
 				F3AABDE819AB16C5003D1D1C /* AddTimestampToSpeaker.xcmappingmodel */,
+				EAD69E4E19D31DAD00CB9AF7 /* Launch Screen.xib */,
 			);
 			name = App;
 			path = EMS;
@@ -767,12 +767,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAE2CF4F19A934B0002F44FC /* MainStoryboard_iPhone.storyboard in Resources */,
 				EAE2CF5019A934B3002F44FC /* MainStoryboard_iPad.storyboard in Resources */,
 				F35BB6D017685885009077D3 /* InfoPlist.strings in Resources */,
 				F3D5E2C41770946100888A7E /* style.css in Resources */,
 				EAE4330B19A52F75002C3EBA /* about.html in Resources */,
 				83BF8B6A17ECDA4D0093242C /* Images.xcassets in Resources */,
+				EAD69E4F19D31DAD00CB9AF7 /* Launch Screen.xib in Resources */,
 				EAE4330819A52F1C002C3EBA /* Localizable.strings in Resources */,
 				15A735D219BDB7F5001AAC7C /* EMS-Keys.plist in Resources */,
 				F354B0BA1781AA1D007F7B01 /* iTunesArtwork.png in Resources */,
@@ -787,7 +787,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAE2CF5119A934D2002F44FC /* MainStoryboard_iPhone.storyboard in Resources */,
 				EAE2CF5219A934DD002F44FC /* MainStoryboard_iPad.storyboard in Resources */,
 				F394C9A017F0173900FAFBD4 /* InfoPlist.strings in Resources */,
 				F394C9B517F0173900FAFBD4 /* style.css in Resources */,
@@ -1066,15 +1065,6 @@
 				EA28E8CE19A422E3004AAF81 /* nb */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		F35BB6DD17685885009077D3 /* MainStoryboard_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EA28E8CA19A422D9004AAF81 /* Base */,
-				EA11337A19A65B54008D000A /* nb */,
-			);
-			name = MainStoryboard_iPhone.storyboard;
 			sourceTree = "<group>";
 		};
 		F35BB6E017685885009077D3 /* MainStoryboard_iPad.storyboard */ = {

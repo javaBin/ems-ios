@@ -49,7 +49,7 @@
 
 - (IBAction)scrollToNow:(id)sender;
 
-- (IBAction)back:(UIStoryboardSegue *)segue;
+- (IBAction)backToMainViewController:(UIStoryboardSegue *)segue;
 
 @property BOOL observersInstalled;
 
@@ -361,9 +361,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     
     [self addObservers];
     
-    if (self.splitViewController && ![self.tableView indexPathForSelectedRow]) {
-        [self performSegueWithIdentifier:@"noSessionSelectedSegue" sender:self];
-    }
+    
 }
 
 
@@ -550,7 +548,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 }
 
 
-- (IBAction)back:(UIStoryboardSegue *)segue {
+- (IBAction)backToMainViewController:(UIStoryboardSegue *)segue {
     if ([segue.identifier isEqualToString:@"unwindSettingsSegue"]) {
         self.advancedSearch = [[EMSAdvancedSearch alloc] init];
 
@@ -965,6 +963,16 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
 - (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation {
     return NO;
+}
+
+- (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {
+    
+    if ([secondaryViewController isKindOfClass:[UINavigationController class]] && [[(UINavigationController *)secondaryViewController topViewController] isKindOfClass:[EMSDetailViewController class]] && ([(EMSDetailViewController *)[(UINavigationController *)secondaryViewController topViewController] session] == nil)) {
+        // Return YES to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 #pragma mark - Responding to user opening sessions from notifications
