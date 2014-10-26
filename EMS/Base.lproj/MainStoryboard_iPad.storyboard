@@ -391,7 +391,7 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="GJU-RI-YVR"/>
                         <barButtonItem image="19-gear" style="plain" id="O8v-RP-Sfq">
                             <connections>
-                                <segue destination="kB5-2V-I7W" kind="presentation" identifier="showSettingsView" modalPresentationStyle="overFullScreen" id="L0E-OA-lPv"/>
+                                <segue destination="kB5-2V-I7W" kind="presentation" identifier="showSettingsView" modalPresentationStyle="formSheet" id="L0E-OA-lPv"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
@@ -638,7 +638,7 @@
         <!--Navigation Controller-->
         <scene sceneID="zYM-gy-wia">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="q4g-1e-HQR" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="pageSheet" id="q4g-1e-HQR" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="dnN-zB-NAC">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
@@ -684,7 +684,7 @@
         <image name="28-star-grey.png" width="26" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6go-ii-hOZ"/>
+        <segue reference="UnG-aK-HVm"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.99215692280000001" green="0.52549022440000004" blue="0.29019609089999998" alpha="1" colorSpace="deviceRGB"/>
 </document>
