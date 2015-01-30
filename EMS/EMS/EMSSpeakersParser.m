@@ -17,7 +17,7 @@
     CJCollection *collection = [CJCollection collectionForNSData:data error:&parseError];
 
     if (!collection) {
-        EMS_LOG(@"Failed to retrieve speakers %@ - %@ - %@", href, parseError, [parseError userInfo]);
+        DDLogError(@"Failed to retrieve speakers %@ - %@ - %@", href, parseError, [parseError userInfo]);
 
         *error = parseError;
 

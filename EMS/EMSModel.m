@@ -50,7 +50,7 @@
     NSArray *objects = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
 
     if (!objects) {
-        EMS_LOG(@"Failed to fetch objects for predicate %@, sort %@, type %@ - %@ - %@", predicate, sort, type, error, [error userInfo]);
+        DDLogError(@"Failed to fetch objects for predicate %@, sort %@, type %@ - %@ - %@", predicate, sort, type, error, [error userInfo]);
     }
 
     return objects;
@@ -85,7 +85,7 @@
 
     if (matched.count > 0) {
         if (matched.count > 1) {
-            EMS_LOG(@"WARNING - found %lu conferences for href %@", (unsigned long) matched.count, url);
+            DDLogWarn(@"Found %lu conferences for href %@", (unsigned long) matched.count, url);
 
             [self analyticsWarningForType:@"conference" andHref:url withCount:@(matched.count)];
         }
@@ -102,7 +102,7 @@
 
     if (matched.count > 0) {
         if (matched.count > 1) {
-            EMS_LOG(@"WARNING - found %lu conferences for sessions href %@", (unsigned long) matched.count, url);
+            DDLogWarn(@"Found %lu conferences for sessions href %@", (unsigned long) matched.count, url);
 
             [self analyticsWarningForType:@"conferenceForSession" andHref:url withCount:@(matched.count)];
         }
@@ -119,7 +119,7 @@
 
     if (matched.count > 0) {
         if (matched.count > 1) {
-            EMS_LOG(@"WARNING - found %lu slots for href %@", (unsigned long) matched.count, url);
+            DDLogWarn(@"Found %lu slots for href %@", (unsigned long) matched.count, url);
 
             [self analyticsWarningForType:@"slot" andHref:url withCount:@(matched.count)];
         }
@@ -136,7 +136,7 @@
 
     if (matched.count > 0) {
         if (matched.count > 1) {
-            EMS_LOG(@"WARNING - found %lu rooms for href %@", (unsigned long) matched.count, url);
+            DDLogWarn(@"Found %lu rooms for href %@", (unsigned long) matched.count, url);
 
             [self analyticsWarningForType:@"room" andHref:url withCount:@(matched.count)];
         }
@@ -153,7 +153,7 @@
 
     if (matched.count > 0) {
         if (matched.count > 1) {
-            EMS_LOG(@"WARNING - found %lu sessions for href %@", (unsigned long) matched.count, url);
+            DDLogWarn(@"Found %lu sessions for href %@", (unsigned long) matched.count, url);
 
             [self analyticsWarningForType:@"session" andHref:url withCount:@(matched.count)];
         }
@@ -170,7 +170,7 @@
 
     if (matched.count > 0) {
         if (matched.count > 1) {
-            EMS_LOG(@"WARNING - found %lu speakers for href %@", (unsigned long) matched.count, url);
+            DDLogWarn(@"Found %lu speakers for href %@", (unsigned long) matched.count, url);
 
             [self analyticsWarningForType:@"speaker" andHref:url withCount:@(matched.count)];
         }
@@ -491,7 +491,7 @@
 
 
     // Walk thru non-matching and delete
-    EMS_LOG(@"Deleting %lu conferences", (unsigned long) [unmatched count]);
+    DDLogVerbose(@"Deleting %lu conferences", (unsigned long) [unmatched count]);
 
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Conference *conference = (Conference *) obj;
@@ -500,7 +500,7 @@
     }];
 
     // Walk thru matching and for each one - update. Store in list
-    EMS_LOG(@"Updating %lu conferences", (unsigned long) [matched count]);
+    DDLogVerbose(@"Updating %lu conferences", (unsigned long) [matched count]);
 
     NSMutableSet *seen = [[NSMutableSet alloc] init];
 
@@ -513,7 +513,7 @@
     }];
 
     // Walk thru any new ones left
-    EMS_LOG(@"Inserting from %lu conferences with %lu seen", (unsigned long) [hrefKeyed count], (unsigned long) [seen count]);
+    DDLogVerbose(@"Inserting from %lu conferences with %lu seen", (unsigned long) [hrefKeyed count], (unsigned long) [seen count]);
 
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
@@ -530,7 +530,7 @@
     NSError *saveError = nil;
 
     if (![[self managedObjectContext] save:&saveError]) {
-        EMS_LOG(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
+        DDLogError(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
 
         *error = saveError;
 
@@ -563,7 +563,7 @@
     }
 
     if (conferences.count > 1) {
-        EMS_LOG(@"WARNING - found %lu conferences for slot collection href %@", (unsigned long) conferences.count, href);
+        DDLogWarn(@"Found %lu conferences for slot collection href %@", (unsigned long) conferences.count, href);
 
         [self analyticsWarningForType:@"conferenceForSlotCollection" andHref:href withCount:@(conferences.count)];
     }
@@ -587,7 +587,7 @@
 
 
     // Walk thru non-matching and delete
-    EMS_LOG(@"Deleting %lu slots", (unsigned long) [unmatched count]);
+    DDLogVerbose(@"Deleting %lu slots", (unsigned long) [unmatched count]);
 
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Slot *slot = (Slot *) obj;
@@ -596,7 +596,7 @@
     }];
 
     // Walk thru matching and for each one - update. Store in list
-    EMS_LOG(@"Updating %lu slots", (unsigned long) [matched count]);
+    DDLogVerbose(@"Updating %lu slots", (unsigned long) [matched count]);
 
     NSMutableSet *seen = [[NSMutableSet alloc] init];
 
@@ -609,7 +609,7 @@
     }];
 
     // Walk thru any new ones left
-    EMS_LOG(@"Inserting from %lu slots with %lu seen", (unsigned long) [hrefKeyed count], (unsigned long) [seen count]);
+    DDLogVerbose(@"Inserting from %lu slots with %lu seen", (unsigned long) [hrefKeyed count], (unsigned long) [seen count]);
 
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
@@ -626,7 +626,7 @@
     NSError *saveError = nil;
 
     if (![[self managedObjectContext] save:&saveError]) {
-        EMS_LOG(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
+        DDLogError(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
 
         *error = saveError;
 
@@ -661,7 +661,7 @@
     }
 
     if (conferences.count > 1) {
-        EMS_LOG(@"WARNING - found %lu conferences for room collection href %@", (unsigned long) conferences.count, href);
+        DDLogWarn(@"Found %lu conferences for room collection href %@", (unsigned long) conferences.count, href);
 
         [self analyticsWarningForType:@"conferenceForRoomCollection" andHref:href withCount:@(conferences.count)];
     }
@@ -684,7 +684,7 @@
                       andSort:sort];
 
     // Walk thru non-matching and delete
-    EMS_LOG(@"Deleting %lu rooms", (unsigned long) [unmatched count]);
+    DDLogVerbose(@"Deleting %lu rooms", (unsigned long) [unmatched count]);
 
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Room *room = (Room *) obj;
@@ -693,7 +693,7 @@
     }];
 
     // Walk thru matching and for each one - update. Store in list
-    EMS_LOG(@"Updating %lu rooms", (unsigned long) [matched count]);
+    DDLogVerbose(@"Updating %lu rooms", (unsigned long) [matched count]);
 
     NSMutableSet *seen = [[NSMutableSet alloc] init];
 
@@ -706,7 +706,7 @@
     }];
 
     // Walk thru any new ones left
-    EMS_LOG(@"Inserting from %lu rooms with %lu seen", (unsigned long) [hrefKeyed count], (unsigned long) [seen count]);
+    DDLogVerbose(@"Inserting from %lu rooms with %lu seen", (unsigned long) [hrefKeyed count], (unsigned long) [seen count]);
 
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
@@ -723,7 +723,7 @@
     NSError *saveError = nil;
 
     if (![[self managedObjectContext] save:&saveError]) {
-        EMS_LOG(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
+        DDLogError(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
 
         *error = saveError;
 
@@ -758,7 +758,7 @@
     }
 
     if (sessions.count > 1) {
-        EMS_LOG(@"WARNING - found %lu sessions for speaker collection href %@", (unsigned long) sessions.count, href);
+        DDLogWarn(@"Found %lu sessions for speaker collection href %@", (unsigned long) sessions.count, href);
 
         [self analyticsWarningForType:@"sessionsForSpeakerCollection" andHref:href withCount:@(sessions.count)];
     }
@@ -781,7 +781,7 @@
                          andSort:sort];
 
     // Walk thru non-matching and delete
-    EMS_LOG(@"Deleting %lu speakers", (unsigned long) [unmatched count]);
+    DDLogVerbose(@"Deleting %lu speakers", (unsigned long) [unmatched count]);
 
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Speaker *speaker = (Speaker *) obj;
@@ -790,7 +790,7 @@
     }];
 
     // Walk thru matching and for each one - update. Store in list
-    EMS_LOG(@"Updating %lu speakers", (unsigned long) [matched count]);
+    DDLogVerbose(@"Updating %lu speakers", (unsigned long) [matched count]);
 
     NSMutableSet *seen = [[NSMutableSet alloc] init];
 
@@ -803,7 +803,7 @@
     }];
 
     // Walk thru any new ones left
-    EMS_LOG(@"Inserting from %lu speakers with %lu seen", (unsigned long) [hrefKeyed count], (unsigned long) [seen count]);
+    DDLogVerbose(@"Inserting from %lu speakers with %lu seen", (unsigned long) [hrefKeyed count], (unsigned long) [seen count]);
 
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
@@ -820,7 +820,7 @@
     NSError *saveError = nil;
 
     if (![[self managedObjectContext] save:&saveError]) {
-        EMS_LOG(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
+        DDLogError(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
 
         *error = saveError;
 
@@ -853,7 +853,7 @@
     }
 
     if (conferences.count > 1) {
-        EMS_LOG(@"WARNING - found %lu conferences for session collection href %@", (unsigned long) conferences.count, href);
+        DDLogWarn(@"Found %lu conferences for session collection href %@", (unsigned long) conferences.count, href);
 
         [self analyticsWarningForType:@"conferenceForSessionCollection" andHref:href withCount:@(conferences.count)];
     }
@@ -877,7 +877,7 @@
 
 
     // Walk thru non-matching and delete
-    EMS_LOG(@"Deleting %lu sessions", (unsigned long) [unmatched count]);
+    DDLogVerbose(@"Deleting %lu sessions", (unsigned long) [unmatched count]);
 
     [unmatched enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Session *session = (Session *) obj;
@@ -886,7 +886,7 @@
     }];
 
     // Walk thru matching and for each one - update. Store in list
-    EMS_LOG(@"Updating %lu sessions", (unsigned long) [matched count]);
+    DDLogVerbose(@"Updating %lu sessions", (unsigned long) [matched count]);
 
     NSMutableSet *seen = [[NSMutableSet alloc] init];
 
@@ -900,7 +900,7 @@
 
 
     // Walk thru any new ones left
-    EMS_LOG(@"Inserting from %lu sessions with %lu seen", (unsigned long) [hrefKeyed count], (unsigned long) [seen count]);
+    DDLogVerbose(@"Inserting from %lu sessions with %lu seen", (unsigned long) [hrefKeyed count], (unsigned long) [seen count]);
 
     [hrefKeyed enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (![seen containsObject:key]) {
@@ -918,7 +918,7 @@
     }];
 
     // Fixup lightning sessions
-    EMS_LOG(@"Setting slotName for lightning sessions");
+    DDLogVerbose(@"Setting slotName for lightning sessions");
     NSArray *lightning = [self
             sessionsForPredicate:[NSPredicate predicateWithFormat:@"(format == %@ AND conference == %@ AND slotName = nil)", @"lightning-talk", conference]
                          andSort:nil];
@@ -930,35 +930,35 @@
     }];
 
     if ((conference.start == nil || conference.end == nil) && conference.sessions.count > 0) {
-        EMS_LOG(@"Setting conference dates from session dates for href %@", conference.href);
+        DDLogVerbose(@"Setting conference dates from session dates for href %@", conference.href);
 
         NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"slot.start" ascending:YES];
         NSArray *sorted = [self sessionsForPredicate:[NSPredicate predicateWithFormat:@"(format != %@ AND conference == %@)", @"workshop", conference] andSort:@[dateDescriptor]];
 
         if (conference.start == nil) {
             Session *first = sorted[0];
-            EMS_LOG(@"Setting conference start date from session for href %@ to %@", conference.href, first.slot.start);
+            DDLogVerbose(@"Setting conference start date from session for href %@ to %@", conference.href, first.slot.start);
             conference.start = first.slot.start;
         }
         if (conference.end == nil) {
             Session *last = [sorted lastObject];
-            EMS_LOG(@"Setting conference end date from session for href %@ to %@", conference.href, last.slot.end);
+            DDLogVerbose(@"Setting conference end date from session for href %@ to %@", conference.href, last.slot.end);
             conference.end = last.slot.end;
         }
     }
 
-    EMS_LOG(@"Need to delete conference metafields where none on session");
+    DDLogVerbose(@"Need to delete conference metafields where none on session");
 
     // TODO - delete metafields
 //    [self deleteAllObjectForPredicate:[NSPredicate predicateWithFormat:@"NONE conference.sessions.keywords == SELF"] andType:@"ConferenceKeyword"];
 //    [self deleteAllObjectForPredicate:[NSPredicate predicateWithFormat:@"NONE conference.sessions.levels == SELF"] andType:@"ConferenceLevel"];
 //    [self deleteAllObjectForPredicate:[NSPredicate predicateWithFormat:@"NONE conference.sessions.format == SELF"] andType:@"ConferenceType"];
 
-    EMS_LOG(@"Persisting");
+    DDLogVerbose(@"Persisting");
     NSError *saveError = nil;
 
     if (![[self managedObjectContext] save:&saveError]) {
-        EMS_LOG(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
+        DDLogError(@"Failed to save conferences %@ - %@", saveError, [saveError userInfo]);
 
         *error = saveError;
 
@@ -972,7 +972,7 @@
 
 - (NSString *)getSlotNameForLightningSlot:(Slot *)slot forConference:(Conference *)conference {
     if (slot == nil || slot.start == nil || slot.end == nil) {
-        EMS_LOG(@"GSNFLS: Slot data looks strange, %@, %@, %@", slot, slot.start, slot.end);
+        DDLogVerbose(@"GSNFLS: Slot data looks strange, %@, %@, %@", slot, slot.start, slot.end);
 
         return nil;
     }
@@ -983,18 +983,18 @@
                                                               slot,
                                                               conference];
 
-    EMS_LOG(@"GSNFLS: Getting slot name for %@ - %@", slot.start, slot.end);
+    DDLogVerbose(@"GSNFLS: Getting slot name for %@ - %@", slot.start, slot.end);
 
     NSArray *slots = [self slotsForPredicate:predicate andSort:nil];
 
     __block Slot *found = nil;
 
-    EMS_LOG(@"GSNFLS: Found %lu possible slots for %@ - %@", (unsigned long) slots.count, slot.start, slot.end);
+    DDLogVerbose(@"GSNFLS: Found %lu possible slots for %@ - %@", (unsigned long) slots.count, slot.start, slot.end);
 
     [slots enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Slot *s = (Slot *) obj;
 
-        EMS_LOG(@"GSNFLS: Checking %@ - %@ with %lu possible slots for %@ - %@", s.start, s.end, (unsigned long) s.sessions.count, slot.start, slot.end);
+        DDLogVerbose(@"GSNFLS: Checking %@ - %@ with %lu possible slots for %@ - %@", s.start, s.end, (unsigned long) s.sessions.count, slot.start, slot.end);
 
         if (s.sessions.count > 0) {
             if (![s.sessions containsObject:slot]) {
@@ -1010,7 +1010,7 @@
                 }];
 
                 if (!sawWorkshop) {
-                    EMS_LOG(@"GSNFLS: Found %@ - %@ for %@ - %@", s.start, s.end, slot.start, slot.end);
+                    DDLogVerbose(@"GSNFLS: Found %@ - %@ for %@ - %@", s.start, s.end, slot.start, slot.end);
 
                     found = s;
                     *stop = YES;
@@ -1020,12 +1020,12 @@
     }];
 
     if (found) {
-        EMS_LOG(@"GSNFLS: Returning %@ - %@ for %@ - %@", found.start, found.end, slot.start, slot.end);
+        DDLogVerbose(@"GSNFLS: Returning %@ - %@ for %@ - %@", found.start, found.end, slot.start, slot.end);
 
         return [self slotNameForSlot:found];
     }
 
-    EMS_LOG(@"GSNFLS: Returning self for %@ - %@", slot.start, slot.end);
+    DDLogVerbose(@"GSNFLS: Returning self for %@ - %@", slot.start, slot.end);
 
     // Default to our own name
     return [self slotNameForSlot:slot];
@@ -1033,7 +1033,7 @@
 
 - (NSString *)slotNameForSlot:(Slot *)slot {
     if (slot == nil || slot.start == nil || slot.end == nil) {
-        EMS_LOG(@"GSNFS: Slot data looks strange, %@, %@, %@", slot, slot.start, slot.end);
+        DDLogVerbose(@"GSNFS: Slot data looks strange, %@, %@, %@", slot, slot.start, slot.end);
 
         return nil;
     }
@@ -1058,7 +1058,7 @@
 }
 
 - (Session *)toggleFavourite:(Session *)session {
-    EMS_LOG(@"Trying to toggle favourite for %@", session);
+    DDLogVerbose(@"Trying to toggle favourite for %@", session);
 
     BOOL isFavourite = [session.favourite boolValue];
 
@@ -1069,11 +1069,11 @@
 
         if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
             PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-            EMS_LOG(@"Current channels %@", [currentInstallation channels]);
+            DDLogVerbose(@"Current channels %@", [currentInstallation channels]);
             NSString *channelName = [session sanitizedTitle];
             if ([[currentInstallation channels] containsObject:channelName]) {
                 [currentInstallation removeObject:channelName forKey:@"channels"];
-                EMS_LOG(@"Updated channels %@", [currentInstallation channels]);
+                DDLogVerbose(@"Updated channels %@", [currentInstallation channels]);
             }
             [currentInstallation saveEventually:^(BOOL succeeded, NSError *error) {
                 if (!succeeded) {
@@ -1088,10 +1088,10 @@
 
         if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
             PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-            EMS_LOG(@"Current channels %@", [currentInstallation channels]);
+            DDLogVerbose(@"Current channels %@", [currentInstallation channels]);
             NSString *channelName = [session sanitizedTitle];
             [currentInstallation addUniqueObject:channelName forKey:@"channels"];
-            EMS_LOG(@"Updated channels %@", [currentInstallation channels]);
+            DDLogVerbose(@"Updated channels %@", [currentInstallation channels]);
             [currentInstallation saveEventually:^(BOOL succeeded, NSError *error) {
                 if (!succeeded) {
                     [EMSTracking trackException:[NSString stringWithFormat:@"Unable to save removing of channel due to Code: %ld, Domain: %@, Info: %@", (long) error.code, [error domain], [error userInfo]]];
@@ -1102,7 +1102,7 @@
 
     NSError *error;
     if (![[self managedObjectContext] save:&error]) {
-        EMS_LOG(@"Failed to toggle favourite for %@, %@, %@", session, error, [error userInfo]);
+        DDLogError(@"Failed to toggle favourite for %@, %@, %@", session, error, [error userInfo]);
     }
 
     [[EMSAppDelegate sharedAppDelegate] syncManagedObjectContext];
@@ -1113,7 +1113,7 @@
 
 - (NSDate *)dateForConference:(Conference *)conference andDate:(NSDate *)date {
 #ifdef USE_TEST_DATE
-    EMS_LOG(@"WARNING - RUNNING IN USE_TEST_DATE mode");
+    DDLogWarn(@"RUNNING IN USE_TEST_DATE mode");
 
     // In debug mode we will use the current time of day but always the first day of conference. Otherwise we couldn't test until JZ started ;)
     NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"slot.start" ascending:YES];
@@ -1126,7 +1126,7 @@
         return nil;
     }
 
-    EMS_LOG(@"Saw conference date of %@", conferenceDate);
+    DDLogVerbose(@"Saw conference date of %@", conferenceDate);
 
     NSCalendar *calendar = [NSCalendar currentCalendar];
 
@@ -1160,7 +1160,7 @@
     NSArray *objects = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
 
     if (error) {
-        EMS_LOG(@"Failed to fetch speaker pic for url %@, - %@ - %@", url, error, [error userInfo]);
+        DDLogError(@"Failed to fetch speaker pic for url %@, - %@ - %@", url, error, [error userInfo]);
     }
 
     if ([objects count] > 0) {
@@ -1251,7 +1251,7 @@
     NSError *saveError = nil;
 
     if (![[self managedObjectContext] save:&saveError]) {
-        EMS_LOG(@"Failed to save conference after clearing %@ - %@", saveError, [saveError userInfo]);
+        DDLogError(@"Failed to save conference after clearing %@ - %@", saveError, [saveError userInfo]);
     }
 }
 

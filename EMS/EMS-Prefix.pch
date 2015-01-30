@@ -15,13 +15,16 @@
 #import <CoreData/CoreData.h>
 
 #import <Crashlytics/Crashlytics.h>
-
 #import <Parse/Parse.h>
+#import <CocoaLumberjack/CocoaLumberjack.h>
 
 #import "EMSFeatureConfig.h"
 
-#define EMS_LOG(__FORMAT__, ...) if ([EMSFeatureConfig isCrashlyticsEnabled]) { CLS_LOG(__FORMAT__, ##__VA_ARGS__); } else { NSLog(__FORMAT__, ##__VA_ARGS__); }
-
+#ifdef DEBUG
+static const int ddLogLevel = DDLogLevelVerbose;
+#else
+static const int ddLogLevel = DDLogLevelWarning;
+#endif
 
 #endif
 

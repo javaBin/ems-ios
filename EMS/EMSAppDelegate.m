@@ -2,6 +2,7 @@
 //  EMSAppDelegate.m
 //
 
+#import <CrashlyticsLumberjack/CrashlyticsLogger.h>
 #import "EMSAppDelegate.h"
 #import "EMSMainViewController.h"
 #import "EMSLocalNotificationManager.h"
@@ -21,26 +22,32 @@ int networkCount = 0;
 
 - (void)handleIncomingRemoteNotification:(NSDictionary *)dictionary {
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
-        EMS_LOG(@"Incoming remote notification: %@", dictionary);
+        DDLogVerbose(@"Incoming remote notification: %@", dictionary);
 
         [PFPush handlePush:dictionary];
     }
 }
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    EMS_LOG(@"WE STARTED");
-    
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+
+    DDLogVerbose(@"WE STARTED");
+
     NSDictionary *prefs = [EMSFeatureConfig getKeys];
-    
+
     if ([EMSFeatureConfig isCrashlyticsEnabled]) {
 #ifdef DEBUGCRASHLYTICS
         [[Crashlytics sharedInstance] setDebugMode:YES];
 #endif
         [Crashlytics startWithAPIKey:prefs[@"crashlytics-api-key"] delegate:self];
+        [DDLog addLogger:[CrashlyticsLogger sharedInstance]];
+        
+        DDLogVerbose(@"Connected to crashlytics");
     }
-    
+
     [EMSTracking initializeTrackerWithKey:prefs[@"google-analytics-tracking-id"]];
-    
+
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
 #ifdef DEBUG
 #ifdef TEST_PROD_NOTIFICATIONS
@@ -55,7 +62,7 @@ int networkCount = 0;
                       clientKey:prefs[@"parse-client-key-prod"]];
 #endif
     }
-    
+
     return YES;
 }
 
@@ -77,7 +84,7 @@ int networkCount = 0;
             if (dictionary != nil) {
                 [EMSTracking trackEventWithCategory:@"system" action:@"remotenotification" label:@"init-receive"];
 
-                EMS_LOG(@"Launched from push notification: %@", dictionary);
+                DDLogInfo(@"Launched from push notification: %@", dictionary);
                 [self handleIncomingRemoteNotification:dictionary];
             }
         }
@@ -100,7 +107,7 @@ int networkCount = 0;
         [EMSTracking trackEventWithCategory:@"system" action:@"remotenotification" label:@"register"];
         [EMSTracking dispatch];
 
-        EMS_LOG(@"My token is: %@", deviceToken);
+        DDLogDebug(@"My token is: %@", deviceToken);
 
         PFInstallation *currentInstallation = [PFInstallation currentInstallation];
         [currentInstallation setDeviceTokenFromData:deviceToken];
@@ -117,7 +124,7 @@ int networkCount = 0;
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
-        EMS_LOG(@"Failed to get token, error: %@ [%@]", error, [error userInfo]);
+        DDLogError(@"Failed to get token, error: %@ [%@]", error, [error userInfo]);
     }
 }
 
@@ -139,10 +146,10 @@ int networkCount = 0;
 - (void)remove:(NSString *)path {
     NSError *error = nil;
     if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        EMS_LOG(@"Deleting %@", path);
+        DDLogVerbose(@"Deleting %@", path);
 
         if (![[NSFileManager defaultManager] removeItemAtPath:path error:&error]) {
-            EMS_LOG(@"Failed to delete %@ - %@ - %@", path, error, [error userInfo]);
+            DDLogError(@"Failed to delete %@ - %@ - %@", path, error, [error userInfo]);
         }
     }
 }
@@ -162,7 +169,7 @@ int networkCount = 0;
         return __model;
     }
 
-    EMS_LOG(@"No model - initializing");
+    DDLogInfo(@"No model - initializing");
 
     __model = [[EMSModel alloc] initWithManagedObjectContext:[self uiManagedObjectContext]];
 
@@ -178,7 +185,7 @@ int networkCount = 0;
         return __managedObjectContext;
     }
 
-    EMS_LOG(@"No moc - initializing");
+    DDLogInfo(@"No moc - initializing");
 
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -189,7 +196,7 @@ int networkCount = 0;
         }
     });
 
-    EMS_LOG(@"No moc - initialized");
+    DDLogVerbose(@"No moc - initialized");
 
     return __managedObjectContext;
 }
@@ -199,7 +206,7 @@ int networkCount = 0;
         return __uiManagedObjectContext;
     }
 
-    EMS_LOG(@"No UI moc - initializing");
+    DDLogInfo(@"No UI moc - initializing");
 
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -211,7 +218,7 @@ int networkCount = 0;
         }
     });
 
-    EMS_LOG(@"No UI moc - initialized");
+    DDLogVerbose(@"No UI moc - initialized");
 
     return __uiManagedObjectContext;
 }
@@ -221,7 +228,7 @@ int networkCount = 0;
         return __backgroundManagedObjectContext;
     }
 
-    EMS_LOG(@"No background moc - initializing");
+    DDLogInfo(@"No background moc - initializing");
 
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -233,7 +240,7 @@ int networkCount = 0;
         }
     });
 
-    EMS_LOG(@"No background moc - initialized");
+    DDLogVerbose(@"No background moc - initialized");
 
     return __backgroundManagedObjectContext;
 }
@@ -244,18 +251,18 @@ int networkCount = 0;
         return __managedObjectModel;
     }
 
-    EMS_LOG(@"No mom - initializing");
+    DDLogInfo(@"No mom - initializing");
 
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"EMSCoreDataModel" withExtension:@"momd"];
     __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
 
-    EMS_LOG(@"No mom - initialized");
+    DDLogVerbose(@"No mom - initialized");
 
     return __managedObjectModel;
 }
 
 - (EMSModel *)modelForBackground {
-    EMS_LOG(@"Creating background model");
+    DDLogInfo(@"Creating background model");
 
     NSManagedObjectContext *backgroundContext = [self backgroundManagedObjectContext];
 
@@ -268,7 +275,7 @@ int networkCount = 0;
     NSError *error = nil;
     if (__uiManagedObjectContext != nil) {
         if ([__uiManagedObjectContext hasChanges] && ![__uiManagedObjectContext save:&error]) {
-            EMS_LOG(@"Failed to save ui data at shutdown %@, %@", error, [error userInfo]);
+            DDLogError(@"Failed to save ui data at shutdown %@, %@", error, [error userInfo]);
         }
     }
     if (__managedObjectContext != nil) {
@@ -281,7 +288,7 @@ int networkCount = 0;
                 savedOK = [__managedObjectContext save:&mocError];
 
                 if (!savedOK) {
-                    EMS_LOG(@"Failed to save data at shutdown %@, %@", mocError, [mocError userInfo]);
+                    DDLogError(@"Failed to save data at shutdown %@, %@", mocError, [mocError userInfo]);
                 }
             }
         }];
@@ -294,7 +301,7 @@ int networkCount = 0;
         return __persistentStoreCoordinator;
     }
 
-    EMS_LOG(@"No persistent store - initializing");
+    DDLogInfo(@"No persistent store - initializing");
 
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"EMSCoreDataModel.sqlite"];
 
@@ -304,26 +311,26 @@ int networkCount = 0;
 
     NSError *error = nil;
     if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
-        EMS_LOG(@"Failed to set up SQL database. Deleting. %@, %@", error, [error userInfo]);
+        DDLogError(@"Failed to set up SQL database. Deleting. %@, %@", error, [error userInfo]);
 
         //delete the sqlite file and try again
         NSError *deleteError = nil;
 
         if (![[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:&deleteError]) {
-            EMS_LOG(@"Failed to delete database on failed first attempt %@, %@", deleteError, [deleteError userInfo]);
+            DDLogError(@"Failed to delete database on failed first attempt %@, %@", deleteError, [deleteError userInfo]);
         }
 
         NSError *error2 = nil;
 
         if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error2]) {
-            EMS_LOG(@"Failed to set up database on second attempt %@, %@", error2, [error2 userInfo]);
+            DDLogError(@"Failed to set up database on second attempt %@, %@", error2, [error2 userInfo]);
 
             [self showErrorAlertWithTitle:NSLocalizedString(@"Database error", "Database error dialog title")
                                andMessage:NSLocalizedString(@"We failed to create the database. If this happens again after an application restart please delete and re-install.", "Database error dialog message")];
         }
     }
 
-    EMS_LOG(@"No persistent store - initialized");
+    DDLogVerbose(@"No persistent store - initialized");
 
     return __persistentStoreCoordinator;
 }
@@ -359,13 +366,13 @@ int networkCount = 0;
         UIApplication *app = [UIApplication sharedApplication];
         app.networkActivityIndicatorVisible = YES;
 
-        EMS_LOG(@"startNetwork finished with %d", networkCount);
+        DDLogVerbose(@"startNetwork finished with %d", networkCount);
     });
 }
 
 - (void)stopNetwork {
     dispatch_async(dispatch_get_main_queue(), ^{
-        EMS_LOG(@"stopNetwork started with %d", networkCount);
+        DDLogVerbose(@"stopNetwork started with %d", networkCount);
 
         networkCount--;
 
@@ -385,7 +392,7 @@ int networkCount = 0;
 }
 
 - (void)crashlyticsDidDetectCrashDuringPreviousExecution:(Crashlytics *)crashlytics {
-    EMS_LOG(@"Crash detected - clearing advanced search");
+    DDLogVerbose(@"Crash detected - clearing advanced search");
 
     EMSAdvancedSearch *advancedSearch = [[EMSAdvancedSearch alloc] init];
     [advancedSearch clear];
@@ -399,31 +406,31 @@ int networkCount = 0;
 
 - (BOOL)application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder {
     NSString *archivedVersion = [coder decodeObjectForKey:UIApplicationStateRestorationBundleVersionKey];
-    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey];
-    
-    if (![archivedVersion isEqual:version]){ // Don´t restore across updates
-        EMS_LOG(@"Bundle version is: %@, archived version is %@. Skipping state restore.", version, archivedVersion);
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *) kCFBundleVersionKey];
+
+    if (![archivedVersion isEqual:version]) { // Don´t restore across updates
+        DDLogInfo(@"Bundle version is: %@, archived version is %@. Skipping state restore.", version, archivedVersion);
         return NO;
     }
 
     UIUserInterfaceIdiom archivedIdiom = [[coder decodeObjectForKey:UIApplicationStateRestorationUserInterfaceIdiomKey] integerValue];
-    
+
     UIUserInterfaceIdiom idiom = UI_USER_INTERFACE_IDIOM();
-    
+
     if (archivedIdiom != idiom) { // Don´t restore if idiom changed. E.g user restored from iPad to iPhone etc.
-         EMS_LOG(@"User interface idiom in bundle %ld, does not match current user interface idiom %ld. Skipping state restore.", archivedIdiom, idiom);
+        DDLogInfo(@"User interface idiom in bundle %ld, does not match current user interface idiom %ld. Skipping state restore.", archivedIdiom, idiom);
         return NO;
     }
-    
+
     NSString *archivedSystemVersion = [coder decodeObjectForKey:UIApplicationStateRestorationSystemVersionKey];
-    
+
     NSString *systemVersion = [UIDevice currentDevice].systemVersion;
-    
-    if(![archivedSystemVersion isEqual:systemVersion]) { // Don´t restore across system versions
-        EMS_LOG(@"System version in archive %@ does not match current system version %@. Skipping state restore.", archivedSystemVersion, systemVersion);
+
+    if (![archivedSystemVersion isEqual:systemVersion]) { // Don´t restore across system versions
+        DDLogInfo(@"System version in archive %@ does not match current system version %@. Skipping state restore.", archivedSystemVersion, systemVersion);
         return NO;
     }
-    
+
     return YES;
 }
 

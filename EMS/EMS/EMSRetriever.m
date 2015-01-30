@@ -76,16 +76,16 @@
 
 - (Conference *)conferenceForHref:(NSString *)href {
     NSAssert([NSThread isMainThread], @"Can only be called on main thread.");
-    
-    EMS_LOG(@"Getting conference for %@", href);
+
+    DDLogVerbose(@"Getting conference for %@", href);
 
     return [[[EMSAppDelegate sharedAppDelegate] model] conferenceForHref:href];
 }
 
 - (Conference *)activeConference {
     NSAssert([NSThread isMainThread], @"Can only be called on main thread.");
-    
-    EMS_LOG(@"Getting current conference");
+
+    DDLogVerbose(@"Getting current conference");
 
     NSString *activeConference = [[self currentConference] absoluteString];
 
@@ -162,7 +162,7 @@
             }
             
         } else {
-            EMS_LOG(@"Failed to sync conferences %@ - %@", error, [error userInfo]);
+            DDLogError(@"Failed to sync conferences %@ - %@", error, [error userInfo]);
 
             [self cancelConferenceRefresh];
 
@@ -249,7 +249,7 @@
                error:(NSError *)error {
 
     if (error != nil) {
-        EMS_LOG(@"Retrieved error for root %@ - %@", error, [error userInfo]);
+        DDLogError(@"Retrieved error for root %@ - %@", error, [error userInfo]);
 
         [self finishedConferencesWithError:error];
 
@@ -292,7 +292,7 @@
 - (void)finishedEvents:(NSArray *)conferences forHref:(NSURL *)href error:(NSError *)error {
 
     if (error != nil) {
-        EMS_LOG(@"Retrieved error for events %@ - %@", error, [error userInfo]);
+        DDLogError(@"Retrieved error for events %@ - %@", error, [error userInfo]);
 
         [self finishedConferencesWithError:error];
 

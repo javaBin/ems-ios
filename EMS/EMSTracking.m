@@ -23,7 +23,7 @@
 }
 
 + (void)trackScreen:(NSString *)name {
-    EMS_LOG(@"Tracking Screen %@", name);
+    DDLogInfo(@"Tracking Screen %@", name);
 
     if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
         id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
@@ -40,7 +40,7 @@
 }
 
 + (void)trackEventWithCategory:(NSString *)category action:(NSString *)action label:(NSString *)label value:(NSNumber *)value {
-    EMS_LOG(@"Tracking Event with Category %@, action %@, label %@ and value %@", category, action, label, value);
+    DDLogInfo(@"Tracking Event with Category %@, action %@, label %@ and value %@", category, action, label, value);
 
     if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
         id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
@@ -60,7 +60,7 @@
 }
 
 + (void)trackException:(NSString *)description {
-    EMS_LOG(@"Tracking Exception with Description %@", description);
+    DDLogInfo(@"Tracking Exception with Description %@", description);
 
     if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
         id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
@@ -70,7 +70,7 @@
 }
 
 + (void)trackSocialWithNetwork:(NSString *)network action:(NSString *)action target:(NSString *)target {
-    EMS_LOG(@"Tracking Social with network %@, action %@ and target %@", network, action, target);
+    DDLogInfo(@"Tracking Social with network %@, action %@ and target %@", network, action, target);
 
     if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
         id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
@@ -82,7 +82,7 @@
 }
 
 + (void)trackTimingWithCategory:(NSString *)category interval:(NSNumber *)interval name:(NSString *)name {
-    EMS_LOG(@"Tracking Timing with Category %@, interval %@ and name %@", category, interval, name);
+    DDLogInfo(@"Tracking Timing with Category %@, interval %@ and name %@", category, interval, name);
 
     if ([EMSFeatureConfig isGoogleAnalyticsEnabled]) {
         id <GAITracker> tracker = [[GAI sharedInstance] defaultTracker];

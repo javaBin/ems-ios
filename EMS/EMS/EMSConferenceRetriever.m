@@ -83,27 +83,27 @@
         NSLog(@"Rooms is done saving");
     }];
     self.roomsDoneOperation = roomsDoneOperation;
-    
-    EMS_LOG(@"Starting retrieval");
+
+    DDLogVerbose(@"Starting retrieval");
     
     
     Conference *conference = self.conference;
     if (conference != nil) {
-        EMS_LOG(@"Starting retrieval - saw conf");
+        DDLogVerbose(@"Starting retrieval - saw conf");
         
         //TODO: Check this logic?
         if (conference.slotCollection != nil) {
-            EMS_LOG(@"Starting retrieval - saw slot collection");
+            DDLogVerbose(@"Starting retrieval - saw slot collection");
             [self refreshSlots:[NSURL URLWithString:conference.slotCollection]];
         }
         
         if (conference.roomCollection != nil) {
-            EMS_LOG(@"Starting retrieval - saw room collection");
+            DDLogVerbose(@"Starting retrieval - saw room collection");
             [self refreshRooms:[NSURL URLWithString:conference.roomCollection]];
         }
         
         if (conference.sessionCollection != nil) {
-            EMS_LOG(@"Starting retrieval - saw session collection");
+            DDLogVerbose(@"Starting retrieval - saw session collection");
             [self refreshSessions:[NSURL URLWithString:conference.sessionCollection]];
         }
         
@@ -150,7 +150,7 @@
         }
         
         if (error) {
-            EMS_LOG(@"Failed to sync sessions %@ - %@", error, [error userInfo]);
+            DDLogError(@"Failed to sync sessions %@ - %@", error, [error userInfo]);
             [self cancelSessionRefresh];
         } else {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -174,7 +174,7 @@
 
 - (void)finishedSlots:(NSArray *)slots forHref:(NSURL *)href error:(NSError *)error {
     if (error != nil) {
-        EMS_LOG(@"Retrieved error for slots %@ - %@", error, [error userInfo]);
+        DDLogError(@"Retrieved error for slots %@ - %@", error, [error userInfo]);
         
         [self finishedSessionsWithError:error];
         
@@ -182,13 +182,13 @@
     }
     
     NSOperation *saveSlotsOperation = [NSBlockOperation blockOperationWithBlock:^{
-        EMS_LOG(@"Storing slots %lu", (unsigned long) [slots count]);
+        DDLogVerbose(@"Storing slots %lu", (unsigned long) [slots count]);
         EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
         [backgroundModel.managedObjectContext performBlock:^{
             NSError *saveError = nil;
             
             if (![backgroundModel storeSlots:slots forHref:[href absoluteString] error:&saveError]) {
-                EMS_LOG(@"Failed to store slots %@ - %@", saveError, [saveError userInfo]);
+                DDLogError(@"Failed to store slots %@ - %@", saveError, [saveError userInfo]);
                 
                 [self finishedSessionsWithError:saveError];
             }
@@ -210,14 +210,14 @@
 
 - (void)finishedSessions:(NSArray *)sessions forHref:(NSURL *)href error:(NSError *)error {
     if (error != nil) {
-        EMS_LOG(@"Retrieved error for sessions %@ - %@", error, [error userInfo]);
+        DDLogError(@"Retrieved error for sessions %@ - %@", error, [error userInfo]);
         
         [self finishedSessionsWithError:error];
         
         return;
     }
-    
-    EMS_LOG(@"Storing sessions %lu", (unsigned long) [sessions count]);
+
+    DDLogVerbose(@"Storing sessions %lu", (unsigned long) [sessions count]);
     
     NSOperation *saveSessionsOperation = [NSBlockOperation blockOperationWithBlock:^{
         EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
@@ -249,14 +249,14 @@
 
 - (void)finishedRooms:(NSArray *)rooms forHref:(NSURL *)href error:(NSError *)error {
     if (error != nil) {
-        EMS_LOG(@"Retrieved error for rooms %@ - %@", error, [error userInfo]);
+        DDLogError(@"Retrieved error for rooms %@ - %@", error, [error userInfo]);
         
         [self finishedSessionsWithError:error];
         
         return;
     }
-    
-    EMS_LOG(@"Storing rooms %lu", (unsigned long) [rooms count]);
+
+    DDLogVerbose(@"Storing rooms %lu", (unsigned long) [rooms count]);
     
     NSOperation *saveRoomsOperation = [NSBlockOperation blockOperationWithBlock:^{
         EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
@@ -265,7 +265,7 @@
             NSError *saveError = nil;
             
             if (![backgroundModel storeRooms:rooms forHref:[href absoluteString] error:&saveError]) {
-                EMS_LOG(@"Failed to store rooms %@ - %@", saveError, [saveError userInfo]);
+                DDLogError(@"Failed to store rooms %@ - %@", saveError, [saveError userInfo]);
                 
                 [self finishedSessionsWithError:error];
             }

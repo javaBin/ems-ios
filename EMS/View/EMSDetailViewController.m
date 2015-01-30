@@ -210,7 +210,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
         if ([EMSFeatureConfig isFeatureEnabled:fBioPics]) {
             if (speaker.thumbnailUrl != nil) {
-                EMS_LOG(@"Speaker has available thumbnail %@", speaker.thumbnailUrl);
+                DDLogVerbose(@"Speaker has available thumbnail %@", speaker.thumbnailUrl);
 
                 NSString *pngFilePath = [self pathForCachedThumbnail:speaker];
 
@@ -351,7 +351,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
     calendarEvent.alarms = alarms;
 
-    EMS_LOG(@"Created calendar event %@", calendarEvent);
+    DDLogVerbose(@"Created calendar event %@", calendarEvent);
 
     return calendarEvent;
 }
@@ -426,7 +426,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
 - (NSDate *)dateForDate:(NSDate *)date {
 #ifdef USE_TEST_DATE
-    EMS_LOG(@"WARNING - RUNNING IN USE_TEST_DATE mode");
+    DDLogWarn(@"RUNNING IN USE_TEST_DATE mode");
 
     // In debug mode we will use the current day but always the start time of the slot. Otherwise we couldn't test until JZ started ;)
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -463,7 +463,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     }
 
     NSString *shareString = [NSString stringWithFormat:@"%@ - %@", self.session.conference.name, self.session.title];
-    EMS_LOG(@"About to share for %@", shareString);
+    DDLogVerbose(@"About to share for %@", shareString);
 
     // TODO - web URL?
     // NSURL *shareUrl = [NSURL URLWithString:@"http://www.java.no"];
@@ -495,7 +495,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
             UIActivityTypeSaveToCameraRoll];
 
     [activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
-        EMS_LOG(@"Sharing of %@ via %@ - completed %d", shareString, activityType, completed);
+        DDLogVerbose(@"Sharing of %@ via %@ - completed %d", shareString, activityType, completed);
 
 
         self.shareButton.enabled = YES;
@@ -763,7 +763,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     }
 
 
-    EMS_LOG(@"Retrieving speakers for href %@", self.session.speakerCollection);
+    DDLogVerbose(@"Retrieving speakers for href %@", self.session.speakerCollection);
 
     [self.speakerRetriever refreshSpeakers:[NSURL URLWithString:self.session.speakerCollection]];
 }
@@ -792,7 +792,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         }];
         
         if (newBios) {
-            EMS_LOG(@"Saw updated bios - updating screen");
+            DDLogVerbose(@"Saw updated bios - updating screen");
             self.cachedSpeakerBios = [NSDictionary dictionaryWithDictionary:speakerBios];
             
             if (!self.tableView.isDragging && !self.tableView.isDecelerating) {
@@ -806,7 +806,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 }
 
 - (void)checkForNewThumbnailForSpeaker:(Speaker *)speaker withFilename:(NSString *)pngFilePath forSessionHref:(NSString *)href {
-    EMS_LOG(@"Checking for updated thumbnail %@", speaker.thumbnailUrl);
+    DDLogVerbose(@"Checking for updated thumbnail %@", speaker.thumbnailUrl);
 
     static NSDateFormatter *httpDateFormatter;
     static dispatch_once_t onceToken;
@@ -822,7 +822,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     NSDate *lastModified = [[[EMSAppDelegate sharedAppDelegate] model] dateForSpeakerPic:speaker.thumbnailUrl];
 
     if (lastModified) {
-        EMS_LOG(@"Setting last modified to %@", lastModified);
+        DDLogVerbose(@"Setting last modified to %@", lastModified);
 
         NSString *httpFormattedDate = [httpDateFormatter stringFromDate:lastModified];
         sessionConfiguration.HTTPAdditionalHeaders = @{@"If-Modified-Since" : httpFormattedDate};
@@ -835,7 +835,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
     [[session downloadTaskWithURL:[NSURL URLWithString:speaker.thumbnailUrl] completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            EMS_LOG(@"Failed to retrieve thumbnail %@ - %@ - %@", speaker.thumbnailUrl, error, [error userInfo]);
+            DDLogError(@"Failed to retrieve thumbnail %@ - %@ - %@", speaker.thumbnailUrl, error, [error userInfo]);
         } else {
             // Network is likely still up
             [EMSTracking dispatch];
@@ -854,7 +854,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
                         [fileManager removeItemAtPath:pngFilePath error:&fileError];
 
                         if (fileError != nil) {
-                            EMS_LOG(@"Failed to delete old thumbnail %@ - %@ - %@", pngFilePath, fileError, [fileError userInfo]);
+                            DDLogError(@"Failed to delete old thumbnail %@ - %@ - %@", pngFilePath, fileError, [fileError userInfo]);
 
                             fileError = nil;
                         }
@@ -863,7 +863,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
                     [fileManager moveItemAtPath:[location path] toPath:pngFilePath error:&fileError];
 
                     if (fileError != nil) {
-                        EMS_LOG(@"Failed to copy thumbnail %@ - %@ - %@", location, fileError, [fileError userInfo]);
+                        DDLogError(@"Failed to copy thumbnail %@ - %@ - %@", location, fileError, [fileError userInfo]);
                     } else {
                         NSString *lastModifiedHeader = [httpResponse allHeaderFields][@"Last-Modified"];
 

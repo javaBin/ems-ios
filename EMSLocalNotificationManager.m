@@ -150,7 +150,7 @@ NSString *const EMSUserRequestedSessionNotificationSessionKey = @"EMSUserRequest
     NSError *error;
 
     if (![[self fetchedResultsController] performFetch:&error]) {
-        EMS_LOG(@"Unresolved error when trying to find favorite sessions. (%@, %@)", error, [error userInfo]);
+        DDLogError(@"Unresolved error when trying to find favorite sessions. (%@, %@)", error, [error userInfo]);
     }
 
     [self updateAllNotifications];
@@ -226,20 +226,20 @@ NSString *const EMSUserRequestedSessionNotificationSessionKey = @"EMSUserRequest
         notification.soundName = UILocalNotificationDefaultSoundName;
         notification.userInfo = @{@"sessionhref" : session.href};
 
-        EMS_LOG(@"Adding notification %@ for session %@ to notifications", notification, session);
+        DDLogVerbose(@"Adding notification %@ for session %@ to notifications", notification, session);
 
         [[UIApplication sharedApplication] scheduleLocalNotification:notification];
     }
 }
 
 - (void)removeNotification:(Session *)session {
-    EMS_LOG(@"Trying to remove notification for session %@ with ID %@", session, session.href);
+    DDLogVerbose(@"Trying to remove notification for session %@ with ID %@", session, session.href);
 
     NSArray *notifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
 
     for (UILocalNotification *notification in notifications) {
         if ([notification.userInfo[@"sessionhref"] isEqualToString:session.href]) {
-            EMS_LOG(@"Removing notification at %@ from notifications", notification);
+            DDLogVerbose(@"Removing notification at %@ from notifications", notification);
             [[UIApplication sharedApplication] cancelLocalNotification:notification];
         }
     }
@@ -254,13 +254,13 @@ NSString *const EMSUserRequestedSessionNotificationSessionKey = @"EMSUserRequest
 
 - (NSDate *)dateForSession:(Session *)session {
 #ifdef USE_TEST_DATE
-    EMS_LOG(@"WARNING - RUNNING IN USE_TEST_DATE mode");
+    DDLogWarn(@"RUNNING IN USE_TEST_DATE mode");
 
     // In debug mode we will use the current day but always the start time of the slot. Otherwise we couldn't test until JZ started ;)
 
     NSDate *sessionDate = session.slot.start;
 
-    EMS_LOG(@"Saw session date of %@", sessionDate);
+    DDLogVerbose(@"Saw session date of %@", sessionDate);
 
     NSCalendar *calendar = [NSCalendar currentCalendar];
 

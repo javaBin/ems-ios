@@ -19,7 +19,7 @@
     CJCollection *collection = [CJCollection collectionForNSData:data error:&parseError];
 
     if (!collection) {
-        EMS_LOG(@"Failed to retrieve conferences %@ - %@ - %@", href, parseError, [parseError userInfo]);
+        DDLogError(@"Failed to retrieve conferences %@ - %@ - %@", href, parseError, [parseError userInfo]);
 
         *error = parseError;
 

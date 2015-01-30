@@ -136,7 +136,7 @@
             otherButtonTitles:nil];
         [errorAlert show];
 
-        EMS_LOG(@"Unresolved error %@, %@", error, [error userInfo]);
+        DDLogError(@"Unresolved error %@, %@", error, [error userInfo]);
     }
 
     [self initializeFooter];
@@ -337,7 +337,7 @@
     Conference *conference = [[EMSRetriever sharedInstance] activeConference];
     
     if (conference) {
-        EMS_LOG(@"Conference found - initialize");
+        DDLogVerbose(@"Conference found - initialize");
         
         [self initializeFetchedResultsController];
     }
@@ -471,8 +471,8 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
         EMSDetailViewController *destination = (EMSDetailViewController *) tmpDestination;
         
         Session *session = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
-        
-        EMS_LOG(@"Preparing detail view with %@", session);
+
+        DDLogVerbose(@"Preparing detail view with %@", session);
         
         destination.session = session;
         
@@ -489,7 +489,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
         EMSSearchViewController *destination = (EMSSearchViewController *) navigationController.childViewControllers[0];
 
         Conference *conference = [[EMSRetriever sharedInstance] activeConference];
-        EMS_LOG(@"Preparing search view with %@ and conference %@", self.search.text, conference);
+        DDLogVerbose(@"Preparing search view with %@ and conference %@", self.search.text, conference);
 
         destination.advancedSearch = self.advancedSearch;
 
@@ -972,8 +972,8 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
 - (void) sessionRequested:(NSNotification *) notification {
     NSDictionary *userInfo = [notification userInfo];
-    
-    EMS_LOG(@"Starting with a notification with userInfo %@", userInfo);
+
+    DDLogVerbose(@"Starting with a notification with userInfo %@", userInfo);
     
     NSString *sessionUrl = userInfo[EMSUserRequestedSessionNotificationSessionKey];
     
@@ -990,11 +990,9 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
         Session *session = [[[EMSAppDelegate sharedAppDelegate] model] sessionForHref:sessionUrl];
         
         if (session) {//If we don´t find session, assume database have been deleted together with favorite, so don´t show alert.
-           
-            
-            EMS_LOG(@"Preparing detail view from passed href %@", session);
-            
-            
+
+            DDLogVerbose(@"Preparing detail view from passed href %@", session);
+
             EMSDetailViewController *detailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EMSDetailViewController"];
             
             detailViewController.session = session;

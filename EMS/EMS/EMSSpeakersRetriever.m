@@ -37,7 +37,7 @@
     }
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        EMS_LOG(@"Error for speakers %@ - %@", error, [error userInfo]);
+        DDLogError(@"Error for speakers %@ - %@", error, [error userInfo]);
 
         self.refreshingSpeakers = NO;
     });
@@ -47,7 +47,7 @@
     if (error != nil) {
         [self finishedWithError:error];
     } else {
-        EMS_LOG(@"Storing speakers %lu for href %@", (unsigned long) [speakers count], href);
+        DDLogVerbose(@"Storing speakers %lu for href %@", (unsigned long) [speakers count], href);
 
         EMSModel *backgroundModel = [[EMSAppDelegate sharedAppDelegate] modelForBackground];
 
