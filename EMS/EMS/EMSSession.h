@@ -24,4 +24,6 @@
 @property(strong, nonatomic) NSURL *roomItem;
 @property(strong, nonatomic) NSURL *slotItem;
 
+- (NSString *)description;
+
 @end

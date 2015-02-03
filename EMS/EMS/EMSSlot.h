@@ -11,4 +11,6 @@
 
 @property(strong, nonatomic) NSURL *href;
 
+- (NSString *)description;
+
 @end

@@ -20,4 +20,6 @@
 
 @property(strong, nonatomic) NSNumber *hintCount;
 
+- (NSString *)description;
+
 @end

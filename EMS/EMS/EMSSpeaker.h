@@ -12,4 +12,6 @@
 @property(strong, nonatomic) NSURL *thumbnailUrl;
 @property(strong, nonatomic) NSDate *lastUpdated;
 
+- (NSString *)description;
+
 @end
