@@ -42,7 +42,7 @@ int networkCount = 0;
 #endif
         [Crashlytics startWithAPIKey:prefs[@"crashlytics-api-key"] delegate:self];
         [DDLog addLogger:[CrashlyticsLogger sharedInstance]];
-        
+
         DDLogVerbose(@"Connected to crashlytics");
     }
 
@@ -77,18 +77,18 @@ int networkCount = 0;
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
         [EMSTracking trackEventWithCategory:@"system" action:@"remotenotification" label:@"initialize"];
 
-        if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
-        {
+#if !(TARGET_IPHONE_SIMULATOR)
+        if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)]) {
             // iOS 8 Notifications
             [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert categories:nil]];
 
             [application registerForRemoteNotifications];
         }
-        else
-        {
+        else {
             // iOS < 8 Notifications
             [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert];
         }
+#endif
 
         if (launchOptions != nil) {
             NSDictionary *dictionary = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
