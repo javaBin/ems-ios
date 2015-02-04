@@ -77,7 +77,18 @@ int networkCount = 0;
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
         [EMSTracking trackEventWithCategory:@"system" action:@"remotenotification" label:@"initialize"];
 
-        [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert];
+        if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
+        {
+            // iOS 8 Notifications
+            [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert categories:nil]];
+
+            [application registerForRemoteNotifications];
+        }
+        else
+        {
+            // iOS < 8 Notifications
+            [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert];
+        }
 
         if (launchOptions != nil) {
             NSDictionary *dictionary = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
