@@ -150,7 +150,7 @@ int networkCount = 0;
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
 
-    [[EMSLocalNotificationManager sharedInstance] application:application didReceiveLocalNotification:notification];;
+    [[EMSLocalNotificationManager sharedInstance] application:application didReceiveLocalNotification:notification];
 
 }
 
