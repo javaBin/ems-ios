@@ -141,6 +141,8 @@
 
     [self initializeFooter];
     [self.tableView reloadData];
+    
+
 }
 
 - (NSPredicate *)currentConferencePredicate {
@@ -336,20 +338,7 @@
     [self updateTableViewRowHeight];
     
 
-    Conference *conference = [[EMSRetriever sharedInstance] activeConference];
     
-    if (conference) {
-        DDLogVerbose(@"Conference found - initialize");
-        
-        [self initializeFetchedResultsController];
-    }
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionRequested:) name:EMSUserRequestedSessionNotification object:[EMSLocalNotificationManager sharedInstance]];
-    
-    if ([[self.fetchedResultsController fetchedObjects] count] == 0) {
-        [self retrieve];
-    }
-
 }
 
 static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
@@ -363,6 +352,19 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     
     [self addObservers];
     
+    Conference *conference = [[EMSRetriever sharedInstance] activeConference];
+    
+    if (conference) {
+        DDLogVerbose(@"Conference found - initialize");
+        
+        [self initializeFetchedResultsController];
+    }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionRequested:) name:EMSUserRequestedSessionNotification object:[EMSLocalNotificationManager sharedInstance]];
+    
+    if ([[self.fetchedResultsController fetchedObjects] count] == 0) {
+        [self retrieve];
+    }
     
 }
 
@@ -1056,8 +1058,6 @@ static NSString *const EMSMainViewControllerRestorationIdentifierSegmentControlI
     if (selectedIndex == 1) {
         self.filterFavourites = YES;
     }
-    
-    [self initializeFetchedResultsController];
     
 }
 
