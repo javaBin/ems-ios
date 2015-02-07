@@ -328,6 +328,8 @@
     // Can't turn it off - so let's have it only if we have at least 500 sections :)
     // This is also set in the storyboard but appears not to work.
     self.tableView.sectionIndexMinimumDisplayRowCount = 500;
+    
+    self.splitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
 
     self.observersInstalled = NO;
     
@@ -961,9 +963,9 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
 #pragma mark - UISplitViewControllerDelegate
 
-- (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation {
+/*- (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation {
     return NO;
-}
+}*/
 
 - (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {
     
@@ -973,7 +975,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     } else {
         return NO;
     }
-}
+ }
 
 #pragma mark - Responding to user opening sessions from notifications
 
