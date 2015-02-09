@@ -607,7 +607,7 @@
                     <toolbarItems/>
                     <connections>
                         <segue destination="KOY-zZ-zXD" kind="relationship" relationship="masterViewController" id="tGC-ob-jZN"/>
-                        <segue destination="iE6-kW-KK5" kind="relationship" relationship="detailViewController" id="6go-ii-hOZ"/>
+                        <segue destination="J7x-mP-J2c" kind="relationship" relationship="detailViewController" id="1WA-uj-BNx"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ASN-Uz-wgP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -654,6 +654,53 @@
             <point key="canvasLocation" x="-741" y="-1039"/>
         </scene>
         <!--Navigation Controller-->
+        <scene sceneID="lwY-kP-Afx">
+            <objects>
+                <navigationController storyboardIdentifier="No Session Selected Navigation Controller" id="J7x-mP-J2c" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8NV-zE-9Ni">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="pKE-J0-KhS" kind="relationship" relationship="rootViewController" id="Zkx-TY-0ZD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="U5X-KT-z6V" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3964" y="555"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="n2T-Vr-5rX">
+            <objects>
+                <viewController storyboardIdentifier="No Session Selected View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pKE-J0-KhS" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZOC-Az-mGT"/>
+                        <viewControllerLayoutGuide type="bottom" id="Sxn-2l-IWf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dbj-RN-G6U">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No session selected" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tpa-Y5-CML">
+                                <rect key="frame" x="223" y="289" width="155" height="21"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="Tpa-Y5-CML" secondAttribute="centerY" constant="0.5" id="I1F-Nt-njx"/>
+                            <constraint firstAttribute="centerX" secondItem="Tpa-Y5-CML" secondAttribute="centerX" constant="-0.5" id="zbo-yw-C47"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="iJn-hP-ejx"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S3v-ek-rKm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3235" y="560"/>
+        </scene>
+        <!--Navigation Controller-->
         <scene sceneID="K3P-zx-EED">
             <objects>
                 <navigationController storyboardIdentifier="Session Detail Navigation Controller" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="iE6-kW-KK5" sceneMemberID="viewController">
@@ -683,8 +730,5 @@
         <image name="258-checkmark-grey.png" width="640" height="960"/>
         <image name="28-star-grey.png" width="26" height="26"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="6go-ii-hOZ"/>
-    </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.99215692280000001" green="0.52549022440000004" blue="0.29019609089999998" alpha="1" colorSpace="deviceRGB"/>
 </document>

@@ -1,3 +1,4 @@
+
 //
 //  EMSAppDelegate.m
 //
@@ -8,6 +9,7 @@
 #import "EMSLocalNotificationManager.h"
 #import "EMSTracking.h"
 #import "EMSDetailViewController.h"
+
 
 @implementation EMSAppDelegate
 
@@ -496,28 +498,45 @@ int networkCount = 0;
 
 - (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {
     
-    if ([secondaryViewController isKindOfClass:[UINavigationController class]]) {
-        UINavigationController *secondaryNavigationController = (UINavigationController *) secondaryViewController;
-        if ([secondaryNavigationController.topViewController isKindOfClass:[EMSDetailViewController class]]) {
-            EMSDetailViewController *detailViewController = (EMSDetailViewController *) secondaryNavigationController.topViewController;
-            if (detailViewController.session == nil) {
-                //We do not want to collapse this as we have nothing to show. Show master list instead.
-                return YES;
-            }
+    // Never collapse...
+    BOOL collapseHandled = YES;
+    
+    // Unless we are showing session details
+    if ([self secondaryViewControllerIsShowingSessionDetails:secondaryViewController]) {
+        collapseHandled = NO;
+    }
+    
+    return collapseHandled;
+}
+
+
+- (UIViewController *)splitViewController:(UISplitViewController *)splitViewController separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)primaryViewController {
+    
+    UINavigationController *primaryNavigationController = (UINavigationController *) primaryViewController;
+    EMSMainViewController *mainViewController = (EMSMainViewController *)primaryNavigationController.viewControllers.firstObject;
+    
+    if (primaryNavigationController.visibleViewController == mainViewController) {
+        return [splitViewController.storyboard instantiateViewControllerWithIdentifier:@"No Session Selected Navigation Controller"];
+    }
+    
+    return nil;
+
+}
+
+- (BOOL) secondaryViewControllerIsShowingSessionDetails: (UIViewController *)secondaryViewController {
+    
+    BOOL isShowingSessionDetails = NO;
+    
+    
+    UINavigationController *secondaryNavigationController = (UINavigationController *) secondaryViewController;
+    if ([secondaryNavigationController.topViewController isKindOfClass:[EMSDetailViewController class]]) {
+        EMSDetailViewController *detailViewController = (EMSDetailViewController *) secondaryNavigationController.topViewController;
+        if (detailViewController.session != nil) {
+            isShowingSessionDetails = YES;
         }
     }
     
-    
-    if ([secondaryViewController isKindOfClass:[UINavigationController class]] && [[(UINavigationController *)secondaryViewController topViewController] isKindOfClass:[EMSDetailViewController class]] && ([(EMSDetailViewController *)[(UINavigationController *)secondaryViewController topViewController] session] == nil)) {
-        // Return YES to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
-- (UIViewController *)splitViewController:(UISplitViewController *)splitViewController separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)primaryViewController {
-    return nil;
+    return isShowingSessionDetails;
 }
 
 @end
