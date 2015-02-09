@@ -300,9 +300,6 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    if (self.splitViewController) {
-        self.clearsSelectionOnViewWillAppear = NO;
-    }
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -335,35 +332,6 @@
     
     [self updateTableViewRowHeight];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionRequested:) name:EMSUserRequestedSessionNotification object:[EMSLocalNotificationManager sharedInstance]];
-    
-}
-
-static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-
-    if (!self.splitViewController) {
-       [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow]  animated:YES];
-    }
-    
-    [self addObservers];
-    
-    
-}
-
-
-- (void)viewDidAppear:(BOOL)animated {
-
-    [super viewDidAppear:animated];
-
-    [EMSTracking trackScreen:@"Main Screen"];
-
-    [self updateRefreshControl];
-
-    [self initializeFooter];
-    
     Conference *conference = [[EMSRetriever sharedInstance] activeConference];
     
     if (conference) {
@@ -375,10 +343,38 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     if ([[self.fetchedResultsController fetchedObjects] count] == 0) {
         [self retrieve];
     }
-
     
-    // In case text size was changed while we were gone. 
-    [self.tableView reloadData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionRequested:) name:EMSUserRequestedSessionNotification object:[EMSLocalNotificationManager sharedInstance]];
+    
+}
+
+static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
+
+- (void)viewWillAppear:(BOOL)animated {
+
+    if (!self.splitViewController || self.splitViewController.collapsed) {
+        self.clearsSelectionOnViewWillAppear = YES;
+    } else {
+        self.clearsSelectionOnViewWillAppear = NO;
+    }
+    
+    [self addObservers];
+    
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+
+
+    [EMSTracking trackScreen:@"Main Screen"];
+
+    [self updateRefreshControl];
+
+    [self initializeFooter];
+    
+    [self reloadDataKeepSelection];
+    
+    [super viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -1040,6 +1036,8 @@ static NSString *const EMSMainViewControllerRestorationIdentifierSegmentControlI
         self.filterFavourites = YES;
     }
     
+    [self initializeFetchedResultsController];
+    
 }
 
 #pragma mark - UIDataSourceModelAssociation
@@ -1064,5 +1062,21 @@ static NSString *const EMSMainViewControllerRestorationIdentifierSegmentControlI
     }
     return indexPath;
 }
+
+- (void)reloadDataKeepSelection {
+    // In case text size was changed while we were gone.
+    NSIndexPath *oldIndexPath = [self.tableView indexPathForSelectedRow];
+    
+    if (oldIndexPath) {
+        NSString *modelIdentifier = [self modelIdentifierForElementAtIndexPath:oldIndexPath inView:self.tableView];
+        
+        [self.tableView reloadData];
+        
+        NSIndexPath *currentSelectedIndexPath = [self indexPathForElementWithModelIdentifier:modelIdentifier inView:self.tableView];
+        [self.tableView selectRowAtIndexPath:currentSelectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    }
+    
+}
+
 
 @end
