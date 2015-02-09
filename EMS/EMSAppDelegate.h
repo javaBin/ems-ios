@@ -6,7 +6,7 @@
 #import <CoreData/CoreData.h>
 #import "EMSModel.h"
 
-@interface EMSAppDelegate : UIResponder <UIApplicationDelegate, CrashlyticsDelegate>
+@interface EMSAppDelegate : UIResponder <UIApplicationDelegate, CrashlyticsDelegate, UISplitViewControllerDelegate>
 
 @property(strong, nonatomic) UIWindow *window;
 

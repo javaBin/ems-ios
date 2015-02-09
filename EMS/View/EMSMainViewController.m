@@ -19,7 +19,7 @@
 #import "EMSTracking.h"
 #import "EMSLocalNotificationManager.h"
 
-@interface EMSMainViewController () <UISplitViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate, UIDataSourceModelAssociation>
+@interface EMSMainViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate, UIDataSourceModelAssociation>
 
 @property(nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
@@ -301,7 +301,6 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     if (self.splitViewController) {
-        self.splitViewController.delegate = self;
         self.clearsSelectionOnViewWillAppear = NO;
     }
     
@@ -331,13 +330,12 @@
     // This is also set in the storyboard but appears not to work.
     self.tableView.sectionIndexMinimumDisplayRowCount = 500;
     
-    self.splitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
 
     self.observersInstalled = NO;
     
     [self updateTableViewRowHeight];
     
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionRequested:) name:EMSUserRequestedSessionNotification object:[EMSLocalNotificationManager sharedInstance]];
     
 }
 
@@ -352,19 +350,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     
     [self addObservers];
     
-    Conference *conference = [[EMSRetriever sharedInstance] activeConference];
-    
-    if (conference) {
-        DDLogVerbose(@"Conference found - initialize");
-        
-        [self initializeFetchedResultsController];
-    }
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionRequested:) name:EMSUserRequestedSessionNotification object:[EMSLocalNotificationManager sharedInstance]];
-    
-    if ([[self.fetchedResultsController fetchedObjects] count] == 0) {
-        [self retrieve];
-    }
     
 }
 
@@ -378,6 +363,19 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     [self updateRefreshControl];
 
     [self initializeFooter];
+    
+    Conference *conference = [[EMSRetriever sharedInstance] activeConference];
+    
+    if (conference) {
+        DDLogVerbose(@"Conference found - initialize");
+        
+        [self initializeFetchedResultsController];
+    }
+    
+    if ([[self.fetchedResultsController fetchedObjects] count] == 0) {
+        [self retrieve];
+    }
+
     
     // In case text size was changed while we were gone. 
     [self.tableView reloadData];
@@ -961,23 +959,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
     return index;
 }
-
-
-#pragma mark - UISplitViewControllerDelegate
-
-/*- (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation {
-    return NO;
-}*/
-
-- (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {
-    
-    if ([secondaryViewController isKindOfClass:[UINavigationController class]] && [[(UINavigationController *)secondaryViewController topViewController] isKindOfClass:[EMSDetailViewController class]] && ([(EMSDetailViewController *)[(UINavigationController *)secondaryViewController topViewController] session] == nil)) {
-        // Return YES to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
-        return YES;
-    } else {
-        return NO;
-    }
- }
 
 #pragma mark - Responding to user opening sessions from notifications
 

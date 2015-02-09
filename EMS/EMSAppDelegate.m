@@ -7,6 +7,7 @@
 #import "EMSMainViewController.h"
 #import "EMSLocalNotificationManager.h"
 #import "EMSTracking.h"
+#import "EMSDetailViewController.h"
 
 @implementation EMSAppDelegate
 
@@ -62,6 +63,16 @@ int networkCount = 0;
                       clientKey:prefs[@"parse-client-key-prod"]];
 #endif
     }
+    
+    if ([self.window.rootViewController isKindOfClass:[UISplitViewController class]]) {
+        UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
+        
+        splitViewController.delegate = self;
+        
+        splitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+    }
+    
+    
 
     return YES;
 }
@@ -443,6 +454,70 @@ int networkCount = 0;
     }
 
     return YES;
+}
+
+- (void)application:(UIApplication *)application didDecodeRestorableStateWithCoder:(NSCoder *)coder {
+    if ([self.window.rootViewController isKindOfClass:[UISplitViewController class]]) {
+        
+        UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
+        
+        UINavigationController *primaryNavigation = splitViewController.viewControllers.firstObject;
+        
+        if ([primaryNavigation.visibleViewController isKindOfClass:[EMSDetailViewController class]]) {
+            UIViewController *detailViewController = primaryNavigation.visibleViewController.parentViewController;
+            
+            [primaryNavigation popToRootViewControllerAnimated:NO];
+            
+            [splitViewController showDetailViewController:detailViewController sender:self];
+        }
+        
+    }
+}
+
+- (UIViewController *)application:(UIApplication *)application viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder {
+    
+    if ([self.window.rootViewController isKindOfClass:[UISplitViewController class]]) {
+        UISplitViewController *splitViewController = (UISplitViewController *) self.window.rootViewController;
+        
+        if ([identifierComponents.lastObject isEqualToString:@"Session Detail Navigation Controller"]) {
+            // Always return the navigation controller created as part of the storyboard to
+            // avoid duplicate detail views when state of split view was stored in a collapsed state.
+            return splitViewController.viewControllers.lastObject;
+        }
+        
+    }
+    return nil;
+}
+
+
+
+#pragma mark - UISplitViewControllerDelegate
+
+
+- (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {
+    
+    if ([secondaryViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *secondaryNavigationController = (UINavigationController *) secondaryViewController;
+        if ([secondaryNavigationController.topViewController isKindOfClass:[EMSDetailViewController class]]) {
+            EMSDetailViewController *detailViewController = (EMSDetailViewController *) secondaryNavigationController.topViewController;
+            if (detailViewController.session == nil) {
+                //We do not want to collapse this as we have nothing to show. Show master list instead.
+                return YES;
+            }
+        }
+    }
+    
+    
+    if ([secondaryViewController isKindOfClass:[UINavigationController class]] && [[(UINavigationController *)secondaryViewController topViewController] isKindOfClass:[EMSDetailViewController class]] && ([(EMSDetailViewController *)[(UINavigationController *)secondaryViewController topViewController] session] == nil)) {
+        // Return YES to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (UIViewController *)splitViewController:(UISplitViewController *)splitViewController separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)primaryViewController {
+    return nil;
 }
 
 @end
