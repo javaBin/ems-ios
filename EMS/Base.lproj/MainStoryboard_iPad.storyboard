@@ -102,7 +102,7 @@
         <!--About-->
         <scene sceneID="Rfw-lf-DmR">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" id="8wA-7M-7aZ" customClass="EMSAboutViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="8wA-7M-7aZ" customClass="EMSAboutViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8wZ-9t-BQE"/>
                         <viewControllerLayoutGuide type="bottom" id="FuJ-2y-Ooe"/>
