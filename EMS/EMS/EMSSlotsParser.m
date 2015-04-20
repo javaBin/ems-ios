@@ -43,9 +43,10 @@
             if ([@"start" isEqualToString:field]) {
                 slot.start = [EMSDateConverter dateFromString:value];
             }
-            if ([@"end" isEqualToString:field]) {
-                slot.end = [EMSDateConverter dateFromString:value];
+            if ([@"duration" isEqualToString:field]) {
+                slot.duration = [value integerValue];
             }
+
         }];
 
         [temp addObject:slot];

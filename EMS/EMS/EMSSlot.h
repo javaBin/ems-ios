@@ -7,9 +7,11 @@
 @interface EMSSlot : NSObject
 
 @property(strong, nonatomic) NSDate *start;
-@property(strong, nonatomic) NSDate *end;
+@property(readonly, nonatomic) NSDate *end;
 
 @property(strong, nonatomic) NSURL *href;
+
+@property(nonatomic) NSInteger duration;
 
 - (NSString *)description;
 
