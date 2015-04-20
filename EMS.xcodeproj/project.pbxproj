@@ -62,7 +62,8 @@
 		85E86E298BD74799AE57514E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C5F2910AEBD4413B205CE89 /* libPods.a */; };
 		EA11338719A7A880008D000A /* EMSLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */; };
 		EA11338819A7A880008D000A /* EMSLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */; };
-		EA2FC8F819FD67CA00CD50FF /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAD69E4E19D31DAD00CB9AF7 /* Launch Screen.xib */; };
+		EA5CF87F1AE56EE30025E361 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA5CF87E1AE56EE30025E361 /* Launch Screen.xib */; };
+		EA5CF8801AE56EE30025E361 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA5CF87E1AE56EE30025E361 /* Launch Screen.xib */; };
 		EA6132BC193FC35B000F54DC /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
 		EA74604219A42A3600E24D04 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA74604119A42A3600E24D04 /* EMS-Keys.plist */; };
 		EA81CDDE19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = EA81CDDD19AF8F0400FE43A2 /* EMSConferenceRetriever.m */; };
@@ -72,7 +73,6 @@
 		EA9ACCBE19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */; };
 		EACB2E9B199EBD1700557D82 /* EMSDefaultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */; };
 		EACB2E9C199EBD1700557D82 /* EMSDefaultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */; };
-		EAD69E4F19D31DAD00CB9AF7 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAD69E4E19D31DAD00CB9AF7 /* Launch Screen.xib */; };
 		EAE2CF5019A934B3002F44FC /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6E017685885009077D3 /* MainStoryboard_iPad.storyboard */; };
 		EAE2CF5219A934DD002F44FC /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6E017685885009077D3 /* MainStoryboard_iPad.storyboard */; };
 		EAE4330819A52F1C002C3EBA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAE4330619A52F1C002C3EBA /* Localizable.strings */; };
@@ -254,13 +254,13 @@
 		83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSAboutViewController.m; sourceTree = "<group>"; };
 		A4647E03BE9A10F278B9CB8A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D1581B6A0B2740B18088FCDA /* Pods.debug run crashlytics.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods.debug run crashlytics.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.debug run crashlytics.xcconfig"; sourceTree = "<group>"; };
-		EA11337A19A65B54008D000A /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/MainStoryboard_iPhone.strings; sourceTree = "<group>"; };
 		EA11337C19A65B5F008D000A /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/MainStoryboard_iPad.strings; sourceTree = "<group>"; };
 		EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSLocalNotificationManager.m; sourceTree = "<group>"; };
 		EA11338919A7A89F008D000A /* EMSLocalNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSLocalNotificationManager.h; sourceTree = "<group>"; };
 		EA1E8F6317E782E8000F2DB7 /* JavaZone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JavaZone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA28E8CB19A422D9004AAF81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		EA28E8CE19A422E3004AAF81 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		EA5CF87E1AE56EE30025E361 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		EA6132BA193FC35B000F54DC /* EMSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConfig.h; sourceTree = "<group>"; };
 		EA6132BB193FC35B000F54DC /* EMSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConfig.m; sourceTree = "<group>"; };
 		EA74604119A42A3600E24D04 /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
@@ -270,7 +270,6 @@
 		EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSessionTitleTableViewCell.m; sourceTree = "<group>"; };
 		EACB2E99199EBD1700557D82 /* EMSDefaultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSDefaultTableViewCell.h; sourceTree = "<group>"; };
 		EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDefaultTableViewCell.m; sourceTree = "<group>"; };
-		EAD69E4E19D31DAD00CB9AF7 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		EAE4330719A52F1C002C3EBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EAE4330A19A52F28002C3EBA /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EAE4330C19A52F75002C3EBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = en; path = en.lproj/about.html; sourceTree = "<group>"; };
@@ -603,7 +602,7 @@
 				4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */,
 				4E1AD6B14458A2997A59456D /* EMSTracking.h */,
 				F3AABDE819AB16C5003D1D1C /* AddTimestampToSpeaker.xcmappingmodel */,
-				EAD69E4E19D31DAD00CB9AF7 /* Launch Screen.xib */,
+				EA5CF87E1AE56EE30025E361 /* Launch Screen.xib */,
 			);
 			name = App;
 			path = EMS;
@@ -772,7 +771,7 @@
 				F3D5E2C41770946100888A7E /* style.css in Resources */,
 				EAE4330B19A52F75002C3EBA /* about.html in Resources */,
 				83BF8B6A17ECDA4D0093242C /* Images.xcassets in Resources */,
-				EAD69E4F19D31DAD00CB9AF7 /* Launch Screen.xib in Resources */,
+				EA5CF87F1AE56EE30025E361 /* Launch Screen.xib in Resources */,
 				EAE4330819A52F1C002C3EBA /* Localizable.strings in Resources */,
 				15A735D219BDB7F5001AAC7C /* EMS-Keys.plist in Resources */,
 				F354B0BA1781AA1D007F7B01 /* iTunesArtwork.png in Resources */,
@@ -796,7 +795,7 @@
 				EAE4330919A52F1C002C3EBA /* Localizable.strings in Resources */,
 				F394C9C817F0173900FAFBD4 /* Images.xcassets in Resources */,
 				F394C9CE17F0173900FAFBD4 /* iTunesArtwork.png in Resources */,
-				EA2FC8F819FD67CA00CD50FF /* Launch Screen.xib in Resources */,
+				EA5CF8801AE56EE30025E361 /* Launch Screen.xib in Resources */,
 				F394C9CF17F0173900FAFBD4 /* iTunesArtwork@2x.png in Resources */,
 				4E1AD52D6C458D6D36CECFBA /* README.md in Resources */,
 				4E1ADC3468CFC054FD549975 /* ChangeLog in Resources */,

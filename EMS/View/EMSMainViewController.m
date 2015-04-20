@@ -303,6 +303,8 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = [self estimateTableViewRowHeight: self.tableView.bounds.size];
 }
 
 - (void)viewDidLoad {
@@ -329,8 +331,6 @@
     
 
     self.observersInstalled = NO;
-    
-    [self updateTableViewRowHeight];
     
     Conference *conference = [[EMSRetriever sharedInstance] activeConference];
     
@@ -403,10 +403,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     if (!self.observersInstalled) {
         [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions)) options:0 context:kRefreshActiveConferenceContext];
 
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTableViewRowHeightReload) name:UIContentSizeCategoryDidChangeNotification object:nil];
-       
-        [self updateTableViewRowHeight];
-
         self.observersInstalled = YES;
     }
 }
@@ -415,7 +411,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     if (self.observersInstalled) {
         [[EMSRetriever sharedInstance] removeObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions))];
 
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
         self.observersInstalled = NO;
     }
 }
@@ -567,41 +562,31 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 #pragma mark - Table view data source
 
 
-- (void)updateTableViewRowHeightReload {
-    [self updateTableViewRowHeight];
-    
-    [self.tableView reloadData];
-
-}
-
-- (void)updateTableViewRowHeight {
+- (CGFloat) estimateTableViewRowHeight:(CGSize) size {
     if (!self.sizingCell) {
         self.sizingCell = [self.tableView dequeueReusableCellWithIdentifier:@"SessionCell"];
     }
     EMSSessionCell *sessionCell = self.sizingCell;
-
+    
     sessionCell.title.text = @"We want it to always be the size of two lines, so we put in a really long title before we calculate size.";
     sessionCell.room.text = @"Room";
     sessionCell.speaker.text = @"Speakers";
-
+    
     sessionCell.title.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     sessionCell.room.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
     sessionCell.speaker.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-
-
-    sessionCell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.bounds), CGRectGetHeight(sessionCell.bounds));
-
+    
+    
+    sessionCell.frame = CGRectMake(0.0f, 0.0f, size.width, size.height);
+    
     [sessionCell setNeedsLayout];
     [sessionCell layoutIfNeeded];
-
-
-    CGFloat height = [sessionCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-
-    self.tableView.rowHeight = height + 1;
-
     
+    
+    CGFloat height = [sessionCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    
+    return height + 1;
 }
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSUInteger count = [[_fetchedResultsController sections] count];
