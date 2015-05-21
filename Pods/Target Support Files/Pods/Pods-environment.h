@@ -6,11 +6,11 @@
 // project.
 
 
-// Bolts
-#define COCOAPODS_POD_AVAILABLE_Bolts
-#define COCOAPODS_VERSION_MAJOR_Bolts 1
-#define COCOAPODS_VERSION_MINOR_Bolts 1
-#define COCOAPODS_VERSION_PATCH_Bolts 3
+// Bolts/Tasks
+#define COCOAPODS_POD_AVAILABLE_Bolts_Tasks
+#define COCOAPODS_VERSION_MAJOR_Bolts_Tasks 1
+#define COCOAPODS_VERSION_MINOR_Bolts_Tasks 1
+#define COCOAPODS_VERSION_PATCH_Bolts_Tasks 5
 
 // CocoaLumberjack
 #define COCOAPODS_POD_AVAILABLE_CocoaLumberjack
@@ -46,18 +46,18 @@
 #define COCOAPODS_POD_AVAILABLE_CrashlyticsLumberjack
 #define COCOAPODS_VERSION_MAJOR_CrashlyticsLumberjack 2
 #define COCOAPODS_VERSION_MINOR_CrashlyticsLumberjack 0
-#define COCOAPODS_VERSION_PATCH_CrashlyticsLumberjack 0
+#define COCOAPODS_VERSION_PATCH_CrashlyticsLumberjack 1
 
 // GoogleAnalytics-iOS-SDK
 #define COCOAPODS_POD_AVAILABLE_GoogleAnalytics_iOS_SDK
 #define COCOAPODS_VERSION_MAJOR_GoogleAnalytics_iOS_SDK 3
-#define COCOAPODS_VERSION_MINOR_GoogleAnalytics_iOS_SDK 10
+#define COCOAPODS_VERSION_MINOR_GoogleAnalytics_iOS_SDK 12
 #define COCOAPODS_VERSION_PATCH_GoogleAnalytics_iOS_SDK 0
 
 // GoogleAnalytics-iOS-SDK/Core
 #define COCOAPODS_POD_AVAILABLE_GoogleAnalytics_iOS_SDK_Core
 #define COCOAPODS_VERSION_MAJOR_GoogleAnalytics_iOS_SDK_Core 3
-#define COCOAPODS_VERSION_MINOR_GoogleAnalytics_iOS_SDK_Core 10
+#define COCOAPODS_VERSION_MINOR_GoogleAnalytics_iOS_SDK_Core 12
 #define COCOAPODS_VERSION_PATCH_GoogleAnalytics_iOS_SDK_Core 0
 
 // NHCalendarActivity
@@ -69,6 +69,6 @@
 // Parse
 #define COCOAPODS_POD_AVAILABLE_Parse
 #define COCOAPODS_VERSION_MAJOR_Parse 1
-#define COCOAPODS_VERSION_MINOR_Parse 6
-#define COCOAPODS_VERSION_PATCH_Parse 2
+#define COCOAPODS_VERSION_MINOR_Parse 7
+#define COCOAPODS_VERSION_PATCH_Parse 4
 

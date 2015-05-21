@@ -1,38 +1,39 @@
 PODS:
-  - Bolts (1.1.3)
-  - CocoaLumberjack (2.0.0-rc):
-    - CocoaLumberjack/Default (= 2.0.0-rc)
-    - CocoaLumberjack/Extensions (= 2.0.0-rc)
-  - CocoaLumberjack/Core (2.0.0-rc)
-  - CocoaLumberjack/Default (2.0.0-rc):
+  - Bolts/Tasks (1.1.5)
+  - CocoaLumberjack (2.0.0):
+    - CocoaLumberjack/Default (= 2.0.0)
+    - CocoaLumberjack/Extensions (= 2.0.0)
+  - CocoaLumberjack/Core (2.0.0)
+  - CocoaLumberjack/Default (2.0.0):
     - CocoaLumberjack/Core
-  - CocoaLumberjack/Extensions (2.0.0-rc):
+  - CocoaLumberjack/Extensions (2.0.0):
     - CocoaLumberjack/Default
   - Collection-JSON-ObjC (1.0.1)
-  - CrashlyticsLumberjack (2.0.0-rc2):
-    - CocoaLumberjack/Default (>= 2.0.0-rc)
-  - GoogleAnalytics-iOS-SDK (3.10):
-    - GoogleAnalytics-iOS-SDK/Core (= 3.10)
-  - GoogleAnalytics-iOS-SDK/Core (3.10)
+  - CrashlyticsLumberjack (2.0.1-beta):
+    - CocoaLumberjack/Default (~> 2.0.0)
+    - CrashlyticsLumberjack/Framework (= 2.0.1-beta)
+  - GoogleAnalytics-iOS-SDK (3.12):
+    - GoogleAnalytics-iOS-SDK/Core (= 3.12)
+  - GoogleAnalytics-iOS-SDK/Core (3.12)
   - NHCalendarActivity (0.0.3)
-  - Parse (1.6.2):
-    - Bolts (~> 1.1)
+  - Parse (1.7.4):
+    - Bolts/Tasks (>= 1.1.5)
 
 DEPENDENCIES:
-  - CocoaLumberjack (= 2.0.0-rc)
+  - CocoaLumberjack (= 2.0.0)
   - Collection-JSON-ObjC (~> 1.0)
-  - CrashlyticsLumberjack (= 2.0.0-rc2)
-  - GoogleAnalytics-iOS-SDK (~> 3.10)
+  - CrashlyticsLumberjack (= 2.0.1-beta)
+  - GoogleAnalytics-iOS-SDK (~> 3.12)
   - NHCalendarActivity (~> 0.0)
-  - Parse (~> 1.6)
+  - Parse (~> 1.7.4)
 
 SPEC CHECKSUMS:
-  Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
-  CocoaLumberjack: 6186e27827fc574b50b16c10102fcc591437f06c
-  Collection-JSON-ObjC: 7413ea5ece4ff71fb164c0539c8658429b7f75b0
-  CrashlyticsLumberjack: d41d1043ceee3312f546242e8bd3ee0ec22e39b1
-  GoogleAnalytics-iOS-SDK: f422062075d9ccb1ea8d783fc5ba3829461e9502
-  NHCalendarActivity: 093505e6fb32d35c6bb3fa1e7e5130fa08e3252a
-  Parse: 60d65108fe39da77ec16c9e51d74b4d296b21424
+  Bolts: aac24961496d504aa56fc267cde95162a71bac39
+  CocoaLumberjack: a6f77d987d65dc7ba86b0f84db7d0b9084f77bcb
+  Collection-JSON-ObjC: 4f1c9fe35f6e8f1cb51e015d6182d23efc0652a0
+  CrashlyticsLumberjack: 26034b4b6d8b0bf547ea9ba201ff53c6cd50f971
+  GoogleAnalytics-iOS-SDK: 0a3327a993b8ed2b8fe1c6c4a8dcf5b76d2237a8
+  NHCalendarActivity: c20c09dd71fba011c9dc252f6210d01134137a63
+  Parse: 6ca512c6e860b66739c95151b2f76ac4712b7842
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.37.1
