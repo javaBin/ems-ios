@@ -94,8 +94,8 @@ NSString *const PrefsSearchField = @"searchFields";
     [defaults synchronize];
 
     if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-        [Crashlytics setObjectValue:self.searchText forKey:@"lastStoredSearchText"];
-        [Crashlytics setObjectValue:self.fields forKey:@"lastStoredSearchFields"];
+        [[Crashlytics sharedInstance] setObjectValue:self.searchText forKey:@"lastStoredSearchText"];
+        [[Crashlytics sharedInstance] setObjectValue:self.fields forKey:@"lastStoredSearchFields"];
     }
 }
 
@@ -118,8 +118,8 @@ NSString *const PrefsSearchField = @"searchFields";
     }
 
     if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-        [Crashlytics setObjectValue:self.searchText forKey:@"lastRetrievedSearchText"];
-        [Crashlytics setObjectValue:self.fields forKey:@"lastRetrievedSearchFields"];
+        [[Crashlytics sharedInstance] setObjectValue:self.searchText forKey:@"lastRetrievedSearchText"];
+        [[Crashlytics sharedInstance] setObjectValue:self.fields forKey:@"lastRetrievedSearchFields"];
     }
 }
 

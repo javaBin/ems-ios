@@ -14,6 +14,16 @@
 		15204C1F18DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */; };
 		15204C2018DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */; };
 		15A735D219BDB7F5001AAC7C /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15A735D119BDB7F5001AAC7C /* EMS-Keys.plist */; };
+		15C644EC1B0E784500EEBA41 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C644EA1B0E784500EEBA41 /* Crashlytics.framework */; };
+		15C644ED1B0E784500EEBA41 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C644EA1B0E784500EEBA41 /* Crashlytics.framework */; };
+		15C644EE1B0E784500EEBA41 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C644EB1B0E784500EEBA41 /* Fabric.framework */; };
+		15C644EF1B0E784500EEBA41 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C644EB1B0E784500EEBA41 /* Fabric.framework */; };
+		15C8563A1B0E6A5300626DB8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C856361B0E6A5300626DB8 /* Security.framework */; };
+		15C8563B1B0E6A5300626DB8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C856361B0E6A5300626DB8 /* Security.framework */; };
+		15C8563C1B0E6A5300626DB8 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C856371B0E6A5300626DB8 /* libc++.dylib */; };
+		15C8563D1B0E6A5300626DB8 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C856371B0E6A5300626DB8 /* libc++.dylib */; };
+		15C8563E1B0E6A5300626DB8 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C856381B0E6A5300626DB8 /* libz.dylib */; };
+		15C8563F1B0E6A5300626DB8 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C856381B0E6A5300626DB8 /* libz.dylib */; };
 		4E1AD00E5B0570877570A148 /* EMSTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */; };
 		4E1AD032EC53C9E396CAD414 /* EMSSpeakersRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1AD7801B1EF0B9E87AAF57 /* EMSSpeakersRetriever.m */; };
 		4E1AD35397D90DE204F516F2 /* EMSTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */; };
@@ -180,6 +190,11 @@
 		15204C1D18DB82C40062874A /* EMSCoreDataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "EMSCoreDataModel 3.xcdatamodel"; sourceTree = "<group>"; };
 		15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = RemoveSlugMapping.xcmappingmodel; sourceTree = "<group>"; };
 		15A735D119BDB7F5001AAC7C /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
+		15C644EA1B0E784500EEBA41 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		15C644EB1B0E784500EEBA41 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		15C856361B0E6A5300626DB8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		15C856371B0E6A5300626DB8 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		15C856381B0E6A5300626DB8 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		4E1AD00D04FA079A848CDAE5 /* JavaZone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "JavaZone-Info.plist"; sourceTree = "<group>"; };
 		4E1AD0E07B70D148B519768B /* flatMap-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "flatMap-Info.plist"; sourceTree = "<group>"; };
 		4E1AD0EE5411335585333A2F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; path = README.md; sourceTree = "<group>"; };
@@ -345,13 +360,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15C8563E1B0E6A5300626DB8 /* libz.dylib in Frameworks */,
 				833EF2DB1774E49F005E24A3 /* SystemConfiguration.framework in Frameworks */,
+				15C644EC1B0E784500EEBA41 /* Crashlytics.framework in Frameworks */,
 				F3E601E11772F7EC000673AE /* EventKit.framework in Frameworks */,
 				F3939E50176887090078C709 /* CoreData.framework in Frameworks */,
 				F35BB6C617685885009077D3 /* UIKit.framework in Frameworks */,
+				15C8563C1B0E6A5300626DB8 /* libc++.dylib in Frameworks */,
+				15C644EE1B0E784500EEBA41 /* Fabric.framework in Frameworks */,
 				F35BB6C817685885009077D3 /* Foundation.framework in Frameworks */,
 				F35BB6CA17685885009077D3 /* CoreGraphics.framework in Frameworks */,
 				830C7D79176F8B4900D38B46 /* Crashlytics.framework in Frameworks */,
+				15C8563A1B0E6A5300626DB8 /* Security.framework in Frameworks */,
 				85E86E298BD74799AE57514E /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -360,13 +380,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15C8563F1B0E6A5300626DB8 /* libz.dylib in Frameworks */,
 				F394C99617F0173900FAFBD4 /* SystemConfiguration.framework in Frameworks */,
+				15C644ED1B0E784500EEBA41 /* Crashlytics.framework in Frameworks */,
 				F394C99717F0173900FAFBD4 /* EventKit.framework in Frameworks */,
 				F394C99817F0173900FAFBD4 /* CoreData.framework in Frameworks */,
 				F394C99917F0173900FAFBD4 /* UIKit.framework in Frameworks */,
+				15C8563D1B0E6A5300626DB8 /* libc++.dylib in Frameworks */,
+				15C644EF1B0E784500EEBA41 /* Fabric.framework in Frameworks */,
 				F394C99A17F0173900FAFBD4 /* Foundation.framework in Frameworks */,
 				F394C99B17F0173900FAFBD4 /* CoreGraphics.framework in Frameworks */,
 				F394C99C17F0173900FAFBD4 /* Crashlytics.framework in Frameworks */,
+				15C8563B1B0E6A5300626DB8 /* Security.framework in Frameworks */,
 				F394C99E17F0173900FAFBD4 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -571,6 +596,11 @@
 		F35BB6C417685885009077D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				15C644EA1B0E784500EEBA41 /* Crashlytics.framework */,
+				15C644EB1B0E784500EEBA41 /* Fabric.framework */,
+				15C856361B0E6A5300626DB8 /* Security.framework */,
+				15C856371B0E6A5300626DB8 /* libc++.dylib */,
+				15C856381B0E6A5300626DB8 /* libz.dylib */,
 				833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */,
 				F3E601E01772F7EC000673AE /* EventKit.framework */,
 				830C7D78176F8B4900D38B46 /* Crashlytics.framework */,
@@ -718,6 +748,7 @@
 				TargetAttributes = {
 					837F68541A80CC8400AC7C97 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = EL8Z296J47;
 						TestTargetID = F35BB6C117685885009077D3;
 					};
 					F35BB6C117685885009077D3 = {
@@ -832,7 +863,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${EMS_RUN_CRASHLYTICS}\" == \"1\" ]\nthen\n    ./Crashlytics.framework/run 76243485dba0d4938b2917f78d8106a6ff1d0d0b\nfi";
+			shellScript = "if [ \"${EMS_RUN_CRASHLYTICS}\" == \"1\" ]\nthen\n    ./Fabric.framework/run 76243485dba0d4938b2917f78d8106a6ff1d0d0b 741dd9afca2eeb5612e3151aecb37b40af8527ed08c556305e2ee71662368613\nfi";
 		};
 		F15340BFC7864A9580FD3334 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1098,6 +1129,8 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1117,6 +1150,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JavaZone.app/JavaZone";
 			};
 			name = Debug;
@@ -1130,6 +1164,8 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1149,6 +1185,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JavaZone.app/JavaZone";
 			};
 			name = "Debug Run Crashlytics";
@@ -1162,6 +1199,8 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1178,6 +1217,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JavaZone.app/JavaZone";
 			};
 			name = Release;
@@ -1261,7 +1301,8 @@
 				CURRENT_PROJECT_VERSION = 22;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
@@ -1293,7 +1334,8 @@
 				CURRENT_PROJECT_VERSION = 22;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
@@ -1323,7 +1365,8 @@
 				CURRENT_PROJECT_VERSION = 22;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
@@ -1352,7 +1395,8 @@
 				CURRENT_PROJECT_VERSION = 22;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
@@ -1420,7 +1464,8 @@
 				CURRENT_PROJECT_VERSION = 22;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
@@ -1450,7 +1495,8 @@
 				CURRENT_PROJECT_VERSION = 22;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";

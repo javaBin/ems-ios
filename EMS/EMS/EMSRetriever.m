@@ -102,7 +102,7 @@
     NSURL *href = [defaults URLForKey:@"activeConference"];
     
     if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-        [Crashlytics setObjectValue:href forKey:@"lastRetrievedConference"];
+        [[Crashlytics sharedInstance] setObjectValue:href forKey:@"lastRetrievedConference"];
     }
     
     return href;
@@ -117,7 +117,7 @@
     [defaults synchronize];
     
     if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-        [Crashlytics setObjectValue:href forKey:@"lastStoredConference"];
+        [[Crashlytics sharedInstance] setObjectValue:href forKey:@"lastStoredConference"];
     }
 }
 

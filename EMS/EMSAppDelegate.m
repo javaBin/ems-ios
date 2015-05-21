@@ -40,7 +40,7 @@ int networkCount = 0;
 #ifdef DEBUGCRASHLYTICS
         [[Crashlytics sharedInstance] setDebugMode:YES];
 #endif
-        [Crashlytics startWithAPIKey:prefs[@"crashlytics-api-key"] delegate:self];
+        [Fabric with:@[CrashlyticsKit, CrashlyticsKit]];
         [DDLog addLogger:[CrashlyticsLogger sharedInstance]];
 
         DDLogVerbose(@"Connected to crashlytics");
@@ -402,11 +402,15 @@ int networkCount = 0;
     });
 }
 
-- (void)crashlyticsDidDetectCrashDuringPreviousExecution:(Crashlytics *)crashlytics {
-    DDLogVerbose(@"Crash detected - clearing advanced search");
 
+
+- (void)crashlyticsDidDetectReportForLastExecution:(CLSReport * __nonnull)report completionHandler:(void (^ __nonnull)(BOOL))completionHandler {
+    DDLogVerbose(@"Crash detected - clearing advanced search");
+    
     EMSAdvancedSearch *advancedSearch = [[EMSAdvancedSearch alloc] init];
     [advancedSearch clear];
+
+    completionHandler(YES);
 }
 
 #pragma mark - State restoration

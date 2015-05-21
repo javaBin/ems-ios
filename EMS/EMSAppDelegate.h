@@ -8,6 +8,8 @@
 
 @interface EMSAppDelegate : UIResponder <UIApplicationDelegate, CrashlyticsDelegate>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @property(strong, nonatomic) UIWindow *window;
 
 @property(nonatomic, strong) NSManagedObjectContext *managedObjectContext;
@@ -32,6 +34,8 @@
 
 - (void)syncManagedObjectContext;
 
-- (void)crashlyticsDidDetectCrashDuringPreviousExecution:(Crashlytics *)crashlytics;
+NS_ASSUME_NONNULL_END
+
+- (void)crashlyticsDidDetectReportForLastExecution:(CLSReport * __nonnull)report completionHandler:(void (^ __nonnull)(BOOL))completionHandler;
 
 @end

@@ -227,7 +227,7 @@
         NSPredicate *resultPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
 
         if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-            [Crashlytics setObjectValue:resultPredicate forKey:@"activePredicate"];
+            [[Crashlytics sharedInstance] setObjectValue:resultPredicate forKey:@"activePredicate"];
         }
 
         return resultPredicate;
@@ -477,7 +477,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
         destination.session = session;
         
         if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-            [Crashlytics setObjectValue:session.href forKey:@"lastDetailSession"];
+            [[Crashlytics sharedInstance] setObjectValue:session.href forKey:@"lastDetailSession"];
         }
         
         [EMSTracking trackEventWithCategory:@"listView" action:@"detail" label:session.href];
@@ -980,7 +980,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     if (sessionUrl) {
         
         if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-            [Crashlytics setObjectValue:sessionUrl forKey:@"lastDetailSessionFromNotification"];
+            [[Crashlytics sharedInstance] setObjectValue:sessionUrl forKey:@"lastDetailSessionFromNotification"];
         }
         
         
