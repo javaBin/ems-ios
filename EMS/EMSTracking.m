@@ -30,7 +30,7 @@
 
         [tracker set:kGAIScreenName value:name];
 
-        [tracker send:[[GAIDictionaryBuilder createAppView] build]];
+        [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
     }
 }
 
