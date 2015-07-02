@@ -46,6 +46,10 @@
     return ([self getKeys][@"google-analytics-tracking-id"] != nil);
 }
 
++ (BOOL)isFeedbackEnabled {
+    return ([self getKeys][@"feedback-server"] != nil);
+}
+
 + (BOOL)isParseEnabled {
     NSDictionary *prefs = [self getKeys];
 

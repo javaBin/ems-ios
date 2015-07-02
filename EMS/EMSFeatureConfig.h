@@ -15,6 +15,7 @@ typedef enum EMSFeature : NSUInteger {
 + (BOOL)isCrashlyticsEnabled;
 + (BOOL)isGoogleAnalyticsEnabled;
 + (BOOL)isParseEnabled;
++ (BOOL)isFeedbackEnabled;
 
 + (NSDictionary *)getKeys;
 
