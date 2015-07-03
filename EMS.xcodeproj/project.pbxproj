@@ -44,6 +44,11 @@
 		830C7D79176F8B4900D38B46 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830C7D78176F8B4900D38B46 /* Crashlytics.framework */; };
 		833EF2DB1774E49F005E24A3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */; };
 		835263D21B45195F00ED97D7 /* RatingApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835263D11B45195F00ED97D7 /* RatingApi.swift */; };
+		835D903E1B46737C0038FA3E /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835D903D1B46737C0038FA3E /* RatingViewController.swift */; };
+		835D903F1B46737C0038FA3E /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835D903D1B46737C0038FA3E /* RatingViewController.swift */; };
+		835D90401B4674240038FA3E /* RatingApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835263D11B45195F00ED97D7 /* RatingApi.swift */; };
+		835D90421B4675960038FA3E /* RatingViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835D90411B4675960038FA3E /* RatingViewCell.swift */; };
+		835D90431B4675960038FA3E /* RatingViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835D90411B4675960038FA3E /* RatingViewCell.swift */; };
 		836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836331311770DD2B000F8D95 /* EMSSearchViewController.m */; };
 		837F68621A80CE2600AC7C97 /* EMSTestEventsParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 837F68611A80CE2600AC7C97 /* EMSTestEventsParser.m */; };
 		837F68641A80E3BC00AC7C97 /* slots.json in Resources */ = {isa = PBXBuildFile; fileRef = 837F68631A80E3BC00AC7C97 /* slots.json */; };
@@ -221,6 +226,9 @@
 		833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		835263D01B45195F00ED97D7 /* JavaZone-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JavaZone-Bridging-Header.h"; sourceTree = "<group>"; };
 		835263D11B45195F00ED97D7 /* RatingApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingApi.swift; sourceTree = "<group>"; };
+		835D903C1B46737B0038FA3E /* flatMap-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "flatMap-Bridging-Header.h"; path = "EMS/Rating/flatMap-Bridging-Header.h"; sourceTree = "<group>"; };
+		835D903D1B46737C0038FA3E /* RatingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingViewController.swift; sourceTree = "<group>"; };
+		835D90411B4675960038FA3E /* RatingViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingViewCell.swift; sourceTree = "<group>"; };
 		836331301770DD2B000F8D95 /* EMSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSearchViewController.h; sourceTree = "<group>"; };
 		836331311770DD2B000F8D95 /* EMSSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSearchViewController.m; sourceTree = "<group>"; };
 		8363313B1770F06C000F8D95 /* EMSSearchViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EMSSearchViewDelegate.h; path = ../View/EMSSearchViewDelegate.h; sourceTree = "<group>"; };
@@ -398,6 +406,8 @@
 			isa = PBXGroup;
 			children = (
 				835263D11B45195F00ED97D7 /* RatingApi.swift */,
+				835D903D1B46737C0038FA3E /* RatingViewController.swift */,
+				835D90411B4675960038FA3E /* RatingViewCell.swift */,
 			);
 			name = Rating;
 			path = EMS/Rating;
@@ -599,6 +609,7 @@
 				648F22F76B1C8A1B0290C7F4 /* Pods */,
 				837F68551A80CC8400AC7C97 /* JavaZone Tests.xctest */,
 				835263D01B45195F00ED97D7 /* JavaZone-Bridging-Header.h */,
+				835D903C1B46737B0038FA3E /* flatMap-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -965,11 +976,13 @@
 				839BD665176F9BD400900712 /* EMSSessionsParser.m in Sources */,
 				839BD666176F9BD400900712 /* EMSSlot.m in Sources */,
 				839BD667176F9BD400900712 /* EMSSlotsParser.m in Sources */,
+				835D903E1B46737C0038FA3E /* RatingViewController.swift in Sources */,
 				839BD66B176F9BD400900712 /* EMSMainViewController.m in Sources */,
 				EA11338719A7A880008D000A /* EMSLocalNotificationManager.m in Sources */,
 				835263D21B45195F00ED97D7 /* RatingApi.swift in Sources */,
 				839BD66C176F9BD400900712 /* EMSSettingsViewController.m in Sources */,
 				839BD670176FA67000900712 /* EMSSpeaker.m in Sources */,
+				835D90421B4675960038FA3E /* RatingViewCell.swift in Sources */,
 				F31862371770340200292371 /* EMSDetailViewController.m in Sources */,
 				F31862421770501800292371 /* EMSSessionCell.m in Sources */,
 				F3D5E2C717709CD100888A7E /* EMSSpeakersParser.m in Sources */,
@@ -1027,7 +1040,9 @@
 				EA11338819A7A880008D000A /* EMSLocalNotificationManager.m in Sources */,
 				F394C98217F0173900FAFBD4 /* EMSSpeaker.m in Sources */,
 				F394C98317F0173900FAFBD4 /* EMSDetailViewController.m in Sources */,
+				835D903F1B46737C0038FA3E /* RatingViewController.swift in Sources */,
 				F394C98417F0173900FAFBD4 /* EMSSessionCell.m in Sources */,
+				835D90431B4675960038FA3E /* RatingViewCell.swift in Sources */,
 				F394C98517F0173900FAFBD4 /* EMSSpeakersParser.m in Sources */,
 				F30A8CE6192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m in Sources */,
 				F394C98617F0173900FAFBD4 /* EMSSearchViewController.m in Sources */,
@@ -1042,6 +1057,7 @@
 				F30A8CDC192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */,
 				F394C98E17F0173900FAFBD4 /* ConferenceType.m in Sources */,
 				F394C98F17F0173900FAFBD4 /* Session.m in Sources */,
+				835D90401B4674240038FA3E /* RatingApi.swift in Sources */,
 				EA8F2C831944CCB7002EAE1F /* EMSConfig.m in Sources */,
 				EA9ACCBE19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */,
 				F394C99017F0173900FAFBD4 /* EMSFeatureConfig.m in Sources */,
@@ -1368,6 +1384,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "flatMap - AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 22;
@@ -1379,6 +1396,7 @@
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
 				INFOPLIST_FILE = "flatMap/flatMap-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1386,6 +1404,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = flatMap;
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "EMS/Rating/flatMap-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1397,6 +1417,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "flatMap - AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 22;
@@ -1408,6 +1429,7 @@
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
 				INFOPLIST_FILE = "flatMap/flatMap-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1415,6 +1437,7 @@
 				PRODUCT_NAME = flatMap;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0C88122F-AAA1-4104-952D-FFAA4290D539";
+				SWIFT_OBJC_BRIDGING_HEADER = "EMS/Rating/flatMap-Bridging-Header.h";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1499,6 +1522,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "flatMap - AppIcon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 22;
@@ -1510,6 +1534,7 @@
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
 				INFOPLIST_FILE = "flatMap/flatMap-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1517,6 +1542,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = flatMap;
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "EMS/Rating/flatMap-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
 			};

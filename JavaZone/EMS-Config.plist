@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>feedback-server</key>
+	<key>rating-server</key>
 	<string>http://localhost</string>
 	<key>features</key>
 	<dict>

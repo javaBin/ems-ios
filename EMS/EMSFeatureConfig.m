@@ -4,16 +4,24 @@
 
 @implementation EMSFeatureConfig
 
-+ (NSDictionary *)featureFlagDictionary {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"EMS-Config" ofType:@"plist"];
-    NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:filePath];
++ (NSDictionary *)openDict:(NSString *)name {
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:name ofType:@"plist"];
+    NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
 
-    return prefs;
+    return dict;
+}
+
++ (NSDictionary *)configDictionary {
+    return [self openDict:@"EMS-Config"];
+}
+
++ (NSDictionary *)keyDictionary {
+    return [self openDict:@"EMS-Keys"];
 }
 
 + (BOOL)isFeatureEnabled:(EMSFeature)feature {
-    NSDictionary *prefs = [EMSFeatureConfig featureFlagDictionary];
-    NSDictionary *features = prefs[@"features"];
+    NSDictionary *config = [EMSFeatureConfig configDictionary];
+    NSDictionary *features = config[@"features"];
 
     if (feature == fLocalNotifications) {
         return [features[@"local-notifications"] boolValue];
@@ -39,19 +47,19 @@
 }
 
 + (BOOL)isCrashlyticsEnabled {
-    return ([self getKeys][@"crashlytics-api-key"] != nil);
+    return ([self keyDictionary][@"crashlytics-api-key"] != nil);
 }
 
 + (BOOL)isGoogleAnalyticsEnabled {
-    return ([self getKeys][@"google-analytics-tracking-id"] != nil);
+    return ([self keyDictionary][@"google-analytics-tracking-id"] != nil);
 }
 
-+ (BOOL)isFeedbackEnabled {
-    return ([self getKeys][@"feedback-server"] != nil);
++ (BOOL)isRatingEnabled {
+    return ([self configDictionary][@"rating-server"] != nil);
 }
 
 + (BOOL)isParseEnabled {
-    NSDictionary *prefs = [self getKeys];
+    NSDictionary *keys = [self keyDictionary];
 
     NSString *idKey = @"parse-app-id";
     NSString *clientKey = @"parse-client-key";
@@ -66,14 +74,9 @@
     clientKey = @"parse-client-key-prod";
 #endif
 
-    return ([[prefs allKeys] containsObject:idKey] && [[prefs allKeys] containsObject:clientKey]);
+    return ([[keys allKeys] containsObject:idKey] && [[keys allKeys] containsObject:clientKey]);
 }
 
 
-+ (NSDictionary *)getKeys {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"EMS-Keys" ofType:@"plist"];
-
-    return [[NSDictionary alloc] initWithContentsOfFile:filePath];
-}
 
 @end

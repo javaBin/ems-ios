@@ -39,7 +39,7 @@ public class RatingApi {
         }
     }
     
-    public func postFeedback(session: Session, overall: Int, relevance: Int, content: Int, quality: Int) {
+    public func postRating(session: Session, overall: Int, relevance: Int, content: Int, quality: Int) {
         let deviceId = UIDevice.currentDevice().identifierForVendor
         
         let data = ["template":

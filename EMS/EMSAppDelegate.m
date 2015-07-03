@@ -34,7 +34,7 @@ int networkCount = 0;
 
     DDLogVerbose(@"WE STARTED");
 
-    NSDictionary *prefs = [EMSFeatureConfig getKeys];
+    NSDictionary *prefs = [EMSFeatureConfig keyDictionary];
 
     if ([EMSFeatureConfig isCrashlyticsEnabled]) {
 #ifdef DEBUGCRASHLYTICS

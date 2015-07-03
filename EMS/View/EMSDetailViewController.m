@@ -27,6 +27,8 @@
 #import "EMSSessionTitleTableViewCell.h"
 #import "EMSSpeakersRetriever.h"
 
+#import "EMSFeatureConfig.h"
+
 @interface EMSDetailViewController () <UIPopoverControllerDelegate, EMSSpeakersRetrieverDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property(nonatomic) UIPopoverController *sharePopoverController;
@@ -58,7 +60,7 @@
 typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     EMSDetailViewControllerSectionInfo,
     EMSDetailViewControllerSectionLegacy,
-
+    EMSDetailViewControllerSectionRating
 };
 
 @implementation EMSDetailViewController
@@ -527,6 +529,10 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (EMSFeatureConfig.isRatingEnabled) {
+        return 3;
+    }
+    
     return 2;
 }
 
@@ -537,6 +543,10 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         rows = 1;
     } else if (section == EMSDetailViewControllerSectionLegacy) {
         rows = [self.parts count];
+    } else if (section == EMSDetailViewControllerSectionRating) {
+        if (EMSFeatureConfig.isRatingEnabled) {
+            rows = 1;
+        }
     }
 
     return rows;
@@ -549,6 +559,8 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     if (indexPath.section == EMSDetailViewControllerSectionInfo) {
         EMSSessionTitleTableViewCell *titleCell = [self.tableView dequeueReusableCellWithIdentifier:@"SessionTitleTableViewCell" forIndexPath:indexPath];
         cell = [self configureTitleCell:titleCell forIndexPath:indexPath];
+    } else if (indexPath.section == EMSDetailViewControllerSectionRating) {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:@"RatingCell" forIndexPath:indexPath];
     } else if (indexPath.section == EMSDetailViewControllerSectionLegacy) {
         EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
         if (row.body) {
@@ -623,6 +635,10 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell;
     
+    if (indexPath.section == EMSDetailViewControllerSectionRating) {
+        return 44;
+    }
+    
     EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
     if (indexPath.section == EMSDetailViewControllerSectionInfo) {
         if (!self.titleSizingCell) {
@@ -677,6 +693,10 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         if (row.link) {
             return indexPath;
         }
+    }
+
+    if (indexPath.section == EMSDetailViewControllerSectionRating) {
+        return indexPath;
     }
 
     return nil;
