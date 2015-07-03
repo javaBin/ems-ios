@@ -24,7 +24,7 @@ public class RatingApi {
         let matcher = NSRegularExpression(pattern: ".*/events/(.*)/sessions/(.*)", options: nil, error: &matchError)
         
         if let seenError = matchError {
-            println(seenError.description)
+            Log.warn("\(seenError)")
             return nil
         }
         
@@ -57,7 +57,7 @@ public class RatingApi {
         let json = NSJSONSerialization.dataWithJSONObject(data, options: NSJSONWritingOptions(0), error: &jsonError)
         
         if let seenError = jsonError {
-            println(seenError.description)
+            Log.warn("\(seenError)")
             return
         }
         
