@@ -1301,7 +1301,9 @@
         } else {
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
             [errorDetail setValue:NSLocalizedString(@"Unable to generate rating href from session", @"Error message when trying to store rating.") forKey:NSLocalizedDescriptionKey];
-            *error = [NSError errorWithDomain:@"EMSModel" code:100 userInfo:errorDetail];
+            if (error != NULL) {
+                *error = [NSError errorWithDomain:@"EMSModel" code:100 userInfo:errorDetail];
+            }
             
             return NO;
         }

@@ -608,13 +608,13 @@
         <!--Rating View Controller-->
         <scene sceneID="Cjy-5K-PBM">
             <objects>
-                <tableViewController id="dXd-fw-bay" customClass="RatingViewController" customModule="JavaZone" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="dXd-fw-bay" customClass="RatingViewController" customModule="EMS" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="BRU-Yy-0U5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="RatingViewCell" id="WVV-k0-7gL" customClass="RatingViewCell" customModule="JavaZone" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="RatingViewCell" id="WVV-k0-7gL" customClass="RatingViewCell" customModule="EMS" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WVV-k0-7gL" id="LGA-1V-7qw">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -698,7 +698,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="GUA-bp-haj">
-                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="done" id="Xi4-VS-Ua5">
+                        <barButtonItem key="leftBarButtonItem" title="Done" id="Xi4-VS-Ua5">
                             <connections>
                                 <segue destination="Pn0-u3-MhH" kind="unwind" unwindAction="unwindToDetailViewController:" id="HDd-YT-MP9"/>
                             </connections>
