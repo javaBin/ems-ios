@@ -1,7 +1,7 @@
 import UIKit
 import CoreData
 import XCTest
-import JavaZone
+import EMS
 
 class TestRating: XCTestCase {
     var moc : NSManagedObjectContext? = nil
