@@ -24,9 +24,6 @@ public class RatingViewController: UITableViewController, RatingViewCellDelegate
     
     public override func viewDidAppear(animated: Bool) {
         EMSTracking.trackScreen("Rating Screen")
-        
-        Log.debug("\(rating)")
-        
     }
     
     public override func viewDidLoad() {

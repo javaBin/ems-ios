@@ -341,6 +341,9 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
                                                        relevance:[(NSNumber *)ratingController.sections[1][@"rating"] intValue]
                                                       forSession:self.session
                                                            error:nil];
+    
+    RatingApi *api = [[RatingApi alloc] initWithServer:[[EMSFeatureConfig configDictionary] objectForKey:@"rating-server"]];
+    [api postRating:self.session rating:[[[EMSAppDelegate sharedAppDelegate] model] ratingForSession:self.session]];
 }
 
 #pragma mark - UIPopoverControllerDelegate

@@ -39,31 +39,33 @@ public class RatingApi : NSObject {
         }
     }
     
-    public func postRating(session: Session, overall: Int, relevance: Int, content: Int, quality: Int) {
+    public func postRating(session: Session, rating: Rating?) {
         let deviceId = UIDevice.currentDevice().identifierForVendor
         
-        let data = ["template":
-            ["data": [
-                ["name": "overall", "value": overall],
-                ["name": "relevance", "value": relevance],
-                ["name": "content", "value": content],
-                ["name": "quality", "value": quality]
+        if let postRating = rating {
+            let data = ["template":
+                ["data": [
+                    ["name": "overall", "value": postRating.overall],
+                    ["name": "relevance", "value": postRating.relevance],
+                    ["name": "content", "value": postRating.content],
+                    ["name": "quality", "value": postRating.quality]
+                    ]
                 ]
             ]
-        ]
-        
-        var jsonError : NSError?
-        
-        let json = NSJSONSerialization.dataWithJSONObject(data, options: NSJSONWritingOptions(0), error: &jsonError)
-        
-        if let seenError = jsonError {
-            Log.warn("\(seenError)")
-            return
-        }
-        
-        if let url = urlFromSession(session),
-            let body = json {
-                post(url, body: body)
+            
+            var jsonError : NSError?
+            
+            let json = NSJSONSerialization.dataWithJSONObject(data, options: NSJSONWritingOptions(0), error: &jsonError)
+            
+            if let seenError = jsonError {
+                Log.warn("\(seenError)")
+                return
+            }
+            
+            if let url = urlFromSession(session),
+                let body = json {
+                    post(url, body: body)
+            }
         }
         
     }
