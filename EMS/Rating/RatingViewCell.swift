@@ -7,6 +7,10 @@ class RatingViewCell: UITableViewCell {
     @IBOutlet weak var rating4: UIButton!
     @IBOutlet weak var rating5: UIButton!
     
+    var delegate : RatingViewCellDelegate? = nil
+    
+    var section : Int = -1;
+    
     var rating : Int = 0
     
     @IBAction func ratingButtonClick(sender: UIButton) {
@@ -26,6 +30,8 @@ class RatingViewCell: UITableViewCell {
         }
         
         updateView()
+        
+        delegate?.ratingApplied(section, rating: rating)
     }
     
     func updateView() {
@@ -34,5 +40,11 @@ class RatingViewCell: UITableViewCell {
         rating3.selected = rating >= 3
         rating4.selected = rating >= 4
         rating5.selected = rating >= 5
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        updateView()
     }
 }

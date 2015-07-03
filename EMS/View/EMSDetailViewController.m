@@ -321,6 +321,28 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     // Dispose of any resources that can be recreated.
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"showRatingSegue"]) {
+        Rating *rating = [[[EMSAppDelegate sharedAppDelegate] model] ratingForSession:self.session];
+        
+        RatingViewController *destination = segue.destinationViewController;
+        
+        destination.rating = rating;
+    }
+    
+}
+
+- (IBAction)unwindToDetailViewController:(UIStoryboardSegue *)unwindSegue {
+    RatingViewController *ratingController = unwindSegue.sourceViewController;
+    
+    [[[EMSAppDelegate sharedAppDelegate] model] setRatingOverall:[(NSNumber *)ratingController.sections[0][@"rating"] intValue]
+                                                         content:[(NSNumber *)ratingController.sections[2][@"rating"] intValue]
+                                                         quality:[(NSNumber *)ratingController.sections[3][@"rating"] intValue]
+                                                       relevance:[(NSNumber *)ratingController.sections[1][@"rating"] intValue]
+                                                      forSession:self.session
+                                                           error:nil];
+}
+
 #pragma mark - UIPopoverControllerDelegate
 
 - (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController {

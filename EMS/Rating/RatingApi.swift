@@ -1,6 +1,6 @@
 import UIKit
 
-public class RatingApi {
+public class RatingApi : NSObject {
     let server : String
     
     public init(server : String) {

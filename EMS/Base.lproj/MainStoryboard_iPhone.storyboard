@@ -576,7 +576,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="dXd-fw-bay" kind="push" id="Vm2-dy-b1x"/>
+                                    <segue destination="dXd-fw-bay" kind="push" identifier="showRatingSegue" id="Vm2-dy-b1x"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -697,9 +697,16 @@
                             <outlet property="delegate" destination="dXd-fw-bay" id="15g-p4-hpg"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="GUA-bp-haj"/>
+                    <navigationItem key="navigationItem" id="GUA-bp-haj">
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="done" id="Xi4-VS-Ua5">
+                            <connections>
+                                <segue destination="Pn0-u3-MhH" kind="unwind" unwindAction="unwindToDetailViewController:" id="HDd-YT-MP9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OQr-yh-bmv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Pn0-u3-MhH" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1926" y="514"/>
         </scene>

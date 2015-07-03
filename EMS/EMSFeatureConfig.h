@@ -18,5 +18,6 @@ typedef enum EMSFeature : NSUInteger {
 + (BOOL)isRatingEnabled;
 
 + (NSDictionary *)keyDictionary;
++ (NSDictionary *)configDictionary;
 
 @end

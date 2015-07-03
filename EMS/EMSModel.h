@@ -47,4 +47,7 @@
 - (NSDate *)dateForSpeakerPic:(NSString *)url;
 - (void)setDate:(NSDate *)date ForSpeakerPic:(NSString *)url;
 
+- (Rating *)ratingForSession:(Session *)session;
+- (BOOL)setRatingOverall:(int)overall content:(int)content quality:(int)quality relevance:(int)relevance forSession:(Session *)session  error:(NSError **)error;
+
 @end

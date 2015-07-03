@@ -1255,4 +1255,77 @@
     }
 }
 
+- (Rating *)ratingForSession:(Session *)session {
+    RatingApi *api = [[RatingApi alloc] initWithServer: [[EMSFeatureConfig configDictionary] objectForKey:@"rating-server"]];
+    
+    NSURL *url = [api urlFromSession:session];
+    
+    if (url != nil) {
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        
+        [fetchRequest setEntity:[NSEntityDescription entityForName:@"Rating" inManagedObjectContext:[self managedObjectContext]]];
+        
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"(href LIKE %@)", [url absoluteString]]];
+        
+        NSError *error;
+        
+        NSArray *objects = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+        
+        if (error) {
+            DDLogError(@"Failed to fetch rating for url %@, - %@ - %@", url, error, [error userInfo]);
+        }
+        
+        if ([objects count] > 0) {
+            return objects[0];
+        }
+    }
+    
+    return nil;
+}
+
+- (BOOL)setRatingOverall:(int)overall content:(int)content quality:(int)quality relevance:(int)relevance forSession:(Session *)session  error:(NSError **)error {
+    Rating *rating = [self ratingForSession:session];
+    
+    if (rating == nil) {
+        RatingApi *api = [[RatingApi alloc] initWithServer: [[EMSFeatureConfig configDictionary] objectForKey:@"rating-server"]];
+        
+        NSURL *url = [api urlFromSession:session];
+
+        if (url != nil) {
+            rating = [NSEntityDescription
+                                insertNewObjectForEntityForName:@"Rating"
+                                inManagedObjectContext:[self managedObjectContext]];
+
+            rating.href = [url absoluteString];
+        } else {
+            NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+            [errorDetail setValue:NSLocalizedString(@"Unable to generate rating href from session", @"Error message when trying to store rating.") forKey:NSLocalizedDescriptionKey];
+            *error = [NSError errorWithDomain:@"EMSModel" code:100 userInfo:errorDetail];
+            
+            return NO;
+        }
+    }
+    
+    if (rating != nil) {
+        rating.overall = [NSNumber numberWithInt:overall];
+        rating.content = [NSNumber numberWithInt:content];
+        rating.quality = [NSNumber numberWithInt:quality];
+        rating.relevance = [NSNumber numberWithInt:relevance];
+    }
+    
+    NSError *saveError = nil;
+    
+    if (![[self managedObjectContext] save:&saveError]) {
+        DDLogError(@"Failed to save rating %@ - %@", saveError, [saveError userInfo]);
+        
+        *error = saveError;
+        
+        return NO;
+    }
+    
+    return YES;
+}
+
+
 @end

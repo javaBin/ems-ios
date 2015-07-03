@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="2" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Conference" representedClassName="Conference" syncable="YES">
+        <attribute name="end" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="hintCount" optional="YES" attributeType="Integer 32" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="roomCollection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sessionCollection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="slotCollection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="start" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="venue" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="conferenceKeywords" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ConferenceKeyword" inverseName="conference" inverseEntity="ConferenceKeyword" syncable="YES"/>
+        <relationship name="conferenceLevels" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ConferenceLevel" inverseName="conference" inverseEntity="ConferenceLevel" syncable="YES"/>
+        <relationship name="conferenceTypes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ConferenceType" inverseName="conference" inverseEntity="ConferenceType" syncable="YES"/>
+        <relationship name="rooms" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Room" inverseName="conference" inverseEntity="Room" syncable="YES"/>
+        <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Session" inverseName="conference" inverseEntity="Session" syncable="YES"/>
+        <relationship name="slots" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Slot" inverseName="conference" inverseEntity="Slot" syncable="YES"/>
+    </entity>
+    <entity name="ConferenceKeyword" representedClassName="ConferenceKeyword" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="conference" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conference" inverseName="conferenceKeywords" inverseEntity="Conference" syncable="YES"/>
+    </entity>
+    <entity name="ConferenceLevel" representedClassName="ConferenceLevel" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="conference" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conference" inverseName="conferenceLevels" inverseEntity="Conference" syncable="YES"/>
+    </entity>
+    <entity name="ConferenceType" representedClassName="ConferenceType" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="conference" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conference" inverseName="conferenceTypes" inverseEntity="Conference" syncable="YES"/>
+    </entity>
+    <entity name="Keyword" representedClassName="Keyword" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="session" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Session" inverseName="keywords" inverseEntity="Session" syncable="YES"/>
+    </entity>
+    <entity name="Rating" representedClassName="EMS.Rating" syncable="YES">
+        <attribute name="content" attributeType="Integer 16" minValueString="0" maxValueString="5" defaultValueString="0" syncable="YES"/>
+        <attribute name="href" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="overall" attributeType="Integer 16" minValueString="0" maxValueString="5" defaultValueString="0" syncable="YES"/>
+        <attribute name="quality" attributeType="Integer 16" minValueString="0" maxValueString="5" defaultValueString="0" syncable="YES"/>
+        <attribute name="relevance" attributeType="Integer 16" minValueString="0" maxValueString="5" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Room" representedClassName="Room" syncable="YES">
+        <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="conference" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conference" inverseName="rooms" inverseEntity="Conference" syncable="YES"/>
+        <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Session" inverseName="room" inverseEntity="Session" syncable="YES"/>
+    </entity>
+    <entity name="Session" representedClassName="Session" syncable="YES">
+        <attribute name="attachmentCollection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="audience" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="favourite" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="format" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="level" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="roomName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="slotName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="speakerCollection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="summary" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="videoLink" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="conference" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conference" inverseName="sessions" inverseEntity="Conference" syncable="YES"/>
+        <relationship name="keywords" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Keyword" inverseName="session" inverseEntity="Keyword" syncable="YES"/>
+        <relationship name="room" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Room" inverseName="sessions" inverseEntity="Room" syncable="YES"/>
+        <relationship name="slot" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Slot" inverseName="sessions" inverseEntity="Slot" syncable="YES"/>
+        <relationship name="speakers" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Speaker" inverseName="session" inverseEntity="Speaker" syncable="YES"/>
+    </entity>
+    <entity name="Slot" representedClassName="Slot" syncable="YES">
+        <attribute name="end" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="start" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="conference" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conference" inverseName="slots" inverseEntity="Conference" syncable="YES"/>
+        <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Session" inverseName="slot" inverseEntity="Session" syncable="YES"/>
+    </entity>
+    <entity name="Speaker" representedClassName="Speaker" syncable="YES">
+        <attribute name="bio" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastUpdated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnailUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="session" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Session" inverseName="speakers" inverseEntity="Session" syncable="YES"/>
+    </entity>
+    <entity name="SpeakerPic" representedClassName="SpeakerPic" syncable="YES">
+        <attribute name="lastUpdated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Conference" positionX="160" positionY="192" width="128" height="270"/>
+        <element name="ConferenceKeyword" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="ConferenceLevel" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="ConferenceType" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="Keyword" positionX="781" positionY="522" width="128" height="75"/>
+        <element name="Room" positionX="432" positionY="153" width="128" height="105"/>
+        <element name="Session" positionX="592" positionY="324" width="128" height="345"/>
+        <element name="Slot" positionX="268" positionY="584" width="128" height="120"/>
+        <element name="Speaker" positionX="783" positionY="648" width="128" height="135"/>
+        <element name="SpeakerPic" positionX="369" positionY="306" width="128" height="75"/>
+        <element name="Rating" positionX="378" positionY="315" width="128" height="120"/>
+    </elements>
+</model>

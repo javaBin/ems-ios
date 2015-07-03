@@ -42,6 +42,10 @@
 		72A8D4AB9F0401AEED460AE7 /* NSURLResponse+EMSExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 72A8DE57C7743D16672B2213 /* NSURLResponse+EMSExtensions.m */; };
 		79387D8AE85FBC7DAB0920FC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68C4AE1D95BFE01192E3C8AE /* libPods.a */; };
 		830C7D79176F8B4900D38B46 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830C7D78176F8B4900D38B46 /* Crashlytics.framework */; };
+		8322B32D1B4681DE008DE85B /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8322B32C1B4681DE008DE85B /* Rating.swift */; };
+		8322B32E1B4681DE008DE85B /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8322B32C1B4681DE008DE85B /* Rating.swift */; };
+		8322B3301B46A19D008DE85B /* RatingViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8322B32F1B46A19D008DE85B /* RatingViewCellDelegate.swift */; };
+		8322B3311B46A19D008DE85B /* RatingViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8322B32F1B46A19D008DE85B /* RatingViewCellDelegate.swift */; };
 		833EF2DB1774E49F005E24A3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */; };
 		835263D21B45195F00ED97D7 /* RatingApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835263D11B45195F00ED97D7 /* RatingApi.swift */; };
 		835D903E1B46737C0038FA3E /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835D903D1B46737C0038FA3E /* RatingViewController.swift */; };
@@ -223,10 +227,12 @@
 		72A8D87D677DB805A5EADFAA /* NSURLResponse+EMSExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLResponse+EMSExtensions.h"; sourceTree = "<group>"; };
 		72A8DE57C7743D16672B2213 /* NSURLResponse+EMSExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLResponse+EMSExtensions.m"; sourceTree = "<group>"; };
 		830C7D78176F8B4900D38B46 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		8322B32B1B467EE2008DE85B /* EMSCoreDataModel 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "EMSCoreDataModel 6.xcdatamodel"; sourceTree = "<group>"; };
+		8322B32C1B4681DE008DE85B /* Rating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Rating.swift; path = EMS/EMSMO/Rating.swift; sourceTree = "<group>"; };
+		8322B32F1B46A19D008DE85B /* RatingViewCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingViewCellDelegate.swift; sourceTree = "<group>"; };
 		833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		835263D01B45195F00ED97D7 /* JavaZone-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JavaZone-Bridging-Header.h"; sourceTree = "<group>"; };
+		835263D01B45195F00ED97D7 /* EMS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EMS-Bridging-Header.h"; sourceTree = "<group>"; };
 		835263D11B45195F00ED97D7 /* RatingApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingApi.swift; sourceTree = "<group>"; };
-		835D903C1B46737B0038FA3E /* flatMap-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "flatMap-Bridging-Header.h"; path = "EMS/Rating/flatMap-Bridging-Header.h"; sourceTree = "<group>"; };
 		835D903D1B46737C0038FA3E /* RatingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingViewController.swift; sourceTree = "<group>"; };
 		835D90411B4675960038FA3E /* RatingViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingViewCell.swift; sourceTree = "<group>"; };
 		836331301770DD2B000F8D95 /* EMSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSearchViewController.h; sourceTree = "<group>"; };
@@ -408,6 +414,7 @@
 				835263D11B45195F00ED97D7 /* RatingApi.swift */,
 				835D903D1B46737C0038FA3E /* RatingViewController.swift */,
 				835D90411B4675960038FA3E /* RatingViewCell.swift */,
+				8322B32F1B46A19D008DE85B /* RatingViewCellDelegate.swift */,
 			);
 			name = Rating;
 			path = EMS/Rating;
@@ -553,6 +560,7 @@
 		83AF91B51772053600FAE20F /* EMSMO */ = {
 			isa = PBXGroup;
 			children = (
+				8322B32C1B4681DE008DE85B /* Rating.swift */,
 				1504124E19ABDDA500051E04 /* SpeakerPic.h */,
 				1504124F19ABDDA500051E04 /* SpeakerPic.m */,
 				F3AE33DD1772EA94000EE4A9 /* Session.h */,
@@ -608,8 +616,7 @@
 				4E1ADFF5906ECB18F85E943C /* ChangeLog */,
 				648F22F76B1C8A1B0290C7F4 /* Pods */,
 				837F68551A80CC8400AC7C97 /* JavaZone Tests.xctest */,
-				835263D01B45195F00ED97D7 /* JavaZone-Bridging-Header.h */,
-				835D903C1B46737B0038FA3E /* flatMap-Bridging-Header.h */,
+				835263D01B45195F00ED97D7 /* EMS-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -968,6 +975,7 @@
 				839BD65E176F9BD400900712 /* EMSConference.m in Sources */,
 				839BD65F176F9BD400900712 /* EMSEventsParser.m in Sources */,
 				15204C1F18DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */,
+				8322B3301B46A19D008DE85B /* RatingViewCellDelegate.swift in Sources */,
 				839BD660176F9BD400900712 /* EMSDateConverter.m in Sources */,
 				839BD661176F9BD400900712 /* EMSRetriever.m in Sources */,
 				839BD662176F9BD400900712 /* EMSRoom.m in Sources */,
@@ -983,6 +991,7 @@
 				839BD66C176F9BD400900712 /* EMSSettingsViewController.m in Sources */,
 				839BD670176FA67000900712 /* EMSSpeaker.m in Sources */,
 				835D90421B4675960038FA3E /* RatingViewCell.swift in Sources */,
+				8322B32D1B4681DE008DE85B /* Rating.swift in Sources */,
 				F31862371770340200292371 /* EMSDetailViewController.m in Sources */,
 				F31862421770501800292371 /* EMSSessionCell.m in Sources */,
 				F3D5E2C717709CD100888A7E /* EMSSpeakersParser.m in Sources */,
@@ -1028,6 +1037,7 @@
 				F394C97617F0173900FAFBD4 /* EMSEventsParser.m in Sources */,
 				15204C2018DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */,
 				F394C97717F0173900FAFBD4 /* EMSDateConverter.m in Sources */,
+				8322B3311B46A19D008DE85B /* RatingViewCellDelegate.swift in Sources */,
 				F394C97817F0173900FAFBD4 /* EMSRetriever.m in Sources */,
 				F394C97917F0173900FAFBD4 /* EMSRoom.m in Sources */,
 				F394C97A17F0173900FAFBD4 /* EMSRoomsParser.m in Sources */,
@@ -1043,6 +1053,7 @@
 				835D903F1B46737C0038FA3E /* RatingViewController.swift in Sources */,
 				F394C98417F0173900FAFBD4 /* EMSSessionCell.m in Sources */,
 				835D90431B4675960038FA3E /* RatingViewCell.swift in Sources */,
+				8322B32E1B4681DE008DE85B /* Rating.swift in Sources */,
 				F394C98517F0173900FAFBD4 /* EMSSpeakersParser.m in Sources */,
 				F30A8CE6192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m in Sources */,
 				F394C98617F0173900FAFBD4 /* EMSSearchViewController.m in Sources */,
@@ -1160,6 +1171,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					JZ,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1194,6 +1206,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					JZ,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1226,6 +1239,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = JZ;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1327,6 +1341,11 @@
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					JZ,
+				);
 				INFOPLIST_FILE = "JavaZone/JavaZone-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1335,9 +1354,10 @@
 					"\"$(SRCROOT)\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_MODULE_NAME = EMS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "924c7a4b-7da1-4a8b-b78d-ce79cf60157e";
-				SWIFT_OBJC_BRIDGING_HEADER = "JavaZone-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "EMS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1361,6 +1381,11 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					JZ,
+				);
 				INFOPLIST_FILE = "JavaZone/JavaZone-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1368,10 +1393,11 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
+				PRODUCT_MODULE_NAME = EMS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "60ef02e5-a467-46a3-93e1-c8d4bc777a9f";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "60ef02e5-a467-46a3-93e1-c8d4bc777a9f";
-				SWIFT_OBJC_BRIDGING_HEADER = "JavaZone-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "EMS-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
@@ -1394,6 +1420,11 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					FM,
+				);
 				INFOPLIST_FILE = "flatMap/flatMap-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1402,9 +1433,10 @@
 					"\"$(SRCROOT)\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_MODULE_NAME = EMS;
 				PRODUCT_NAME = flatMap;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "EMS/Rating/flatMap-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "EMS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
@@ -1427,6 +1459,11 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					FM,
+				);
 				INFOPLIST_FILE = "flatMap/flatMap-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1434,10 +1471,11 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
+				PRODUCT_MODULE_NAME = EMS;
 				PRODUCT_NAME = flatMap;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0C88122F-AAA1-4104-952D-FFAA4290D539";
-				SWIFT_OBJC_BRIDGING_HEADER = "EMS/Rating/flatMap-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "EMS-Bridging-Header.h";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1498,6 +1536,11 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					JZ,
+				);
 				INFOPLIST_FILE = "JavaZone/JavaZone-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1506,9 +1549,10 @@
 					"\"$(SRCROOT)\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_MODULE_NAME = EMS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "924c7a4b-7da1-4a8b-b78d-ce79cf60157e";
-				SWIFT_OBJC_BRIDGING_HEADER = "JavaZone-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "EMS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1532,6 +1576,11 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					FM,
+				);
 				INFOPLIST_FILE = "flatMap/flatMap-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1540,9 +1589,10 @@
 					"\"$(SRCROOT)\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_MODULE_NAME = EMS;
 				PRODUCT_NAME = flatMap;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "EMS/Rating/flatMap-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "EMS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
@@ -1598,13 +1648,14 @@
 		F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				8322B32B1B467EE2008DE85B /* EMSCoreDataModel 6.xcdatamodel */,
 				1504124B19ABDCCE00051E04 /* EMSCoreDataModel 5.xcdatamodel */,
 				F3AABDDD19AB1434003D1D1C /* EMSCoreDataModel 4.xcdatamodel */,
 				15204C1D18DB82C40062874A /* EMSCoreDataModel 3.xcdatamodel */,
 				F37A6ABD17B223390060634D /* EMSCoreDataModel 2.xcdatamodel */,
 				F3939E521768879C0078C709 /* EMSCoreDataModel.xcdatamodel */,
 			);
-			currentVersion = 1504124B19ABDCCE00051E04 /* EMSCoreDataModel 5.xcdatamodel */;
+			currentVersion = 8322B32B1B467EE2008DE85B /* EMSCoreDataModel 6.xcdatamodel */;
 			path = EMSCoreDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
