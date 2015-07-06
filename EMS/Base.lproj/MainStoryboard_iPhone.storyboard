@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Settings-->
@@ -669,6 +670,15 @@
                                                 <action selector="ratingButtonClick:" destination="WVV-k0-7gL" eventType="touchUpInside" id="NKF-v4-Axp"/>
                                             </connections>
                                         </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WbD-Hr-b76" customClass="TintButton" customModule="EMS" customModuleProvider="target">
+                                            <rect key="frame" x="290" y="11" width="22" height="22"/>
+                                            <state key="normal" image="298-circlex">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="clearRating:" destination="WVV-k0-7gL" eventType="touchUpInside" id="Sg0-im-QUT"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="centerX" secondItem="vaG-dx-mu6" secondAttribute="centerX" id="8Ir-xD-0x3"/>
@@ -676,14 +686,17 @@
                                         <constraint firstAttribute="centerY" secondItem="6hq-On-EZW" secondAttribute="centerY" id="BNB-9i-xol"/>
                                         <constraint firstAttribute="centerY" secondItem="vaG-dx-mu6" secondAttribute="centerY" id="GVs-CZ-u5F"/>
                                         <constraint firstItem="WQa-sm-yJH" firstAttribute="leading" secondItem="Sp1-uY-ONM" secondAttribute="trailing" constant="8" symbolic="YES" id="NIe-C0-W8h"/>
+                                        <constraint firstAttribute="centerY" secondItem="WbD-Hr-b76" secondAttribute="centerY" id="Rs5-yF-1Bi"/>
                                         <constraint firstItem="Fgc-b2-DxM" firstAttribute="leading" secondItem="6hq-On-EZW" secondAttribute="trailing" constant="8" symbolic="YES" id="VVj-bL-BBb"/>
                                         <constraint firstAttribute="centerY" secondItem="Fgc-b2-DxM" secondAttribute="centerY" id="ZK8-rh-nle"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="WbD-Hr-b76" secondAttribute="trailing" id="aPy-ug-Z98"/>
                                         <constraint firstItem="vaG-dx-mu6" firstAttribute="leading" secondItem="Fgc-b2-DxM" secondAttribute="trailing" constant="8" symbolic="YES" id="bWh-j8-Tdb"/>
                                         <constraint firstItem="Sp1-uY-ONM" firstAttribute="leading" secondItem="vaG-dx-mu6" secondAttribute="trailing" constant="8" symbolic="YES" id="l09-bQ-qhR"/>
                                         <constraint firstAttribute="centerY" secondItem="Sp1-uY-ONM" secondAttribute="centerY" id="lkb-ii-c0j"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="clearButton" destination="WbD-Hr-b76" id="lgz-2R-ozi"/>
                                     <outlet property="rating1" destination="6hq-On-EZW" id="wug-F0-Zyi"/>
                                     <outlet property="rating2" destination="Fgc-b2-DxM" id="au7-4U-xDO"/>
                                     <outlet property="rating3" destination="vaG-dx-mu6" id="SWQ-UI-tbj"/>
@@ -698,7 +711,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="GUA-bp-haj">
-                        <barButtonItem key="leftBarButtonItem" title="Done" id="Xi4-VS-Ua5">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="Xi4-VS-Ua5">
                             <connections>
                                 <segue destination="Pn0-u3-MhH" kind="unwind" unwindAction="unwindToDetailViewController:" id="HDd-YT-MP9"/>
                             </connections>
@@ -773,6 +786,7 @@
         <image name="28-star" width="26" height="26"/>
         <image name="28-star-grey.png" width="26" height="26"/>
         <image name="28-star-yellow" width="26" height="26"/>
+        <image name="298-circlex" width="22" height="22"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

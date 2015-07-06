@@ -6,6 +6,7 @@ class RatingViewCell: UITableViewCell {
     @IBOutlet weak var rating3: TintButton!
     @IBOutlet weak var rating4: TintButton!
     @IBOutlet weak var rating5: TintButton!
+    @IBOutlet weak var clearButton: TintButton!
     
     var delegate : RatingViewCellDelegate? = nil
     
@@ -13,23 +14,36 @@ class RatingViewCell: UITableViewCell {
     
     var rating : Int = 0
     
-    @IBAction func ratingButtonClick(sender: UIButton) {
+    @IBAction func ratingButtonClick(sender: TintButton) {
         switch sender {
         case rating1:
-            rating = 1
+            applyRating(1)
         case rating2:
-            rating = 2
+            applyRating(2)
         case rating3:
-            rating = 3
+            applyRating(3)
         case rating4:
-            rating = 4
+            applyRating(4)
         case rating5:
-            rating = 5
+            applyRating(5)
         default:
-            rating = 0
+            applyRating(0)
         }
         
         updateView()
+        
+        delegate?.ratingApplied(section, rating: rating)
+    }
+    
+    @IBAction func clearRating(sender: TintButton) {
+        applyRating(0)
+        
+        updateView()
+
+    }
+    
+    func applyRating(newRating: Int) {
+        rating = newRating
         
         delegate?.ratingApplied(section, rating: rating)
     }
@@ -48,6 +62,7 @@ class RatingViewCell: UITableViewCell {
         rating3.setImage("28-star")
         rating4.setImage("28-star")
         rating5.setImage("28-star")
+        clearButton.setImage(UIImage(named: "298-circlex"), forState: .Normal)
 
         super.layoutSubviews()
         
