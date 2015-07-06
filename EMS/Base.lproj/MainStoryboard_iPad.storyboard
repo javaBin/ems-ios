@@ -770,9 +770,9 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5IH-wu-UM4" id="mIs-qh-p7v">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYe-Bl-zSj">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYe-Bl-zSj" customClass="TintButton" customModule="EMS" customModuleProvider="target">
                                             <rect key="frame" x="371" y="9" width="26" height="26"/>
-                                            <state key="normal" image="28-star-grey" backgroundImage="28-star-yellow">
+                                            <state key="normal" image="28-star">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <state key="selected" image="28-star-yellow"/>
@@ -780,19 +780,9 @@
                                                 <action selector="ratingButtonClick:" destination="5IH-wu-UM4" eventType="touchUpInside" id="ERV-Vi-Jnh"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Qf-2l-teT">
-                                            <rect key="frame" x="405" y="9" width="26" height="26"/>
-                                            <state key="normal" image="28-star-grey" backgroundImage="28-star-yellow">
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                            <state key="selected" image="28-star-yellow"/>
-                                            <connections>
-                                                <action selector="ratingButtonClick:" destination="5IH-wu-UM4" eventType="touchUpInside" id="ZDw-75-tVl"/>
-                                            </connections>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGD-zB-ecY">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGD-zB-ecY" customClass="TintButton" customModule="EMS" customModuleProvider="target">
                                             <rect key="frame" x="337" y="9" width="26" height="26"/>
-                                            <state key="normal" image="28-star-grey" backgroundImage="28-star-yellow">
+                                            <state key="normal" image="28-star">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <state key="selected" image="28-star-yellow"/>
@@ -800,9 +790,9 @@
                                                 <action selector="ratingButtonClick:" destination="5IH-wu-UM4" eventType="touchUpInside" id="INi-LZ-1eU"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6cD-Vf-UYt">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6cD-Vf-UYt" customClass="TintButton" customModule="EMS" customModuleProvider="target">
                                             <rect key="frame" x="303" y="9" width="26" height="26"/>
-                                            <state key="normal" image="28-star-grey" backgroundImage="28-star-yellow">
+                                            <state key="normal" image="28-star">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <state key="selected" image="28-star-yellow"/>
@@ -810,14 +800,24 @@
                                                 <action selector="ratingButtonClick:" destination="5IH-wu-UM4" eventType="touchUpInside" id="vtF-nN-JQn"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w3F-Tq-uZl">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w3F-Tq-uZl" customClass="TintButton" customModule="EMS" customModuleProvider="target">
                                             <rect key="frame" x="439" y="9" width="26" height="26"/>
-                                            <state key="normal" image="28-star-grey" backgroundImage="28-star-yellow">
+                                            <state key="normal" image="28-star">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <state key="selected" image="28-star-yellow"/>
                                             <connections>
                                                 <action selector="ratingButtonClick:" destination="5IH-wu-UM4" eventType="touchUpInside" id="fq7-8l-76a"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Qf-2l-teT" customClass="TintButton" customModule="EMS" customModuleProvider="target">
+                                            <rect key="frame" x="405" y="9" width="26" height="26"/>
+                                            <state key="normal" image="28-star">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <state key="selected" image="28-star-yellow"/>
+                                            <connections>
+                                                <action selector="ratingButtonClick:" destination="5IH-wu-UM4" eventType="touchUpInside" id="ZDw-75-tVl"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -865,7 +865,7 @@
     <resources>
         <image name="19-gear" width="26" height="26"/>
         <image name="258-checkmark-grey.png" width="19" height="18"/>
-        <image name="28-star-grey" width="26" height="26"/>
+        <image name="28-star" width="26" height="26"/>
         <image name="28-star-grey.png" width="26" height="26"/>
         <image name="28-star-yellow" width="26" height="26"/>
     </resources>

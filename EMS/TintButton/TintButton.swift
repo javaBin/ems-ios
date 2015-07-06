@@ -1,7 +1,7 @@
 import UIKit
 
-class TintButton: UIButton {
-    override var selected: Bool {
+public class TintButton: UIButton {
+    public override var selected: Bool {
         didSet {
             if (UIImage.instancesRespondToSelector("imageWithRenderingMode:")) {
                 if (self.selected) {
@@ -12,17 +12,19 @@ class TintButton: UIButton {
             }
         }
     }
-
-    func setImage(baseName: String) {
-        var normalImage = UIImage(named: "\(baseName)-grey")
-        var selectedImage = UIImage(named: "\(baseName)-yellow")
-
+    
+    public override func setImage(image: UIImage?, forState state: UIControlState) {
+        var img : UIImage? = image
+        
         if (UIImage.instancesRespondToSelector("imageWithRenderingMode:")) {
-            normalImage = normalImage?.imageWithRenderingMode(.AlwaysTemplate)
-            selectedImage = selectedImage?.imageWithRenderingMode(.AlwaysTemplate)
+            img = img?.imageWithRenderingMode(.AlwaysTemplate)
         }
 
-        self.setImage(normalImage, forState:.Normal)
-        self.setImage(selectedImage, forState:.Selected)
+        super.setImage(img, forState: state)
+    }
+    
+    public func setImage(name: String) {
+        self.setImage(UIImage(named: "\(name)-grey"), forState:.Normal)
+        self.setImage(UIImage(named: "\(name)-yellow"), forState:.Selected)
     }
 }

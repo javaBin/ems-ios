@@ -1,11 +1,11 @@
 import UIKit
 
 class RatingViewCell: UITableViewCell {
-    @IBOutlet weak var rating1: UIButton!
-    @IBOutlet weak var rating2: UIButton!
-    @IBOutlet weak var rating3: UIButton!
-    @IBOutlet weak var rating4: UIButton!
-    @IBOutlet weak var rating5: UIButton!
+    @IBOutlet weak var rating1: TintButton!
+    @IBOutlet weak var rating2: TintButton!
+    @IBOutlet weak var rating3: TintButton!
+    @IBOutlet weak var rating4: TintButton!
+    @IBOutlet weak var rating5: TintButton!
     
     var delegate : RatingViewCellDelegate? = nil
     
@@ -43,6 +43,12 @@ class RatingViewCell: UITableViewCell {
     }
     
     override func layoutSubviews() {
+        rating1.setImage("28-star")
+        rating2.setImage("28-star")
+        rating3.setImage("28-star")
+        rating4.setImage("28-star")
+        rating5.setImage("28-star")
+
         super.layoutSubviews()
         
         updateView()
