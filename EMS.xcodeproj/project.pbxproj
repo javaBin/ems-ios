@@ -31,6 +31,8 @@
 		5A416373BE23A1920C51ED23 /* speakers.json in Resources */ = {isa = PBXBuildFile; fileRef = 5A416FF3FE1C13CF6A368C9B /* speakers.json */; };
 		5A41652E4EABA57BAD1A98F9 /* Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A416442702316FA44451703 /* Log.m */; };
 		5A41664B5785031931F6E8F6 /* rooms.json in Resources */ = {isa = PBXBuildFile; fileRef = 5A4163F46F3439C519558165 /* rooms.json */; };
+		5A4166E6F45437C6545E3C4A /* TintButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4163968458233F329A569D /* TintButton.swift */; };
+		5A41688B322BF8E59FBF4F3E /* TintButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4163968458233F329A569D /* TintButton.swift */; };
 		5A41693E03F65F0A8006386F /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = 5A4161A69C9115F0CFF36204 /* events.json */; };
 		5A41697BB085BA29489DD9E6 /* sessions.json in Resources */ = {isa = PBXBuildFile; fileRef = 5A416D72DD69483C5D094AC3 /* sessions.json */; };
 		5A4169D2EECA2B8CFBD4B2A1 /* EMSTestConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4167DAA06AD9CEFB3ADC81 /* EMSTestConfig.m */; };
@@ -211,6 +213,7 @@
 		4E1ADFF5906ECB18F85E943C /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
 		5A4161A69C9115F0CFF36204 /* events.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = events.json; sourceTree = "<group>"; };
 		5A4161BD61ADB3BD11754CD3 /* EMSTestSlotsParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSTestSlotsParser.m; sourceTree = "<group>"; };
+		5A4163968458233F329A569D /* TintButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TintButton.swift; sourceTree = "<group>"; };
 		5A4163F46F3439C519558165 /* rooms.json */ = {isa = PBXFileReference; lastKnownFileType = file.json; path = rooms.json; sourceTree = "<group>"; };
 		5A416435CF3CFFADAFE2460F /* EMSTestRootParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSTestRootParser.m; sourceTree = "<group>"; };
 		5A416442702316FA44451703 /* Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Log.m; sourceTree = "<group>"; };
@@ -398,6 +401,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5A41635A61DB7D3B475CA9BD /* TintButton */ = {
+			isa = PBXGroup;
+			children = (
+				5A4163968458233F329A569D /* TintButton.swift */,
+			);
+			name = TintButton;
+			path = EMS/TintButton;
+			sourceTree = "<group>";
+		};
 		648F22F76B1C8A1B0290C7F4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -617,6 +629,7 @@
 				648F22F76B1C8A1B0290C7F4 /* Pods */,
 				837F68551A80CC8400AC7C97 /* JavaZone Tests.xctest */,
 				835263D01B45195F00ED97D7 /* EMS-Bridging-Header.h */,
+				5A41635A61DB7D3B475CA9BD /* TintButton */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1021,6 +1034,7 @@
 				4E1ADE290D991D1633B27066 /* EMSSpeakersRetriever.m in Sources */,
 				72A8D4AB9F0401AEED460AE7 /* NSURLResponse+EMSExtensions.m in Sources */,
 				5A41652E4EABA57BAD1A98F9 /* Log.m in Sources */,
+				5A4166E6F45437C6545E3C4A /* TintButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1083,6 +1097,7 @@
 				4E1AD032EC53C9E396CAD414 /* EMSSpeakersRetriever.m in Sources */,
 				72A8D23A0F61EBA5DD99D33D /* NSURLResponse+EMSExtensions.m in Sources */,
 				5A416E8B9CF2BA598F01DEFE /* Log.m in Sources */,
+				5A41688B322BF8E59FBF4F3E /* TintButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

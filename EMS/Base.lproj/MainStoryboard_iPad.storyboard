@@ -256,7 +256,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="129"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wYW-RC-moy">
+                                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wYW-RC-moy" customClass="TintButton" customModule="EMS" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="35" width="60" height="60"/>
                                             <accessibility key="accessibilityConfiguration" hint="" label="Add to favorites">
                                                 <accessibilityTraits key="traits" none="YES" button="YES"/>
@@ -530,7 +530,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ucs-dE-fm0">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ucs-dE-fm0" customClass="TintButton" customModule="EMS" customModuleProvider="target">
                                             <rect key="frame" x="709" y="27" width="44" height="44"/>
                                             <accessibility key="accessibilityConfiguration" label="Add to favorites"/>
                                             <constraints>

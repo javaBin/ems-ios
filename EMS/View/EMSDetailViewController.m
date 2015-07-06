@@ -614,25 +614,9 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     titleCell.timeAndRoomLabel.text = [EMSDetailViewController createControllerTitle:self.session];
     titleCell.timeAndRoomLabel.accessibilityLabel = [EMSDetailViewController createControllerAccessibilityTitle:self.session];
     
-    NSString *imageBaseName = [self.session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star";
-    NSString *imageNameFormat = @"%@-%@";
+    [titleCell.favoriteButton setImage:[self.session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star"];
 
-    UIImage *normalImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"grey"]];
-    UIImage *selectedImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"yellow"]];
-
-    if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
-        normalImage = [normalImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    }
-
-    [titleCell.favoriteButton setImage:normalImage forState:UIControlStateNormal];
-    [titleCell.favoriteButton setImage:selectedImage forState:UIControlStateSelected];
-
-    if ([self.session.favourite boolValue]) {
-        titleCell.favoriteButton.tintColor = nil;
-    } else {
-        titleCell.favoriteButton.tintColor = [UIColor lightGrayColor];
-    }
+    [titleCell.favoriteButton setSelected:[self.session.favourite boolValue]];
     
     return titleCell;
 }
