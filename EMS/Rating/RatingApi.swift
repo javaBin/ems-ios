@@ -40,8 +40,7 @@ public class RatingApi : NSObject {
     }
     
     public func postRating(session: Session, rating: Rating?) {
-        let deviceId = UIDevice.currentDevice().identifierForVendor
-        
+        Log.debug("Posting feedback for session \(session.href)")
         if let postRating = rating {
             let data = ["template":
                 ["data": [
@@ -52,6 +51,8 @@ public class RatingApi : NSObject {
                     ]
                 ]
             ]
+
+            Log.debug("Posting feedback for session \(session.href) with data \(data)")
             
             var jsonError : NSError?
             
@@ -72,6 +73,8 @@ public class RatingApi : NSObject {
     
     
     func post(url : NSURL, body : NSData) {
+        let deviceId = UIDevice.currentDevice().identifierForVendor
+        
         var request = NSMutableURLRequest(URL: url)
         var session = NSURLSession.sharedSession()
         request.HTTPMethod = "POST"
@@ -81,9 +84,22 @@ public class RatingApi : NSObject {
         request.HTTPBody = body
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(deviceId.UUIDString, forHTTPHeaderField: "Device-ID")
+        
+        let timer = NSDate()
         
         var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            // Do we even get a response?
+            Log.debug("Sent feedback")
+
+            EMSTracking.trackTimingWithCategory("feedback", interval: NSDate().timeIntervalSinceDate(timer), name: "feedback")
+
+            if (error != nil) {
+                Log.warn("Failed to send feedback \(error)")
+                
+                EMSTracking.trackException("Unable to send feedback due to Code: \(error.code), Domain: \(error.domain), Info: \(error.userInfo)")
+            }
+
+            EMSTracking.dispatch()
         })
         
         task.resume()

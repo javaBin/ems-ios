@@ -57,6 +57,9 @@ class RatingViewCell: UITableViewCell {
     }
     
     override func layoutSubviews() {
+        // If we can get this to work by simply setting it in storyboard then these setImage lines can go.
+        // But for some reason setting in storyboard isn't triggering the code for setting tint.
+        
         rating1.setImage("28-star")
         rating2.setImage("28-star")
         rating3.setImage("28-star")
