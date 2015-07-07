@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>rating-server</key>
-	<string>http://localhost</string>
+	<string>http://test.javazone.no/devnull/server/</string>
 	<key>features</key>
 	<dict>
 		<key>links</key>
