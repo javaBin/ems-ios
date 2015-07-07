@@ -264,8 +264,8 @@ NSString *const EMSUserRequestedSessionNotificationSessionKey = @"EMSUserRequest
 
     NSCalendar *calendar = [NSCalendar currentCalendar];
 
-    NSDateComponents *timeComp = [calendar components:NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:sessionDate];
-    NSDateComponents *dateComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:[[NSDate alloc] init]];
+    NSDateComponents *timeComp = [calendar components:NSCalendarUnitHour | NSCalendarUnitMinute fromDate:sessionDate];
+    NSDateComponents *dateComp = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:[[NSDate alloc] init]];
 
 
     static NSDateFormatter *inputFormatter;

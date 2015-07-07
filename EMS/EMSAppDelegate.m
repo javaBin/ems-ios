@@ -78,16 +78,9 @@ int networkCount = 0;
         [EMSTracking trackEventWithCategory:@"system" action:@"remotenotification" label:@"initialize"];
 
 #if !(TARGET_IPHONE_SIMULATOR)
-        if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)]) {
-            // iOS 8 Notifications
             [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert categories:nil]];
 
             [application registerForRemoteNotifications];
-        }
-        else {
-            // iOS < 8 Notifications
-            [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert];
-        }
 #endif
 
         if (launchOptions != nil) {

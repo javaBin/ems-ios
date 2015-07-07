@@ -1130,8 +1130,8 @@
 
     NSCalendar *calendar = [NSCalendar currentCalendar];
 
-    NSDateComponents *timeComp = [calendar components:NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:date];
-    NSDateComponents *dateComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:conferenceDate];
+    NSDateComponents *timeComp = [calendar components:NSCalendarUnitHour | NSCalendarUnitMinute fromDate:date];
+    NSDateComponents *dateComp = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:conferenceDate];
 
     static NSDateFormatter *inputFormatter;
 

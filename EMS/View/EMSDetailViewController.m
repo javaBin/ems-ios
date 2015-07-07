@@ -458,8 +458,8 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     // In debug mode we will use the current day but always the start time of the slot. Otherwise we couldn't test until JZ started ;)
     NSCalendar *calendar = [NSCalendar currentCalendar];
 
-    NSDateComponents *timeComp = [calendar components:NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:date];
-    NSDateComponents *dateComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:[[NSDate alloc] init]];
+    NSDateComponents *timeComp = [calendar components:NSCalendarUnitHour | NSCalendarUnitMinute fromDate:date];
+    NSDateComponents *dateComp = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:[[NSDate alloc] init]];
 
     static NSDateFormatter *inputFormatter;
 
@@ -521,16 +521,19 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
             UIActivityTypeAssignToContact,
             UIActivityTypeSaveToCameraRoll];
 
-    [activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
+    [activityViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
         DDLogVerbose(@"Sharing of %@ via %@ - completed %d", shareString, activityType, completed);
 
-
         self.shareButton.enabled = YES;
+        
         if (completed) {
             [EMSTracking trackSocialWithNetwork:activityType action:@"Share" target:self.session.href];
         }
-    }];
 
+        if (activityError != nil) {
+            [EMSTracking trackException:[NSString stringWithFormat:@"Unable to share with Code: %ld, Domain: %@, Info: %@", activityError.code, activityError.domain, activityError.userInfo]];
+        }
+    }];
 
     activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
 
