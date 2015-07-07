@@ -84,7 +84,7 @@ public class RatingApi : NSObject {
         request.HTTPBody = body
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue(deviceId.UUIDString, forHTTPHeaderField: "Device-ID")
+        request.addValue(deviceId.UUIDString, forHTTPHeaderField: "Voter-ID")
         
         let timer = NSDate()
         
