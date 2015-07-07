@@ -6,4 +6,5 @@
 
 @interface EMSConfig : NSObject
 + (NSURL *) emsRootUrl;
++ (NSURL *) ratingUrl;
 @end

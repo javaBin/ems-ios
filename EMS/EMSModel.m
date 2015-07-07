@@ -20,6 +20,7 @@
 #import "Speaker.h"
 #import "EMSTracking.h"
 #import "SpeakerPic.h"
+#import "EMSConfig.h"
 
 @implementation EMSModel
 
@@ -1256,7 +1257,7 @@
 }
 
 - (Rating *)ratingForSession:(Session *)session {
-    RatingApi *api = [[RatingApi alloc] initWithServer: [[EMSFeatureConfig configDictionary] objectForKey:@"rating-server"]];
+    RatingApi *api = [[RatingApi alloc] initWithServer: [[EMSConfig ratingUrl] absoluteString]];
     
     NSURL *url = [api urlFromSession:session];
     
@@ -1288,7 +1289,7 @@
     Rating *rating = [self ratingForSession:session];
     
     if (rating == nil) {
-        RatingApi *api = [[RatingApi alloc] initWithServer: [[EMSFeatureConfig configDictionary] objectForKey:@"rating-server"]];
+        RatingApi *api = [[RatingApi alloc] initWithServer: [[EMSConfig ratingUrl] absoluteString]];
         
         NSURL *url = [api urlFromSession:session];
 

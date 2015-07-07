@@ -28,6 +28,7 @@
 #import "EMSSpeakersRetriever.h"
 
 #import "EMSFeatureConfig.h"
+#import "EMSConfig.h"
 
 @interface EMSDetailViewController () <UIPopoverControllerDelegate, EMSSpeakersRetrieverDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -342,7 +343,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
                                                       forSession:self.session
                                                            error:nil];
     
-    RatingApi *api = [[RatingApi alloc] initWithServer:[[EMSFeatureConfig configDictionary] objectForKey:@"rating-server"]];
+    RatingApi *api = [[RatingApi alloc] initWithServer:[[EMSConfig ratingUrl] absoluteString]];
     [api postRating:self.session rating:[[[EMSAppDelegate sharedAppDelegate] model] ratingForSession:self.session]];
 }
 

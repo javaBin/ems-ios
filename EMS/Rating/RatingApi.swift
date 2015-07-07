@@ -9,7 +9,7 @@ public class RatingApi : NSObject {
     
     public func urlFromSession(session : Session) -> NSURL? {
         if let parts = extractParts(session) {
-            return NSURL(string: "\(server)/events/\(parts.event)/sessions/\(parts.session)/feedbacks")
+            return NSURL(string: "\(server)events/\(parts.event)/sessions/\(parts.session)/feedbacks")
         }
         
         return nil;
@@ -89,7 +89,7 @@ public class RatingApi : NSObject {
         let timer = NSDate()
         
         var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            Log.debug("Sent feedback")
+            Log.debug("Sent feedback to URL \(url)")
 
             EMSTracking.trackTimingWithCategory("feedback", interval: NSDate().timeIntervalSinceDate(timer), name: "feedback")
 
@@ -99,6 +99,18 @@ public class RatingApi : NSObject {
                 EMSTracking.trackException("Unable to send feedback due to Code: \(error.code), Domain: \(error.domain), Info: \(error.userInfo)")
             }
 
+            if let httpResponse = response as? NSHTTPURLResponse {
+                if (httpResponse.statusCode >= 300) {
+                    let dataString = NSString(data: data, encoding: NSUTF8StringEncoding)
+                    
+                    EMSTracking.trackException("Unable to send feedback with status code: \(httpResponse.statusCode) for url \(url)")
+
+                    Log.debug("Feedback got status \(httpResponse.statusCode) with data \(dataString)")
+                } else {
+                    Log.debug("Feedback OK with status \(httpResponse.statusCode)")
+                }
+            }
+            
             EMSTracking.dispatch()
         })
         

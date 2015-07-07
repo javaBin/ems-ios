@@ -4,6 +4,8 @@
 <dict>
 	<key>rating-server</key>
 	<string>http://test.javazone.no/devnull/server/</string>
+	<key>rating-server-prod</key>
+	<string>http://javazone.no/devnull/server/</string>
 	<key>features</key>
 	<dict>
 		<key>links</key>

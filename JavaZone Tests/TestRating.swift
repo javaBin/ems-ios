@@ -28,7 +28,7 @@ class TestRating: XCTestCase {
         
         session.href = "http://javazone.no/ems/server/events/0e6d98e9-5b06-42e7-b275-6abadb498c81/sessions/d0e180a3-2aa6-468d-a65f-12859cf1bc66"
         
-        let api = RatingApi(server: "http://javazone.no/devnull/server")
+        let api = RatingApi(server: "http://javazone.no/devnull/server/")
         
         if let url = api.urlFromSession(session) {
             XCTAssertEqual(url.absoluteString!, "http://javazone.no/devnull/server/events/0e6d98e9-5b06-42e7-b275-6abadb498c81/sessions/d0e180a3-2aa6-468d-a65f-12859cf1bc66/feedbacks", "Incorrect url generated")
