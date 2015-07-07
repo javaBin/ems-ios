@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0Ye-bN-FPt">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -622,50 +621,45 @@
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vaG-dx-mu6" customClass="TintButton" customModule="EMS" customModuleProvider="target">
                                             <rect key="frame" x="147" y="9" width="26" height="26"/>
-                                            <state key="normal" image="28-star">
+                                            <state key="normal" image="28-star-grey">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
-                                            <state key="selected" image="28-star-yellow"/>
                                             <connections>
                                                 <action selector="ratingButtonClick:" destination="WVV-k0-7gL" eventType="touchUpInside" id="rvR-Cr-sgL"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sp1-uY-ONM" customClass="TintButton" customModule="EMS" customModuleProvider="target">
-                                            <rect key="frame" x="181" y="9" width="26" height="26"/>
-                                            <state key="normal" image="28-star">
+                                            <rect key="frame" x="189" y="9" width="26" height="26"/>
+                                            <state key="normal" image="28-star-grey">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
-                                            <state key="selected" image="28-star-yellow"/>
                                             <connections>
                                                 <action selector="ratingButtonClick:" destination="WVV-k0-7gL" eventType="touchUpInside" id="EnL-GC-yRt"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fgc-b2-DxM" customClass="TintButton" customModule="EMS" customModuleProvider="target">
-                                            <rect key="frame" x="113" y="9" width="26" height="26"/>
-                                            <state key="normal" image="28-star">
+                                            <rect key="frame" x="105" y="9" width="26" height="26"/>
+                                            <state key="normal" image="28-star-grey">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
-                                            <state key="selected" image="28-star-yellow"/>
                                             <connections>
                                                 <action selector="ratingButtonClick:" destination="WVV-k0-7gL" eventType="touchUpInside" id="xIq-8C-CeK"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6hq-On-EZW" customClass="TintButton" customModule="EMS" customModuleProvider="target">
-                                            <rect key="frame" x="79" y="9" width="26" height="26"/>
-                                            <state key="normal" image="28-star">
+                                            <rect key="frame" x="63" y="9" width="26" height="26"/>
+                                            <state key="normal" image="28-star-grey">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
-                                            <state key="selected" image="28-star-yellow"/>
                                             <connections>
                                                 <action selector="ratingButtonClick:" destination="WVV-k0-7gL" eventType="touchUpInside" id="FiK-n4-0GI"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WQa-sm-yJH" customClass="TintButton" customModule="EMS" customModuleProvider="target">
-                                            <rect key="frame" x="215" y="9" width="26" height="26"/>
-                                            <state key="normal" image="28-star">
+                                            <rect key="frame" x="231" y="9" width="26" height="26"/>
+                                            <state key="normal" image="28-star-grey">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
-                                            <state key="selected" image="28-star-yellow"/>
                                             <connections>
                                                 <action selector="ratingButtonClick:" destination="WVV-k0-7gL" eventType="touchUpInside" id="NKF-v4-Axp"/>
                                             </connections>
@@ -685,13 +679,13 @@
                                         <constraint firstAttribute="centerY" secondItem="WQa-sm-yJH" secondAttribute="centerY" id="8eQ-Kh-x9w"/>
                                         <constraint firstAttribute="centerY" secondItem="6hq-On-EZW" secondAttribute="centerY" id="BNB-9i-xol"/>
                                         <constraint firstAttribute="centerY" secondItem="vaG-dx-mu6" secondAttribute="centerY" id="GVs-CZ-u5F"/>
-                                        <constraint firstItem="WQa-sm-yJH" firstAttribute="leading" secondItem="Sp1-uY-ONM" secondAttribute="trailing" constant="8" symbolic="YES" id="NIe-C0-W8h"/>
+                                        <constraint firstItem="WQa-sm-yJH" firstAttribute="leading" secondItem="Sp1-uY-ONM" secondAttribute="trailing" constant="16" id="NIe-C0-W8h"/>
                                         <constraint firstAttribute="centerY" secondItem="WbD-Hr-b76" secondAttribute="centerY" id="Rs5-yF-1Bi"/>
-                                        <constraint firstItem="Fgc-b2-DxM" firstAttribute="leading" secondItem="6hq-On-EZW" secondAttribute="trailing" constant="8" symbolic="YES" id="VVj-bL-BBb"/>
+                                        <constraint firstItem="Fgc-b2-DxM" firstAttribute="leading" secondItem="6hq-On-EZW" secondAttribute="trailing" constant="16" id="VVj-bL-BBb"/>
                                         <constraint firstAttribute="centerY" secondItem="Fgc-b2-DxM" secondAttribute="centerY" id="ZK8-rh-nle"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="WbD-Hr-b76" secondAttribute="trailing" id="aPy-ug-Z98"/>
-                                        <constraint firstItem="vaG-dx-mu6" firstAttribute="leading" secondItem="Fgc-b2-DxM" secondAttribute="trailing" constant="8" symbolic="YES" id="bWh-j8-Tdb"/>
-                                        <constraint firstItem="Sp1-uY-ONM" firstAttribute="leading" secondItem="vaG-dx-mu6" secondAttribute="trailing" constant="8" symbolic="YES" id="l09-bQ-qhR"/>
+                                        <constraint firstItem="vaG-dx-mu6" firstAttribute="leading" secondItem="Fgc-b2-DxM" secondAttribute="trailing" constant="16" id="bWh-j8-Tdb"/>
+                                        <constraint firstItem="Sp1-uY-ONM" firstAttribute="leading" secondItem="vaG-dx-mu6" secondAttribute="trailing" constant="16" id="l09-bQ-qhR"/>
                                         <constraint firstAttribute="centerY" secondItem="Sp1-uY-ONM" secondAttribute="centerY" id="lkb-ii-c0j"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -783,9 +777,8 @@
     <resources>
         <image name="19-gear" width="26" height="26"/>
         <image name="258-checkmark-grey.png" width="19" height="18"/>
-        <image name="28-star" width="26" height="26"/>
+        <image name="28-star-grey" width="26" height="26"/>
         <image name="28-star-grey.png" width="26" height="26"/>
-        <image name="28-star-yellow" width="26" height="26"/>
         <image name="298-circlex" width="22" height="22"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
