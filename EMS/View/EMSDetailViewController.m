@@ -683,9 +683,9 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         
     } else {
         
-        CGFloat prefWidth =CGRectGetWidth(tableView.bounds);
-        CGFloat prefHeigth = 400;
-        cell.bounds = CGRectMake(0.0f, 0.0f, prefWidth, prefHeigth);
+        CGFloat prefWidth = CGRectGetWidth(tableView.bounds);
+        CGFloat prefHeight = 400;
+        cell.bounds = CGRectMake(0.0f, 0.0f, prefWidth, prefHeight);
         
         [cell setNeedsLayout];
         [cell layoutSubviews];
