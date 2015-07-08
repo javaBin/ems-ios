@@ -30,6 +30,8 @@
 #import "EMSFeatureConfig.h"
 #import "EMSConfig.h"
 
+#import "NSDate+EMSExtensions.h"
+
 @interface EMSDetailViewController () <UIPopoverControllerDelegate, EMSSpeakersRetrieverDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property(nonatomic) UIPopoverController *sharePopoverController;
@@ -453,28 +455,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 }
 
 - (NSDate *)dateForDate:(NSDate *)date {
-#ifdef USE_TEST_DATE
-    DDLogWarn(@"RUNNING IN USE_TEST_DATE mode");
-
-    // In debug mode we will use the current day but always the start time of the slot. Otherwise we couldn't test until JZ started ;)
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-
-    NSDateComponents *timeComp = [calendar components:NSCalendarUnitHour | NSCalendarUnitMinute fromDate:date];
-    NSDateComponents *dateComp = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:[[NSDate alloc] init]];
-
-    static NSDateFormatter *inputFormatter;
-
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        inputFormatter = [[NSDateFormatter alloc] init];
-        [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
-        [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-    });
-
-    return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04ld-%02ld-%02ld %02ld:%02ld:00 +0200", (long) [dateComp year], (long) [dateComp month], (long) [dateComp day], (long) [timeComp hour], (long) [timeComp minute]]];
-#else
-    return date;
-#endif
+    return [NSDate dateForDate:date fromDate:[[NSDate alloc] init]];
 }
 
 #pragma mark - Actions

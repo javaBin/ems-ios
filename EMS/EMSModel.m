@@ -22,6 +22,8 @@
 #import "SpeakerPic.h"
 #import "EMSConfig.h"
 
+#import "NSDate+EMSExtensions.h"
+
 @implementation EMSModel
 
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)moc {
@@ -1113,40 +1115,17 @@
 
 
 - (NSDate *)dateForConference:(Conference *)conference andDate:(NSDate *)date {
-#ifdef USE_TEST_DATE
-    DDLogWarn(@"RUNNING IN USE_TEST_DATE mode");
-
-    // In debug mode we will use the current time of day but always the first day of conference. Otherwise we couldn't test until JZ started ;)
     NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"slot.start" ascending:YES];
     NSArray *sessions = [self sessionsForPredicate:[NSPredicate predicateWithFormat:@"(format != %@ AND conference == %@)", @"workshop", conference] andSort:@[dateDescriptor]];
-
+    
     Session *firstSession = sessions[0];
     NSDate *conferenceDate = firstSession.slot.start;
-
+    
     if (conferenceDate == nil) {
         return nil;
     }
-
-    DDLogVerbose(@"Saw conference date of %@", conferenceDate);
-
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-
-    NSDateComponents *timeComp = [calendar components:NSCalendarUnitHour | NSCalendarUnitMinute fromDate:date];
-    NSDateComponents *dateComp = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:conferenceDate];
-
-    static NSDateFormatter *inputFormatter;
-
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        inputFormatter = [[NSDateFormatter alloc] init];
-        [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
-        [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-    });
-
-    return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04ld-%02ld-%02ld %02ld:%02ld:00 +0200", (long) [dateComp year], (long) [dateComp month], (long) [dateComp day], (long) [timeComp hour], (long) [timeComp minute]]];
-#else
-    return date;
-#endif
+    
+    return [NSDate dateForDate:date fromDate:conferenceDate];
 }
 
 - (SpeakerPic *)speakerPicForHref:(NSString *)url {

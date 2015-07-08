@@ -14,6 +14,8 @@
 #import "Session.h"
 #import "Room.h"
 
+#import "NSDate+EMSExtensions.h"
+
 // This class is not Thread safe. Call all methods on main Thread.
 
 NSString *const EMSUserRequestedSessionNotification = @"EMSUserRequestedSessionNotification";
@@ -253,34 +255,9 @@ NSString *const EMSUserRequestedSessionNotificationSessionKey = @"EMSUserRequest
 }
 
 - (NSDate *)dateForSession:(Session *)session {
-#ifdef USE_TEST_DATE
-    DDLogWarn(@"RUNNING IN USE_TEST_DATE mode");
-
-    // In debug mode we will use the current day but always the start time of the slot. Otherwise we couldn't test until JZ started ;)
-
     NSDate *sessionDate = session.slot.start;
-
-    DDLogVerbose(@"Saw session date of %@", sessionDate);
-
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-
-    NSDateComponents *timeComp = [calendar components:NSCalendarUnitHour | NSCalendarUnitMinute fromDate:sessionDate];
-    NSDateComponents *dateComp = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:[[NSDate alloc] init]];
-
-
-    static NSDateFormatter *inputFormatter;
-
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        inputFormatter = [[NSDateFormatter alloc] init];
-        [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
-        [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-    });
-
-    return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04ld-%02ld-%02ld %02ld:%02ld:00 +0200", (long) [dateComp year], (long) [dateComp month], (long) [dateComp day], (long) [timeComp hour], (long) [timeComp minute]]];
-#else
-    return session.slot.start;
-#endif
+    
+    return [NSDate dateForDate:sessionDate fromDate:[[NSDate alloc] init]];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {

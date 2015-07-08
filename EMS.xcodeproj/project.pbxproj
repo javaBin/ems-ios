@@ -13,6 +13,8 @@
 		1504125319ABE19200051E04 /* Speaker.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C61772EA93000EE4A9 /* Speaker.m */; };
 		15204C1F18DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */; };
 		15204C2018DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */; };
+		15806D071B4D75C400EFFB47 /* NSDate+EMSExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 15806D061B4D75C400EFFB47 /* NSDate+EMSExtensions.m */; };
+		15806D081B4D75C400EFFB47 /* NSDate+EMSExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 15806D061B4D75C400EFFB47 /* NSDate+EMSExtensions.m */; };
 		15A735D219BDB7F5001AAC7C /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15A735D119BDB7F5001AAC7C /* EMS-Keys.plist */; };
 		4E1AD00E5B0570877570A148 /* EMSTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */; };
 		4E1AD032EC53C9E396CAD414 /* EMSSpeakersRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1AD7801B1EF0B9E87AAF57 /* EMSSpeakersRetriever.m */; };
@@ -193,6 +195,8 @@
 		1504124F19ABDDA500051E04 /* SpeakerPic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeakerPic.m; path = EMS/EMSMO/SpeakerPic.m; sourceTree = "<group>"; };
 		15204C1D18DB82C40062874A /* EMSCoreDataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "EMSCoreDataModel 3.xcdatamodel"; sourceTree = "<group>"; };
 		15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = RemoveSlugMapping.xcmappingmodel; sourceTree = "<group>"; };
+		15806D051B4D75C400EFFB47 /* NSDate+EMSExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+EMSExtensions.h"; sourceTree = "<group>"; };
+		15806D061B4D75C400EFFB47 /* NSDate+EMSExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+EMSExtensions.m"; sourceTree = "<group>"; };
 		15A735D119BDB7F5001AAC7C /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
 		4E1AD00D04FA079A848CDAE5 /* JavaZone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "JavaZone-Info.plist"; sourceTree = "<group>"; };
 		4E1AD0E07B70D148B519768B /* flatMap-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "flatMap-Info.plist"; sourceTree = "<group>"; };
@@ -651,6 +655,8 @@
 		F35BB6CB17685885009077D3 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				15806D051B4D75C400EFFB47 /* NSDate+EMSExtensions.h */,
+				15806D061B4D75C400EFFB47 /* NSDate+EMSExtensions.m */,
 				83BF8B6917ECDA4D0093242C /* Images.xcassets */,
 				F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */,
 				15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */,
@@ -999,6 +1005,7 @@
 				839BD667176F9BD400900712 /* EMSSlotsParser.m in Sources */,
 				835D903E1B46737C0038FA3E /* RatingViewController.swift in Sources */,
 				839BD66B176F9BD400900712 /* EMSMainViewController.m in Sources */,
+				15806D071B4D75C400EFFB47 /* NSDate+EMSExtensions.m in Sources */,
 				EA11338719A7A880008D000A /* EMSLocalNotificationManager.m in Sources */,
 				835263D21B45195F00ED97D7 /* RatingApi.swift in Sources */,
 				839BD66C176F9BD400900712 /* EMSSettingsViewController.m in Sources */,
@@ -1062,6 +1069,7 @@
 				F394C97F17F0173900FAFBD4 /* EMSMainViewController.m in Sources */,
 				F394C98017F0173900FAFBD4 /* EMSSettingsViewController.m in Sources */,
 				EA11338819A7A880008D000A /* EMSLocalNotificationManager.m in Sources */,
+				15806D081B4D75C400EFFB47 /* NSDate+EMSExtensions.m in Sources */,
 				F394C98217F0173900FAFBD4 /* EMSSpeaker.m in Sources */,
 				F394C98317F0173900FAFBD4 /* EMSDetailViewController.m in Sources */,
 				835D903F1B46737C0038FA3E /* RatingViewController.swift in Sources */,
