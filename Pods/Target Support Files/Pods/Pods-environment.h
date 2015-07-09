@@ -6,35 +6,35 @@
 // project.
 
 
-// Bolts
-#define COCOAPODS_POD_AVAILABLE_Bolts
-#define COCOAPODS_VERSION_MAJOR_Bolts 1
-#define COCOAPODS_VERSION_MINOR_Bolts 1
-#define COCOAPODS_VERSION_PATCH_Bolts 3
+// Bolts/Tasks
+#define COCOAPODS_POD_AVAILABLE_Bolts_Tasks
+#define COCOAPODS_VERSION_MAJOR_Bolts_Tasks 1
+#define COCOAPODS_VERSION_MINOR_Bolts_Tasks 2
+#define COCOAPODS_VERSION_PATCH_Bolts_Tasks 0
 
 // CocoaLumberjack
 #define COCOAPODS_POD_AVAILABLE_CocoaLumberjack
 #define COCOAPODS_VERSION_MAJOR_CocoaLumberjack 2
 #define COCOAPODS_VERSION_MINOR_CocoaLumberjack 0
-#define COCOAPODS_VERSION_PATCH_CocoaLumberjack 0
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack 1
 
 // CocoaLumberjack/Core
 #define COCOAPODS_POD_AVAILABLE_CocoaLumberjack_Core
 #define COCOAPODS_VERSION_MAJOR_CocoaLumberjack_Core 2
 #define COCOAPODS_VERSION_MINOR_CocoaLumberjack_Core 0
-#define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Core 0
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Core 1
 
 // CocoaLumberjack/Default
 #define COCOAPODS_POD_AVAILABLE_CocoaLumberjack_Default
 #define COCOAPODS_VERSION_MAJOR_CocoaLumberjack_Default 2
 #define COCOAPODS_VERSION_MINOR_CocoaLumberjack_Default 0
-#define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Default 0
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Default 1
 
 // CocoaLumberjack/Extensions
 #define COCOAPODS_POD_AVAILABLE_CocoaLumberjack_Extensions
 #define COCOAPODS_VERSION_MAJOR_CocoaLumberjack_Extensions 2
 #define COCOAPODS_VERSION_MINOR_CocoaLumberjack_Extensions 0
-#define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Extensions 0
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Extensions 1
 
 // Collection-JSON-ObjC
 #define COCOAPODS_POD_AVAILABLE_Collection_JSON_ObjC
@@ -42,23 +42,29 @@
 #define COCOAPODS_VERSION_MINOR_Collection_JSON_ObjC 0
 #define COCOAPODS_VERSION_PATCH_Collection_JSON_ObjC 1
 
+// CrashlyticsFramework
+#define COCOAPODS_POD_AVAILABLE_CrashlyticsFramework
+#define COCOAPODS_VERSION_MAJOR_CrashlyticsFramework 2
+#define COCOAPODS_VERSION_MINOR_CrashlyticsFramework 2
+#define COCOAPODS_VERSION_PATCH_CrashlyticsFramework 10
+
 // CrashlyticsLumberjack
 #define COCOAPODS_POD_AVAILABLE_CrashlyticsLumberjack
 #define COCOAPODS_VERSION_MAJOR_CrashlyticsLumberjack 2
 #define COCOAPODS_VERSION_MINOR_CrashlyticsLumberjack 0
-#define COCOAPODS_VERSION_PATCH_CrashlyticsLumberjack 0
+#define COCOAPODS_VERSION_PATCH_CrashlyticsLumberjack 1
 
-// GoogleAnalytics-iOS-SDK
-#define COCOAPODS_POD_AVAILABLE_GoogleAnalytics_iOS_SDK
-#define COCOAPODS_VERSION_MAJOR_GoogleAnalytics_iOS_SDK 3
-#define COCOAPODS_VERSION_MINOR_GoogleAnalytics_iOS_SDK 10
-#define COCOAPODS_VERSION_PATCH_GoogleAnalytics_iOS_SDK 0
+// CrashlyticsLumberjack/Framework
+#define COCOAPODS_POD_AVAILABLE_CrashlyticsLumberjack_Framework
+#define COCOAPODS_VERSION_MAJOR_CrashlyticsLumberjack_Framework 2
+#define COCOAPODS_VERSION_MINOR_CrashlyticsLumberjack_Framework 0
+#define COCOAPODS_VERSION_PATCH_CrashlyticsLumberjack_Framework 1
 
-// GoogleAnalytics-iOS-SDK/Core
-#define COCOAPODS_POD_AVAILABLE_GoogleAnalytics_iOS_SDK_Core
-#define COCOAPODS_VERSION_MAJOR_GoogleAnalytics_iOS_SDK_Core 3
-#define COCOAPODS_VERSION_MINOR_GoogleAnalytics_iOS_SDK_Core 10
-#define COCOAPODS_VERSION_PATCH_GoogleAnalytics_iOS_SDK_Core 0
+// GoogleAnalytics
+#define COCOAPODS_POD_AVAILABLE_GoogleAnalytics
+#define COCOAPODS_VERSION_MAJOR_GoogleAnalytics 3
+#define COCOAPODS_VERSION_MINOR_GoogleAnalytics 12
+#define COCOAPODS_VERSION_PATCH_GoogleAnalytics 0
 
 // NHCalendarActivity
 #define COCOAPODS_POD_AVAILABLE_NHCalendarActivity
@@ -69,6 +75,6 @@
 // Parse
 #define COCOAPODS_POD_AVAILABLE_Parse
 #define COCOAPODS_VERSION_MAJOR_Parse 1
-#define COCOAPODS_VERSION_MINOR_Parse 6
-#define COCOAPODS_VERSION_PATCH_Parse 2
+#define COCOAPODS_VERSION_MINOR_Parse 7
+#define COCOAPODS_VERSION_PATCH_Parse 5
 

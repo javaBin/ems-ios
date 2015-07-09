@@ -13,7 +13,7 @@
 @property(nonatomic, strong) IBOutlet UILabel *speaker;
 @property(nonatomic, strong) IBOutlet UILabel *summary;
 @property(nonatomic, strong) IBOutlet UILabel *keywords;
-@property(nonatomic, strong) IBOutlet UIButton *icon;
+@property(nonatomic, strong) IBOutlet TintButton *icon;
 @property(nonatomic, strong) IBOutlet UIImageView *level;
 @property(nonatomic, strong) IBOutlet UIImageView *video;
 @property(nonatomic, strong) Session *session;

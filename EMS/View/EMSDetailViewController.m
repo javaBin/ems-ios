@@ -27,6 +27,11 @@
 #import "EMSSessionTitleTableViewCell.h"
 #import "EMSSpeakersRetriever.h"
 
+#import "EMSFeatureConfig.h"
+#import "EMSConfig.h"
+
+#import "NSDate+EMSExtensions.h"
+
 @interface EMSDetailViewController () <UIPopoverControllerDelegate, EMSSpeakersRetrieverDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property(nonatomic) UIPopoverController *sharePopoverController;
@@ -58,7 +63,7 @@
 typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     EMSDetailViewControllerSectionInfo,
     EMSDetailViewControllerSectionLegacy,
-
+    EMSDetailViewControllerSectionRating
 };
 
 @implementation EMSDetailViewController
@@ -319,6 +324,31 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     // Dispose of any resources that can be recreated.
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"showRatingSegue"]) {
+        Rating *rating = [[[EMSAppDelegate sharedAppDelegate] model] ratingForSession:self.session];
+        
+        RatingViewController *destination = segue.destinationViewController;
+        
+        destination.rating = rating;
+    }
+    
+}
+
+- (IBAction)unwindToDetailViewController:(UIStoryboardSegue *)unwindSegue {
+    RatingViewController *ratingController = unwindSegue.sourceViewController;
+    
+    [[[EMSAppDelegate sharedAppDelegate] model] setRatingOverall:[(NSNumber *)ratingController.sections[0][@"rating"] intValue]
+                                                         content:[(NSNumber *)ratingController.sections[2][@"rating"] intValue]
+                                                         quality:[(NSNumber *)ratingController.sections[3][@"rating"] intValue]
+                                                       relevance:[(NSNumber *)ratingController.sections[1][@"rating"] intValue]
+                                                      forSession:self.session
+                                                           error:nil];
+    
+    RatingApi *api = [[RatingApi alloc] initWithServer:[[EMSConfig ratingUrl] absoluteString]];
+    [api postRating:self.session rating:[[[EMSAppDelegate sharedAppDelegate] model] ratingForSession:self.session]];
+}
+
 #pragma mark - UIPopoverControllerDelegate
 
 - (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController {
@@ -425,28 +455,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 }
 
 - (NSDate *)dateForDate:(NSDate *)date {
-#ifdef USE_TEST_DATE
-    DDLogWarn(@"RUNNING IN USE_TEST_DATE mode");
-
-    // In debug mode we will use the current day but always the start time of the slot. Otherwise we couldn't test until JZ started ;)
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-
-    NSDateComponents *timeComp = [calendar components:NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:date];
-    NSDateComponents *dateComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:[[NSDate alloc] init]];
-
-    static NSDateFormatter *inputFormatter;
-
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        inputFormatter = [[NSDateFormatter alloc] init];
-        [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
-        [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-    });
-
-    return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04ld-%02ld-%02ld %02ld:%02ld:00 +0200", (long) [dateComp year], (long) [dateComp month], (long) [dateComp day], (long) [timeComp hour], (long) [timeComp minute]]];
-#else
-    return date;
-#endif
+    return [NSDate dateForDate:date fromDate:[[NSDate alloc] init]];
 }
 
 #pragma mark - Actions
@@ -494,16 +503,19 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
             UIActivityTypeAssignToContact,
             UIActivityTypeSaveToCameraRoll];
 
-    [activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
+    [activityViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
         DDLogVerbose(@"Sharing of %@ via %@ - completed %d", shareString, activityType, completed);
 
-
         self.shareButton.enabled = YES;
+        
         if (completed) {
             [EMSTracking trackSocialWithNetwork:activityType action:@"Share" target:self.session.href];
         }
-    }];
 
+        if (activityError != nil) {
+            [EMSTracking trackException:[NSString stringWithFormat:@"Unable to share with Code: %ld, Domain: %@, Info: %@", activityError.code, activityError.domain, activityError.userInfo]];
+        }
+    }];
 
     activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
 
@@ -527,6 +539,10 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (EMSFeatureConfig.isRatingEnabled) {
+        return 3;
+    }
+    
     return 2;
 }
 
@@ -537,6 +553,10 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         rows = 1;
     } else if (section == EMSDetailViewControllerSectionLegacy) {
         rows = [self.parts count];
+    } else if (section == EMSDetailViewControllerSectionRating) {
+        if (EMSFeatureConfig.isRatingEnabled) {
+            rows = 1;
+        }
     }
 
     return rows;
@@ -549,6 +569,8 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     if (indexPath.section == EMSDetailViewControllerSectionInfo) {
         EMSSessionTitleTableViewCell *titleCell = [self.tableView dequeueReusableCellWithIdentifier:@"SessionTitleTableViewCell" forIndexPath:indexPath];
         cell = [self configureTitleCell:titleCell forIndexPath:indexPath];
+    } else if (indexPath.section == EMSDetailViewControllerSectionRating) {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:@"RatingCell" forIndexPath:indexPath];
     } else if (indexPath.section == EMSDetailViewControllerSectionLegacy) {
         EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
         if (row.body) {
@@ -577,25 +599,9 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     titleCell.timeAndRoomLabel.text = [EMSDetailViewController createControllerTitle:self.session];
     titleCell.timeAndRoomLabel.accessibilityLabel = [EMSDetailViewController createControllerAccessibilityTitle:self.session];
     
-    NSString *imageBaseName = [self.session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star";
-    NSString *imageNameFormat = @"%@-%@";
+    [titleCell.favoriteButton setImage:[self.session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star"];
 
-    UIImage *normalImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"grey"]];
-    UIImage *selectedImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"yellow"]];
-
-    if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
-        normalImage = [normalImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    }
-
-    [titleCell.favoriteButton setImage:normalImage forState:UIControlStateNormal];
-    [titleCell.favoriteButton setImage:selectedImage forState:UIControlStateSelected];
-
-    if ([self.session.favourite boolValue]) {
-        titleCell.favoriteButton.tintColor = nil;
-    } else {
-        titleCell.favoriteButton.tintColor = [UIColor lightGrayColor];
-    }
+    [titleCell.favoriteButton setSelected:[self.session.favourite boolValue]];
     
     return titleCell;
 }
@@ -622,6 +628,10 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell;
+    
+    if (indexPath.section == EMSDetailViewControllerSectionRating) {
+        return 44;
+    }
     
     EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
     if (indexPath.section == EMSDetailViewControllerSectionInfo) {
@@ -655,9 +665,9 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         
     } else {
         
-        CGFloat prefWidth =CGRectGetWidth(tableView.bounds);
-        CGFloat prefHeigth = 400;
-        cell.bounds = CGRectMake(0.0f, 0.0f, prefWidth, prefHeigth);
+        CGFloat prefWidth = CGRectGetWidth(tableView.bounds);
+        CGFloat prefHeight = 400;
+        cell.bounds = CGRectMake(0.0f, 0.0f, prefWidth, prefHeight);
         
         [cell setNeedsLayout];
         [cell layoutSubviews];
@@ -677,6 +687,10 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         if (row.link) {
             return indexPath;
         }
+    }
+
+    if (indexPath.section == EMSDetailViewControllerSectionRating) {
+        return indexPath;
     }
 
     return nil;

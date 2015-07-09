@@ -613,28 +613,10 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     [sessionCell setNeedsLayout];
     [sessionCell layoutIfNeeded];
 
-    UIButton *icon = sessionCell.icon;
+    TintButton *icon = sessionCell.icon;
 
+    [icon setImage:[session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star"];
     [icon setSelected:[session.favourite boolValue]];
-
-    NSString *imageBaseName = [session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star";
-    NSString *imageNameFormat = @"%@-%@";
-
-    UIImage *normalImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"grey"]];
-    UIImage *selectedImage = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, imageBaseName, @"yellow"]];
-
-    if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
-        normalImage = [normalImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        if (icon.selected) {
-            icon.tintColor = nil;
-        } else {
-            icon.tintColor = [UIColor lightGrayColor];
-        }
-    }
-
-    [icon setImage:normalImage forState:UIControlStateNormal];
-    [icon setImage:selectedImage forState:UIControlStateSelected];
 
     [sessionCell.icon addTarget:self action:@selector(toggleFavourite:) forControlEvents:UIControlEventTouchUpInside];
 

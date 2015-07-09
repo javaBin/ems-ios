@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>rating-server</key>
+	<string>http://test.javazone.no/devnull/server/</string>
+	<key>rating-server-prod</key>
+	<string>http://javazone.no/devnull/server/</string>
 	<key>features</key>
 	<dict>
 		<key>links</key>

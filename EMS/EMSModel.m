@@ -20,6 +20,9 @@
 #import "Speaker.h"
 #import "EMSTracking.h"
 #import "SpeakerPic.h"
+#import "EMSConfig.h"
+
+#import "NSDate+EMSExtensions.h"
 
 @implementation EMSModel
 
@@ -1112,40 +1115,17 @@
 
 
 - (NSDate *)dateForConference:(Conference *)conference andDate:(NSDate *)date {
-#ifdef USE_TEST_DATE
-    DDLogWarn(@"RUNNING IN USE_TEST_DATE mode");
-
-    // In debug mode we will use the current time of day but always the first day of conference. Otherwise we couldn't test until JZ started ;)
     NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"slot.start" ascending:YES];
     NSArray *sessions = [self sessionsForPredicate:[NSPredicate predicateWithFormat:@"(format != %@ AND conference == %@)", @"workshop", conference] andSort:@[dateDescriptor]];
-
+    
     Session *firstSession = sessions[0];
     NSDate *conferenceDate = firstSession.slot.start;
-
+    
     if (conferenceDate == nil) {
         return nil;
     }
-
-    DDLogVerbose(@"Saw conference date of %@", conferenceDate);
-
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-
-    NSDateComponents *timeComp = [calendar components:NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:date];
-    NSDateComponents *dateComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:conferenceDate];
-
-    static NSDateFormatter *inputFormatter;
-
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        inputFormatter = [[NSDateFormatter alloc] init];
-        [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
-        [inputFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-    });
-
-    return [inputFormatter dateFromString:[NSString stringWithFormat:@"%04ld-%02ld-%02ld %02ld:%02ld:00 +0200", (long) [dateComp year], (long) [dateComp month], (long) [dateComp day], (long) [timeComp hour], (long) [timeComp minute]]];
-#else
-    return date;
-#endif
+    
+    return [NSDate dateForDate:date fromDate:conferenceDate];
 }
 
 - (SpeakerPic *)speakerPicForHref:(NSString *)url {
@@ -1254,5 +1234,80 @@
         DDLogError(@"Failed to save conference after clearing %@ - %@", saveError, [saveError userInfo]);
     }
 }
+
+- (Rating *)ratingForSession:(Session *)session {
+    RatingApi *api = [[RatingApi alloc] initWithServer: [[EMSConfig ratingUrl] absoluteString]];
+    
+    NSURL *url = [api urlFromSession:session];
+    
+    if (url != nil) {
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        
+        [fetchRequest setEntity:[NSEntityDescription entityForName:@"Rating" inManagedObjectContext:[self managedObjectContext]]];
+        
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"(href LIKE %@)", [url absoluteString]]];
+        
+        NSError *error;
+        
+        NSArray *objects = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+        
+        if (error) {
+            DDLogError(@"Failed to fetch rating for url %@, - %@ - %@", url, error, [error userInfo]);
+        }
+        
+        if ([objects count] > 0) {
+            return objects[0];
+        }
+    }
+    
+    return nil;
+}
+
+- (BOOL)setRatingOverall:(int)overall content:(int)content quality:(int)quality relevance:(int)relevance forSession:(Session *)session  error:(NSError **)error {
+    Rating *rating = [self ratingForSession:session];
+    
+    if (rating == nil) {
+        RatingApi *api = [[RatingApi alloc] initWithServer: [[EMSConfig ratingUrl] absoluteString]];
+        
+        NSURL *url = [api urlFromSession:session];
+
+        if (url != nil) {
+            rating = [NSEntityDescription
+                                insertNewObjectForEntityForName:@"Rating"
+                                inManagedObjectContext:[self managedObjectContext]];
+
+            rating.href = [url absoluteString];
+        } else {
+            NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+            [errorDetail setValue:NSLocalizedString(@"Unable to generate rating href from session", @"Error message when trying to store rating.") forKey:NSLocalizedDescriptionKey];
+            if (error != NULL) {
+                *error = [NSError errorWithDomain:@"EMSModel" code:100 userInfo:errorDetail];
+            }
+            
+            return NO;
+        }
+    }
+    
+    if (rating != nil) {
+        rating.overall = [NSNumber numberWithInt:overall];
+        rating.content = [NSNumber numberWithInt:content];
+        rating.quality = [NSNumber numberWithInt:quality];
+        rating.relevance = [NSNumber numberWithInt:relevance];
+    }
+    
+    NSError *saveError = nil;
+    
+    if (![[self managedObjectContext] save:&saveError]) {
+        DDLogError(@"Failed to save rating %@ - %@", saveError, [saveError userInfo]);
+        
+        *error = saveError;
+        
+        return NO;
+    }
+    
+    return YES;
+}
+
 
 @end

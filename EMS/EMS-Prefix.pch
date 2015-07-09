@@ -26,5 +26,7 @@ static const int ddLogLevel = DDLogLevelVerbose;
 static const int ddLogLevel = DDLogLevelWarning;
 #endif
 
+#import "EMS-Swift.h"
+
 #endif
 
