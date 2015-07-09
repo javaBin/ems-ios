@@ -121,6 +121,14 @@
 }
 
 - (void)initializeFetchedResultsController {
+    
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    NSString *selectedModelIdentifier  = nil;
+    
+    if (selectedIndexPath) {
+        selectedModelIdentifier = [self modelIdentifierForElementAtIndexPath:selectedIndexPath inView:self.tableView];
+    }
+    
     [self setDefaultTypeSearch];
 
     [self.fetchedResultsController.fetchRequest setPredicate:[self currentConferencePredicate]];
@@ -141,6 +149,19 @@
 
     [self initializeFooter];
     [self.tableView reloadData];
+    
+    if (selectedModelIdentifier) {
+        
+        selectedIndexPath = [self indexPathForElementWithModelIdentifier:selectedModelIdentifier inView:self.tableView];
+        
+        if (selectedIndexPath) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+            });
+        }
+    }
+    
     
 
 }
@@ -371,8 +392,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     [self updateRefreshControl];
 
     [self initializeFooter];
-    
-    [self reloadDataKeepSelection];
     
     [super viewDidAppear:animated];
 }
@@ -983,6 +1002,10 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
 static NSString *const EMSMainViewControllerRestorationIdentifierSegmentControlIndex = @"EMSMainViewControllerRestorationIdentifierSegmentControlIndex";
 
+- (void)applicationFinishedRestoringState {
+    [self initializeFetchedResultsController];
+}
+
 - (void)encodeRestorableStateWithCoder:(NSCoder *)coder {
     
     
@@ -1002,8 +1025,6 @@ static NSString *const EMSMainViewControllerRestorationIdentifierSegmentControlI
     if (selectedIndex == 1) {
         self.filterFavourites = YES;
     }
-    
-    [self initializeFetchedResultsController];
     
 }
 
@@ -1029,21 +1050,5 @@ static NSString *const EMSMainViewControllerRestorationIdentifierSegmentControlI
     }
     return indexPath;
 }
-
-- (void)reloadDataKeepSelection {
-    // In case text size was changed while we were gone.
-    NSIndexPath *oldIndexPath = [self.tableView indexPathForSelectedRow];
-    
-    if (oldIndexPath) {
-        NSString *modelIdentifier = [self modelIdentifierForElementAtIndexPath:oldIndexPath inView:self.tableView];
-        
-        [self.tableView reloadData];
-        
-        NSIndexPath *currentSelectedIndexPath = [self indexPathForElementWithModelIdentifier:modelIdentifier inView:self.tableView];
-        [self.tableView selectRowAtIndexPath:currentSelectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-    }
-    
-}
-
 
 @end

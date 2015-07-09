@@ -486,6 +486,8 @@ int networkCount = 0;
 
 
 
+
+
 #pragma mark - UISplitViewControllerDelegate
 
 
@@ -510,7 +512,7 @@ int networkCount = 0;
     
     if (primaryNavigationController.visibleViewController == mainViewController) {
         return [splitViewController.storyboard instantiateViewControllerWithIdentifier:@"No Session Selected Navigation Controller"];
-    }
+    } 
     
     return nil;
 
