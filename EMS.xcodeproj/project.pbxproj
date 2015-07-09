@@ -62,8 +62,6 @@
 		85E86E298BD74799AE57514E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C5F2910AEBD4413B205CE89 /* libPods.a */; };
 		EA11338719A7A880008D000A /* EMSLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */; };
 		EA11338819A7A880008D000A /* EMSLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */; };
-		EA5CF87F1AE56EE30025E361 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA5CF87E1AE56EE30025E361 /* Launch Screen.xib */; };
-		EA5CF8801AE56EE30025E361 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA5CF87E1AE56EE30025E361 /* Launch Screen.xib */; };
 		EA6132BC193FC35B000F54DC /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
 		EA74604219A42A3600E24D04 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA74604119A42A3600E24D04 /* EMS-Keys.plist */; };
 		EA81CDDE19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = EA81CDDD19AF8F0400FE43A2 /* EMSConferenceRetriever.m */; };
@@ -260,7 +258,6 @@
 		EA1E8F6317E782E8000F2DB7 /* JavaZone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JavaZone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA28E8CB19A422D9004AAF81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		EA28E8CE19A422E3004AAF81 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		EA5CF87E1AE56EE30025E361 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		EA6132BA193FC35B000F54DC /* EMSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConfig.h; sourceTree = "<group>"; };
 		EA6132BB193FC35B000F54DC /* EMSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConfig.m; sourceTree = "<group>"; };
 		EA74604119A42A3600E24D04 /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
@@ -478,7 +475,7 @@
 			path = EMS/EMS;
 			sourceTree = "<group>";
 		};
-		839BD654176F9BD400900712 /* View */ = {
+		839BD654176F9BD400900712 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				839BD656176F9BD400900712 /* EMSMainViewController.h */,
@@ -504,7 +501,7 @@
 				EA9ACCBB19A9764500D369C6 /* EMSSessionTitleTableViewCell.h */,
 				EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */,
 			);
-			name = View;
+			name = Controllers;
 			path = EMS/View;
 			sourceTree = "<group>";
 		};
@@ -553,7 +550,7 @@
 				F394C9E017F019E400FAFBD4 /* JavaZone */,
 				839BD637176F9BD400900712 /* Config */,
 				83AF91B51772053600FAE20F /* EMSMO */,
-				839BD654176F9BD400900712 /* View */,
+				839BD654176F9BD400900712 /* Controllers */,
 				839BD63A176F9BD400900712 /* EMS */,
 				F35BB6CB17685885009077D3 /* App */,
 				837F68561A80CC8400AC7C97 /* JavaZone Tests */,
@@ -602,7 +599,6 @@
 				4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */,
 				4E1AD6B14458A2997A59456D /* EMSTracking.h */,
 				F3AABDE819AB16C5003D1D1C /* AddTimestampToSpeaker.xcmappingmodel */,
-				EA5CF87E1AE56EE30025E361 /* Launch Screen.xib */,
 			);
 			name = App;
 			path = EMS;
@@ -771,7 +767,6 @@
 				F3D5E2C41770946100888A7E /* style.css in Resources */,
 				EAE4330B19A52F75002C3EBA /* about.html in Resources */,
 				83BF8B6A17ECDA4D0093242C /* Images.xcassets in Resources */,
-				EA5CF87F1AE56EE30025E361 /* Launch Screen.xib in Resources */,
 				EAE4330819A52F1C002C3EBA /* Localizable.strings in Resources */,
 				15A735D219BDB7F5001AAC7C /* EMS-Keys.plist in Resources */,
 				F354B0BA1781AA1D007F7B01 /* iTunesArtwork.png in Resources */,
@@ -795,7 +790,6 @@
 				EAE4330919A52F1C002C3EBA /* Localizable.strings in Resources */,
 				F394C9C817F0173900FAFBD4 /* Images.xcassets in Resources */,
 				F394C9CE17F0173900FAFBD4 /* iTunesArtwork.png in Resources */,
-				EA5CF8801AE56EE30025E361 /* Launch Screen.xib in Resources */,
 				F394C9CF17F0173900FAFBD4 /* iTunesArtwork@2x.png in Resources */,
 				4E1AD52D6C458D6D36CECFBA /* README.md in Resources */,
 				4E1ADC3468CFC054FD549975 /* ChangeLog in Resources */,
