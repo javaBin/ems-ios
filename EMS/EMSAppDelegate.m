@@ -1,3 +1,4 @@
+
 //
 //  EMSAppDelegate.m
 //
@@ -7,6 +8,8 @@
 #import "EMSMainViewController.h"
 #import "EMSLocalNotificationManager.h"
 #import "EMSTracking.h"
+#import "EMSDetailViewController.h"
+
 
 @implementation EMSAppDelegate
 
@@ -62,6 +65,16 @@ int networkCount = 0;
                       clientKey:prefs[@"parse-client-key-prod"]];
 #endif
     }
+    
+    if ([self.window.rootViewController isKindOfClass:[UISplitViewController class]]) {
+        UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
+        
+        splitViewController.delegate = self;
+        
+        splitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+    }
+    
+    
 
     return YES;
 }
@@ -436,6 +449,89 @@ int networkCount = 0;
     }
 
     return YES;
+}
+
+- (void)application:(UIApplication *)application didDecodeRestorableStateWithCoder:(NSCoder *)coder {
+    if ([self.window.rootViewController isKindOfClass:[UISplitViewController class]]) {
+        
+        UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
+        
+        UINavigationController *primaryNavigation = splitViewController.viewControllers.firstObject;
+        
+        if ([primaryNavigation.visibleViewController isKindOfClass:[EMSDetailViewController class]]) {
+            UIViewController *detailViewController = primaryNavigation.visibleViewController.parentViewController;
+            
+            [primaryNavigation popToRootViewControllerAnimated:NO];
+            
+            [splitViewController showDetailViewController:detailViewController sender:self];
+        }
+        
+    }
+}
+
+- (UIViewController *)application:(UIApplication *)application viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder {
+    
+    if ([self.window.rootViewController isKindOfClass:[UISplitViewController class]]) {
+        UISplitViewController *splitViewController = (UISplitViewController *) self.window.rootViewController;
+        
+        if ([identifierComponents.lastObject isEqualToString:@"Session Detail Navigation Controller"]) {
+            // Always return the navigation controller created as part of the storyboard to
+            // avoid duplicate detail views when state of split view was stored in a collapsed state.
+            return splitViewController.viewControllers.lastObject;
+        }
+        
+    }
+    return nil;
+}
+
+
+
+
+
+#pragma mark - UISplitViewControllerDelegate
+
+
+- (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {
+    
+    // Never collapse...
+    BOOL collapseHandled = YES;
+    
+    // Unless we are showing session details
+    if ([self secondaryViewControllerIsShowingSessionDetails:secondaryViewController]) {
+        collapseHandled = NO;
+    }
+    
+    return collapseHandled;
+}
+
+
+- (UIViewController *)splitViewController:(UISplitViewController *)splitViewController separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)primaryViewController {
+    
+    UINavigationController *primaryNavigationController = (UINavigationController *) primaryViewController;
+    EMSMainViewController *mainViewController = (EMSMainViewController *)primaryNavigationController.viewControllers.firstObject;
+    
+    if (primaryNavigationController.visibleViewController == mainViewController) {
+        return [splitViewController.storyboard instantiateViewControllerWithIdentifier:@"No Session Selected Navigation Controller"];
+    } 
+    
+    return nil;
+
+}
+
+- (BOOL) secondaryViewControllerIsShowingSessionDetails: (UIViewController *)secondaryViewController {
+    
+    BOOL isShowingSessionDetails = NO;
+    
+    
+    UINavigationController *secondaryNavigationController = (UINavigationController *) secondaryViewController;
+    if ([secondaryNavigationController.topViewController isKindOfClass:[EMSDetailViewController class]]) {
+        EMSDetailViewController *detailViewController = (EMSDetailViewController *) secondaryNavigationController.topViewController;
+        if (detailViewController.session != nil) {
+            isShowingSessionDetails = YES;
+        }
+    }
+    
+    return isShowingSessionDetails;
 }
 
 @end

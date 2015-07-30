@@ -15,4 +15,9 @@
     return description;
 }
 
+- (NSDate *)end {
+   
+    return [NSDate dateWithTimeInterval:self.duration*60 sinceDate:self.start];
+}
+
 @end

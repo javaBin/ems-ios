@@ -19,7 +19,7 @@
 #import "EMSTracking.h"
 #import "EMSLocalNotificationManager.h"
 
-@interface EMSMainViewController () <UISplitViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate, UIDataSourceModelAssociation>
+@interface EMSMainViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, EMSSearchViewDelegate, UIDataSourceModelAssociation>
 
 @property(nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
@@ -49,7 +49,7 @@
 
 - (IBAction)scrollToNow:(id)sender;
 
-- (IBAction)back:(UIStoryboardSegue *)segue;
+- (IBAction)backToMainViewController:(UIStoryboardSegue *)segue;
 
 @property BOOL observersInstalled;
 
@@ -121,6 +121,14 @@
 }
 
 - (void)initializeFetchedResultsController {
+    
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    NSString *selectedModelIdentifier  = nil;
+    
+    if (selectedIndexPath) {
+        selectedModelIdentifier = [self modelIdentifierForElementAtIndexPath:selectedIndexPath inView:self.tableView];
+    }
+    
     [self setDefaultTypeSearch];
 
     [self.fetchedResultsController.fetchRequest setPredicate:[self currentConferencePredicate]];
@@ -141,6 +149,21 @@
 
     [self initializeFooter];
     [self.tableView reloadData];
+    
+    if (selectedModelIdentifier) {
+        
+        selectedIndexPath = [self indexPathForElementWithModelIdentifier:selectedModelIdentifier inView:self.tableView];
+        
+        if (selectedIndexPath) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+            });
+        }
+    }
+    
+    
+
 }
 
 - (NSPredicate *)currentConferencePredicate {
@@ -298,13 +321,11 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    if (self.splitViewController) {
-        self.splitViewController.delegate = self;
-        self.clearsSelectionOnViewWillAppear = NO;
-    }
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = [self estimateTableViewRowHeight: self.tableView.bounds.size];
 }
 
 - (void)viewDidLoad {
@@ -328,12 +349,10 @@
     // Can't turn it off - so let's have it only if we have at least 500 sections :)
     // This is also set in the storyboard but appears not to work.
     self.tableView.sectionIndexMinimumDisplayRowCount = 500;
+    
 
     self.observersInstalled = NO;
     
-    [self updateTableViewRowHeight];
-    
-
     Conference *conference = [[EMSRetriever sharedInstance] activeConference];
     
     if (conference) {
@@ -342,34 +361,31 @@
         [self initializeFetchedResultsController];
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionRequested:) name:EMSUserRequestedSessionNotification object:[EMSLocalNotificationManager sharedInstance]];
-    
     if ([[self.fetchedResultsController fetchedObjects] count] == 0) {
         [self retrieve];
     }
-
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionRequested:) name:EMSUserRequestedSessionNotification object:[EMSLocalNotificationManager sharedInstance]];
+    
 }
 
 static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
 
-    if (!self.splitViewController) {
-       [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow]  animated:YES];
+    if (!self.splitViewController || self.splitViewController.collapsed) {
+        self.clearsSelectionOnViewWillAppear = YES;
+    } else {
+        self.clearsSelectionOnViewWillAppear = NO;
     }
     
     [self addObservers];
     
-    if (self.splitViewController && ![self.tableView indexPathForSelectedRow]) {
-        [self performSegueWithIdentifier:@"noSessionSelectedSegue" sender:self];
-    }
+    [super viewWillAppear:animated];
 }
-
 
 - (void)viewDidAppear:(BOOL)animated {
 
-    [super viewDidAppear:animated];
 
     [EMSTracking trackScreen:@"Main Screen"];
 
@@ -377,8 +393,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
     [self initializeFooter];
     
-    // In case text size was changed while we were gone. 
-    [self.tableView reloadData];
+    [super viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -407,10 +422,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     if (!self.observersInstalled) {
         [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions)) options:0 context:kRefreshActiveConferenceContext];
 
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTableViewRowHeightReload) name:UIContentSizeCategoryDidChangeNotification object:nil];
-       
-        [self updateTableViewRowHeight];
-
         self.observersInstalled = YES;
     }
 }
@@ -419,7 +430,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     if (self.observersInstalled) {
         [[EMSRetriever sharedInstance] removeObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions))];
 
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
         self.observersInstalled = NO;
     }
 }
@@ -550,7 +560,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 }
 
 
-- (IBAction)back:(UIStoryboardSegue *)segue {
+- (IBAction)backToMainViewController:(UIStoryboardSegue *)segue {
     if ([segue.identifier isEqualToString:@"unwindSettingsSegue"]) {
         self.advancedSearch = [[EMSAdvancedSearch alloc] init];
 
@@ -571,41 +581,31 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 #pragma mark - Table view data source
 
 
-- (void)updateTableViewRowHeightReload {
-    [self updateTableViewRowHeight];
-    
-    [self.tableView reloadData];
-
-}
-
-- (void)updateTableViewRowHeight {
+- (CGFloat) estimateTableViewRowHeight:(CGSize) size {
     if (!self.sizingCell) {
         self.sizingCell = [self.tableView dequeueReusableCellWithIdentifier:@"SessionCell"];
     }
     EMSSessionCell *sessionCell = self.sizingCell;
-
+    
     sessionCell.title.text = @"We want it to always be the size of two lines, so we put in a really long title before we calculate size.";
     sessionCell.room.text = @"Room";
     sessionCell.speaker.text = @"Speakers";
-
+    
     sessionCell.title.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     sessionCell.room.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
     sessionCell.speaker.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-
-
-    sessionCell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.bounds), CGRectGetHeight(sessionCell.bounds));
-
+    
+    
+    sessionCell.frame = CGRectMake(0.0f, 0.0f, size.width, size.height);
+    
     [sessionCell setNeedsLayout];
     [sessionCell layoutIfNeeded];
-
-
-    CGFloat height = [sessionCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-
-    self.tableView.rowHeight = height + 1;
-
     
+    
+    CGFloat height = [sessionCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    
+    return height + 1;
 }
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSUInteger count = [[_fetchedResultsController sections] count];
@@ -942,13 +942,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     return index;
 }
 
-
-#pragma mark - UISplitViewControllerDelegate
-
-- (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation {
-    return NO;
-}
-
 #pragma mark - Responding to user opening sessions from notifications
 
 
@@ -1009,6 +1002,10 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
 static NSString *const EMSMainViewControllerRestorationIdentifierSegmentControlIndex = @"EMSMainViewControllerRestorationIdentifierSegmentControlIndex";
 
+- (void)applicationFinishedRestoringState {
+    [self initializeFetchedResultsController];
+}
+
 - (void)encodeRestorableStateWithCoder:(NSCoder *)coder {
     
     
@@ -1028,8 +1025,6 @@ static NSString *const EMSMainViewControllerRestorationIdentifierSegmentControlI
     if (selectedIndex == 1) {
         self.filterFavourites = YES;
     }
-    
-    [self initializeFetchedResultsController];
     
 }
 
