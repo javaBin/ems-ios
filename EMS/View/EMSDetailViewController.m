@@ -536,13 +536,28 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
 }
 
+- (BOOL)ratingAvailableForDate:(NSDate *)date {
+    if (date == nil) {
+        return NO;
+    }
+    
+    // checkDate is 5 min before end of session
+    NSDate *checkDate = [[self dateForDate:date] dateByAddingTimeInterval:(-5 * 60)];
+    
+    if ([[NSDate date] compare:checkDate] == NSOrderedDescending) {
+        return YES;
+    }
+    
+    return NO;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (EMSFeatureConfig.isRatingEnabled) {
+    if (EMSFeatureConfig.isRatingEnabled && [self ratingAvailableForDate:self.session.slot.end]) {
         return 3;
     }
-    
+
     return 2;
 }
 
