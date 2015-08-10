@@ -82,7 +82,7 @@ public class RatingApi : NSObject {
         var err: NSError?
         
         request.HTTPBody = body
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/vnd.collection+json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue(deviceId.UUIDString, forHTTPHeaderField: "Voter-ID")
         
