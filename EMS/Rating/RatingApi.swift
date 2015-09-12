@@ -24,7 +24,7 @@ public class RatingApi : NSObject {
         let matcher: NSRegularExpression?
         do {
             matcher = try NSRegularExpression(pattern: ".*/events/(.*)/sessions/(.*)", options: [])
-        } catch var error as NSError {
+        } catch let error as NSError {
             matchError = error
             matcher = nil
         }
@@ -34,15 +34,17 @@ public class RatingApi : NSObject {
             return nil
         }
         
-        let matches = matcher?.matchesInString(url, options: [], range: NSMakeRange(0, nsUrl.length)) as! [NSTextCheckingResult]
-        
-        if (matches.count > 0) {
-            let match = matches[0]
+        if let matches = matcher?.matchesInString(url, options: [], range: NSMakeRange(0, nsUrl.length)) {
+            if (matches.count > 0) {
+                let match = matches[0]
             
-            return (event: nsUrl.substringWithRange(match.rangeAtIndex(1)), session: nsUrl.substringWithRange(match.rangeAtIndex(2)))
-        } else {
-            return nil
+                return (event: nsUrl.substringWithRange(match.rangeAtIndex(1)), session: nsUrl.substringWithRange(match.rangeAtIndex(2)))
+            } else {
+                return nil
+            }
         }
+        
+        return nil
     }
     
     public func postRating(session: Session, rating: Rating?) {
@@ -65,7 +67,7 @@ public class RatingApi : NSObject {
             let json: NSData?
             do {
                 json = try NSJSONSerialization.dataWithJSONObject(data, options: NSJSONWritingOptions(rawValue: 0))
-            } catch var error as NSError {
+            } catch let error as NSError {
                 jsonError = error
                 json = nil
             }
@@ -87,20 +89,18 @@ public class RatingApi : NSObject {
     func post(url : NSURL, body : NSData) {
         let deviceId = UIDevice.currentDevice().identifierForVendor
         
-        var request = NSMutableURLRequest(URL: url)
-        var session = NSURLSession.sharedSession()
+        let request = NSMutableURLRequest(URL: url)
+        let session = NSURLSession.sharedSession()
         request.HTTPMethod = "POST"
-        
-        var err: NSError?
         
         request.HTTPBody = body
         request.addValue("application/vnd.collection+json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue(deviceId.UUIDString, forHTTPHeaderField: "Voter-ID")
+        request.addValue(deviceId!.UUIDString, forHTTPHeaderField: "Voter-ID")
         
         let timer = NSDate()
         
-        var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+        let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
             Log.debug("Sent feedback to URL \(url)")
 
             EMSTracking.trackTimingWithCategory("feedback", interval: NSDate().timeIntervalSinceDate(timer), name: "feedback")
@@ -108,12 +108,12 @@ public class RatingApi : NSObject {
             if (error != nil) {
                 Log.warn("Failed to send feedback \(error)")
                 
-                EMSTracking.trackException("Unable to send feedback due to Code: \(error.code), Domain: \(error.domain), Info: \(error.userInfo)")
+                EMSTracking.trackException("Unable to send feedback due to Code: \(error!.code), Domain: \(error!.domain), Info: \(error!.userInfo)")
             }
 
             if let httpResponse = response as? NSHTTPURLResponse {
                 if (httpResponse.statusCode >= 300) {
-                    let dataString = NSString(data: data, encoding: NSUTF8StringEncoding)
+                    let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
                     
                     EMSTracking.trackException("Unable to send feedback with status code: \(httpResponse.statusCode) for url \(url)")
 
