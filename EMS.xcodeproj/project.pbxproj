@@ -779,6 +779,8 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = EMS;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Chris Searle";
 				TargetAttributes = {

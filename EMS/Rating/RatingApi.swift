@@ -21,14 +21,20 @@ public class RatingApi : NSObject {
         
         var matchError: NSError?
         
-        let matcher = NSRegularExpression(pattern: ".*/events/(.*)/sessions/(.*)", options: nil, error: &matchError)
+        let matcher: NSRegularExpression?
+        do {
+            matcher = try NSRegularExpression(pattern: ".*/events/(.*)/sessions/(.*)", options: [])
+        } catch var error as NSError {
+            matchError = error
+            matcher = nil
+        }
         
         if let seenError = matchError {
             Log.warn("\(seenError)")
             return nil
         }
         
-        let matches = matcher?.matchesInString(url, options: nil, range: NSMakeRange(0, nsUrl.length)) as! [NSTextCheckingResult]
+        let matches = matcher?.matchesInString(url, options: [], range: NSMakeRange(0, nsUrl.length)) as! [NSTextCheckingResult]
         
         if (matches.count > 0) {
             let match = matches[0]
@@ -56,7 +62,13 @@ public class RatingApi : NSObject {
             
             var jsonError : NSError?
             
-            let json = NSJSONSerialization.dataWithJSONObject(data, options: NSJSONWritingOptions(0), error: &jsonError)
+            let json: NSData?
+            do {
+                json = try NSJSONSerialization.dataWithJSONObject(data, options: NSJSONWritingOptions(rawValue: 0))
+            } catch var error as NSError {
+                jsonError = error
+                json = nil
+            }
             
             if let seenError = jsonError {
                 Log.warn("\(seenError)")
