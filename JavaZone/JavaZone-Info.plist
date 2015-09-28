@@ -45,7 +45,7 @@
 		</dict>
 	</dict>
 	<key>UIMainStoryboardFile</key>
-	<string>MainStoryboard_iPad</string>
+	<string>Main</string>
 	<key>UIMainStoryboardFile~ipad</key>
 	<string>MainStoryboard_iPad</string>
 	<key>UIPrerenderedIcon</key>

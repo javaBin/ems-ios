@@ -80,17 +80,22 @@
 		EA11338719A7A880008D000A /* EMSLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */; };
 		EA11338819A7A880008D000A /* EMSLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */; };
 		EA6132BC193FC35B000F54DC /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
-		EA6C81DB1B4F2F3300E9CD55 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15A735D119BDB7F5001AAC7C /* EMS-Keys.plist */; };
 		EA74604219A42A3600E24D04 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA74604119A42A3600E24D04 /* EMS-Keys.plist */; };
 		EA81CDDE19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = EA81CDDD19AF8F0400FE43A2 /* EMSConferenceRetriever.m */; };
 		EA81CDDF19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = EA81CDDD19AF8F0400FE43A2 /* EMSConferenceRetriever.m */; };
 		EA8F2C831944CCB7002EAE1F /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
 		EA9ACCBD19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */; };
 		EA9ACCBE19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */; };
+		EAA965321BB9BAC400BEB749 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965311BB9BAC400BEB749 /* Settings.storyboard */; settings = {ASSET_TAGS = (); }; };
+		EAA965331BB9BAC400BEB749 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965311BB9BAC400BEB749 /* Settings.storyboard */; settings = {ASSET_TAGS = (); }; };
+		EAA965361BB9BB8900BEB749 /* Filter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965341BB9BB8900BEB749 /* Filter.storyboard */; settings = {ASSET_TAGS = (); }; };
+		EAA965371BB9BB8900BEB749 /* Filter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965341BB9BB8900BEB749 /* Filter.storyboard */; settings = {ASSET_TAGS = (); }; };
+		EAA965391BB9C1C600BEB749 /* Detail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965381BB9C1C600BEB749 /* Detail.storyboard */; settings = {ASSET_TAGS = (); }; };
+		EAA9653A1BB9C1C600BEB749 /* Detail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965381BB9C1C600BEB749 /* Detail.storyboard */; settings = {ASSET_TAGS = (); }; };
 		EACB2E9B199EBD1700557D82 /* EMSDefaultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */; };
 		EACB2E9C199EBD1700557D82 /* EMSDefaultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */; };
-		EAE2CF5019A934B3002F44FC /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6E017685885009077D3 /* MainStoryboard_iPad.storyboard */; };
-		EAE2CF5219A934DD002F44FC /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6E017685885009077D3 /* MainStoryboard_iPad.storyboard */; };
+		EAE2CF5019A934B3002F44FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6E017685885009077D3 /* Main.storyboard */; };
+		EAE2CF5219A934DD002F44FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6E017685885009077D3 /* Main.storyboard */; };
 		EAE4330819A52F1C002C3EBA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAE4330619A52F1C002C3EBA /* Localizable.strings */; };
 		EAE4330919A52F1C002C3EBA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAE4330619A52F1C002C3EBA /* Localizable.strings */; };
 		EAE4330B19A52F75002C3EBA /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = EAE4330D19A52F75002C3EBA /* about.html */; };
@@ -283,11 +288,11 @@
 		83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSAboutViewController.m; sourceTree = "<group>"; };
 		A4647E03BE9A10F278B9CB8A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D1581B6A0B2740B18088FCDA /* Pods.debug run crashlytics.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods.debug run crashlytics.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.debug run crashlytics.xcconfig"; sourceTree = "<group>"; };
-		EA11337C19A65B5F008D000A /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/MainStoryboard_iPad.strings; sourceTree = "<group>"; };
+		EA11337C19A65B5F008D000A /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Main.strings; sourceTree = "<group>"; };
 		EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSLocalNotificationManager.m; sourceTree = "<group>"; };
 		EA11338919A7A89F008D000A /* EMSLocalNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSLocalNotificationManager.h; sourceTree = "<group>"; };
 		EA1E8F6317E782E8000F2DB7 /* JavaZone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JavaZone.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		EA28E8CB19A422D9004AAF81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		EA28E8CB19A422D9004AAF81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EA28E8CE19A422E3004AAF81 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EA6132BA193FC35B000F54DC /* EMSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConfig.h; sourceTree = "<group>"; };
 		EA6132BB193FC35B000F54DC /* EMSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConfig.m; sourceTree = "<group>"; };
@@ -296,6 +301,9 @@
 		EA81CDDD19AF8F0400FE43A2 /* EMSConferenceRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConferenceRetriever.m; sourceTree = "<group>"; };
 		EA9ACCBB19A9764500D369C6 /* EMSSessionTitleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSessionTitleTableViewCell.h; sourceTree = "<group>"; };
 		EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSessionTitleTableViewCell.m; sourceTree = "<group>"; };
+		EAA965311BB9BAC400BEB749 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		EAA965351BB9BB8900BEB749 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Filter.storyboard; sourceTree = "<group>"; };
+		EAA965381BB9C1C600BEB749 /* Detail.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Detail.storyboard; sourceTree = "<group>"; };
 		EACB2E99199EBD1700557D82 /* EMSDefaultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSDefaultTableViewCell.h; sourceTree = "<group>"; };
 		EACB2E9A199EBD1700557D82 /* EMSDefaultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDefaultTableViewCell.m; sourceTree = "<group>"; };
 		EAE4330719A52F1C002C3EBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -659,7 +667,10 @@
 				F3CEA3CE17B224170092776F /* AddVideoLinkMapping.xcmappingmodel */,
 				F35BB6D417685885009077D3 /* EMSAppDelegate.h */,
 				F35BB6D517685885009077D3 /* EMSAppDelegate.m */,
-				F35BB6E017685885009077D3 /* MainStoryboard_iPad.storyboard */,
+				F35BB6E017685885009077D3 /* Main.storyboard */,
+				EAA965381BB9C1C600BEB749 /* Detail.storyboard */,
+				EAA965341BB9BB8900BEB749 /* Filter.storyboard */,
+				EAA965311BB9BAC400BEB749 /* Settings.storyboard */,
 				F35BB6CC17685885009077D3 /* Supporting Files */,
 				F3939E5F1769C3CD0078C709 /* EMSModel.h */,
 				F3939E601769C3CD0078C709 /* EMSModel.m */,
@@ -835,16 +846,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAE2CF5019A934B3002F44FC /* MainStoryboard_iPad.storyboard in Resources */,
-				EA6C81DB1B4F2F3300E9CD55 /* EMS-Keys.plist in Resources */,
+				EAA965361BB9BB8900BEB749 /* Filter.storyboard in Resources */,
+				EAE2CF5019A934B3002F44FC /* Main.storyboard in Resources */,
 				F35BB6D017685885009077D3 /* InfoPlist.strings in Resources */,
 				F3D5E2C41770946100888A7E /* style.css in Resources */,
+				EAA965321BB9BAC400BEB749 /* Settings.storyboard in Resources */,
 				EAE4330B19A52F75002C3EBA /* about.html in Resources */,
 				83BF8B6A17ECDA4D0093242C /* Images.xcassets in Resources */,
 				EAE4330819A52F1C002C3EBA /* Localizable.strings in Resources */,
 				F354B0BA1781AA1D007F7B01 /* iTunesArtwork.png in Resources */,
 				F354B0BB1781AA1D007F7B01 /* iTunesArtwork@2x.png in Resources */,
 				4E1ADFF1BCEBD89ABF3ACAE4 /* README.md in Resources */,
+				EAA965391BB9C1C600BEB749 /* Detail.storyboard in Resources */,
 				4E1AD738AAB8C89E2FF89CB1 /* ChangeLog in Resources */,
 				4E1AD77617AC893954D9A3D7 /* EMS-Config.plist in Resources */,
 			);
@@ -854,7 +867,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAE2CF5219A934DD002F44FC /* MainStoryboard_iPad.storyboard in Resources */,
+				EAE2CF5219A934DD002F44FC /* Main.storyboard in Resources */,
 				F394C9A017F0173900FAFBD4 /* InfoPlist.strings in Resources */,
 				F394C9B517F0173900FAFBD4 /* style.css in Resources */,
 				EAE4330F19A52FA5002C3EBA /* about.html in Resources */,
@@ -862,9 +875,12 @@
 				EA74604219A42A3600E24D04 /* EMS-Keys.plist in Resources */,
 				EAE4330919A52F1C002C3EBA /* Localizable.strings in Resources */,
 				F394C9C817F0173900FAFBD4 /* Images.xcassets in Resources */,
+				EAA9653A1BB9C1C600BEB749 /* Detail.storyboard in Resources */,
+				EAA965371BB9BB8900BEB749 /* Filter.storyboard in Resources */,
 				F394C9CE17F0173900FAFBD4 /* iTunesArtwork.png in Resources */,
 				F394C9CF17F0173900FAFBD4 /* iTunesArtwork@2x.png in Resources */,
 				4E1AD52D6C458D6D36CECFBA /* README.md in Resources */,
+				EAA965331BB9BAC400BEB749 /* Settings.storyboard in Resources */,
 				4E1ADC3468CFC054FD549975 /* ChangeLog in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1115,6 +1131,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		EAA965341BB9BB8900BEB749 /* Filter.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EAA965351BB9BB8900BEB749 /* Base */,
+			);
+			name = Filter.storyboard;
+			sourceTree = "<group>";
+		};
 		EAE4330619A52F1C002C3EBA /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1151,13 +1175,13 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		F35BB6E017685885009077D3 /* MainStoryboard_iPad.storyboard */ = {
+		F35BB6E017685885009077D3 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				EA28E8CB19A422D9004AAF81 /* Base */,
 				EA11337C19A65B5F008D000A /* nb */,
 			);
-			name = MainStoryboard_iPad.storyboard;
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
