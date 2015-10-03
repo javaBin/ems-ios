@@ -19,9 +19,12 @@ static NSString *const DictionaryCapitalized = @"DictionaryCapitalized";
 static NSString *const DictionaryCleaned = @"DictionaryCleaned";
 static NSString *const DictionaryImage = @"DictionaryImage";
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
     NSMutableArray *sections = [NSMutableArray array];
 
     if (self.keywords && [self.keywords count] > 0) {
@@ -185,6 +188,15 @@ static NSString *const DictionaryImage = @"DictionaryImage";
 }
 
 #pragma mark - Table view delegate
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"SearchCell"];
+    cell.textLabel.text = @"Some text";
+    
+    CGFloat height = [cell systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    
+    return height;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *predicates = self.sections[(NSUInteger) indexPath.section][DictionaryPredicateKey];

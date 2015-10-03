@@ -70,9 +70,10 @@
     [self retrieve];
 }
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
 
     self.retrieveStartedByUser = NO;
 
@@ -244,18 +245,27 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
 
 
     if (indexPath.section == 0) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"ConferenceCell"];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ConferenceCell"];
-        }
-
+        cell = [tableView dequeueReusableCellWithIdentifier:@"ConferenceCell" forIndexPath:indexPath] ;
         [self configureCell:cell atIndexPath:indexPath];
     } else if (indexPath.section == 1) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"AboutCell"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"AboutCell" forIndexPath:indexPath];
     }
 
 
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = nil;
+    if (indexPath.section == 0) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"ConferenceCell" forIndexPath:indexPath] ;
+    } else if (indexPath.section == 1) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"AboutCell" forIndexPath:indexPath];
+    }
+    
+    CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    
+    return height;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {

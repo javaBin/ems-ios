@@ -63,7 +63,7 @@ IB_DESIGNABLE
     self.typeLabel.text =  [self titleForSessionFormat];
     self.typeLabel.hidden = [self.session.format isEqualToString:@"presentation"];
     
-    NSArray *levelColors = [self colorsForLevel:self.session.level];
+    NSArray *levelColors = [EMSSessionCell colorsForLevel:self.session.level];
     self.levelColorView.lineColor = levelColors.firstObject;
     
     if ([levelColors count] > 1) {
@@ -118,7 +118,8 @@ IB_DESIGNABLE
 
 #define UIColorFromRGBA(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF000000) >> 24))/255.0 green:((float)((rgbValue & 0xFF0000) >> 16))/255.0 blue:((float)((rgbValue & 0xFF00) >> 8 ))/255.0 alpha:((float)((rgbValue & 0xFF))/255.0)]
 
-- (NSArray *) colorsForLevel:(NSString *) level{
+
++ (NSArray *) colorsForLevel:(NSString *) level{
     
     if ([@"beginner" isEqualToString:level]) {
         static NSArray *beginner;
