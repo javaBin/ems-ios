@@ -37,13 +37,9 @@
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 
-@property (strong, nonatomic) EMSSessionCell *sizingCell;
-
 @property(nonatomic) BOOL retrieveStartedByUser;
 
 @property(nonatomic) BOOL shouldReloadOnScrollDidEnd;
-
-- (IBAction)toggleFavourite:(id)sender;
 
 - (IBAction)segmentChanged:(id)sender;
 
@@ -325,7 +321,7 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.estimatedRowHeight = [self estimateTableViewRowHeight: self.tableView.bounds.size];
+    self.tableView.estimatedRowHeight = [self estimateTableViewRowHeight];
 }
 
 - (void)viewDidLoad {
@@ -421,7 +417,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 - (void)addObservers {
     if (!self.observersInstalled) {
         [[EMSRetriever sharedInstance] addObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions)) options:0 context:kRefreshActiveConferenceContext];
-
+        
         self.observersInstalled = YES;
     }
 }
@@ -429,7 +425,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 - (void)removeObservers {
     if (self.observersInstalled) {
         [[EMSRetriever sharedInstance] removeObserver:self forKeyPath:NSStringFromSelector(@selector(refreshingSessions))];
-
+        
         self.observersInstalled = NO;
     }
 }
@@ -580,31 +576,47 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
 #pragma mark - Table view data source
 
-
-- (CGFloat) estimateTableViewRowHeight:(CGSize) size {
-    if (!self.sizingCell) {
-        self.sizingCell = [self.tableView dequeueReusableCellWithIdentifier:@"SessionCell"];
-    }
-    EMSSessionCell *sessionCell = self.sizingCell;
-    
-    sessionCell.title.text = @"We want it to always be the size of two lines, so we put in a really long title before we calculate size.";
-    sessionCell.room.text = @"Room";
-    sessionCell.speaker.text = @"Speakers";
-    
-    sessionCell.title.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-    sessionCell.room.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-    sessionCell.speaker.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-    
-    
-    sessionCell.frame = CGRectMake(0.0f, 0.0f, size.width, size.height);
-    
-    [sessionCell setNeedsLayout];
-    [sessionCell layoutIfNeeded];
-    
-    
+- (CGFloat) estimateTableViewRowHeight {
+    EMSSessionCell *sessionCell = [self.tableView dequeueReusableCellWithIdentifier:@"SessionCell"];
+   
     CGFloat height = [sessionCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
     
-    return height + 1;
+    return height;
+}
+
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    Session *session = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    if ([session.favourite boolValue]) {
+        UITableViewRowAction *favouriteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from Favourites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+            EMSSessionCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            
+            [self toggleFavourite:cell.session];
+            
+            [tableView setEditing:NO animated:YES];
+        }];
+
+        favouriteAction.backgroundColor = self.tableView.tintColor;
+        return @[favouriteAction];
+    } else {
+        UITableViewRowAction *favouriteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Add to Favourites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+            EMSSessionCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            
+            [self toggleFavourite:cell.session];
+            
+            [tableView setEditing:NO animated:YES];
+        }];
+        
+        favouriteAction.backgroundColor = self.tableView.tintColor;
+        
+        return @[favouriteAction];
+    }
+
+}
+
+- (void)toggleFavourite:(Session *) session{
+    [[[EMSAppDelegate sharedAppDelegate] model] toggleFavourite:session];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -625,55 +637,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     Session *session = [_fetchedResultsController objectAtIndexPath:indexPath];
 
     EMSSessionCell *sessionCell = (EMSSessionCell *) cell;
-
-    sessionCell.title.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-    sessionCell.room.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-    sessionCell.speaker.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-    [sessionCell setNeedsLayout];
-    [sessionCell layoutIfNeeded];
-
-    TintButton *icon = sessionCell.icon;
-
-    [icon setImage:[session.format isEqualToString:@"lightning-talk"] ? @"64-zap" : @"28-star"];
-    [icon setSelected:[session.favourite boolValue]];
-
-    [sessionCell.icon addTarget:self action:@selector(toggleFavourite:) forControlEvents:UIControlEventTouchUpInside];
-
-    UIImageView *level = sessionCell.level;
-
-    [level setImage:[UIImage imageNamed:session.level]];
-
-    UIImageView *video = sessionCell.video;
-
-    if (session.videoLink) {
-        [video setImage:[UIImage imageNamed:@"70-tv"]];
-    } else {
-        [video setImage:nil];
-    }
-
-    sessionCell.title.text = session.title;
-    if (session.room) {
-        sessionCell.room.text = session.room.name;
-    } else {
-        sessionCell.room.text = @"";
-    }
-
-    NSMutableArray *speakerNames = [[NSMutableArray alloc] init];
-
-    [session.speakers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-        Speaker *speaker = (Speaker *) obj;
-
-        [speakerNames addObject:speaker.name];
-    }];
-
-    sessionCell.speaker.text = [speakerNames componentsJoinedByString:@", "];
-
-
-    sessionCell.title.accessibilityLanguage = session.language;
-
-    sessionCell.accessibilityLabel = [NSString stringWithFormat:NSLocalizedString(@"%@, Location: %@, Speakers: %@", @"{Session title}, Location: {Session Location}, Speakers: {Session speakers}"),
-                                                                sessionCell.title.text, sessionCell.room.text, sessionCell.speaker.text];
-    sessionCell.accessibilityLanguage = session.language;
 
     sessionCell.session = session;
 }
@@ -838,26 +801,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     [[EMSRetriever sharedInstance] refreshActiveConference];
 }
 
-- (void)toggleFavourite:(id)sender {
-    UIButton *button = (UIButton *) sender;
-
-    UIView *view = [button superview];
-
-    while (view != nil) {
-        if ([view isKindOfClass:[EMSSessionCell class]]) {
-            EMSSessionCell *cell = (EMSSessionCell *) view;
-
-            Session *session = cell.session;
-
-            [[[EMSAppDelegate sharedAppDelegate] model] toggleFavourite:session];
-
-            break;
-        }
-
-        view = [view superview];
-    }
-}
-
 - (void)segmentChanged:(id)sender {
     
 
@@ -1003,11 +946,11 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 static NSString *const EMSMainViewControllerRestorationIdentifierSegmentControlIndex = @"EMSMainViewControllerRestorationIdentifierSegmentControlIndex";
 
 - (void)applicationFinishedRestoringState {
+    [self setEditing:NO];//Make sure we don´t restore any editing state
     [self initializeFetchedResultsController];
 }
 
 - (void)encodeRestorableStateWithCoder:(NSCoder *)coder {
-    
     
     [super encodeRestorableStateWithCoder:coder];
     
