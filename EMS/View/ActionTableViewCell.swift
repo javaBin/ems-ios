@@ -38,6 +38,7 @@ class ActionTableViewCell : UITableViewCell {
     }
     
     private func updateValues() {
+        self.titleLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
         self.titleLabel.text = self.rowAction?.title
     }
     
