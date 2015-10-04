@@ -194,7 +194,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     }
     
     if (EMSFeatureConfig.isRatingEnabled && [self ratingAvailableForDate:self.session.slot.end]) {
-        ActionTableViewCellAction *ratingAction = [[ActionTableViewCellAction alloc] initWithTitle:NSLocalizedString(@"Rate Session", @"Title for rate session action in detail view") handler:^{
+        ActionTableViewCellAction *ratingAction = [[ActionTableViewCellAction alloc] initWithTitle:NSLocalizedString(@"Leave feedback", @"Title for rate session action in detail view") handler:^{
             [self performSegueWithIdentifier:@"PresentRatingSegue" sender:self];
         }];
         

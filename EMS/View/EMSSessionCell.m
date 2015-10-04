@@ -159,13 +159,13 @@ IB_DESIGNABLE
 - (NSString *) titleForSessionFormat {
     NSString *format = self.session.format;
     if ([format isEqualToString:@"presentation"]) {
-        return @"Presentasjon";
+        return NSLocalizedString(@"Presentation", @"Title for presentation session format.");
     } else if ([format isEqualToString:@"lightning-talk"]) {
-        return @"Lyntale";
+        return NSLocalizedString(@"Lightning", @"Title for lightning-talk session format.");
     } else if ([format isEqualToString:@"workshop"]) {
-        return @"Workshop";
+        return NSLocalizedString(@"Workshop", @"Title for worksshop session format.");
     } else {
-        return @"Ukjent";
+        return NSLocalizedString(@"Unknown format", @"Title for unknown session format.");
     }
 }
 

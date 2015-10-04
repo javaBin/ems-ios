@@ -78,6 +78,7 @@
 		83F455A1177D5B5C00BC79A1 /* EMSAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */; };
 		85AE61294A3F0F519FCE5ED9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68C4AE1D95BFE01192E3C8AE /* libPods.a */; };
 		EA09B82B1BC084D70053E3BB /* Rating.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA09B82A1BC084D70053E3BB /* Rating.storyboard */; settings = {ASSET_TAGS = (); }; };
+		EA09B83B1BC191780053E3BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA09B83D1BC191780053E3BB /* InfoPlist.strings */; };
 		EA11338719A7A880008D000A /* EMSLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */; };
 		EA11338819A7A880008D000A /* EMSLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */; };
 		EA3A02DD1BBF2322006104F2 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3A02DC1BBF2322006104F2 /* StarView.swift */; settings = {ASSET_TAGS = (); }; };
@@ -295,6 +296,8 @@
 		A4647E03BE9A10F278B9CB8A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D1581B6A0B2740B18088FCDA /* Pods.debug run crashlytics.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods.debug run crashlytics.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.debug run crashlytics.xcconfig"; sourceTree = "<group>"; };
 		EA09B82A1BC084D70053E3BB /* Rating.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Rating.storyboard; sourceTree = "<group>"; };
+		EA09B8381BC191770053E3BB /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Filter.strings; sourceTree = "<group>"; };
+		EA09B83C1BC191780053E3BB /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EA11337C19A65B5F008D000A /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Main.strings; sourceTree = "<group>"; };
 		EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSLocalNotificationManager.m; sourceTree = "<group>"; };
 		EA11338919A7A89F008D000A /* EMSLocalNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSLocalNotificationManager.h; sourceTree = "<group>"; };
@@ -483,6 +486,7 @@
 		837F68571A80CC8400AC7C97 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EA09B83D1BC191780053E3BB /* InfoPlist.strings */,
 				837F68581A80CC8400AC7C97 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -853,6 +857,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A41693E03F65F0A8006386F /* events.json in Resources */,
+				EA09B83B1BC191780053E3BB /* InfoPlist.strings in Resources */,
 				837F68641A80E3BC00AC7C97 /* slots.json in Resources */,
 				5A41664B5785031931F6E8F6 /* rooms.json in Resources */,
 				5A41697BB085BA29489DD9E6 /* sessions.json in Resources */,
@@ -1156,10 +1161,19 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		EA09B83D1BC191780053E3BB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA09B83C1BC191780053E3BB /* nb */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		EAA965341BB9BB8900BEB749 /* Filter.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				EAA965351BB9BB8900BEB749 /* Base */,
+				EA09B8381BC191770053E3BB /* nb */,
 			);
 			name = Filter.storyboard;
 			sourceTree = "<group>";

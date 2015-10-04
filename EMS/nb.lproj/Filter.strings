@@ -1,0 +1,9 @@
+/* Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "HPs-pd-HUx"; */
+"HPs-pd-HUx.title" = "Nullstill";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "akV-4R-bpH"; */
+"akV-4R-bpH.text" = "Tittel";
+
+/* Class = "UINavigationItem"; title = "Filter"; ObjectID = "v4V-tk-hCi"; */
+"v4V-tk-hCi.title" = "Filtrer";
+
