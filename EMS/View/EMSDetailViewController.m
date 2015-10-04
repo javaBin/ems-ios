@@ -633,6 +633,8 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         ActionTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         ActionTableViewCellAction *rowAction = cell.rowAction;
         rowAction.handler();
+        
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
 

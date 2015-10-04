@@ -328,7 +328,7 @@
                     <size key="freeformSize" width="600" height="800"/>
                     <connections>
                         <outlet property="shareButton" destination="Sdd-xK-AHs" id="huh-xm-Urd"/>
-                        <segue destination="tkk-mW-u2U" kind="presentation" identifier="PresentRatingSegue" id="o2U-et-IgB"/>
+                        <segue destination="tkk-mW-u2U" kind="presentation" identifier="PresentRatingSegue" modalPresentationStyle="formSheet" id="o2U-et-IgB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ASS-J2-sfU" userLabel="First Responder" sceneMemberID="firstResponder"/>
