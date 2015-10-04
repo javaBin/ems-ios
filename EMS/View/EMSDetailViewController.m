@@ -31,9 +31,11 @@
 
 #import "NSDate+EMSExtensions.h"
 
+#import <SafariServices/SafariServices.h>
+
 #import "EMS-Bridging-Header.h"
 
-@interface EMSDetailViewController () <UIPopoverControllerDelegate, EMSSpeakersRetrieverDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface EMSDetailViewController () <EMSSpeakersRetrieverDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property(nonatomic) NSArray *parts;
 
@@ -179,7 +181,12 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
             ActionTableViewCellAction *rowAction = [[ActionTableViewCellAction alloc] initWithTitle:NSLocalizedString(@"Video", @"Title for video button in detail view") handler:^() {
                 [EMSTracking trackEventWithCategory:@"web" action:@"open link" label:self.session.videoLink];
                 
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.session.videoLink]];
+                NSURL *videoURL = [NSURL URLWithString:self.session.videoLink];
+                SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:videoURL];
+
+                safariViewController.view.tintColor = self.tableView.tintColor;
+                
+                [self presentViewController:safariViewController animated:YES completion:nil];
             }];
         
             [mutableActions addObject:rowAction];
@@ -805,7 +812,6 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
     return [[[[EMSAppDelegate sharedAppDelegate] applicationCacheDirectory] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.png", safeFilename]] path];
 }
-
 
 #pragma mark - State restoration
 
