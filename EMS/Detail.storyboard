@@ -290,8 +290,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Action Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9vd-Qb-Gl5">
-                                            <rect key="frame" x="16" y="12.5" width="543" height="19.5"/>
+                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9vd-Qb-Gl5">
+                                            <rect key="frame" x="16" y="12.5" width="576" height="19.5"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <color key="textColor" red="0.99215692280000001" green="0.52549022440000004" blue="0.29019609089999998" alpha="1" colorSpace="deviceRGB"/>
@@ -327,6 +327,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="800"/>
                     <connections>
+                        <outlet property="shareButton" destination="Sdd-xK-AHs" id="huh-xm-Urd"/>
                         <segue destination="tkk-mW-u2U" kind="presentation" identifier="PresentRatingSegue" id="o2U-et-IgB"/>
                     </connections>
                 </tableViewController>

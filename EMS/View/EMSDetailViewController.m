@@ -35,8 +35,6 @@
 
 @interface EMSDetailViewController () <UIPopoverControllerDelegate, EMSSpeakersRetrieverDelegate, UITableViewDataSource, UITableViewDelegate>
 
-@property(nonatomic) UIPopoverController *sharePopoverController;
-
 @property(nonatomic) NSArray *parts;
 
 @property(nonatomic, strong) NSDictionary *cachedSpeakerBios;
@@ -54,8 +52,6 @@
 @property(nonatomic) BOOL shouldReloadOnScrollDidEnd;
 
 @property(nonatomic) BOOL shouldRefreshThumbnail;
-
-@property(nonatomic, weak) UICollectionView *categoriesCollectionView;
 
 @property(nonatomic, copy) NSArray *keywords;
 
@@ -347,21 +343,6 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     }
 }
 
-#pragma mark - UIPopoverControllerDelegate
-
-- (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController {
-    return YES;
-}
-
-- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
-    if (popoverController == self.sharePopoverController) {
-        self.sharePopoverController = nil;
-    }
-
-    self.shareButton.enabled = YES;
-}
-
-
 #pragma mark - Calendar
 
 - (NHCalendarEvent *)createCalendarEvent {
@@ -500,7 +481,10 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
             UIActivityTypeCopyToPasteboard,
             UIActivityTypeAssignToContact,
             UIActivityTypeSaveToCameraRoll];
-
+    
+    
+    activityViewController.popoverPresentationController.barButtonItem = self.shareButton;
+    
     [activityViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
         DDLogVerbose(@"Sharing of %@ via %@ - completed %d", shareString, activityType, completed);
 
@@ -515,22 +499,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         }
     }];
 
-    activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-
-
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        UIPopoverController *popup = [[UIPopoverController alloc] initWithContentViewController:activityViewController];
-
-        popup.delegate = self;
-        [popup presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-
-        self.sharePopoverController = popup;
-    } else {
-        [self presentViewController:activityViewController animated:YES completion:^{
-            activityViewController.excludedActivityTypes = nil;
-            activityViewController = nil;
-        }];
-    }
+    [self presentViewController:activityViewController animated:YES completion:nil];
 
 }
 
