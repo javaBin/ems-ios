@@ -511,7 +511,6 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 }
 
 - (BOOL)ratingAvailableForDate:(NSDate *)date {
-    return YES;
     
     if (date == nil) {
         return NO;
