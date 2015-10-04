@@ -10,18 +10,65 @@
         <scene sceneID="aJF-Fr-zwQ">
             <objects>
                 <tableViewController storyboardIdentifier="EMSDetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="JSy-21-LO2" customClass="EMSDetailViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="Session Detail Table" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="wl0-iX-2Ht">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="Session Detail Table" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="wl0-iX-2Ht">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="zy7-iE-ndJ">
+                            <rect key="frame" x="0.0" y="617" width="600" height="15"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="g0x-1i-rYT">
+                                    <rect key="frame" x="16" y="0.0" width="584" height="15"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YIg-7X-A0j" userLabel="Hairline" customClass="HairLineView" customModule="EMS" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="584" height="1"/>
+                                            <animations/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                    <color key="value" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FYw-Ud-5q5" userLabel="Filler">
+                                            <rect key="frame" x="0.0" y="1" width="584" height="14"/>
+                                            <animations/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="14" id="ZhQ-yv-gs1"/>
+                                            </constraints>
+                                        </view>
+                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gw7-7r-cB5" userLabel="Spacer" customClass="HairLineView" customModule="EMS" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="15" width="584" height="1"/>
+                                            <animations/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                    <color key="value" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                    </subviews>
+                                    <animations/>
+                                </stackView>
+                            </subviews>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="g0x-1i-rYT" secondAttribute="trailing" id="0Tq-Cx-rjm"/>
+                                <constraint firstItem="g0x-1i-rYT" firstAttribute="top" secondItem="zy7-iE-ndJ" secondAttribute="top" id="0a4-O8-tPr"/>
+                                <constraint firstItem="g0x-1i-rYT" firstAttribute="leading" secondItem="zy7-iE-ndJ" secondAttribute="leadingMargin" constant="8" id="Czd-I3-utt"/>
+                                <constraint firstAttribute="bottom" secondItem="g0x-1i-rYT" secondAttribute="bottom" id="gt8-dQ-BuS"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SessionTitleTableViewCell" rowHeight="109" id="uLE-EM-0Ed" userLabel="TitleCell" customClass="EMSSessionTitleTableViewCell">
                                 <rect key="frame" x="0.0" y="86" width="600" height="109"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uLE-EM-0Ed" id="Frw-QQ-wQl">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="108.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="109"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="xCg-mR-6sv" userLabel="Title and Time">
@@ -93,7 +140,7 @@
                                 <rect key="frame" x="0.0" y="195" width="600" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SIl-T8-dKG" id="mvN-GU-iVA">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="38.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="39"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="M2L-GF-55U">
@@ -170,7 +217,7 @@
                                 <rect key="frame" x="0.0" y="234" width="600" height="152"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eO8-OJ-7v2" id="E9M-hS-o78">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="151.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="152"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="AXm-ed-6lC">
@@ -228,7 +275,7 @@
                                 <rect key="frame" x="0.0" y="386" width="600" height="109"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l6n-2U-T5Q" id="roc-86-4g8">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="108.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="109"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="sYB-2B-hXM" userLabel="Main Content">
@@ -288,22 +335,55 @@
                                 <rect key="frame" x="0.0" y="495" width="600" height="122"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hPc-pJ-hXA" id="Shl-Qf-15o">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="121.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="122"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9vd-Qb-Gl5">
-                                            <rect key="frame" x="16" y="51.5" width="576" height="19.5"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="SRb-AH-cJi">
+                                            <rect key="frame" x="17" y="0.0" width="583" height="122"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="guD-56-A9i" userLabel="Separator" customClass="HairLineView" customModule="EMS" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="583" height="1"/>
+                                                    <animations/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                            <color key="value" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9vd-Qb-Gl5">
+                                                    <rect key="frame" x="0.0" y="16" width="583" height="91"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <color key="textColor" red="0.99215692280000001" green="0.52549022440000004" blue="0.29019609089999998" alpha="1" colorSpace="deviceRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cvi-9a-syr" userLabel="Spacer" customClass="HairLineView" customModule="EMS" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="122" width="583" height="1"/>
+                                                    <animations/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                            <color key="value" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                            </subviews>
                                             <animations/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <color key="textColor" red="0.99215692280000001" green="0.52549022440000004" blue="0.29019609089999998" alpha="1" colorSpace="deviceRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        </stackView>
                                     </subviews>
                                     <animations/>
                                     <constraints>
-                                        <constraint firstItem="9vd-Qb-Gl5" firstAttribute="centerY" secondItem="Shl-Qf-15o" secondAttribute="centerY" id="4vB-bK-NQ3"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="9vd-Qb-Gl5" secondAttribute="trailing" id="CEy-Rg-ee0"/>
-                                        <constraint firstItem="9vd-Qb-Gl5" firstAttribute="leading" secondItem="Shl-Qf-15o" secondAttribute="leadingMargin" constant="8" id="ExS-XX-S93"/>
+                                        <constraint firstItem="SRb-AH-cJi" firstAttribute="top" secondItem="Shl-Qf-15o" secondAttribute="top" id="7DP-H2-tCv"/>
+                                        <constraint firstAttribute="trailing" secondItem="SRb-AH-cJi" secondAttribute="trailing" id="Zgf-Ez-fAg"/>
+                                        <constraint firstAttribute="bottom" secondItem="SRb-AH-cJi" secondAttribute="bottom" id="hQ5-f8-URk"/>
+                                        <constraint firstItem="SRb-AH-cJi" firstAttribute="leading" secondItem="Shl-Qf-15o" secondAttribute="leadingMargin" constant="9" id="weu-BH-ArQ"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <animations/>

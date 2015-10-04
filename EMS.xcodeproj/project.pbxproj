@@ -79,6 +79,7 @@
 		85AE61294A3F0F519FCE5ED9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68C4AE1D95BFE01192E3C8AE /* libPods.a */; };
 		EA09B82B1BC084D70053E3BB /* Rating.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA09B82A1BC084D70053E3BB /* Rating.storyboard */; settings = {ASSET_TAGS = (); }; };
 		EA09B83B1BC191780053E3BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA09B83D1BC191780053E3BB /* InfoPlist.strings */; };
+		EA09B83F1BC1E03D0053E3BB /* HairLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA09B83E1BC1E03D0053E3BB /* HairLineView.swift */; settings = {ASSET_TAGS = (); }; };
 		EA11338719A7A880008D000A /* EMSLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */; };
 		EA11338819A7A880008D000A /* EMSLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */; };
 		EA3A02DD1BBF2322006104F2 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3A02DC1BBF2322006104F2 /* StarView.swift */; settings = {ASSET_TAGS = (); }; };
@@ -298,6 +299,7 @@
 		EA09B82A1BC084D70053E3BB /* Rating.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Rating.storyboard; sourceTree = "<group>"; };
 		EA09B8381BC191770053E3BB /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Filter.strings; sourceTree = "<group>"; };
 		EA09B83C1BC191780053E3BB /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		EA09B83E1BC1E03D0053E3BB /* HairLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HairLineView.swift; sourceTree = "<group>"; };
 		EA11337C19A65B5F008D000A /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Main.strings; sourceTree = "<group>"; };
 		EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSLocalNotificationManager.m; sourceTree = "<group>"; };
 		EA11338919A7A89F008D000A /* EMSLocalNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSLocalNotificationManager.h; sourceTree = "<group>"; };
@@ -593,6 +595,7 @@
 				EA461F451BBF9A40000998AC /* TypeLabelCollectionViewCell.swift */,
 				EA461F471BBF9CD5000998AC /* CategoriesTableViewCell.swift */,
 				EA461F491BC04CDA000998AC /* ActionTableViewCell.swift */,
+				EA09B83E1BC1E03D0053E3BB /* HairLineView.swift */,
 			);
 			name = Controllers;
 			path = EMS/View;
@@ -1041,6 +1044,7 @@
 				839BD667176F9BD400900712 /* EMSSlotsParser.m in Sources */,
 				EA3A02DD1BBF2322006104F2 /* StarView.swift in Sources */,
 				835D903E1B46737C0038FA3E /* RatingViewController.swift in Sources */,
+				EA09B83F1BC1E03D0053E3BB /* HairLineView.swift in Sources */,
 				839BD66B176F9BD400900712 /* EMSMainViewController.m in Sources */,
 				15806D071B4D75C400EFFB47 /* NSDate+EMSExtensions.m in Sources */,
 				EA11338719A7A880008D000A /* EMSLocalNotificationManager.m in Sources */,
