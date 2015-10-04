@@ -558,20 +558,29 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     if (indexPath.section == EMSDetailViewControllerSectionInfo) {
         EMSSessionTitleTableViewCell *titleCell = [self.tableView dequeueReusableCellWithIdentifier:@"SessionTitleTableViewCell" forIndexPath:indexPath];
         cell = [self configureTitleCell:titleCell forIndexPath:indexPath];
+        cell.separatorInset = UIEdgeInsetsMake(0, CGFLOAT_MAX, 0, 0);
     } else if (indexPath.section == EmsDetailViewControllerSectionCategories) {
         CategoriesTableViewCell *categoriesCell = [self.tableView dequeueReusableCellWithIdentifier:@"CategoriesCell"];
         categoriesCell.categories = self.keywords;
         categoriesCell.level = self.session.level;
         cell= categoriesCell;
+        cell.separatorInset = UIEdgeInsetsMake(0, CGFLOAT_MAX, 0, 0);
     } else if (indexPath.section == EmsDetailViewControllerSectionDescription) {
         EmsDescriptionTableViewCell *descriptionCell = [self.tableView dequeueReusableCellWithIdentifier:@"DescriptionCell" forIndexPath:indexPath];
         descriptionCell.session = self.session;
         cell = descriptionCell;
+        cell.separatorInset = UIEdgeInsetsMake(0, CGFLOAT_MAX, 0, 0);
     } else if (indexPath.section == EMSDetailViewControllerSectionLegacy) {
         EMSDetailViewRow *row = self.parts[(NSUInteger) indexPath.row];
 
         EMSTopAlignCellTableViewCell *speakerCell = [self.tableView dequeueReusableCellWithIdentifier:@"SpeakerCell" forIndexPath:indexPath];
         cell = [self configureSpeakerCell:speakerCell forRow:row forIndexPath:indexPath];
+        
+        if (indexPath.row == [self.parts count] - 1) {
+            cell.separatorInset = self.tableView.separatorInset;
+        } else {
+            cell.separatorInset = UIEdgeInsetsMake(0, CGFLOAT_MAX, 0, 0);
+        }
     } else if (indexPath.section == EmsDetailViewControllerSectionActions) {
         ActionTableViewCell *actionCell = [self.tableView dequeueReusableCellWithIdentifier:@"RatingCell" forIndexPath:indexPath];
         
