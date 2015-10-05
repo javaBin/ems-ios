@@ -46,18 +46,18 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SessionCell" rowHeight="103" id="KT9-EM-DWY" customClass="EMSSessionCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SessionCell" id="KT9-EM-DWY" customClass="EMSSessionCell">
                                 <rect key="frame" x="0.0" y="130" width="600" height="103"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KT9-EM-DWY" id="Zqj-Bh-haJ">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="102.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView userInteractionEnabled="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="3yc-hG-RbD">
-                                            <rect key="frame" x="8" y="8" width="584" height="86"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FiY-E6-phI">
+                                            <rect key="frame" x="8" y="8" width="584" height="86.5"/>
                                             <subviews>
                                                 <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Mb-sf-dlz" userLabel="Main Level Color" customClass="SessionLevelLineView" customModule="EMS" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="3.5" height="86"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="3.5" height="86.5"/>
                                                     <animations/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
@@ -74,71 +74,78 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Xau-Xx-xrp" userLabel="Information View">
-                                                    <rect key="frame" x="11.5" y="0.0" width="572.5" height="86"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="epC-Jo-Sqd" userLabel="Title View">
+                                                    <rect key="frame" x="11" y="0.0" width="573" height="64"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="YGu-2W-QHp" userLabel="Title View">
-                                                            <rect key="frame" x="0.0" y="0.0" width="572.5" height="58.5"/>
-                                                            <subviews>
-                                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="100" contentMode="left" text="Testing layout with title that is more than two lines. Testing layout with title that is more than two lines." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pye-ep-KZc">
-                                                                    <rect key="frame" x="0.0" y="9" width="552.5" height="40.5"/>
-                                                                    <animations/>
-                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <view contentMode="scaleToFill" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="qEI-xy-pAK" customClass="StarView" customModule="EMS" customModuleProvider="target">
-                                                                    <rect key="frame" x="557" y="22" width="15" height="15"/>
-                                                                    <animations/>
-                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                    <userDefinedRuntimeAttributes>
-                                                                        <userDefinedRuntimeAttribute type="number" keyPath="starSize">
-                                                                            <real key="value" value="15"/>
-                                                                        </userDefinedRuntimeAttribute>
-                                                                    </userDefinedRuntimeAttributes>
-                                                                </view>
-                                                            </subviews>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="100" contentMode="left" verticalHuggingPriority="249" misplaced="YES" text="Testing layout with title that is more than two lines. Testing layout with title that is more than two lines." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pye-ep-KZc">
+                                                            <rect key="frame" x="0.0" y="12" width="553" height="41"/>
                                                             <animations/>
-                                                        </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="3KC-tY-mVP" userLabel="Subtitle View">
-                                                            <rect key="frame" x="0.0" y="62" width="572.5" height="23.5"/>
-                                                            <subviews>
-                                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="200" contentMode="left" text="Room 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYZ-5B-fa6">
-                                                                    <rect key="frame" x="0.0" y="5" width="515" height="13.5"/>
-                                                                    <animations/>
-                                                                    <accessibility key="accessibilityConfiguration" hint=""/>
-                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Lightning" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h6v-pd-nMw" customClass="TypeLabel" customModule="EMS" customModuleProvider="target">
-                                                                    <rect key="frame" x="520" y="4" width="52.5" height="15"/>
-                                                                    <animations/>
-                                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
-                                                                    <color key="textColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                    <userDefinedRuntimeAttributes>
-                                                                        <userDefinedRuntimeAttribute type="color" keyPath="labelBackgroundColor">
-                                                                            <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                                        </userDefinedRuntimeAttribute>
-                                                                    </userDefinedRuntimeAttributes>
-                                                                </label>
-                                                            </subviews>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <view contentMode="scaleToFill" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="qEI-xy-pAK" customClass="StarView" customModule="EMS" customModuleProvider="target">
+                                                            <rect key="frame" x="558" y="25" width="15" height="15"/>
                                                             <animations/>
-                                                        </stackView>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="starSize">
+                                                                    <real key="value" value="15"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </view>
+                                                    </subviews>
+                                                    <animations/>
+                                                </stackView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="STo-V3-uk8" userLabel="Room View">
+                                                    <rect key="frame" x="11" y="72" width="573" height="15"/>
+                                                    <subviews>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="200" contentMode="left" text="Room 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYZ-5B-fa6">
+                                                            <rect key="frame" x="0.0" y="0.0" width="516" height="15"/>
+                                                            <animations/>
+                                                            <accessibility key="accessibilityConfiguration" hint=""/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Lightning" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h6v-pd-nMw" customClass="TypeLabel" customModule="EMS" customModuleProvider="target">
+                                                            <rect key="frame" x="521" y="0.0" width="53" height="15"/>
+                                                            <animations/>
+                                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
+                                                            <color key="textColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="color" keyPath="labelBackgroundColor">
+                                                                    <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </label>
                                                     </subviews>
                                                     <animations/>
                                                 </stackView>
                                             </subviews>
                                             <animations/>
-                                        </stackView>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="epC-Jo-Sqd" secondAttribute="trailing" id="4Kw-xR-IDH"/>
+                                                <constraint firstItem="7Mb-sf-dlz" firstAttribute="top" secondItem="FiY-E6-phI" secondAttribute="top" id="96b-EU-PZS"/>
+                                                <constraint firstItem="7Mb-sf-dlz" firstAttribute="leading" secondItem="FiY-E6-phI" secondAttribute="leading" id="FQu-0y-orQ"/>
+                                                <constraint firstItem="epC-Jo-Sqd" firstAttribute="leading" secondItem="7Mb-sf-dlz" secondAttribute="trailing" constant="7.5" id="JxN-nA-3Ve"/>
+                                                <constraint firstItem="STo-V3-uk8" firstAttribute="leading" secondItem="7Mb-sf-dlz" secondAttribute="trailing" constant="7.5" id="ctd-O0-7h8"/>
+                                                <constraint firstItem="epC-Jo-Sqd" firstAttribute="top" secondItem="FiY-E6-phI" secondAttribute="top" id="egh-bW-U1B"/>
+                                                <constraint firstAttribute="bottom" secondItem="7Mb-sf-dlz" secondAttribute="bottom" id="iVc-PD-c01"/>
+                                                <constraint firstAttribute="trailing" secondItem="STo-V3-uk8" secondAttribute="trailing" id="m7A-xD-2Cj"/>
+                                                <constraint firstAttribute="bottom" secondItem="STo-V3-uk8" secondAttribute="bottom" id="vQy-F2-mzS"/>
+                                                <constraint firstItem="STo-V3-uk8" firstAttribute="top" secondItem="epC-Jo-Sqd" secondAttribute="bottom" constant="8" id="veB-UX-ay0"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <animations/>
                                     <constraints>
-                                        <constraint firstItem="3yc-hG-RbD" firstAttribute="top" secondItem="Zqj-Bh-haJ" secondAttribute="topMargin" id="M0r-Wi-wgp"/>
-                                        <constraint firstItem="3yc-hG-RbD" firstAttribute="leading" secondItem="Zqj-Bh-haJ" secondAttribute="leadingMargin" id="feV-oy-7Nf"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="3yc-hG-RbD" secondAttribute="trailing" id="gLn-rN-lHB"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="3yc-hG-RbD" secondAttribute="bottom" constant="0.5" id="rnQ-xV-SNl"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="FiY-E6-phI" secondAttribute="trailing" id="4iW-WB-l5B"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="FiY-E6-phI" secondAttribute="bottom" id="5Da-C0-lQx"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="FiY-E6-phI" secondAttribute="leading" id="98J-ea-ei5"/>
+                                        <constraint firstItem="FiY-E6-phI" firstAttribute="top" secondItem="Zqj-Bh-haJ" secondAttribute="topMargin" id="apw-kN-eRE"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <animations/>

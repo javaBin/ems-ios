@@ -47,10 +47,6 @@
 
 @property(nonatomic) BOOL observersInstalled;
 
-@property(nonatomic, strong) EMSSessionTitleTableViewCell *titleSizingCell;
-
-@property(nonatomic, strong) EMSTopAlignCellTableViewCell *topAlignSizingCell;
-
 @property(nonatomic) BOOL shouldReloadOnScrollDidEnd;
 
 @property(nonatomic) BOOL shouldRefreshThumbnail;
@@ -277,17 +273,12 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     }
 }
 
-
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    //self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 100;
+   
+   
 
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.estimatedRowHeight = 50;
-    
-    //We do not do fullscreen layout on iOS 7+ right now.
-    if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
-        self.automaticallyAdjustsScrollViewInsets = YES;
-    }
 
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -295,6 +286,8 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     self.observersInstalled = NO;
 
     [self setupWithSession:self.session];
+    
+    [super viewDidLoad];
     
 }
 
@@ -306,6 +299,8 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    
 
     [EMSTracking trackScreen:@"Detail Screen"];
 }
@@ -586,8 +581,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 
 - (EMSSessionTitleTableViewCell *) configureTitleCell:(EMSSessionTitleTableViewCell *)titleCell forIndexPath:(NSIndexPath *) indexPath {
     
-    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
-    font = [font fontWithSize:(CGFloat) (font.pointSize * 1.2)];
+    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleTitle2];
     titleCell.titleLabel.font = font;
     
     titleCell.titleLabel.text = self.session.title;
