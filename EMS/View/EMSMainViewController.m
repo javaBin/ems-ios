@@ -49,6 +49,8 @@
 
 @property BOOL observersInstalled;
 
+@property NSCache *cellHeightCache;
+
 @end
 
 @implementation EMSMainViewController
@@ -326,7 +328,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    self.cellHeightCache = [[NSCache alloc] init];
+    
     self.title = NSLocalizedString(@"Sessions", @"Session list title");
 
     self.settingsButton.accessibilityLabel = NSLocalizedString(@"Settings", @"Accessibility label for settings button");
@@ -664,6 +668,21 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 }
 
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *sessionIdentifier = [self modelIdentifierForElementAtIndexPath:indexPath inView:self.tableView];
+    NSNumber *height = [self.cellHeightCache objectForKey:sessionIdentifier];
+    if (height) {
+        return [height floatValue];
+    } else {
+        return 100.0;
+    }
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *sessionIdentifier = [self modelIdentifierForElementAtIndexPath:indexPath inView:self.tableView];
+    [self.cellHeightCache setObject:@(cell.bounds.size.height) forKey:sessionIdentifier];
+}
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (!decelerate && self.shouldReloadOnScrollDidEnd) {
