@@ -72,7 +72,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ucs-dE-fm0" customClass="TintButton" customModule="EMS" customModuleProvider="target">
-                                            <rect key="frame" x="548" y="-1.5" width="44" height="44.5"/>
+                                            <rect key="frame" x="548" y="13.5" width="44" height="44.5"/>
                                             <animations/>
                                             <accessibility key="accessibilityConfiguration" label="Add to favorites"/>
                                             <constraints>
@@ -92,14 +92,14 @@
                                             </connections>
                                         </button>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Tuesday 09/10/2014 10:00 - 11:00, Room 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3iu-Ni-rHD" userLabel="Time And Room">
-                                            <rect key="frame" x="16" y="43.5" width="568" height="57.5"/>
+                                            <rect key="frame" x="16" y="58.5" width="568" height="42.5"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hJ4-5a-aLw">
-                                            <rect key="frame" x="16" y="8" width="522" height="25.5"/>
+                                            <rect key="frame" x="16" y="23" width="522" height="25.5"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -109,7 +109,7 @@
                                     <animations/>
                                     <constraints>
                                         <constraint firstItem="3iu-Ni-rHD" firstAttribute="leading" secondItem="Frw-QQ-wQl" secondAttribute="leadingMargin" constant="8" id="6OG-X7-0DG"/>
-                                        <constraint firstAttribute="topMargin" secondItem="hJ4-5a-aLw" secondAttribute="top" id="7z7-gG-qhF"/>
+                                        <constraint firstItem="hJ4-5a-aLw" firstAttribute="top" secondItem="Frw-QQ-wQl" secondAttribute="topMargin" constant="15" id="7z7-gG-qhF"/>
                                         <constraint firstItem="ucs-dE-fm0" firstAttribute="centerY" secondItem="hJ4-5a-aLw" secondAttribute="centerY" id="KWL-tJ-dEI"/>
                                         <constraint firstItem="ucs-dE-fm0" firstAttribute="leading" secondItem="hJ4-5a-aLw" secondAttribute="trailing" constant="10" id="Nqt-pE-wsM"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="3iu-Ni-rHD" secondAttribute="trailing" constant="8" id="PZk-fn-Weq"/>
@@ -332,7 +332,7 @@
                                             <rect key="frame" x="17" y="0.0" width="583" height="122"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="guD-56-A9i" userLabel="Separator" customClass="HairLineView" customModule="EMS" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="583" height="0.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="583" height="1"/>
                                                     <animations/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <userDefinedRuntimeAttributes>
@@ -345,14 +345,14 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9vd-Qb-Gl5">
-                                                    <rect key="frame" x="0.0" y="15.5" width="583" height="91"/>
+                                                    <rect key="frame" x="0.0" y="16" width="583" height="91"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.99215692280000001" green="0.52549022440000004" blue="0.29019609089999998" alpha="1" colorSpace="deviceRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cvi-9a-syr" userLabel="Spacer" customClass="HairLineView" customModule="EMS" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="121" width="583" height="0.5"/>
+                                                    <rect key="frame" x="0.0" y="122" width="583" height="1"/>
                                                     <animations/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <userDefinedRuntimeAttributes>
