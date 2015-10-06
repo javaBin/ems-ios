@@ -174,15 +174,22 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     NSMutableArray *mutableActions = [NSMutableArray array];
     if ([EMSFeatureConfig isFeatureEnabled:fLinks]) {
         if (self.session.videoLink) {
+            typeof(self) __weak weakSelf = self;
             ActionTableViewCellAction *rowAction = [[ActionTableViewCellAction alloc] initWithTitle:NSLocalizedString(@"Video", @"Title for video button in detail view") handler:^() {
-                [EMSTracking trackEventWithCategory:@"web" action:@"open link" label:self.session.videoLink];
                 
-                NSURL *videoURL = [NSURL URLWithString:self.session.videoLink];
+                typeof(weakSelf) strongSelf = weakSelf;
+                if (!strongSelf) {
+                    return;
+                }
+                
+                [EMSTracking trackEventWithCategory:@"web" action:@"open link" label:strongSelf.session.videoLink];
+                
+                NSURL *videoURL = [NSURL URLWithString:strongSelf.session.videoLink];
                 SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:videoURL];
 
-                safariViewController.view.tintColor = self.tableView.tintColor;
+                safariViewController.view.tintColor = strongSelf.tableView.tintColor;
                 
-                [self presentViewController:safariViewController animated:YES completion:nil];
+                [strongSelf presentViewController:safariViewController animated:YES completion:nil];
             }];
         
             [mutableActions addObject:rowAction];
@@ -190,8 +197,10 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     }
     
     if (EMSFeatureConfig.isRatingEnabled && [self ratingAvailableForDate:self.session.slot.end]) {
+        typeof(self) __weak weakSelf = self;
         ActionTableViewCellAction *ratingAction = [[ActionTableViewCellAction alloc] initWithTitle:NSLocalizedString(@"Leave feedback", @"Title for rate session action in detail view") handler:^{
-            [self performSegueWithIdentifier:@"PresentRatingSegue" sender:self];
+            typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf performSegueWithIdentifier:@"PresentRatingSegue" sender:strongSelf];
         }];
         
         [mutableActions addObject:ratingAction];
