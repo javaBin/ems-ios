@@ -451,39 +451,6 @@ int networkCount = 0;
     return YES;
 }
 
-- (void)application:(UIApplication *)application didDecodeRestorableStateWithCoder:(NSCoder *)coder {
-    if ([self.window.rootViewController isKindOfClass:[UISplitViewController class]]) {
-        
-        UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-        
-        UINavigationController *primaryNavigation = splitViewController.viewControllers.firstObject;
-        
-        if ([primaryNavigation.visibleViewController isKindOfClass:[EMSDetailViewController class]]) {
-            UIViewController *detailViewController = primaryNavigation.visibleViewController.parentViewController;
-            
-            [primaryNavigation popToRootViewControllerAnimated:NO];
-            
-            [splitViewController showDetailViewController:detailViewController sender:self];
-        }
-        
-    }
-}
-
-- (UIViewController *)application:(UIApplication *)application viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder {
-    
-    if ([self.window.rootViewController isKindOfClass:[UISplitViewController class]]) {
-        UISplitViewController *splitViewController = (UISplitViewController *) self.window.rootViewController;
-        
-        if ([identifierComponents.lastObject isEqualToString:@"Session Detail Navigation Controller"]) {
-            // Always return the navigation controller created as part of the storyboard to
-            // avoid duplicate detail views when state of split view was stored in a collapsed state.
-            return splitViewController.viewControllers.lastObject;
-        }
-        
-    }
-    return nil;
-}
-
 
 
 
