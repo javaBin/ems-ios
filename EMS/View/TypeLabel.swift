@@ -35,7 +35,7 @@ class TypeLabel : UILabel {
     }
     
     override func drawRect(rect: CGRect) {
-        let cornerRadius = self.bounds.height/4
+        let cornerRadius = self.bounds.height/2
         let bezierPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: cornerRadius)
         labelBackgroundColor?.setFill()
         bezierPath.fill()
@@ -44,7 +44,7 @@ class TypeLabel : UILabel {
     
     override func intrinsicContentSize() -> CGSize {
         let size = super.intrinsicContentSize()
-        return CGSize(width: size.width + size.height / 2, height: size.height + size.height / 4.0)
+        return CGSize(width: size.width + size.height, height: size.height + size.height / 3.0)
     }
     
     override func prepareForInterfaceBuilder() {
