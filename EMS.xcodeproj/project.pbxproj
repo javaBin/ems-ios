@@ -88,7 +88,6 @@
 		EA461F481BBF9CD5000998AC /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F471BBF9CD5000998AC /* CategoriesTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		EA461F4A1BC04CDA000998AC /* ActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F491BC04CDA000998AC /* ActionTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		EA6132BC193FC35B000F54DC /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
-		EA74604219A42A3600E24D04 /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA74604119A42A3600E24D04 /* EMS-Keys.plist */; };
 		EA81CDDE19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = EA81CDDD19AF8F0400FE43A2 /* EMSConferenceRetriever.m */; };
 		EA81CDDF19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = EA81CDDD19AF8F0400FE43A2 /* EMSConferenceRetriever.m */; };
 		EA8F2C831944CCB7002EAE1F /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
@@ -108,6 +107,17 @@
 		EAE4330919A52F1C002C3EBA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAE4330619A52F1C002C3EBA /* Localizable.strings */; };
 		EAE4330B19A52F75002C3EBA /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = EAE4330D19A52F75002C3EBA /* about.html */; };
 		EAE4330F19A52FA5002C3EBA /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = EAE4331119A52FA5002C3EBA /* about.html */; };
+		EAE809911BC48C8600EAA446 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAE809901BC48C8600EAA446 /* Launch Screen.storyboard */; settings = {ASSET_TAGS = (); }; };
+		EAE809951BC4941B00EAA446 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAE809901BC48C8600EAA446 /* Launch Screen.storyboard */; settings = {ASSET_TAGS = (); }; };
+		EAE8099C1BC494B500EAA446 /* ActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F491BC04CDA000998AC /* ActionTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		EAE8099D1BC494B800EAA446 /* HairLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA09B83E1BC1E03D0053E3BB /* HairLineView.swift */; settings = {ASSET_TAGS = (); }; };
+		EAE8099E1BC494BC00EAA446 /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F471BBF9CD5000998AC /* CategoriesTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		EAE8099F1BC494BF00EAA446 /* TypeLabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F451BBF9A40000998AC /* TypeLabelCollectionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		EAE809A01BC494C700EAA446 /* EmsDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F431BBF8926000998AC /* EmsDescriptionTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		EAE809A11BC494CB00EAA446 /* TypeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACD33EB1BBC4FF60060C28E /* TypeLabel.swift */; settings = {ASSET_TAGS = (); }; };
+		EAE809A21BC494CE00EAA446 /* SessionLevelLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACD33ED1BBC810D0060C28E /* SessionLevelLineView.swift */; settings = {ASSET_TAGS = (); }; };
+		EAE809A31BC495D500EAA446 /* Rating.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA09B82A1BC084D70053E3BB /* Rating.storyboard */; settings = {ASSET_TAGS = (); }; };
+		EAE809A41BC495F200EAA446 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3A02DC1BBF2322006104F2 /* StarView.swift */; settings = {ASSET_TAGS = (); }; };
 		F30A8CDB192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */ = {isa = PBXBuildFile; fileRef = F30A8CDA192B42FF0066DFD9 /* EMSDetailViewRow.m */; };
 		F30A8CDC192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */ = {isa = PBXBuildFile; fileRef = F30A8CDA192B42FF0066DFD9 /* EMSDetailViewRow.m */; };
 		F30A8CE5192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F30A8CE4192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m */; };
@@ -329,6 +339,7 @@
 		EAE4330E19A52F7C002C3EBA /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = nb; path = nb.lproj/about.html; sourceTree = "<group>"; };
 		EAE4331019A52FA5002C3EBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = en; path = en.lproj/about.html; sourceTree = "<group>"; };
 		EAE4331319A53115002C3EBA /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = nb; path = nb.lproj/about.html; sourceTree = "<group>"; };
+		EAE809901BC48C8600EAA446 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		F30A8CD9192B42FF0066DFD9 /* EMSDetailViewRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSDetailViewRow.h; sourceTree = "<group>"; };
 		F30A8CDA192B42FF0066DFD9 /* EMSDetailViewRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDetailViewRow.m; sourceTree = "<group>"; };
 		F30A8CE3192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSTopAlignCellTableViewCell.h; sourceTree = "<group>"; };
@@ -696,6 +707,7 @@
 				EA09B82A1BC084D70053E3BB /* Rating.storyboard */,
 				EAA965341BB9BB8900BEB749 /* Filter.storyboard */,
 				EAA965311BB9BAC400BEB749 /* Settings.storyboard */,
+				EAE809901BC48C8600EAA446 /* Launch Screen.storyboard */,
 				F35BB6CC17685885009077D3 /* Supporting Files */,
 				F3939E5F1769C3CD0078C709 /* EMSModel.h */,
 				F3939E601769C3CD0078C709 /* EMSModel.m */,
@@ -883,6 +895,7 @@
 				83BF8B6A17ECDA4D0093242C /* Images.xcassets in Resources */,
 				EAE4330819A52F1C002C3EBA /* Localizable.strings in Resources */,
 				F354B0BA1781AA1D007F7B01 /* iTunesArtwork.png in Resources */,
+				EAE809911BC48C8600EAA446 /* Launch Screen.storyboard in Resources */,
 				F354B0BB1781AA1D007F7B01 /* iTunesArtwork@2x.png in Resources */,
 				4E1ADFF1BCEBD89ABF3ACAE4 /* README.md in Resources */,
 				EAA965391BB9C1C600BEB749 /* Detail.storyboard in Resources */,
@@ -897,10 +910,11 @@
 			files = (
 				EAE2CF5219A934DD002F44FC /* Main.storyboard in Resources */,
 				F394C9A017F0173900FAFBD4 /* InfoPlist.strings in Resources */,
+				EAE809951BC4941B00EAA446 /* Launch Screen.storyboard in Resources */,
 				F394C9B517F0173900FAFBD4 /* style.css in Resources */,
 				EAE4330F19A52FA5002C3EBA /* about.html in Resources */,
 				F394C9E717F01C0300FAFBD4 /* EMS-Config.plist in Resources */,
-				EA74604219A42A3600E24D04 /* EMS-Keys.plist in Resources */,
+				EAE809A31BC495D500EAA446 /* Rating.storyboard in Resources */,
 				EAE4330919A52F1C002C3EBA /* Localizable.strings in Resources */,
 				F394C9C817F0173900FAFBD4 /* Images.xcassets in Resources */,
 				EAA9653A1BB9C1C600BEB749 /* Detail.storyboard in Resources */,
@@ -1110,8 +1124,10 @@
 				F394C97A17F0173900FAFBD4 /* EMSRoomsParser.m in Sources */,
 				F394C97B17F0173900FAFBD4 /* EMSSession.m in Sources */,
 				F394C97C17F0173900FAFBD4 /* EMSSessionsParser.m in Sources */,
+				EAE8099F1BC494BF00EAA446 /* TypeLabelCollectionViewCell.swift in Sources */,
 				F394C97D17F0173900FAFBD4 /* EMSSlot.m in Sources */,
 				F394C97E17F0173900FAFBD4 /* EMSSlotsParser.m in Sources */,
+				EAE809A11BC494CB00EAA446 /* TypeLabel.swift in Sources */,
 				F394C97F17F0173900FAFBD4 /* EMSMainViewController.m in Sources */,
 				F394C98017F0173900FAFBD4 /* EMSSettingsViewController.m in Sources */,
 				EA11338819A7A880008D000A /* EMSLocalNotificationManager.m in Sources */,
@@ -1123,6 +1139,8 @@
 				835D90431B4675960038FA3E /* RatingViewCell.swift in Sources */,
 				8322B32E1B4681DE008DE85B /* Rating.swift in Sources */,
 				F394C98517F0173900FAFBD4 /* EMSSpeakersParser.m in Sources */,
+				EAE809A41BC495F200EAA446 /* StarView.swift in Sources */,
+				EAE8099D1BC494B800EAA446 /* HairLineView.swift in Sources */,
 				F30A8CE6192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m in Sources */,
 				F394C98617F0173900FAFBD4 /* EMSSearchViewController.m in Sources */,
 				F394C98817F0173900FAFBD4 /* Conference.m in Sources */,
@@ -1130,6 +1148,7 @@
 				F3AABDEA19AB16C6003D1D1C /* AddTimestampToSpeaker.xcmappingmodel in Sources */,
 				F394C98A17F0173900FAFBD4 /* ConferenceLevel.m in Sources */,
 				F394C98B17F0173900FAFBD4 /* Room.m in Sources */,
+				EAE809A21BC494CE00EAA446 /* SessionLevelLineView.swift in Sources */,
 				F394C98C17F0173900FAFBD4 /* Slot.m in Sources */,
 				F394C98D17F0173900FAFBD4 /* ConferenceKeyword.m in Sources */,
 				F30A8CDC192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */,
@@ -1142,6 +1161,8 @@
 				F394C99117F0173900FAFBD4 /* EMSAdvancedSearch.m in Sources */,
 				F394C99217F0173900FAFBD4 /* EMSAboutViewController.m in Sources */,
 				1504125119ABDDA500051E04 /* SpeakerPic.m in Sources */,
+				EAE8099C1BC494B500EAA446 /* ActionTableViewCell.swift in Sources */,
+				EAE8099E1BC494BC00EAA446 /* CategoriesTableViewCell.swift in Sources */,
 				F394C99317F0173900FAFBD4 /* AddVideoLinkMapping.xcmappingmodel in Sources */,
 				F394C99417F0173900FAFBD4 /* EMSConferenceDetailViewController.m in Sources */,
 				4E1AD00E5B0570877570A148 /* EMSTracking.m in Sources */,
@@ -1149,6 +1170,7 @@
 				EA81CDDF19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */,
 				4E1AD032EC53C9E396CAD414 /* EMSSpeakersRetriever.m in Sources */,
 				72A8D23A0F61EBA5DD99D33D /* NSURLResponse+EMSExtensions.m in Sources */,
+				EAE809A01BC494C700EAA446 /* EmsDescriptionTableViewCell.swift in Sources */,
 				5A416E8B9CF2BA598F01DEFE /* Log.m in Sources */,
 				5A41688B322BF8E59FBF4F3E /* TintButton.swift in Sources */,
 			);
@@ -1407,7 +1429,6 @@
 			baseConfigurationReference = 6D16B444F2A97F37E8160B34 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "JavaZone - AppIcon";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1450,7 +1471,6 @@
 			baseConfigurationReference = A4647E03BE9A10F278B9CB8A /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "JavaZone - AppIcon";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1490,7 +1510,6 @@
 			baseConfigurationReference = 6D16B444F2A97F37E8160B34 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "flatMap - AppIcon";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1530,7 +1549,6 @@
 			baseConfigurationReference = A4647E03BE9A10F278B9CB8A /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "flatMap - AppIcon";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1610,7 +1628,6 @@
 			baseConfigurationReference = D1581B6A0B2740B18088FCDA /* Pods.debug run crashlytics.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "JavaZone - AppIcon";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1651,7 +1668,6 @@
 			baseConfigurationReference = D1581B6A0B2740B18088FCDA /* Pods.debug run crashlytics.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "flatMap - AppIcon";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

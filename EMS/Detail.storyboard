@@ -17,7 +17,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="zy7-iE-ndJ">
-                            <rect key="frame" x="0.0" y="617" width="600" height="15"/>
+                            <rect key="frame" x="0.0" y="658" width="600" height="15"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="g0x-1i-rYT">
@@ -321,15 +321,15 @@
                                     <outlet property="thumbnailView" destination="0oJ-23-AUx" id="5AN-Mu-wKc"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RatingCell" rowHeight="122" id="hPc-pJ-hXA" userLabel="ActionCell" customClass="ActionTableViewCell" customModule="EMS" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="495" width="600" height="122"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RatingCell" rowHeight="163" id="hPc-pJ-hXA" userLabel="ActionCell" customClass="ActionTableViewCell" customModule="EMS" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="495" width="600" height="163"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hPc-pJ-hXA" id="Shl-Qf-15o">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="122"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="163"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="SRb-AH-cJi">
-                                            <rect key="frame" x="17" y="0.0" width="583" height="122"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="SRb-AH-cJi">
+                                            <rect key="frame" x="17" y="0.0" width="583" height="163"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="guD-56-A9i" userLabel="Separator" customClass="HairLineView" customModule="EMS" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="583" height="1"/>
@@ -344,15 +344,15 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
-                                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9vd-Qb-Gl5">
-                                                    <rect key="frame" x="0.0" y="16" width="583" height="91"/>
+                                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Action Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9vd-Qb-Gl5">
+                                                    <rect key="frame" x="0.0" y="16" width="583" height="132"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.99215692280000001" green="0.52549022440000004" blue="0.29019609089999998" alpha="1" colorSpace="deviceRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cvi-9a-syr" userLabel="Spacer" customClass="HairLineView" customModule="EMS" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="122" width="583" height="1"/>
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cvi-9a-syr" userLabel="Spacer" customClass="HairLineView" customModule="EMS" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="163" width="583" height="1"/>
                                                     <animations/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <userDefinedRuntimeAttributes>

@@ -75,17 +75,17 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="epC-Jo-Sqd" userLabel="Title View">
-                                                    <rect key="frame" x="11" y="0.0" width="573" height="64"/>
+                                                    <rect key="frame" x="11" y="0.0" width="573" height="63"/>
                                                     <subviews>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="100" contentMode="left" verticalHuggingPriority="249" misplaced="YES" text="Testing layout with title that is more than two lines. Testing layout with title that is more than two lines." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pye-ep-KZc">
-                                                            <rect key="frame" x="0.0" y="12" width="553" height="41"/>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="100" contentMode="left" verticalHuggingPriority="249" text="Testing layout with title that is more than two lines. Testing layout with title that is more than two lines." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pye-ep-KZc">
+                                                            <rect key="frame" x="0.0" y="11" width="553" height="41"/>
                                                             <animations/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="qEI-xy-pAK" customClass="StarView" customModule="EMS" customModuleProvider="target">
-                                                            <rect key="frame" x="558" y="25" width="15" height="15"/>
+                                                            <rect key="frame" x="558" y="24" width="15" height="15"/>
                                                             <animations/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <userDefinedRuntimeAttributes>
@@ -97,11 +97,11 @@
                                                     </subviews>
                                                     <animations/>
                                                 </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="STo-V3-uk8" userLabel="Room View">
-                                                    <rect key="frame" x="11" y="72" width="573" height="15"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="STo-V3-uk8" userLabel="Room View">
+                                                    <rect key="frame" x="11" y="72" width="573" height="16"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="200" contentMode="left" text="Room 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYZ-5B-fa6">
-                                                            <rect key="frame" x="0.0" y="0.0" width="516" height="15"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="510" height="16"/>
                                                             <animations/>
                                                             <accessibility key="accessibilityConfiguration" hint=""/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
@@ -109,7 +109,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Lightning" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h6v-pd-nMw" customClass="TypeLabel" customModule="EMS" customModuleProvider="target">
-                                                            <rect key="frame" x="521" y="0.0" width="53" height="15"/>
+                                                            <rect key="frame" x="515" y="0.0" width="59" height="16"/>
                                                             <animations/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                             <color key="textColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
