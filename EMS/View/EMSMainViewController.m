@@ -134,14 +134,17 @@
     NSError *error;
 
     if (![[self fetchedResultsController] performFetch:&error]) {
-        UIAlertView *errorAlert = [[UIAlertView alloc]
-                initWithTitle:NSLocalizedString(@"Unable to connect view to data store", @"Error dialog connection to database - Title")
-                      message:NSLocalizedString(@"The data store did something unexpected and without it this application has no data to show. This is not an error we can recover from - please exit using the home button.", @"Error dialog connecting to database - Description")
-                     delegate:nil
-            cancelButtonTitle:NSLocalizedString(@"OK", @"Error dialog dismiss button.")
-            otherButtonTitles:nil];
-        [errorAlert show];
-
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Unable to connect view to data store", @"Error dialog connection to database - Title")
+                                                                       message:NSLocalizedString(@"The data store did something unexpected and without it this application has no data to show. This is not an error we can recover from - please exit using the home button.", @"Error dialog connecting to database - Description")
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"Error dialog dismiss button.")
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {}];
+        
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+        
         DDLogError(@"Unresolved error %@, %@", error, [error userInfo]);
     }
 

@@ -188,26 +188,30 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1 && indexPath.row == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Delete all sessions", @"Delete Conference Confirmation Dialog Title")
-                                                        message:NSLocalizedString(@"This will remove all sessions including any favourite marks. Session information will then have to be downloaded again.", @"Delete Conference Confirmation Dialog Description")
-                                                       delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"Cancel", @"Delete Conference Confirmation Dialog Cancel")
-                                              otherButtonTitles:NSLocalizedString(@"Delete", @"Delete Conference Confirmation Dialog Delete"), nil];
-        [alert show];
-    }
-}
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Delete all sessions", @"Delete Conference Confirmation Dialog Title")
+                                                                       message:NSLocalizedString(@"This will remove all sessions including any favourite marks. Session information will then have to be downloaded again.", @"Delete Conference Confirmation Dialog Description")
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"Delete Conference Confirmation Dialog Cancel")
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {}];
+        
+        [alert addAction:defaultAction];
+        
+        UIAlertAction* deleteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Delete", @"Delete Conference Confirmation Dialog Delete") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+            
+            DDLogVerbose(@"Deleting all sessions for conference %@", conference.href);
+            
+            EMSModel *model = [[EMSAppDelegate sharedAppDelegate] model];
+            
+            [model clearConference:conference];
+            
+            [self.tableView reloadData];
+        }];
 
-#pragma mark - Alert view delegate
-
-- (void)alertView:(UIAlertView *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        DDLogVerbose(@"Deleting all sessions for conference %@", conference.href);
-
-        EMSModel *model = [[EMSAppDelegate sharedAppDelegate] model];
-
-        [model clearConference:conference];
-
-        [self.tableView reloadData];
+        [alert addAction:deleteAction];
+        
+        [self presentViewController:alert animated:YES completion:nil];
     }
 }
 
