@@ -1,5 +1,4 @@
 PODS:
-  - Bolts/Tasks (1.2.0)
   - CocoaLumberjack (2.0.1):
     - CocoaLumberjack/Default (= 2.0.1)
     - CocoaLumberjack/Extensions (= 2.0.1)
@@ -18,8 +17,6 @@ PODS:
     - CrashlyticsFramework (~> 2.2)
   - GoogleAnalytics (3.12.0)
   - NHCalendarActivity (0.0.3)
-  - Parse (1.7.5):
-    - Bolts/Tasks (>= 1.2.0)
 
 DEPENDENCIES:
   - CocoaLumberjack (~> 2.0)
@@ -27,16 +24,13 @@ DEPENDENCIES:
   - CrashlyticsLumberjack (= 2.0.1-beta)
   - GoogleAnalytics (~> 3.12)
   - NHCalendarActivity (~> 0.0)
-  - Parse (~> 1.7)
 
 SPEC CHECKSUMS:
-  Bolts: d176cb1e0012175589e389a9db49b85e27787576
   CocoaLumberjack: 019d1361244274a6138c788c6cb80baabc13fb8f
   Collection-JSON-ObjC: 4f1c9fe35f6e8f1cb51e015d6182d23efc0652a0
-  CrashlyticsFramework: 2f7c515a2d74c8636bf47e761621f2f68193747e
+  CrashlyticsFramework: 5b7a9fb3d94124e3c20a9b10f93244706cfdb0f1
   CrashlyticsLumberjack: 26034b4b6d8b0bf547ea9ba201ff53c6cd50f971
   GoogleAnalytics: ef2e0b800ef3c1e62688cdfc959e0d3132bc246c
   NHCalendarActivity: c20c09dd71fba011c9dc252f6210d01134137a63
-  Parse: 7c0f115eff3e0cea3fac08d50bda47154edb8832
 
-COCOAPODS: 0.37.2
+COCOAPODS: 0.39.0

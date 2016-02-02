@@ -26,8 +26,6 @@ int networkCount = 0;
 - (void)handleIncomingRemoteNotification:(NSDictionary *)dictionary {
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
         DDLogVerbose(@"Incoming remote notification: %@", dictionary);
-
-        [PFPush handlePush:dictionary];
     }
 }
 
@@ -52,18 +50,7 @@ int networkCount = 0;
     [EMSTracking initializeTrackerWithKey:prefs[@"google-analytics-tracking-id"]];
 
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
-#ifdef DEBUG
-#ifdef TEST_PROD_NOTIFICATIONS
-        [Parse setApplicationId:prefs[@"parse-app-id-prod"]
-                      clientKey:prefs[@"parse-client-key-prod"]];
-#else
-        [Parse setApplicationId:prefs[@"parse-app-id"]
-                      clientKey:prefs[@"parse-client-key"]];
-#endif
-#else
-        [Parse setApplicationId:prefs[@"parse-app-id-prod"]
-                      clientKey:prefs[@"parse-client-key-prod"]];
-#endif
+        // TODO
     }
     
     if ([self.window.rootViewController isKindOfClass:[UISplitViewController class]]) {
@@ -125,17 +112,6 @@ int networkCount = 0;
         [EMSTracking dispatch];
 
         DDLogDebug(@"My token is: %@", deviceToken);
-
-        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-        [currentInstallation setDeviceTokenFromData:deviceToken];
-        [currentInstallation addUniqueObject:@"Conference" forKey:@"channels"];
-
-        [currentInstallation saveEventually:^(BOOL succeeded, NSError *error) {
-            if (!succeeded) {
-                [EMSTracking trackException:[NSString stringWithFormat:@"Unable to save Conference channel due to Code: %ld, Domain: %@, Info: %@",
-                                                                       (long) error.code, [error domain], [error userInfo]]];
-            }
-        }];
     }
 }
 

@@ -1071,18 +1071,7 @@
         [EMSTracking trackEventWithCategory:@"favourite" action:@"remove" label:session.href];
 
         if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
-            PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-            DDLogVerbose(@"Current channels %@", [currentInstallation channels]);
-            NSString *channelName = [session sanitizedTitle];
-            if ([[currentInstallation channels] containsObject:channelName]) {
-                [currentInstallation removeObject:channelName forKey:@"channels"];
-                DDLogVerbose(@"Updated channels %@", [currentInstallation channels]);
-            }
-            [currentInstallation saveEventually:^(BOOL succeeded, NSError *error) {
-                if (!succeeded) {
-                    [EMSTracking trackException:[NSString stringWithFormat:@"Unable to save adding of channel due to Code: %ld, Domain: %@, Info: %@", (long) error.code, [error domain], [error userInfo]]];
-                }
-            }];
+            // TODO
         }
     } else {
         session.favourite = @YES;
@@ -1090,16 +1079,7 @@
         [EMSTracking trackEventWithCategory:@"favourite" action:@"add" label:session.href];
 
         if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
-            PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-            DDLogVerbose(@"Current channels %@", [currentInstallation channels]);
-            NSString *channelName = [session sanitizedTitle];
-            [currentInstallation addUniqueObject:channelName forKey:@"channels"];
-            DDLogVerbose(@"Updated channels %@", [currentInstallation channels]);
-            [currentInstallation saveEventually:^(BOOL succeeded, NSError *error) {
-                if (!succeeded) {
-                    [EMSTracking trackException:[NSString stringWithFormat:@"Unable to save removing of channel due to Code: %ld, Domain: %@, Info: %@", (long) error.code, [error domain], [error userInfo]]];
-                }
-            }];
+            // TODO
         }
     }
 

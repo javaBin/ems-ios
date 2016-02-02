@@ -21,13 +21,8 @@ The current keys it provides are:
 
 * crashlytics-api-key
 * google-analytics-tracking-id
-* parse-client-key
-* parse-app-id
-* parse-client-key-prod
-* parse-app-id-prod
 
 **DO NOT JUST COPY THE SAMPLE FILE!** It will use the placeholders as keys and things will break. If you do not have keys - create an empty plist file.
-
 
 The build uses cocoapods - so you will need to run the pod command and make sure you open EMS.xcworkspace and not EMS.xcodeproj.
 
@@ -39,8 +34,6 @@ The following CFLAGS are available
     * will use the current time but the first day of the selected conference when calculating Now & Next view
 * TEST_PROD
     * will use the production server for debug builds
-* TEST_PROD_NOTIFICATIONS
-    * use the production notification server for a debug build (will require you to use correct certificate signing)
 * SKIP_CONFIG_REFRESH
     * will not pull down new versions of the config plist file - useful when editing this locally for testing
 

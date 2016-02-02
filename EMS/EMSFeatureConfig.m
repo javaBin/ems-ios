@@ -36,11 +36,8 @@
     }
 
     if (feature == fRemoteNotifications) {
-        if ([self isParseEnabled]) {
-            return [features[@"remote-notifications"] boolValue];
-        } else {
-            return NO;
-        }
+//      return [features[@"remote-notifications"] boolValue];
+        return NO;
     }
 
     return NO;
@@ -57,26 +54,5 @@
 + (BOOL)isRatingEnabled {
     return ([self configDictionary][@"rating-server"] != nil);
 }
-
-+ (BOOL)isParseEnabled {
-    NSDictionary *keys = [self keyDictionary];
-
-    NSString *idKey = @"parse-app-id";
-    NSString *clientKey = @"parse-client-key";
-
-#ifdef DEBUG
-#ifdef TEST_PROD_NOTIFICATIONS
-    idKey = @"parse-app-id-prod";
-    clientKey = @"parse-client-key-prod";
-#endif
-#else
-    idKey = @"parse-app-id-prod";
-    clientKey = @"parse-client-key-prod";
-#endif
-
-    return ([[keys allKeys] containsObject:idKey] && [[keys allKeys] containsObject:clientKey]);
-}
-
-
 
 @end
