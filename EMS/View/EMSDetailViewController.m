@@ -346,6 +346,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
                                                              content:[(NSNumber *)ratingController.sections[2][@"rating"] intValue]
                                                              quality:[(NSNumber *)ratingController.sections[3][@"rating"] intValue]
                                                            relevance:[(NSNumber *)ratingController.sections[1][@"rating"] intValue]
+                                                            comments:ratingController.comments
                                                           forSession:self.session
                                                                error:nil];
         

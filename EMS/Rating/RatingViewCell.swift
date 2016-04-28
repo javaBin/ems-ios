@@ -1,5 +1,9 @@
 import UIKit
 
+protocol RatingViewCellDelegate {
+    func ratingApplied(section: Int, rating: Int) -> Void;
+}
+
 class RatingViewCell: UITableViewCell {
     @IBOutlet weak var rating1: TintButton!
     @IBOutlet weak var rating2: TintButton!

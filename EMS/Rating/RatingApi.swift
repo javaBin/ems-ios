@@ -51,11 +51,13 @@ public class RatingApi : NSObject {
         Log.debug("Posting feedback for session \(session.href)")
         if let postRating = rating {
             let data = ["template":
-                ["data": [
-                    ["name": "overall", "value": postRating.overall],
-                    ["name": "relevance", "value": postRating.relevance],
-                    ["name": "content", "value": postRating.content],
-                    ["name": "quality", "value": postRating.quality]
+                ["data":
+                    [
+                        ["name": "overall", "value": postRating.overall],
+                        ["name": "relevance", "value": postRating.relevance],
+                        ["name": "content", "value": postRating.content],
+                        ["name": "quality", "value": postRating.quality],
+                        ["name": "comments", "value": postRating.comments]
                     ]
                 ]
             ]

@@ -1,9 +1,9 @@
 import UIKit
 
-public class RatingViewController: UITableViewController, RatingViewCellDelegate {
+public class RatingViewController: UITableViewController, RatingViewCellDelegate, CommentViewCellDelegate {
     public var rating : Rating? = nil
     
-    var sections = [
+    var sections : Array = [
         [
             "title": "Overall",
             "rating": 0
@@ -22,6 +22,8 @@ public class RatingViewController: UITableViewController, RatingViewCellDelegate
         ]
     ]
     
+    var comments = ""
+    
     public override func viewDidAppear(animated: Bool) {
         EMSTracking.trackScreen("Rating Screen")
     }
@@ -34,6 +36,7 @@ public class RatingViewController: UITableViewController, RatingViewCellDelegate
             sections[1]["rating"] = currentRating.relevance
             sections[2]["rating"] = currentRating.content
             sections[3]["rating"] = currentRating.quality
+            comments = currentRating.comments
         }
     }
     
@@ -44,11 +47,19 @@ public class RatingViewController: UITableViewController, RatingViewCellDelegate
     // MARK: - Table view data source
     
     public override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 4
+        return sections.count + 1
     }
     
     public override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String {
-        return sections[section]["title"] as! String
+        if (section < sections.count) {
+            if let title = sections[section]["title"] as? String {
+                return title
+            } else {
+                return ""
+            }
+        } else {
+            return "Comments"
+        }
     }
     
     public override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -56,16 +67,37 @@ public class RatingViewController: UITableViewController, RatingViewCellDelegate
     }
 
     public override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("RatingViewCell", forIndexPath: indexPath) as! RatingViewCell
+        if (indexPath.section < sections.count) {
+            let cell = tableView.dequeueReusableCellWithIdentifier("RatingViewCell", forIndexPath: indexPath) as! RatingViewCell
         
-        cell.section = indexPath.section
-        cell.rating = sections[indexPath.section]["rating"] as! Int
-        cell.delegate = self
+            cell.section = indexPath.section
+            cell.rating = sections[indexPath.section]["rating"] as! Int
+            cell.delegate = self
         
-        return cell
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("CommentViewCell", forIndexPath: indexPath) as! CommentViewCell
+
+            cell.ratingComments = comments
+            cell.delegate = self
+            
+            return cell
+        }
+    }
+    
+    public override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if (indexPath.section < sections.count) {
+            return 44
+        } else {
+            return 120
+        }
     }
     
     func ratingApplied(section: Int, rating: Int) {
         sections[section]["rating"] = rating
+    }
+    
+    func commentsApplied(comments: String) {
+        self.comments = comments
     }
 }

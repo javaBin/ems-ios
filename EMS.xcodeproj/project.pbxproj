@@ -47,8 +47,6 @@
 		830C7D79176F8B4900D38B46 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830C7D78176F8B4900D38B46 /* Crashlytics.framework */; };
 		8322B32D1B4681DE008DE85B /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8322B32C1B4681DE008DE85B /* Rating.swift */; };
 		8322B32E1B4681DE008DE85B /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8322B32C1B4681DE008DE85B /* Rating.swift */; };
-		8322B3301B46A19D008DE85B /* RatingViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8322B32F1B46A19D008DE85B /* RatingViewCellDelegate.swift */; };
-		8322B3311B46A19D008DE85B /* RatingViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8322B32F1B46A19D008DE85B /* RatingViewCellDelegate.swift */; };
 		833EF2DB1774E49F005E24A3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */; };
 		835263D21B45195F00ED97D7 /* RatingApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835263D11B45195F00ED97D7 /* RatingApi.swift */; };
 		835D903E1B46737C0038FA3E /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835D903D1B46737C0038FA3E /* RatingViewController.swift */; };
@@ -75,49 +73,52 @@
 		83B24CC61B45213B00AA41AD /* TestRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B24CC51B45213B00AA41AD /* TestRating.swift */; };
 		83BF8B6A17ECDA4D0093242C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83BF8B6917ECDA4D0093242C /* Images.xcassets */; };
 		83D5CBA417749EEA00527620 /* EMSFeatureConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */; };
+		83EBB1691CD20D0D00F381A8 /* CommentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB1681CD20D0D00F381A8 /* CommentViewCell.swift */; };
+		83EBB16A1CD20D1500F381A8 /* CommentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB1681CD20D0D00F381A8 /* CommentViewCell.swift */; };
+		83EBB16D1CD2148E00F381A8 /* AddCommentsToRating.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB16C1CD2148E00F381A8 /* AddCommentsToRating.xcmappingmodel */; };
 		83F455A1177D5B5C00BC79A1 /* EMSAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */; };
 		85AE61294A3F0F519FCE5ED9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68C4AE1D95BFE01192E3C8AE /* libPods.a */; };
-		EA09B82B1BC084D70053E3BB /* Rating.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA09B82A1BC084D70053E3BB /* Rating.storyboard */; settings = {ASSET_TAGS = (); }; };
+		EA09B82B1BC084D70053E3BB /* Rating.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA09B82A1BC084D70053E3BB /* Rating.storyboard */; };
 		EA09B83B1BC191780053E3BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA09B83D1BC191780053E3BB /* InfoPlist.strings */; };
-		EA09B83F1BC1E03D0053E3BB /* HairLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA09B83E1BC1E03D0053E3BB /* HairLineView.swift */; settings = {ASSET_TAGS = (); }; };
+		EA09B83F1BC1E03D0053E3BB /* HairLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA09B83E1BC1E03D0053E3BB /* HairLineView.swift */; };
 		EA11338719A7A880008D000A /* EMSLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */; };
 		EA11338819A7A880008D000A /* EMSLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */; };
-		EA3A02DD1BBF2322006104F2 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3A02DC1BBF2322006104F2 /* StarView.swift */; settings = {ASSET_TAGS = (); }; };
-		EA461F441BBF8926000998AC /* EmsDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F431BBF8926000998AC /* EmsDescriptionTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
-		EA461F461BBF9A40000998AC /* TypeLabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F451BBF9A40000998AC /* TypeLabelCollectionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
-		EA461F481BBF9CD5000998AC /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F471BBF9CD5000998AC /* CategoriesTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
-		EA461F4A1BC04CDA000998AC /* ActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F491BC04CDA000998AC /* ActionTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		EA3A02DD1BBF2322006104F2 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3A02DC1BBF2322006104F2 /* StarView.swift */; };
+		EA461F441BBF8926000998AC /* EmsDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F431BBF8926000998AC /* EmsDescriptionTableViewCell.swift */; };
+		EA461F461BBF9A40000998AC /* TypeLabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F451BBF9A40000998AC /* TypeLabelCollectionViewCell.swift */; };
+		EA461F481BBF9CD5000998AC /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F471BBF9CD5000998AC /* CategoriesTableViewCell.swift */; };
+		EA461F4A1BC04CDA000998AC /* ActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F491BC04CDA000998AC /* ActionTableViewCell.swift */; };
 		EA6132BC193FC35B000F54DC /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
 		EA81CDDE19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = EA81CDDD19AF8F0400FE43A2 /* EMSConferenceRetriever.m */; };
 		EA81CDDF19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = EA81CDDD19AF8F0400FE43A2 /* EMSConferenceRetriever.m */; };
 		EA8F2C831944CCB7002EAE1F /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
 		EA9ACCBD19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */; };
 		EA9ACCBE19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */; };
-		EAA965321BB9BAC400BEB749 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965311BB9BAC400BEB749 /* Settings.storyboard */; settings = {ASSET_TAGS = (); }; };
-		EAA965331BB9BAC400BEB749 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965311BB9BAC400BEB749 /* Settings.storyboard */; settings = {ASSET_TAGS = (); }; };
-		EAA965361BB9BB8900BEB749 /* Filter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965341BB9BB8900BEB749 /* Filter.storyboard */; settings = {ASSET_TAGS = (); }; };
-		EAA965371BB9BB8900BEB749 /* Filter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965341BB9BB8900BEB749 /* Filter.storyboard */; settings = {ASSET_TAGS = (); }; };
-		EAA965391BB9C1C600BEB749 /* Detail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965381BB9C1C600BEB749 /* Detail.storyboard */; settings = {ASSET_TAGS = (); }; };
-		EAA9653A1BB9C1C600BEB749 /* Detail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965381BB9C1C600BEB749 /* Detail.storyboard */; settings = {ASSET_TAGS = (); }; };
-		EACD33EC1BBC4FF60060C28E /* TypeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACD33EB1BBC4FF60060C28E /* TypeLabel.swift */; settings = {ASSET_TAGS = (); }; };
-		EACD33EE1BBC810D0060C28E /* SessionLevelLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACD33ED1BBC810D0060C28E /* SessionLevelLineView.swift */; settings = {ASSET_TAGS = (); }; };
+		EAA965321BB9BAC400BEB749 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965311BB9BAC400BEB749 /* Settings.storyboard */; };
+		EAA965331BB9BAC400BEB749 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965311BB9BAC400BEB749 /* Settings.storyboard */; };
+		EAA965361BB9BB8900BEB749 /* Filter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965341BB9BB8900BEB749 /* Filter.storyboard */; };
+		EAA965371BB9BB8900BEB749 /* Filter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965341BB9BB8900BEB749 /* Filter.storyboard */; };
+		EAA965391BB9C1C600BEB749 /* Detail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965381BB9C1C600BEB749 /* Detail.storyboard */; };
+		EAA9653A1BB9C1C600BEB749 /* Detail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965381BB9C1C600BEB749 /* Detail.storyboard */; };
+		EACD33EC1BBC4FF60060C28E /* TypeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACD33EB1BBC4FF60060C28E /* TypeLabel.swift */; };
+		EACD33EE1BBC810D0060C28E /* SessionLevelLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACD33ED1BBC810D0060C28E /* SessionLevelLineView.swift */; };
 		EAE2CF5019A934B3002F44FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6E017685885009077D3 /* Main.storyboard */; };
 		EAE2CF5219A934DD002F44FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6E017685885009077D3 /* Main.storyboard */; };
 		EAE4330819A52F1C002C3EBA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAE4330619A52F1C002C3EBA /* Localizable.strings */; };
 		EAE4330919A52F1C002C3EBA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAE4330619A52F1C002C3EBA /* Localizable.strings */; };
 		EAE4330B19A52F75002C3EBA /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = EAE4330D19A52F75002C3EBA /* about.html */; };
 		EAE4330F19A52FA5002C3EBA /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = EAE4331119A52FA5002C3EBA /* about.html */; };
-		EAE809911BC48C8600EAA446 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAE809901BC48C8600EAA446 /* Launch Screen.storyboard */; settings = {ASSET_TAGS = (); }; };
-		EAE809951BC4941B00EAA446 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAE809901BC48C8600EAA446 /* Launch Screen.storyboard */; settings = {ASSET_TAGS = (); }; };
-		EAE8099C1BC494B500EAA446 /* ActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F491BC04CDA000998AC /* ActionTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
-		EAE8099D1BC494B800EAA446 /* HairLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA09B83E1BC1E03D0053E3BB /* HairLineView.swift */; settings = {ASSET_TAGS = (); }; };
-		EAE8099E1BC494BC00EAA446 /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F471BBF9CD5000998AC /* CategoriesTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
-		EAE8099F1BC494BF00EAA446 /* TypeLabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F451BBF9A40000998AC /* TypeLabelCollectionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
-		EAE809A01BC494C700EAA446 /* EmsDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F431BBF8926000998AC /* EmsDescriptionTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
-		EAE809A11BC494CB00EAA446 /* TypeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACD33EB1BBC4FF60060C28E /* TypeLabel.swift */; settings = {ASSET_TAGS = (); }; };
-		EAE809A21BC494CE00EAA446 /* SessionLevelLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACD33ED1BBC810D0060C28E /* SessionLevelLineView.swift */; settings = {ASSET_TAGS = (); }; };
-		EAE809A31BC495D500EAA446 /* Rating.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA09B82A1BC084D70053E3BB /* Rating.storyboard */; settings = {ASSET_TAGS = (); }; };
-		EAE809A41BC495F200EAA446 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3A02DC1BBF2322006104F2 /* StarView.swift */; settings = {ASSET_TAGS = (); }; };
+		EAE809911BC48C8600EAA446 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAE809901BC48C8600EAA446 /* Launch Screen.storyboard */; };
+		EAE809951BC4941B00EAA446 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAE809901BC48C8600EAA446 /* Launch Screen.storyboard */; };
+		EAE8099C1BC494B500EAA446 /* ActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F491BC04CDA000998AC /* ActionTableViewCell.swift */; };
+		EAE8099D1BC494B800EAA446 /* HairLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA09B83E1BC1E03D0053E3BB /* HairLineView.swift */; };
+		EAE8099E1BC494BC00EAA446 /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F471BBF9CD5000998AC /* CategoriesTableViewCell.swift */; };
+		EAE8099F1BC494BF00EAA446 /* TypeLabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F451BBF9A40000998AC /* TypeLabelCollectionViewCell.swift */; };
+		EAE809A01BC494C700EAA446 /* EmsDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F431BBF8926000998AC /* EmsDescriptionTableViewCell.swift */; };
+		EAE809A11BC494CB00EAA446 /* TypeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACD33EB1BBC4FF60060C28E /* TypeLabel.swift */; };
+		EAE809A21BC494CE00EAA446 /* SessionLevelLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACD33ED1BBC810D0060C28E /* SessionLevelLineView.swift */; };
+		EAE809A31BC495D500EAA446 /* Rating.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA09B82A1BC084D70053E3BB /* Rating.storyboard */; };
+		EAE809A41BC495F200EAA446 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3A02DC1BBF2322006104F2 /* StarView.swift */; };
 		F30A8CDB192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */ = {isa = PBXBuildFile; fileRef = F30A8CDA192B42FF0066DFD9 /* EMSDetailViewRow.m */; };
 		F30A8CDC192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */ = {isa = PBXBuildFile; fileRef = F30A8CDA192B42FF0066DFD9 /* EMSDetailViewRow.m */; };
 		F30A8CE5192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F30A8CE4192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m */; };
@@ -257,7 +258,6 @@
 		830C7D78176F8B4900D38B46 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		8322B32B1B467EE2008DE85B /* EMSCoreDataModel 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "EMSCoreDataModel 6.xcdatamodel"; sourceTree = "<group>"; };
 		8322B32C1B4681DE008DE85B /* Rating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Rating.swift; path = EMS/EMSMO/Rating.swift; sourceTree = "<group>"; };
-		8322B32F1B46A19D008DE85B /* RatingViewCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingViewCellDelegate.swift; sourceTree = "<group>"; };
 		833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		835263D01B45195F00ED97D7 /* EMS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EMS-Bridging-Header.h"; sourceTree = "<group>"; };
 		835263D11B45195F00ED97D7 /* RatingApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingApi.swift; sourceTree = "<group>"; };
@@ -302,6 +302,9 @@
 		83BF8B6917ECDA4D0093242C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = EMS/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		83D5CBA217749EEA00527620 /* EMSFeatureConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSFeatureConfig.h; sourceTree = "<group>"; };
 		83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSFeatureConfig.m; sourceTree = "<group>"; };
+		83EBB1681CD20D0D00F381A8 /* CommentViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewCell.swift; sourceTree = "<group>"; };
+		83EBB16B1CD2140300F381A8 /* EMSCoreDataModel 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "EMSCoreDataModel 7.xcdatamodel"; sourceTree = "<group>"; };
+		83EBB16C1CD2148E00F381A8 /* AddCommentsToRating.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = AddCommentsToRating.xcmappingmodel; sourceTree = "<group>"; };
 		83F4559F177D5B5C00BC79A1 /* EMSAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSAboutViewController.h; sourceTree = "<group>"; };
 		83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSAboutViewController.m; sourceTree = "<group>"; };
 		A4647E03BE9A10F278B9CB8A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -462,7 +465,7 @@
 				835263D11B45195F00ED97D7 /* RatingApi.swift */,
 				835D903D1B46737C0038FA3E /* RatingViewController.swift */,
 				835D90411B4675960038FA3E /* RatingViewCell.swift */,
-				8322B32F1B46A19D008DE85B /* RatingViewCellDelegate.swift */,
+				83EBB1681CD20D0D00F381A8 /* CommentViewCell.swift */,
 			);
 			name = Rating;
 			path = EMS/Rating;
@@ -718,6 +721,7 @@
 				4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */,
 				4E1AD6B14458A2997A59456D /* EMSTracking.h */,
 				F3AABDE819AB16C5003D1D1C /* AddTimestampToSpeaker.xcmappingmodel */,
+				83EBB16C1CD2148E00F381A8 /* AddCommentsToRating.xcmappingmodel */,
 			);
 			name = App;
 			path = EMS;
@@ -1079,12 +1083,12 @@
 				839BD65E176F9BD400900712 /* EMSConference.m in Sources */,
 				839BD65F176F9BD400900712 /* EMSEventsParser.m in Sources */,
 				15204C1F18DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */,
-				8322B3301B46A19D008DE85B /* RatingViewCellDelegate.swift in Sources */,
 				839BD660176F9BD400900712 /* EMSDateConverter.m in Sources */,
 				839BD661176F9BD400900712 /* EMSRetriever.m in Sources */,
 				839BD662176F9BD400900712 /* EMSRoom.m in Sources */,
 				839BD663176F9BD400900712 /* EMSRoomsParser.m in Sources */,
 				839BD664176F9BD400900712 /* EMSSession.m in Sources */,
+				83EBB1691CD20D0D00F381A8 /* CommentViewCell.swift in Sources */,
 				839BD665176F9BD400900712 /* EMSSessionsParser.m in Sources */,
 				839BD666176F9BD400900712 /* EMSSlot.m in Sources */,
 				839BD667176F9BD400900712 /* EMSSlotsParser.m in Sources */,
@@ -1110,6 +1114,7 @@
 				F3AE33CD1772EA93000EE4A9 /* Keyword.m in Sources */,
 				F3AE33D01772EA94000EE4A9 /* ConferenceLevel.m in Sources */,
 				F3AE33D31772EA94000EE4A9 /* Room.m in Sources */,
+				83EBB16D1CD2148E00F381A8 /* AddCommentsToRating.xcmappingmodel in Sources */,
 				F3AE33D61772EA94000EE4A9 /* Slot.m in Sources */,
 				F3AE33D91772EA94000EE4A9 /* ConferenceKeyword.m in Sources */,
 				F30A8CDB192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */,
@@ -1150,12 +1155,12 @@
 				F394C97617F0173900FAFBD4 /* EMSEventsParser.m in Sources */,
 				15204C2018DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */,
 				F394C97717F0173900FAFBD4 /* EMSDateConverter.m in Sources */,
-				8322B3311B46A19D008DE85B /* RatingViewCellDelegate.swift in Sources */,
 				F394C97817F0173900FAFBD4 /* EMSRetriever.m in Sources */,
 				F394C97917F0173900FAFBD4 /* EMSRoom.m in Sources */,
 				F394C97A17F0173900FAFBD4 /* EMSRoomsParser.m in Sources */,
 				F394C97B17F0173900FAFBD4 /* EMSSession.m in Sources */,
 				F394C97C17F0173900FAFBD4 /* EMSSessionsParser.m in Sources */,
+				83EBB16A1CD20D1500F381A8 /* CommentViewCell.swift in Sources */,
 				EAE8099F1BC494BF00EAA446 /* TypeLabelCollectionViewCell.swift in Sources */,
 				F394C97D17F0173900FAFBD4 /* EMSSlot.m in Sources */,
 				F394C97E17F0173900FAFBD4 /* EMSSlotsParser.m in Sources */,
@@ -1391,6 +1396,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1432,6 +1438,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1620,6 +1627,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1783,6 +1791,7 @@
 		F3939E511768879C0078C709 /* EMSCoreDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				83EBB16B1CD2140300F381A8 /* EMSCoreDataModel 7.xcdatamodel */,
 				8322B32B1B467EE2008DE85B /* EMSCoreDataModel 6.xcdatamodel */,
 				1504124B19ABDCCE00051E04 /* EMSCoreDataModel 5.xcdatamodel */,
 				F3AABDDD19AB1434003D1D1C /* EMSCoreDataModel 4.xcdatamodel */,
@@ -1790,7 +1799,7 @@
 				F37A6ABD17B223390060634D /* EMSCoreDataModel 2.xcdatamodel */,
 				F3939E521768879C0078C709 /* EMSCoreDataModel.xcdatamodel */,
 			);
-			currentVersion = 8322B32B1B467EE2008DE85B /* EMSCoreDataModel 6.xcdatamodel */;
+			currentVersion = 83EBB16B1CD2140300F381A8 /* EMSCoreDataModel 7.xcdatamodel */;
 			path = EMSCoreDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

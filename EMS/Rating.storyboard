@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <development version="6000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -13,19 +13,17 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="K4G-jO-8dY">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <animations/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="RatingViewCell" id="5IH-wu-UM4" customClass="RatingViewCell" customModule="EMS" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="113.5" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="114" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5IH-wu-UM4" id="mIs-qh-p7v">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYe-Bl-zSj" customClass="TintButton" customModule="EMS" customModuleProvider="target">
                                             <rect key="frame" x="287" y="9" width="26" height="26"/>
-                                            <animations/>
                                             <state key="normal" image="28-star-grey">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -35,7 +33,6 @@
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGD-zB-ecY" customClass="TintButton" customModule="EMS" customModuleProvider="target">
                                             <rect key="frame" x="245" y="9" width="26" height="26"/>
-                                            <animations/>
                                             <state key="normal" image="28-star-grey">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -45,7 +42,6 @@
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6cD-Vf-UYt" customClass="TintButton" customModule="EMS" customModuleProvider="target">
                                             <rect key="frame" x="203" y="9" width="26" height="26"/>
-                                            <animations/>
                                             <state key="normal" image="28-star-grey">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -55,7 +51,6 @@
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w3F-Tq-uZl" customClass="TintButton" customModule="EMS" customModuleProvider="target">
                                             <rect key="frame" x="371" y="9" width="26" height="26"/>
-                                            <animations/>
                                             <state key="normal" image="28-star-grey">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -65,7 +60,6 @@
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fX0-Ol-WjK" customClass="TintButton" customModule="EMS" customModuleProvider="target">
                                             <rect key="frame" x="570" y="11" width="22" height="22"/>
-                                            <animations/>
                                             <state key="normal" image="298-circlex">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -75,7 +69,6 @@
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Qf-2l-teT" customClass="TintButton" customModule="EMS" customModuleProvider="target">
                                             <rect key="frame" x="329" y="9" width="26" height="26"/>
-                                            <animations/>
                                             <state key="normal" image="28-star-grey">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -84,7 +77,6 @@
                                             </connections>
                                         </button>
                                     </subviews>
-                                    <animations/>
                                     <constraints>
                                         <constraint firstItem="ZYe-Bl-zSj" firstAttribute="leading" secondItem="JGD-zB-ecY" secondAttribute="trailing" constant="16" id="2Qt-5x-INI"/>
                                         <constraint firstAttribute="centerY" secondItem="fX0-Ol-WjK" secondAttribute="centerY" id="R8w-jR-qcG"/>
@@ -100,7 +92,6 @@
                                         <constraint firstItem="JGD-zB-ecY" firstAttribute="leading" secondItem="6cD-Vf-UYt" secondAttribute="trailing" constant="16" id="zn7-3e-gAu"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <animations/>
                                 <connections>
                                     <outlet property="clearButton" destination="fX0-Ol-WjK" id="HmF-hJ-rHO"/>
                                     <outlet property="rating1" destination="6cD-Vf-UYt" id="N2b-d1-cx9"/>
@@ -108,6 +99,52 @@
                                     <outlet property="rating3" destination="ZYe-Bl-zSj" id="41n-s2-Dv0"/>
                                     <outlet property="rating4" destination="9Qf-2l-teT" id="uc9-r4-TTz"/>
                                     <outlet property="rating5" destination="w3F-Tq-uZl" id="esw-Xt-LzG"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CommentViewCell" rowHeight="120" id="JTT-US-fUd" customClass="CommentViewCell" customModule="EMS" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="158" width="600" height="120"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JTT-US-fUd" id="svR-DC-px1">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="119"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="32v-Ax-RgE" userLabel="Clear Button" customClass="TintButton" customModule="EMS" customModuleProvider="target">
+                                            <rect key="frame" x="570" y="16" width="22" height="22"/>
+                                            <state key="normal" image="298-circlex">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="clearComments:" destination="JTT-US-fUd" eventType="touchUpInside" id="NVa-hJ-A9I"/>
+                                            </connections>
+                                        </button>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="0mt-nc-Y8O">
+                                            <rect key="frame" x="16" y="16" width="546" height="87"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="JTT-US-fUd" id="SVs-Bt-kUt"/>
+                                            </connections>
+                                        </textView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="0mt-nc-Y8O" firstAttribute="top" secondItem="svR-DC-px1" secondAttribute="topMargin" constant="8" id="HmS-eX-SB3"/>
+                                        <constraint firstItem="32v-Ax-RgE" firstAttribute="centerY" secondItem="svR-DC-px1" secondAttribute="centerY" id="KNc-x5-zP6"/>
+                                        <constraint firstItem="32v-Ax-RgE" firstAttribute="leading" secondItem="0mt-nc-Y8O" secondAttribute="trailing" constant="8" id="bpr-x5-Wcb"/>
+                                        <constraint firstItem="0mt-nc-Y8O" firstAttribute="leading" secondItem="svR-DC-px1" secondAttribute="leadingMargin" constant="8" id="cvr-K5-JO1"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="32v-Ax-RgE" secondAttribute="trailing" id="sjo-68-GWo"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="0mt-nc-Y8O" secondAttribute="bottom" constant="8" id="tU4-t1-279"/>
+                                        <constraint firstItem="32v-Ax-RgE" firstAttribute="top" secondItem="0mt-nc-Y8O" secondAttribute="top" id="zb9-Vy-qj0"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="KNc-x5-zP6"/>
+                                        </mask>
+                                    </variation>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="clearButton" destination="32v-Ax-RgE" id="5A3-jV-8PN"/>
+                                    <outlet property="commentsField" destination="0mt-nc-Y8O" id="9Dx-1P-kuR"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -143,7 +180,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="04X-uM-Le6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

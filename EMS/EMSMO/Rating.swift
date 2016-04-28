@@ -7,4 +7,5 @@ public class Rating: NSManagedObject {
     @NSManaged var relevance: NSNumber
     @NSManaged var quality: NSNumber
     @NSManaged var content: NSNumber
+    @NSManaged var comments: String
 }

@@ -1244,7 +1244,7 @@
     return nil;
 }
 
-- (BOOL)setRatingOverall:(int)overall content:(int)content quality:(int)quality relevance:(int)relevance forSession:(Session *)session  error:(NSError **)error {
+- (BOOL)setRatingOverall:(int)overall content:(int)content quality:(int)quality relevance:(int)relevance comments:(NSString *)comments forSession:(Session *)session  error:(NSError **)error {
     Rating *rating = [self ratingForSession:session];
     
     if (rating == nil) {
@@ -1274,6 +1274,7 @@
         rating.content = [NSNumber numberWithInt:content];
         rating.quality = [NSNumber numberWithInt:quality];
         rating.relevance = [NSNumber numberWithInt:relevance];
+        rating.comments = comments;
     }
     
     NSError *saveError = nil;
