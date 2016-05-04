@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Chris Searle. All rights reserved.
 //
 
+#import "EMS-Swift.h"
+
 #import "EMSLocalNotificationManager.h"
 #import "EMSAppDelegate.h"
 #import "EMSMainViewController.h"
 #import "EMSDetailViewController.h"
 #import "EMSTracking.h"
-#import "Session.h"
-#import "Room.h"
 
 #import "NSDate+EMSExtensions.h"
 

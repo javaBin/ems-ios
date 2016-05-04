@@ -2,6 +2,8 @@
 //  EMSSettingsViewController.m
 //
 
+#import "EMS-Swift.h"
+
 #import "EMSSettingsViewController.h"
 
 #import "EMSRetriever.h"

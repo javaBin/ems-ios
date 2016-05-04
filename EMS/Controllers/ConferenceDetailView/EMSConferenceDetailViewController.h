@@ -3,7 +3,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Conference.h"
+
+@class Conference;
 
 @interface EMSConferenceDetailViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 

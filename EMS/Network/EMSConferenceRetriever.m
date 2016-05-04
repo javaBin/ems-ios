@@ -6,8 +6,10 @@
 //  Copyright (c) 2014 Chris Searle. All rights reserved.
 //
 
+#import "EMS-Swift.h"
+
 #import "EMSConferenceRetriever.h"
-#import "Conference.h"
+
 #import "EMSRetriever.h"
 #import "EMSAppDelegate.h"
 #import "EMSSessionsParser.h"

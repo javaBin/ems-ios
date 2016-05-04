@@ -8,7 +8,7 @@ public class RatingApi : NSObject {
         self.server = server
     }
     
-    public func urlFromSession(session : Session) -> NSURL? {
+    func urlFromSession(session : Session) -> NSURL? {
         if let parts = extractParts(session) {
             return NSURL(string: "\(server)events/\(parts.event)/sessions/\(parts.session)/feedbacks")
         }
@@ -18,11 +18,17 @@ public class RatingApi : NSObject {
     
     func extractParts(session : Session) -> (event:String, session:String)? {
         let url = session.href
-        let nsUrl = url as NSString
+        
+        if (url == nil) {
+            return nil
+        }
+
+        let nsUrl = url! as NSString
         
         var matchError: NSError?
         
         let matcher: NSRegularExpression?
+        
         do {
             matcher = try NSRegularExpression(pattern: ".*/events/(.*)/sessions/(.*)", options: [])
         } catch let error as NSError {
@@ -35,7 +41,7 @@ public class RatingApi : NSObject {
             return nil
         }
         
-        if let matches = matcher?.matchesInString(url, options: [], range: NSMakeRange(0, nsUrl.length)) {
+        if let matches = matcher?.matchesInString(url!, options: [], range: NSMakeRange(0, nsUrl.length)) {
             if (matches.count > 0) {
                 let match = matches[0]
             
@@ -48,17 +54,18 @@ public class RatingApi : NSObject {
         return nil
     }
     
-    public func postRating(session: Session, rating: Rating?) {
+    func postRating(session: Session, rating: Rating?) {
         DDLogDebug("Posting feedback for session \(session.href)")
         if let postRating = rating {
-            let data = ["template":
+            
+            let data : [String : [ String : [[String: AnyObject]]]] = ["template":
                 ["data":
                     [
-                        ["name": "overall", "value": postRating.overall],
-                        ["name": "relevance", "value": postRating.relevance],
-                        ["name": "content", "value": postRating.content],
-                        ["name": "quality", "value": postRating.quality],
-                        ["name": "comments", "value": postRating.comments]
+                        ["name": "overall", "value": postRating.overall ?? 0],
+                        ["name": "relevance", "value": postRating.relevance ?? 0],
+                        ["name": "content", "value": postRating.content ?? 0],
+                        ["name": "quality", "value": postRating.quality ?? 0],
+                        ["name": "comments", "value": postRating.comments ?? ""]
                     ]
                 ]
             ]

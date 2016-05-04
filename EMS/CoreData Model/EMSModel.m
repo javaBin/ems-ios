@@ -4,6 +4,8 @@
 
 #import "EMSModel.h"
 
+#import "EMS-Swift.h"
+
 #import "EMSConference.h"
 #import "EMSSlot.h"
 #import "EMSRoom.h"
@@ -12,14 +14,7 @@
 
 #import "EMSAppDelegate.h"
 
-#import "ConferenceKeyword.h"
-#import "ConferenceLevel.h"
-#import "ConferenceType.h"
-#import "Keyword.h"
-#import "Room.h"
-#import "Speaker.h"
 #import "EMSTracking.h"
-#import "SpeakerPic.h"
 #import "EMSConfig.h"
 
 #import "NSDate+EMSExtensions.h"

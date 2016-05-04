@@ -2,12 +2,11 @@
 //  EMSSessionCell.m
 //
 
+#import "EMS-Swift.h"
+
 #import "EMSSessionCell.h"
-#import "Session.h"
-#import "Room.h"
-#import "Speaker.h"
+
 #import "EMSAppDelegate.h"
-#import "EMS-Bridging-Header.h"
 
 @interface EMSSessionCell ()
 @property (weak, nonatomic) IBOutlet StarView *starView;

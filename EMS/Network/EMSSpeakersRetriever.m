@@ -2,6 +2,8 @@
 // EMSSpeakersRetriever.m
 //
 
+#import "EMS-Swift.h"
+
 #import "EMSSpeakersRetriever.h"
 #import "EMSSpeakersParserDelegate.h"
 #import "EMSAppDelegate.h"

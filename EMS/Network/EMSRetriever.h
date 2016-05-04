@@ -3,7 +3,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Conference.h"
+
+@class Conference;
 
 @interface EMSRetriever : NSObject
 

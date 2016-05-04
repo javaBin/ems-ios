@@ -2,6 +2,8 @@
 //  EMSRetriever.m
 //
 
+#import "EMS-Swift.h"
+
 #import "EMSRetriever.h"
 
 #import "EMSEventsParser.h"

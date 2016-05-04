@@ -5,7 +5,7 @@
 #import <UIKit/UIKit.h>
 #import "EMSSpeakersRetrieverDelegate.h"
 
-#import "Session.h"
+@class Session;
 
 @interface EMSDetailViewController : UITableViewController
 

@@ -2,6 +2,8 @@
 //  EMSConferenceDetailViewController.m
 //
 
+#import "EMS-Swift.h"
+
 #import "EMSConferenceDetailViewController.h"
 
 #import "EMSAppDelegate.h"

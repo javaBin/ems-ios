@@ -2,6 +2,8 @@
 //  EMSMainViewController.m
 //
 
+#import "EMS-Swift.h"
+
 #import "EMSMainViewController.h"
 
 #import "EMSAppDelegate.h"
@@ -11,11 +13,6 @@
 
 #import "EMSSessionCell.h"
 
-#import "ConferenceKeyword.h"
-#import "ConferenceLevel.h"
-#import "ConferenceType.h"
-#import "Speaker.h"
-#import "Room.h"
 #import "EMSTracking.h"
 #import "EMSLocalNotificationManager.h"
 

@@ -1,7 +1,7 @@
 import UIKit
 
 public class RatingViewController: UITableViewController, RatingViewCellDelegate, CommentViewCellDelegate {
-    public var rating : Rating? = nil
+    var rating : Rating? = nil
     
     var sections : Array = [
         [
@@ -36,7 +36,10 @@ public class RatingViewController: UITableViewController, RatingViewCellDelegate
             sections[1]["rating"] = currentRating.relevance
             sections[2]["rating"] = currentRating.content
             sections[3]["rating"] = currentRating.quality
-            comments = currentRating.comments
+            
+            if let c = currentRating.comments {
+                comments = c
+            }
         }
     }
     

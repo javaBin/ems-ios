@@ -4,11 +4,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "EMS-Swift.h"
-
-#import "Conference.h"
-#import "Session.h"
-#import "Slot.h"
+@class Conference;
+@class Session;
+@class Slot;
+@class Rating;
 
 @interface EMSModel : NSObject
 

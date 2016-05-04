@@ -4,7 +4,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "Session.h"
+@class Session;
 
 @interface EMSSessionCell : UITableViewCell
 

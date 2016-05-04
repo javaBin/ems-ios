@@ -5,15 +5,13 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <EventKit/EventKit.h>
 
+#import "EMS-Swift.h"
+
 #import "EMSDetailViewController.h"
 
 #import "EMSAppDelegate.h"
 
 #import "EMSRetriever.h"
-
-#import "Speaker.h"
-#import "Keyword.h"
-#import "Room.h"
 
 #import "EMSDetailViewRow.h"
 

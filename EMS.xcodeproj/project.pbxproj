@@ -7,12 +7,50 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1504125019ABDDA500051E04 /* SpeakerPic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1504124F19ABDDA500051E04 /* SpeakerPic.m */; };
-		1504125119ABDDA500051E04 /* SpeakerPic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1504124F19ABDDA500051E04 /* SpeakerPic.m */; };
-		1504125219ABE17400051E04 /* Speaker.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C61772EA93000EE4A9 /* Speaker.m */; };
-		1504125319ABE19200051E04 /* Speaker.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C61772EA93000EE4A9 /* Speaker.m */; };
 		15204C1F18DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */; };
 		15204C2018DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */; };
+		1556C4811CDA754600D9B175 /* Session+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C46C1CDA754600D9B175 /* Session+CoreDataProperties.swift */; };
+		1556C4821CDA754600D9B175 /* Session+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C46C1CDA754600D9B175 /* Session+CoreDataProperties.swift */; };
+		1556C4831CDA754600D9B175 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C46D1CDA754600D9B175 /* Session.swift */; };
+		1556C4841CDA754600D9B175 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C46D1CDA754600D9B175 /* Session.swift */; };
+		1556C4851CDA754600D9B175 /* Room+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C46E1CDA754600D9B175 /* Room+CoreDataProperties.swift */; };
+		1556C4861CDA754600D9B175 /* Room+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C46E1CDA754600D9B175 /* Room+CoreDataProperties.swift */; };
+		1556C4871CDA754600D9B175 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C46F1CDA754600D9B175 /* Room.swift */; };
+		1556C4881CDA754600D9B175 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C46F1CDA754600D9B175 /* Room.swift */; };
+		1556C4891CDA754600D9B175 /* Conference+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4701CDA754600D9B175 /* Conference+CoreDataProperties.swift */; };
+		1556C48A1CDA754600D9B175 /* Conference+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4701CDA754600D9B175 /* Conference+CoreDataProperties.swift */; };
+		1556C48B1CDA754600D9B175 /* Conference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4711CDA754600D9B175 /* Conference.swift */; };
+		1556C48C1CDA754600D9B175 /* Conference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4711CDA754600D9B175 /* Conference.swift */; };
+		1556C48D1CDA754600D9B175 /* ConferenceKeyword+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4721CDA754600D9B175 /* ConferenceKeyword+CoreDataProperties.swift */; };
+		1556C48E1CDA754600D9B175 /* ConferenceKeyword+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4721CDA754600D9B175 /* ConferenceKeyword+CoreDataProperties.swift */; };
+		1556C48F1CDA754600D9B175 /* ConferenceKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4731CDA754600D9B175 /* ConferenceKeyword.swift */; };
+		1556C4901CDA754600D9B175 /* ConferenceKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4731CDA754600D9B175 /* ConferenceKeyword.swift */; };
+		1556C4911CDA754600D9B175 /* ConferenceType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4741CDA754600D9B175 /* ConferenceType+CoreDataProperties.swift */; };
+		1556C4921CDA754600D9B175 /* ConferenceType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4741CDA754600D9B175 /* ConferenceType+CoreDataProperties.swift */; };
+		1556C4931CDA754600D9B175 /* ConferenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4751CDA754600D9B175 /* ConferenceType.swift */; };
+		1556C4941CDA754600D9B175 /* ConferenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4751CDA754600D9B175 /* ConferenceType.swift */; };
+		1556C4951CDA754600D9B175 /* Keyword+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4761CDA754600D9B175 /* Keyword+CoreDataProperties.swift */; };
+		1556C4961CDA754600D9B175 /* Keyword+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4761CDA754600D9B175 /* Keyword+CoreDataProperties.swift */; };
+		1556C4971CDA754600D9B175 /* Keyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4771CDA754600D9B175 /* Keyword.swift */; };
+		1556C4981CDA754600D9B175 /* Keyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4771CDA754600D9B175 /* Keyword.swift */; };
+		1556C4991CDA754600D9B175 /* Rating+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4781CDA754600D9B175 /* Rating+CoreDataProperties.swift */; };
+		1556C49A1CDA754600D9B175 /* Rating+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4781CDA754600D9B175 /* Rating+CoreDataProperties.swift */; };
+		1556C49B1CDA754600D9B175 /* ConferenceLevel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4791CDA754600D9B175 /* ConferenceLevel+CoreDataProperties.swift */; };
+		1556C49C1CDA754600D9B175 /* ConferenceLevel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4791CDA754600D9B175 /* ConferenceLevel+CoreDataProperties.swift */; };
+		1556C49D1CDA754600D9B175 /* ConferenceLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47A1CDA754600D9B175 /* ConferenceLevel.swift */; };
+		1556C49E1CDA754600D9B175 /* ConferenceLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47A1CDA754600D9B175 /* ConferenceLevel.swift */; };
+		1556C49F1CDA754600D9B175 /* Slot+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47B1CDA754600D9B175 /* Slot+CoreDataProperties.swift */; };
+		1556C4A01CDA754600D9B175 /* Slot+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47B1CDA754600D9B175 /* Slot+CoreDataProperties.swift */; };
+		1556C4A11CDA754600D9B175 /* Slot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47C1CDA754600D9B175 /* Slot.swift */; };
+		1556C4A21CDA754600D9B175 /* Slot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47C1CDA754600D9B175 /* Slot.swift */; };
+		1556C4A31CDA754600D9B175 /* Speaker+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47D1CDA754600D9B175 /* Speaker+CoreDataProperties.swift */; };
+		1556C4A41CDA754600D9B175 /* Speaker+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47D1CDA754600D9B175 /* Speaker+CoreDataProperties.swift */; };
+		1556C4A51CDA754600D9B175 /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47E1CDA754600D9B175 /* Speaker.swift */; };
+		1556C4A61CDA754600D9B175 /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47E1CDA754600D9B175 /* Speaker.swift */; };
+		1556C4A71CDA754600D9B175 /* SpeakerPic+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47F1CDA754600D9B175 /* SpeakerPic+CoreDataProperties.swift */; };
+		1556C4A81CDA754600D9B175 /* SpeakerPic+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47F1CDA754600D9B175 /* SpeakerPic+CoreDataProperties.swift */; };
+		1556C4A91CDA754600D9B175 /* SpeakerPic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4801CDA754600D9B175 /* SpeakerPic.swift */; };
+		1556C4AA1CDA754600D9B175 /* SpeakerPic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4801CDA754600D9B175 /* SpeakerPic.swift */; };
 		15806D071B4D75C400EFFB47 /* NSDate+EMSExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 15806D061B4D75C400EFFB47 /* NSDate+EMSExtensions.m */; };
 		15806D081B4D75C400EFFB47 /* NSDate+EMSExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 15806D061B4D75C400EFFB47 /* NSDate+EMSExtensions.m */; };
 		15D284E41CDA5F6500FD3F52 /* DDCrashlyticsLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D284E31CDA5F6500FD3F52 /* DDCrashlyticsLogger.swift */; };
@@ -160,14 +198,6 @@
 		F394C98417F0173900FAFBD4 /* EMSSessionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F31862411770501800292371 /* EMSSessionCell.m */; };
 		F394C98517F0173900FAFBD4 /* EMSSpeakersParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F3D5E2C617709CD000888A7E /* EMSSpeakersParser.m */; };
 		F394C98617F0173900FAFBD4 /* EMSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836331311770DD2B000F8D95 /* EMSSearchViewController.m */; };
-		F394C98817F0173900FAFBD4 /* Conference.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C91772EA93000EE4A9 /* Conference.m */; };
-		F394C98917F0173900FAFBD4 /* Keyword.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33CC1772EA93000EE4A9 /* Keyword.m */; };
-		F394C98A17F0173900FAFBD4 /* ConferenceLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33CF1772EA94000EE4A9 /* ConferenceLevel.m */; };
-		F394C98B17F0173900FAFBD4 /* Room.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33D21772EA94000EE4A9 /* Room.m */; };
-		F394C98C17F0173900FAFBD4 /* Slot.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33D51772EA94000EE4A9 /* Slot.m */; };
-		F394C98D17F0173900FAFBD4 /* ConferenceKeyword.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33D81772EA94000EE4A9 /* ConferenceKeyword.m */; };
-		F394C98E17F0173900FAFBD4 /* ConferenceType.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33DB1772EA94000EE4A9 /* ConferenceType.m */; };
-		F394C98F17F0173900FAFBD4 /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33DE1772EA94000EE4A9 /* Session.m */; };
 		F394C99017F0173900FAFBD4 /* EMSFeatureConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */; };
 		F394C99117F0173900FAFBD4 /* EMSAdvancedSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = F37953CA17797E41000B7CDD /* EMSAdvancedSearch.m */; };
 		F394C99217F0173900FAFBD4 /* EMSAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F455A0177D5B5C00BC79A1 /* EMSAboutViewController.m */; };
@@ -187,14 +217,6 @@
 		F399B73917CF42CC004DE2EC /* EMSConferenceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F399B73817CF42CC004DE2EC /* EMSConferenceDetailViewController.m */; };
 		F3AABDE919AB16C6003D1D1C /* AddTimestampToSpeaker.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F3AABDE819AB16C5003D1D1C /* AddTimestampToSpeaker.xcmappingmodel */; };
 		F3AABDEA19AB16C6003D1D1C /* AddTimestampToSpeaker.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F3AABDE819AB16C5003D1D1C /* AddTimestampToSpeaker.xcmappingmodel */; };
-		F3AE33CA1772EA93000EE4A9 /* Conference.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33C91772EA93000EE4A9 /* Conference.m */; };
-		F3AE33CD1772EA93000EE4A9 /* Keyword.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33CC1772EA93000EE4A9 /* Keyword.m */; };
-		F3AE33D01772EA94000EE4A9 /* ConferenceLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33CF1772EA94000EE4A9 /* ConferenceLevel.m */; };
-		F3AE33D31772EA94000EE4A9 /* Room.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33D21772EA94000EE4A9 /* Room.m */; };
-		F3AE33D61772EA94000EE4A9 /* Slot.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33D51772EA94000EE4A9 /* Slot.m */; };
-		F3AE33D91772EA94000EE4A9 /* ConferenceKeyword.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33D81772EA94000EE4A9 /* ConferenceKeyword.m */; };
-		F3AE33DC1772EA94000EE4A9 /* ConferenceType.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33DB1772EA94000EE4A9 /* ConferenceType.m */; };
-		F3AE33DF1772EA94000EE4A9 /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AE33DE1772EA94000EE4A9 /* Session.m */; };
 		F3CEA3CF17B224170092776F /* AddVideoLinkMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F3CEA3CE17B224170092776F /* AddVideoLinkMapping.xcmappingmodel */; };
 		F3D5E2C41770946100888A7E /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = F3D5E2C31770946100888A7E /* style.css */; };
 		F3D5E2C717709CD100888A7E /* EMSSpeakersParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F3D5E2C617709CD000888A7E /* EMSSpeakersParser.m */; };
@@ -213,9 +235,28 @@
 
 /* Begin PBXFileReference section */
 		10FEEBB7F77D543DBDC3DA6F /* Pods-EMS-JavaZone Tests.debug run crashlytics.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMS-JavaZone Tests.debug run crashlytics.xcconfig"; path = "Pods/Target Support Files/Pods-EMS-JavaZone Tests/Pods-EMS-JavaZone Tests.debug run crashlytics.xcconfig"; sourceTree = "<group>"; };
-		1504124E19ABDDA500051E04 /* SpeakerPic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeakerPic.h; sourceTree = "<group>"; };
-		1504124F19ABDDA500051E04 /* SpeakerPic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeakerPic.m; sourceTree = "<group>"; };
 		15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = RemoveSlugMapping.xcmappingmodel; sourceTree = "<group>"; };
+		1556C46C1CDA754600D9B175 /* Session+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1556C46D1CDA754600D9B175 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		1556C46E1CDA754600D9B175 /* Room+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Room+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1556C46F1CDA754600D9B175 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		1556C4701CDA754600D9B175 /* Conference+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Conference+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1556C4711CDA754600D9B175 /* Conference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Conference.swift; sourceTree = "<group>"; };
+		1556C4721CDA754600D9B175 /* ConferenceKeyword+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConferenceKeyword+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1556C4731CDA754600D9B175 /* ConferenceKeyword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConferenceKeyword.swift; sourceTree = "<group>"; };
+		1556C4741CDA754600D9B175 /* ConferenceType+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConferenceType+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1556C4751CDA754600D9B175 /* ConferenceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConferenceType.swift; sourceTree = "<group>"; };
+		1556C4761CDA754600D9B175 /* Keyword+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Keyword+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1556C4771CDA754600D9B175 /* Keyword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keyword.swift; sourceTree = "<group>"; };
+		1556C4781CDA754600D9B175 /* Rating+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Rating+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1556C4791CDA754600D9B175 /* ConferenceLevel+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConferenceLevel+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1556C47A1CDA754600D9B175 /* ConferenceLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConferenceLevel.swift; sourceTree = "<group>"; };
+		1556C47B1CDA754600D9B175 /* Slot+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Slot+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1556C47C1CDA754600D9B175 /* Slot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Slot.swift; sourceTree = "<group>"; };
+		1556C47D1CDA754600D9B175 /* Speaker+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Speaker+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1556C47E1CDA754600D9B175 /* Speaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speaker.swift; sourceTree = "<group>"; };
+		1556C47F1CDA754600D9B175 /* SpeakerPic+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpeakerPic+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1556C4801CDA754600D9B175 /* SpeakerPic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeakerPic.swift; sourceTree = "<group>"; };
 		157476A5E7E3A98238DDE81A /* Pods-EMS-JavaZone.debug run crashlytics.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMS-JavaZone.debug run crashlytics.xcconfig"; path = "Pods/Target Support Files/Pods-EMS-JavaZone/Pods-EMS-JavaZone.debug run crashlytics.xcconfig"; sourceTree = "<group>"; };
 		15806D051B4D75C400EFFB47 /* NSDate+EMSExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+EMSExtensions.h"; sourceTree = "<group>"; };
 		15806D061B4D75C400EFFB47 /* NSDate+EMSExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+EMSExtensions.m"; sourceTree = "<group>"; };
@@ -384,24 +425,6 @@
 		F399B73717CF42CC004DE2EC /* EMSConferenceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConferenceDetailViewController.h; sourceTree = "<group>"; };
 		F399B73817CF42CC004DE2EC /* EMSConferenceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConferenceDetailViewController.m; sourceTree = "<group>"; };
 		F3AABDE819AB16C5003D1D1C /* AddTimestampToSpeaker.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = AddTimestampToSpeaker.xcmappingmodel; sourceTree = "<group>"; };
-		F3AE33C51772EA93000EE4A9 /* Speaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Speaker.h; sourceTree = "<group>"; };
-		F3AE33C61772EA93000EE4A9 /* Speaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Speaker.m; sourceTree = "<group>"; };
-		F3AE33C81772EA93000EE4A9 /* Conference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conference.h; sourceTree = "<group>"; };
-		F3AE33C91772EA93000EE4A9 /* Conference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conference.m; sourceTree = "<group>"; };
-		F3AE33CB1772EA93000EE4A9 /* Keyword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Keyword.h; sourceTree = "<group>"; };
-		F3AE33CC1772EA93000EE4A9 /* Keyword.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Keyword.m; sourceTree = "<group>"; };
-		F3AE33CE1772EA94000EE4A9 /* ConferenceLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConferenceLevel.h; sourceTree = "<group>"; };
-		F3AE33CF1772EA94000EE4A9 /* ConferenceLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConferenceLevel.m; sourceTree = "<group>"; };
-		F3AE33D11772EA94000EE4A9 /* Room.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Room.h; sourceTree = "<group>"; };
-		F3AE33D21772EA94000EE4A9 /* Room.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Room.m; sourceTree = "<group>"; };
-		F3AE33D41772EA94000EE4A9 /* Slot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Slot.h; sourceTree = "<group>"; };
-		F3AE33D51772EA94000EE4A9 /* Slot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Slot.m; sourceTree = "<group>"; };
-		F3AE33D71772EA94000EE4A9 /* ConferenceKeyword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConferenceKeyword.h; sourceTree = "<group>"; };
-		F3AE33D81772EA94000EE4A9 /* ConferenceKeyword.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConferenceKeyword.m; sourceTree = "<group>"; };
-		F3AE33DA1772EA94000EE4A9 /* ConferenceType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConferenceType.h; sourceTree = "<group>"; };
-		F3AE33DB1772EA94000EE4A9 /* ConferenceType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConferenceType.m; sourceTree = "<group>"; };
-		F3AE33DD1772EA94000EE4A9 /* Session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Session.h; sourceTree = "<group>"; };
-		F3AE33DE1772EA94000EE4A9 /* Session.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Session.m; sourceTree = "<group>"; };
 		F3CEA3CE17B224170092776F /* AddVideoLinkMapping.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = AddVideoLinkMapping.xcmappingmodel; sourceTree = "<group>"; };
 		F3D5E2C31770946100888A7E /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		F3D5E2C517709CD000888A7E /* EMSSpeakersParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSpeakersParser.h; sourceTree = "<group>"; };
@@ -696,27 +719,28 @@
 		83AF91B51772053600FAE20F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F3AE33C81772EA93000EE4A9 /* Conference.h */,
-				F3AE33C91772EA93000EE4A9 /* Conference.m */,
-				F3AE33D71772EA94000EE4A9 /* ConferenceKeyword.h */,
-				F3AE33D81772EA94000EE4A9 /* ConferenceKeyword.m */,
-				F3AE33CE1772EA94000EE4A9 /* ConferenceLevel.h */,
-				F3AE33CF1772EA94000EE4A9 /* ConferenceLevel.m */,
-				F3AE33DA1772EA94000EE4A9 /* ConferenceType.h */,
-				F3AE33DB1772EA94000EE4A9 /* ConferenceType.m */,
-				F3AE33CB1772EA93000EE4A9 /* Keyword.h */,
-				F3AE33CC1772EA93000EE4A9 /* Keyword.m */,
+				1556C46C1CDA754600D9B175 /* Session+CoreDataProperties.swift */,
+				1556C46D1CDA754600D9B175 /* Session.swift */,
+				1556C46E1CDA754600D9B175 /* Room+CoreDataProperties.swift */,
+				1556C46F1CDA754600D9B175 /* Room.swift */,
+				1556C4701CDA754600D9B175 /* Conference+CoreDataProperties.swift */,
+				1556C4711CDA754600D9B175 /* Conference.swift */,
+				1556C4721CDA754600D9B175 /* ConferenceKeyword+CoreDataProperties.swift */,
+				1556C4731CDA754600D9B175 /* ConferenceKeyword.swift */,
+				1556C4741CDA754600D9B175 /* ConferenceType+CoreDataProperties.swift */,
+				1556C4751CDA754600D9B175 /* ConferenceType.swift */,
+				1556C4761CDA754600D9B175 /* Keyword+CoreDataProperties.swift */,
+				1556C4771CDA754600D9B175 /* Keyword.swift */,
+				1556C4781CDA754600D9B175 /* Rating+CoreDataProperties.swift */,
+				1556C4791CDA754600D9B175 /* ConferenceLevel+CoreDataProperties.swift */,
+				1556C47A1CDA754600D9B175 /* ConferenceLevel.swift */,
+				1556C47B1CDA754600D9B175 /* Slot+CoreDataProperties.swift */,
+				1556C47C1CDA754600D9B175 /* Slot.swift */,
+				1556C47D1CDA754600D9B175 /* Speaker+CoreDataProperties.swift */,
+				1556C47E1CDA754600D9B175 /* Speaker.swift */,
+				1556C47F1CDA754600D9B175 /* SpeakerPic+CoreDataProperties.swift */,
+				1556C4801CDA754600D9B175 /* SpeakerPic.swift */,
 				8322B32C1B4681DE008DE85B /* Rating.swift */,
-				F3AE33D11772EA94000EE4A9 /* Room.h */,
-				F3AE33D21772EA94000EE4A9 /* Room.m */,
-				F3AE33DD1772EA94000EE4A9 /* Session.h */,
-				F3AE33DE1772EA94000EE4A9 /* Session.m */,
-				F3AE33D41772EA94000EE4A9 /* Slot.h */,
-				F3AE33D51772EA94000EE4A9 /* Slot.m */,
-				F3AE33C51772EA93000EE4A9 /* Speaker.h */,
-				F3AE33C61772EA93000EE4A9 /* Speaker.m */,
-				1504124E19ABDDA500051E04 /* SpeakerPic.h */,
-				1504124F19ABDDA500051E04 /* SpeakerPic.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1179,14 +1203,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1504125219ABE17400051E04 /* Speaker.m in Sources */,
+				1556C49D1CDA754600D9B175 /* ConferenceLevel.swift in Sources */,
+				1556C4A31CDA754600D9B175 /* Speaker+CoreDataProperties.swift in Sources */,
 				F35BB6D217685885009077D3 /* main.m in Sources */,
 				EA6132BC193FC35B000F54DC /* EMSConfig.m in Sources */,
 				F35BB6D617685885009077D3 /* EMSAppDelegate.m in Sources */,
+				1556C4991CDA754600D9B175 /* Rating+CoreDataProperties.swift in Sources */,
 				F3939E611769C3CE0078C709 /* EMSModel.m in Sources */,
 				839BD65E176F9BD400900712 /* EMSConference.m in Sources */,
+				1556C48B1CDA754600D9B175 /* Conference.swift in Sources */,
 				839BD65F176F9BD400900712 /* EMSEventsParser.m in Sources */,
 				15204C1F18DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */,
+				1556C4A11CDA754600D9B175 /* Slot.swift in Sources */,
 				839BD660176F9BD400900712 /* EMSDateConverter.m in Sources */,
 				839BD661176F9BD400900712 /* EMSRetriever.m in Sources */,
 				839BD662176F9BD400900712 /* EMSRoom.m in Sources */,
@@ -1196,9 +1224,12 @@
 				839BD665176F9BD400900712 /* EMSSessionsParser.m in Sources */,
 				839BD666176F9BD400900712 /* EMSSlot.m in Sources */,
 				839BD667176F9BD400900712 /* EMSSlotsParser.m in Sources */,
+				1556C49F1CDA754600D9B175 /* Slot+CoreDataProperties.swift in Sources */,
 				EA3A02DD1BBF2322006104F2 /* StarView.swift in Sources */,
 				835D903E1B46737C0038FA3E /* RatingViewController.swift in Sources */,
+				1556C48F1CDA754600D9B175 /* ConferenceKeyword.swift in Sources */,
 				EA09B83F1BC1E03D0053E3BB /* HairLineView.swift in Sources */,
+				1556C4951CDA754600D9B175 /* Keyword+CoreDataProperties.swift in Sources */,
 				839BD66B176F9BD400900712 /* EMSMainViewController.m in Sources */,
 				15806D071B4D75C400EFFB47 /* NSDate+EMSExtensions.m in Sources */,
 				EA11338719A7A880008D000A /* EMSLocalNotificationManager.m in Sources */,
@@ -1210,36 +1241,40 @@
 				F31862371770340200292371 /* EMSDetailViewController.m in Sources */,
 				EA461F4A1BC04CDA000998AC /* ActionTableViewCell.swift in Sources */,
 				F31862421770501800292371 /* EMSSessionCell.m in Sources */,
+				1556C4A51CDA754600D9B175 /* Speaker.swift in Sources */,
 				F3D5E2C717709CD100888A7E /* EMSSpeakersParser.m in Sources */,
 				F30A8CE5192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m in Sources */,
 				836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */,
-				F3AE33CA1772EA93000EE4A9 /* Conference.m in Sources */,
+				1556C4911CDA754600D9B175 /* ConferenceType+CoreDataProperties.swift in Sources */,
+				1556C4871CDA754600D9B175 /* Room.swift in Sources */,
 				F3AABDE919AB16C6003D1D1C /* AddTimestampToSpeaker.xcmappingmodel in Sources */,
-				F3AE33CD1772EA93000EE4A9 /* Keyword.m in Sources */,
-				F3AE33D01772EA94000EE4A9 /* ConferenceLevel.m in Sources */,
-				F3AE33D31772EA94000EE4A9 /* Room.m in Sources */,
+				1556C4A91CDA754600D9B175 /* SpeakerPic.swift in Sources */,
+				1556C4A71CDA754600D9B175 /* SpeakerPic+CoreDataProperties.swift in Sources */,
 				83EBB16D1CD2148E00F381A8 /* AddCommentsToRating.xcmappingmodel in Sources */,
-				F3AE33D61772EA94000EE4A9 /* Slot.m in Sources */,
-				F3AE33D91772EA94000EE4A9 /* ConferenceKeyword.m in Sources */,
 				F30A8CDB192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */,
+				1556C49B1CDA754600D9B175 /* ConferenceLevel+CoreDataProperties.swift in Sources */,
 				EACD33EC1BBC4FF60060C28E /* TypeLabel.swift in Sources */,
-				F3AE33DC1772EA94000EE4A9 /* ConferenceType.m in Sources */,
-				F3AE33DF1772EA94000EE4A9 /* Session.m in Sources */,
+				1556C4971CDA754600D9B175 /* Keyword.swift in Sources */,
+				1556C4851CDA754600D9B175 /* Room+CoreDataProperties.swift in Sources */,
 				EA9ACCBD19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */,
 				83D5CBA417749EEA00527620 /* EMSFeatureConfig.m in Sources */,
 				F37953CB17797E41000B7CDD /* EMSAdvancedSearch.m in Sources */,
 				15D284E41CDA5F6500FD3F52 /* DDCrashlyticsLogger.swift in Sources */,
 				83F455A1177D5B5C00BC79A1 /* EMSAboutViewController.m in Sources */,
+				1556C4891CDA754600D9B175 /* Conference+CoreDataProperties.swift in Sources */,
 				EA461F441BBF8926000998AC /* EmsDescriptionTableViewCell.swift in Sources */,
 				832764F01CDA241B00F26494 /* EMSCoreDataModel.xcdatamodeld in Sources */,
-				1504125019ABDDA500051E04 /* SpeakerPic.m in Sources */,
+				1556C4811CDA754600D9B175 /* Session+CoreDataProperties.swift in Sources */,
 				F3CEA3CF17B224170092776F /* AddVideoLinkMapping.xcmappingmodel in Sources */,
+				1556C4931CDA754600D9B175 /* ConferenceType.swift in Sources */,
 				F399B73917CF42CC004DE2EC /* EMSConferenceDetailViewController.m in Sources */,
+				1556C48D1CDA754600D9B175 /* ConferenceKeyword+CoreDataProperties.swift in Sources */,
 				4E1AD35397D90DE204F516F2 /* EMSTracking.m in Sources */,
 				4E1AD544AAC6B214D51DD9BC /* EMSRootParser.m in Sources */,
 				EA81CDDE19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */,
 				EA461F461BBF9A40000998AC /* TypeLabelCollectionViewCell.swift in Sources */,
 				4E1ADE290D991D1633B27066 /* EMSSpeakersRetriever.m in Sources */,
+				1556C4831CDA754600D9B175 /* Session.swift in Sources */,
 				EACD33EE1BBC810D0060C28E /* SessionLevelLineView.swift in Sources */,
 				72A8D4AB9F0401AEED460AE7 /* NSURLResponse+EMSExtensions.m in Sources */,
 				5A4166E6F45437C6545E3C4A /* TintButton.swift in Sources */,
@@ -1251,19 +1286,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1504125319ABE19200051E04 /* Speaker.m in Sources */,
 				F394C97117F0173900FAFBD4 /* main.m in Sources */,
 				F394C97217F0173900FAFBD4 /* EMSAppDelegate.m in Sources */,
 				F394C97417F0173900FAFBD4 /* EMSModel.m in Sources */,
 				F394C97517F0173900FAFBD4 /* EMSConference.m in Sources */,
 				F394C97617F0173900FAFBD4 /* EMSEventsParser.m in Sources */,
+				1556C4A01CDA754600D9B175 /* Slot+CoreDataProperties.swift in Sources */,
 				15204C2018DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */,
 				F394C97717F0173900FAFBD4 /* EMSDateConverter.m in Sources */,
+				1556C49E1CDA754600D9B175 /* ConferenceLevel.swift in Sources */,
 				F394C97817F0173900FAFBD4 /* EMSRetriever.m in Sources */,
 				F394C97917F0173900FAFBD4 /* EMSRoom.m in Sources */,
 				F394C97A17F0173900FAFBD4 /* EMSRoomsParser.m in Sources */,
 				F394C97B17F0173900FAFBD4 /* EMSSession.m in Sources */,
 				F394C97C17F0173900FAFBD4 /* EMSSessionsParser.m in Sources */,
+				1556C48A1CDA754600D9B175 /* Conference+CoreDataProperties.swift in Sources */,
 				83EBB16A1CD20D1500F381A8 /* CommentViewCell.swift in Sources */,
 				EAE8099F1BC494BF00EAA446 /* TypeLabelCollectionViewCell.swift in Sources */,
 				F394C97D17F0173900FAFBD4 /* EMSSlot.m in Sources */,
@@ -1271,49 +1308,58 @@
 				EAE809A11BC494CB00EAA446 /* TypeLabel.swift in Sources */,
 				F394C97F17F0173900FAFBD4 /* EMSMainViewController.m in Sources */,
 				F394C98017F0173900FAFBD4 /* EMSSettingsViewController.m in Sources */,
+				1556C4A21CDA754600D9B175 /* Slot.swift in Sources */,
+				1556C4841CDA754600D9B175 /* Session.swift in Sources */,
+				1556C4A41CDA754600D9B175 /* Speaker+CoreDataProperties.swift in Sources */,
+				1556C4941CDA754600D9B175 /* ConferenceType.swift in Sources */,
 				EA11338819A7A880008D000A /* EMSLocalNotificationManager.m in Sources */,
+				1556C48E1CDA754600D9B175 /* ConferenceKeyword+CoreDataProperties.swift in Sources */,
 				15806D081B4D75C400EFFB47 /* NSDate+EMSExtensions.m in Sources */,
 				F394C98217F0173900FAFBD4 /* EMSSpeaker.m in Sources */,
 				F394C98317F0173900FAFBD4 /* EMSDetailViewController.m in Sources */,
 				835D903F1B46737C0038FA3E /* RatingViewController.swift in Sources */,
 				F394C98417F0173900FAFBD4 /* EMSSessionCell.m in Sources */,
+				1556C4AA1CDA754600D9B175 /* SpeakerPic.swift in Sources */,
 				835D90431B4675960038FA3E /* RatingViewCell.swift in Sources */,
+				1556C4981CDA754600D9B175 /* Keyword.swift in Sources */,
 				8322B32E1B4681DE008DE85B /* Rating.swift in Sources */,
 				F394C98517F0173900FAFBD4 /* EMSSpeakersParser.m in Sources */,
 				EAE809A41BC495F200EAA446 /* StarView.swift in Sources */,
 				EAE8099D1BC494B800EAA446 /* HairLineView.swift in Sources */,
 				F30A8CE6192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m in Sources */,
 				F394C98617F0173900FAFBD4 /* EMSSearchViewController.m in Sources */,
-				F394C98817F0173900FAFBD4 /* Conference.m in Sources */,
-				F394C98917F0173900FAFBD4 /* Keyword.m in Sources */,
+				1556C4861CDA754600D9B175 /* Room+CoreDataProperties.swift in Sources */,
 				F3AABDEA19AB16C6003D1D1C /* AddTimestampToSpeaker.xcmappingmodel in Sources */,
-				F394C98A17F0173900FAFBD4 /* ConferenceLevel.m in Sources */,
 				15D284E51CDA5F6500FD3F52 /* DDCrashlyticsLogger.swift in Sources */,
-				F394C98B17F0173900FAFBD4 /* Room.m in Sources */,
 				EAE809A21BC494CE00EAA446 /* SessionLevelLineView.swift in Sources */,
-				F394C98C17F0173900FAFBD4 /* Slot.m in Sources */,
-				F394C98D17F0173900FAFBD4 /* ConferenceKeyword.m in Sources */,
 				F30A8CDC192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */,
-				F394C98E17F0173900FAFBD4 /* ConferenceType.m in Sources */,
-				F394C98F17F0173900FAFBD4 /* Session.m in Sources */,
+				1556C4961CDA754600D9B175 /* Keyword+CoreDataProperties.swift in Sources */,
 				835D90401B4674240038FA3E /* RatingApi.swift in Sources */,
 				EA8F2C831944CCB7002EAE1F /* EMSConfig.m in Sources */,
+				1556C4901CDA754600D9B175 /* ConferenceKeyword.swift in Sources */,
 				EA9ACCBE19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */,
+				1556C4881CDA754600D9B175 /* Room.swift in Sources */,
+				1556C4A81CDA754600D9B175 /* SpeakerPic+CoreDataProperties.swift in Sources */,
 				F394C99017F0173900FAFBD4 /* EMSFeatureConfig.m in Sources */,
 				F394C99117F0173900FAFBD4 /* EMSAdvancedSearch.m in Sources */,
 				F394C99217F0173900FAFBD4 /* EMSAboutViewController.m in Sources */,
-				1504125119ABDDA500051E04 /* SpeakerPic.m in Sources */,
+				1556C4821CDA754600D9B175 /* Session+CoreDataProperties.swift in Sources */,
 				EAE8099C1BC494B500EAA446 /* ActionTableViewCell.swift in Sources */,
 				EAE8099E1BC494BC00EAA446 /* CategoriesTableViewCell.swift in Sources */,
 				F394C99317F0173900FAFBD4 /* AddVideoLinkMapping.xcmappingmodel in Sources */,
 				F394C99417F0173900FAFBD4 /* EMSConferenceDetailViewController.m in Sources */,
+				1556C49A1CDA754600D9B175 /* Rating+CoreDataProperties.swift in Sources */,
 				4E1AD00E5B0570877570A148 /* EMSTracking.m in Sources */,
 				4E1AD3DC51344037FDC2CFFC /* EMSRootParser.m in Sources */,
+				1556C4A61CDA754600D9B175 /* Speaker.swift in Sources */,
 				EA81CDDF19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */,
 				4E1AD032EC53C9E396CAD414 /* EMSSpeakersRetriever.m in Sources */,
 				72A8D23A0F61EBA5DD99D33D /* NSURLResponse+EMSExtensions.m in Sources */,
+				1556C48C1CDA754600D9B175 /* Conference.swift in Sources */,
 				EAE809A01BC494C700EAA446 /* EmsDescriptionTableViewCell.swift in Sources */,
 				5A41688B322BF8E59FBF4F3E /* TintButton.swift in Sources */,
+				1556C49C1CDA754600D9B175 /* ConferenceLevel+CoreDataProperties.swift in Sources */,
+				1556C4921CDA754600D9B175 /* ConferenceType+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
