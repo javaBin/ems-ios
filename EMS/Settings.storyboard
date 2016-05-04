@@ -122,7 +122,7 @@
         <!--Conference Detail View Controller-->
         <scene sceneID="Exw-YQ-F7A">
             <objects>
-                <tableViewController id="Gm3-pp-tiE" customClass="EMSConferenceDetailViewController" sceneMemberID="viewController">
+                <tableViewController id="Gm3-pp-tiE" customClass="ConferenceDetailViewController" customModule="EMS" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="k7N-Rk-xHL">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

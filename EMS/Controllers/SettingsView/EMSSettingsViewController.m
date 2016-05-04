@@ -9,7 +9,6 @@
 #import "EMSRetriever.h"
 
 #import "EMSAppDelegate.h"
-#import "EMSConferenceDetailViewController.h"
 
 #import "EMSAdvancedSearch.h"
 #import "EMSTracking.h"
@@ -368,7 +367,7 @@ static void *refreshingConferencesContext = &refreshingConferencesContext;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showConferenceDetailsView"]) {
 
-        EMSConferenceDetailViewController *destination = (EMSConferenceDetailViewController *) [segue destinationViewController];
+        ConferenceDetailViewController *destination = (ConferenceDetailViewController *) [segue destinationViewController];
 
         DDLogVerbose(@"Preparing conference detail view");
 

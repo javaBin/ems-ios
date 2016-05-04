@@ -55,6 +55,8 @@
 		1556C4AD1CDA8A3E00D9B175 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4AB1CDA8A3E00D9B175 /* AboutViewController.swift */; };
 		1556C4AF1CDA8EF300D9B175 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1556C4AE1CDA8EF300D9B175 /* Images.xcassets */; };
 		1556C4B01CDA8EF300D9B175 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1556C4AE1CDA8EF300D9B175 /* Images.xcassets */; };
+		1556C4B21CDA957D00D9B175 /* ConferenceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4B11CDA957D00D9B175 /* ConferenceDetailViewController.swift */; };
+		1556C4B31CDA957D00D9B175 /* ConferenceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4B11CDA957D00D9B175 /* ConferenceDetailViewController.swift */; };
 		15806D071B4D75C400EFFB47 /* NSDate+EMSExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 15806D061B4D75C400EFFB47 /* NSDate+EMSExtensions.m */; };
 		15806D081B4D75C400EFFB47 /* NSDate+EMSExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 15806D061B4D75C400EFFB47 /* NSDate+EMSExtensions.m */; };
 		15D284E41CDA5F6500FD3F52 /* DDCrashlyticsLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D284E31CDA5F6500FD3F52 /* DDCrashlyticsLogger.swift */; };
@@ -204,7 +206,6 @@
 		F394C99017F0173900FAFBD4 /* EMSFeatureConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */; };
 		F394C99117F0173900FAFBD4 /* EMSAdvancedSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = F37953CA17797E41000B7CDD /* EMSAdvancedSearch.m */; };
 		F394C99317F0173900FAFBD4 /* AddVideoLinkMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F3CEA3CE17B224170092776F /* AddVideoLinkMapping.xcmappingmodel */; };
-		F394C99417F0173900FAFBD4 /* EMSConferenceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F399B73817CF42CC004DE2EC /* EMSConferenceDetailViewController.m */; };
 		F394C99617F0173900FAFBD4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */; };
 		F394C99717F0173900FAFBD4 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3E601E01772F7EC000673AE /* EventKit.framework */; };
 		F394C99817F0173900FAFBD4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3939E4F176887090078C709 /* CoreData.framework */; };
@@ -216,7 +217,6 @@
 		F394C9CE17F0173900FAFBD4 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = F354B0B81781AA1D007F7B01 /* iTunesArtwork.png */; };
 		F394C9CF17F0173900FAFBD4 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F354B0B91781AA1D007F7B01 /* iTunesArtwork@2x.png */; };
 		F394C9E717F01C0300FAFBD4 /* EMS-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = F394C9E617F01C0300FAFBD4 /* EMS-Config.plist */; };
-		F399B73917CF42CC004DE2EC /* EMSConferenceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F399B73817CF42CC004DE2EC /* EMSConferenceDetailViewController.m */; };
 		F3AABDE919AB16C6003D1D1C /* AddTimestampToSpeaker.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F3AABDE819AB16C5003D1D1C /* AddTimestampToSpeaker.xcmappingmodel */; };
 		F3AABDEA19AB16C6003D1D1C /* AddTimestampToSpeaker.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F3AABDE819AB16C5003D1D1C /* AddTimestampToSpeaker.xcmappingmodel */; };
 		F3CEA3CF17B224170092776F /* AddVideoLinkMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F3CEA3CE17B224170092776F /* AddVideoLinkMapping.xcmappingmodel */; };
@@ -261,6 +261,7 @@
 		1556C4801CDA754600D9B175 /* SpeakerPic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeakerPic.swift; sourceTree = "<group>"; };
 		1556C4AB1CDA8A3E00D9B175 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		1556C4AE1CDA8EF300D9B175 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		1556C4B11CDA957D00D9B175 /* ConferenceDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConferenceDetailViewController.swift; sourceTree = "<group>"; };
 		157476A5E7E3A98238DDE81A /* Pods-EMS-JavaZone.debug run crashlytics.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMS-JavaZone.debug run crashlytics.xcconfig"; path = "Pods/Target Support Files/Pods-EMS-JavaZone/Pods-EMS-JavaZone.debug run crashlytics.xcconfig"; sourceTree = "<group>"; };
 		15806D051B4D75C400EFFB47 /* NSDate+EMSExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+EMSExtensions.h"; sourceTree = "<group>"; };
 		15806D061B4D75C400EFFB47 /* NSDate+EMSExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+EMSExtensions.m"; sourceTree = "<group>"; };
@@ -424,8 +425,6 @@
 		F3939E601769C3CD0078C709 /* EMSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSModel.m; sourceTree = "<group>"; };
 		F394C9DE17F0173900FAFBD4 /* flatMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = flatMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F394C9E617F01C0300FAFBD4 /* EMS-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Config.plist"; sourceTree = "<group>"; };
-		F399B73717CF42CC004DE2EC /* EMSConferenceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConferenceDetailViewController.h; sourceTree = "<group>"; };
-		F399B73817CF42CC004DE2EC /* EMSConferenceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConferenceDetailViewController.m; sourceTree = "<group>"; };
 		F3AABDE819AB16C5003D1D1C /* AddTimestampToSpeaker.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = AddTimestampToSpeaker.xcmappingmodel; sourceTree = "<group>"; };
 		F3CEA3CE17B224170092776F /* AddVideoLinkMapping.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = AddVideoLinkMapping.xcmappingmodel; sourceTree = "<group>"; };
 		F3D5E2C31770946100888A7E /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
@@ -531,8 +530,7 @@
 		15E1310C1CDA3B6D00957E20 /* ConferenceDetailView */ = {
 			isa = PBXGroup;
 			children = (
-				F399B73717CF42CC004DE2EC /* EMSConferenceDetailViewController.h */,
-				F399B73817CF42CC004DE2EC /* EMSConferenceDetailViewController.m */,
+				1556C4B11CDA957D00D9B175 /* ConferenceDetailViewController.swift */,
 			);
 			path = ConferenceDetailView;
 			sourceTree = "<group>";
@@ -1250,6 +1248,7 @@
 				F3D5E2C717709CD100888A7E /* EMSSpeakersParser.m in Sources */,
 				F30A8CE5192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m in Sources */,
 				836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */,
+				1556C4B21CDA957D00D9B175 /* ConferenceDetailViewController.swift in Sources */,
 				1556C4911CDA754600D9B175 /* ConferenceType+CoreDataProperties.swift in Sources */,
 				1556C4871CDA754600D9B175 /* Room.swift in Sources */,
 				F3AABDE919AB16C6003D1D1C /* AddTimestampToSpeaker.xcmappingmodel in Sources */,
@@ -1271,7 +1270,6 @@
 				1556C4811CDA754600D9B175 /* Session+CoreDataProperties.swift in Sources */,
 				F3CEA3CF17B224170092776F /* AddVideoLinkMapping.xcmappingmodel in Sources */,
 				1556C4931CDA754600D9B175 /* ConferenceType.swift in Sources */,
-				F399B73917CF42CC004DE2EC /* EMSConferenceDetailViewController.m in Sources */,
 				1556C48D1CDA754600D9B175 /* ConferenceKeyword+CoreDataProperties.swift in Sources */,
 				4E1AD35397D90DE204F516F2 /* EMSTracking.m in Sources */,
 				4E1AD544AAC6B214D51DD9BC /* EMSRootParser.m in Sources */,
@@ -1330,6 +1328,7 @@
 				8322B32E1B4681DE008DE85B /* Rating.swift in Sources */,
 				F394C98517F0173900FAFBD4 /* EMSSpeakersParser.m in Sources */,
 				EAE809A41BC495F200EAA446 /* StarView.swift in Sources */,
+				1556C4B31CDA957D00D9B175 /* ConferenceDetailViewController.swift in Sources */,
 				EAE8099D1BC494B800EAA446 /* HairLineView.swift in Sources */,
 				F30A8CE6192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m in Sources */,
 				F394C98617F0173900FAFBD4 /* EMSSearchViewController.m in Sources */,
@@ -1351,7 +1350,6 @@
 				EAE8099C1BC494B500EAA446 /* ActionTableViewCell.swift in Sources */,
 				EAE8099E1BC494BC00EAA446 /* CategoriesTableViewCell.swift in Sources */,
 				F394C99317F0173900FAFBD4 /* AddVideoLinkMapping.xcmappingmodel in Sources */,
-				F394C99417F0173900FAFBD4 /* EMSConferenceDetailViewController.m in Sources */,
 				1556C49A1CDA754600D9B175 /* Rating+CoreDataProperties.swift in Sources */,
 				4E1AD00E5B0570877570A148 /* EMSTracking.m in Sources */,
 				4E1AD3DC51344037FDC2CFFC /* EMSRootParser.m in Sources */,
