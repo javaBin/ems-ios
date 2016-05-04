@@ -1,0 +1,6 @@
+framework module NHCalendarActivity {
+  umbrella header "NHCalendarActivity-umbrella.h"
+
+  export *
+  module * { export * }
+}

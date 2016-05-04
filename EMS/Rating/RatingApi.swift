@@ -1,4 +1,5 @@
 import UIKit
+import CocoaLumberjack
 
 public class RatingApi : NSObject {
     let server : String
@@ -30,7 +31,7 @@ public class RatingApi : NSObject {
         }
         
         if let seenError = matchError {
-            Log.warn("\(seenError)")
+            DDLogWarn("\(seenError)")
             return nil
         }
         
@@ -48,7 +49,7 @@ public class RatingApi : NSObject {
     }
     
     public func postRating(session: Session, rating: Rating?) {
-        Log.debug("Posting feedback for session \(session.href)")
+        DDLogDebug("Posting feedback for session \(session.href)")
         if let postRating = rating {
             let data = ["template":
                 ["data":
@@ -62,7 +63,7 @@ public class RatingApi : NSObject {
                 ]
             ]
 
-            Log.debug("Posting feedback for session \(session.href) with data \(data)")
+            DDLogDebug("Posting feedback for session \(session.href) with data \(data)")
             
             var jsonError : NSError?
             
@@ -75,7 +76,7 @@ public class RatingApi : NSObject {
             }
             
             if let seenError = jsonError {
-                Log.warn("\(seenError)")
+                DDLogWarn("\(seenError)")
                 return
             }
             
@@ -103,12 +104,12 @@ public class RatingApi : NSObject {
         let timer = NSDate()
         
         let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            Log.debug("Sent feedback to URL \(url)")
+            DDLogDebug("Sent feedback to URL \(url)")
 
             EMSTracking.trackTimingWithCategory("feedback", interval: NSDate().timeIntervalSinceDate(timer), name: "feedback")
 
             if (error != nil) {
-                Log.warn("Failed to send feedback \(error)")
+                DDLogWarn("Failed to send feedback \(error)")
                 
                 EMSTracking.trackException("Unable to send feedback due to Code: \(error!.code), Domain: \(error!.domain), Info: \(error!.userInfo)")
             }
@@ -119,9 +120,9 @@ public class RatingApi : NSObject {
                     
                     EMSTracking.trackException("Unable to send feedback with status code: \(httpResponse.statusCode) for url \(url)")
 
-                    Log.debug("Feedback got status \(httpResponse.statusCode) with data \(dataString)")
+                    DDLogDebug("Feedback got status \(httpResponse.statusCode) with data \(dataString)")
                 } else {
-                    Log.debug("Feedback OK with status \(httpResponse.statusCode)")
+                    DDLogDebug("Feedback OK with status \(httpResponse.statusCode)")
                 }
             }
             

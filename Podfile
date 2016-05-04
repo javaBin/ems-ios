@@ -2,10 +2,25 @@ platform :ios, '8.0'
 
 inhibit_all_warnings!
 
-pod 'GoogleAnalytics', '~> 3.12'
-pod 'Collection-JSON-ObjC', '~> 1.0'
-pod 'NHCalendarActivity', '~> 0.0'
-pod 'CocoaLumberjack', '~> 2.0'
-pod 'CrashlyticsLumberjack', '2.0.1-beta'
+use_frameworks!
 
-link_with 'JavaZone', 'flatMap'
+abstract_target 'EMS' do
+  pod 'Fabric'
+  pod 'Crashlytics'
+
+  pod 'GoogleAnalytics', '~> 3.14'
+  pod 'Collection-JSON-ObjC', '~> 1.0'
+  pod 'NHCalendarActivity', '~> 0.0'
+  pod 'CocoaLumberjack/Swift', '~> 2.3'
+  pod 'Pushwoosh', '~> 4.0'
+
+  target 'JavaZone' do
+  end
+  
+  target 'flatMap' do
+  end
+
+  target 'JavaZone Tests' do
+  end
+
+end

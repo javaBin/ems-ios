@@ -1,36 +1,37 @@
 PODS:
-  - CocoaLumberjack (2.0.1):
-    - CocoaLumberjack/Default (= 2.0.1)
-    - CocoaLumberjack/Extensions (= 2.0.1)
-  - CocoaLumberjack/Core (2.0.1)
-  - CocoaLumberjack/Default (2.0.1):
+  - CocoaLumberjack/Core (2.3.0)
+  - CocoaLumberjack/Default (2.3.0):
     - CocoaLumberjack/Core
-  - CocoaLumberjack/Extensions (2.0.1):
+  - CocoaLumberjack/Extensions (2.3.0):
     - CocoaLumberjack/Default
+  - CocoaLumberjack/Swift (2.3.0):
+    - CocoaLumberjack/Extensions
   - Collection-JSON-ObjC (1.0.1)
-  - CrashlyticsFramework (2.2.10)
-  - CrashlyticsLumberjack (2.0.1-beta):
-    - CocoaLumberjack/Default (~> 2.0.0)
-    - CrashlyticsLumberjack/Framework (= 2.0.1-beta)
-  - CrashlyticsLumberjack/Framework (2.0.1-beta):
-    - CocoaLumberjack/Default (~> 2.0.0)
-    - CrashlyticsFramework (~> 2.2)
-  - GoogleAnalytics (3.12.0)
+  - Crashlytics (3.7.0):
+    - Fabric (~> 1.6.3)
+  - Fabric (1.6.7)
+  - GoogleAnalytics (3.14.0)
   - NHCalendarActivity (0.0.3)
+  - Pushwoosh (4.0.3)
 
 DEPENDENCIES:
-  - CocoaLumberjack (~> 2.0)
+  - CocoaLumberjack/Swift (~> 2.3)
   - Collection-JSON-ObjC (~> 1.0)
-  - CrashlyticsLumberjack (= 2.0.1-beta)
-  - GoogleAnalytics (~> 3.12)
+  - Crashlytics
+  - Fabric
+  - GoogleAnalytics (~> 3.14)
   - NHCalendarActivity (~> 0.0)
+  - Pushwoosh (~> 4.0)
 
 SPEC CHECKSUMS:
-  CocoaLumberjack: 019d1361244274a6138c788c6cb80baabc13fb8f
+  CocoaLumberjack: 97fab7ee5f507fe54445cca7ea80f926729cfd15
   Collection-JSON-ObjC: 4f1c9fe35f6e8f1cb51e015d6182d23efc0652a0
-  CrashlyticsFramework: 5b7a9fb3d94124e3c20a9b10f93244706cfdb0f1
-  CrashlyticsLumberjack: 26034b4b6d8b0bf547ea9ba201ff53c6cd50f971
-  GoogleAnalytics: ef2e0b800ef3c1e62688cdfc959e0d3132bc246c
+  Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
+  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
+  GoogleAnalytics: 9be1afdb8deeac4bb5f13ca7f7d3b9db2a1f43dc
   NHCalendarActivity: c20c09dd71fba011c9dc252f6210d01134137a63
+  Pushwoosh: c7ef2511cca181201e137018e3ea4c2e1d78b0a9
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 234a345ba4bfeb0b293bede4127ecdcaef2dc1c1
+
+COCOAPODS: 1.0.0.rc.1

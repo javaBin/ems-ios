@@ -21,6 +21,7 @@
 NSString *const EMSUserRequestedSessionNotification = @"EMSUserRequestedSessionNotification";
 NSString *const EMSUserRequestedSessionNotificationSessionKey = @"EMSUserRequestedSessionNotificationSessionKey";
 
+static const DDLogLevel ddLogLevel = DDLogLevelDebug;
 
 @interface EMSLocalNotificationManager () <UIAlertViewDelegate, NSFetchedResultsControllerDelegate>
 @property(nonatomic) NSFetchedResultsController *fetchedResultsController;

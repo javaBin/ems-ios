@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <development version="6000" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Rating View Controller-->
+        <scene sceneID="3wJ-8d-QSG">
+            <objects>
+                <tableViewController storyboardIdentifier="Rating View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="e9y-cD-3IM" customClass="RatingViewController" customModule="EMS" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="K4G-jO-8dY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="RatingViewCell" id="5IH-wu-UM4" customClass="RatingViewCell" customModule="EMS" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="114" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5IH-wu-UM4" id="mIs-qh-p7v">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYe-Bl-zSj" customClass="TintButton" customModule="EMS" customModuleProvider="target">
+                                            <rect key="frame" x="287" y="9" width="26" height="26"/>
+                                            <state key="normal" image="28-star-grey">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="ratingButtonClick:" destination="5IH-wu-UM4" eventType="touchUpInside" id="ERV-Vi-Jnh"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGD-zB-ecY" customClass="TintButton" customModule="EMS" customModuleProvider="target">
+                                            <rect key="frame" x="245" y="9" width="26" height="26"/>
+                                            <state key="normal" image="28-star-grey">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="ratingButtonClick:" destination="5IH-wu-UM4" eventType="touchUpInside" id="INi-LZ-1eU"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6cD-Vf-UYt" customClass="TintButton" customModule="EMS" customModuleProvider="target">
+                                            <rect key="frame" x="203" y="9" width="26" height="26"/>
+                                            <state key="normal" image="28-star-grey">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="ratingButtonClick:" destination="5IH-wu-UM4" eventType="touchUpInside" id="vtF-nN-JQn"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w3F-Tq-uZl" customClass="TintButton" customModule="EMS" customModuleProvider="target">
+                                            <rect key="frame" x="371" y="9" width="26" height="26"/>
+                                            <state key="normal" image="28-star-grey">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="ratingButtonClick:" destination="5IH-wu-UM4" eventType="touchUpInside" id="fq7-8l-76a"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fX0-Ol-WjK" customClass="TintButton" customModule="EMS" customModuleProvider="target">
+                                            <rect key="frame" x="570" y="11" width="22" height="22"/>
+                                            <state key="normal" image="298-circlex">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="clearRating:" destination="5IH-wu-UM4" eventType="touchUpInside" id="lbq-Q8-Ag7"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Qf-2l-teT" customClass="TintButton" customModule="EMS" customModuleProvider="target">
+                                            <rect key="frame" x="329" y="9" width="26" height="26"/>
+                                            <state key="normal" image="28-star-grey">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="ratingButtonClick:" destination="5IH-wu-UM4" eventType="touchUpInside" id="ZDw-75-tVl"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ZYe-Bl-zSj" firstAttribute="leading" secondItem="JGD-zB-ecY" secondAttribute="trailing" constant="16" id="2Qt-5x-INI"/>
+                                        <constraint firstAttribute="centerY" secondItem="fX0-Ol-WjK" secondAttribute="centerY" id="R8w-jR-qcG"/>
+                                        <constraint firstItem="9Qf-2l-teT" firstAttribute="leading" secondItem="ZYe-Bl-zSj" secondAttribute="trailing" constant="16" id="TA6-2z-QSk"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="fX0-Ol-WjK" secondAttribute="trailing" id="VrC-6s-r8f"/>
+                                        <constraint firstAttribute="centerX" secondItem="ZYe-Bl-zSj" secondAttribute="centerX" id="b5B-3D-ieB"/>
+                                        <constraint firstAttribute="centerY" secondItem="JGD-zB-ecY" secondAttribute="centerY" id="dVv-IH-lDg"/>
+                                        <constraint firstAttribute="centerY" secondItem="w3F-Tq-uZl" secondAttribute="centerY" id="pRj-bJ-IXo"/>
+                                        <constraint firstAttribute="centerY" secondItem="9Qf-2l-teT" secondAttribute="centerY" id="uMx-fm-4oe"/>
+                                        <constraint firstAttribute="centerY" secondItem="ZYe-Bl-zSj" secondAttribute="centerY" id="ui7-h1-MM9"/>
+                                        <constraint firstItem="w3F-Tq-uZl" firstAttribute="leading" secondItem="9Qf-2l-teT" secondAttribute="trailing" constant="16" id="uzF-PL-K4l"/>
+                                        <constraint firstAttribute="centerY" secondItem="6cD-Vf-UYt" secondAttribute="centerY" id="wai-qh-YGV"/>
+                                        <constraint firstItem="JGD-zB-ecY" firstAttribute="leading" secondItem="6cD-Vf-UYt" secondAttribute="trailing" constant="16" id="zn7-3e-gAu"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="clearButton" destination="fX0-Ol-WjK" id="HmF-hJ-rHO"/>
+                                    <outlet property="rating1" destination="6cD-Vf-UYt" id="N2b-d1-cx9"/>
+                                    <outlet property="rating2" destination="JGD-zB-ecY" id="heI-C8-mZI"/>
+                                    <outlet property="rating3" destination="ZYe-Bl-zSj" id="41n-s2-Dv0"/>
+                                    <outlet property="rating4" destination="9Qf-2l-teT" id="uc9-r4-TTz"/>
+                                    <outlet property="rating5" destination="w3F-Tq-uZl" id="esw-Xt-LzG"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CommentViewCell" rowHeight="120" id="JTT-US-fUd" customClass="CommentViewCell" customModule="EMS" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="158" width="600" height="120"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JTT-US-fUd" id="svR-DC-px1">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="119"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="32v-Ax-RgE" userLabel="Clear Button" customClass="TintButton" customModule="EMS" customModuleProvider="target">
+                                            <rect key="frame" x="570" y="16" width="22" height="22"/>
+                                            <state key="normal" image="298-circlex">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="clearComments:" destination="JTT-US-fUd" eventType="touchUpInside" id="NVa-hJ-A9I"/>
+                                            </connections>
+                                        </button>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="0mt-nc-Y8O">
+                                            <rect key="frame" x="16" y="16" width="546" height="87"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="JTT-US-fUd" id="SVs-Bt-kUt"/>
+                                            </connections>
+                                        </textView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="0mt-nc-Y8O" firstAttribute="top" secondItem="svR-DC-px1" secondAttribute="topMargin" constant="8" id="HmS-eX-SB3"/>
+                                        <constraint firstItem="32v-Ax-RgE" firstAttribute="centerY" secondItem="svR-DC-px1" secondAttribute="centerY" id="KNc-x5-zP6"/>
+                                        <constraint firstItem="32v-Ax-RgE" firstAttribute="leading" secondItem="0mt-nc-Y8O" secondAttribute="trailing" constant="8" id="bpr-x5-Wcb"/>
+                                        <constraint firstItem="0mt-nc-Y8O" firstAttribute="leading" secondItem="svR-DC-px1" secondAttribute="leadingMargin" constant="8" id="cvr-K5-JO1"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="32v-Ax-RgE" secondAttribute="trailing" id="sjo-68-GWo"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="0mt-nc-Y8O" secondAttribute="bottom" constant="8" id="tU4-t1-279"/>
+                                        <constraint firstItem="32v-Ax-RgE" firstAttribute="top" secondItem="0mt-nc-Y8O" secondAttribute="top" id="zb9-Vy-qj0"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="KNc-x5-zP6"/>
+                                        </mask>
+                                    </variation>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="clearButton" destination="32v-Ax-RgE" id="5A3-jV-8PN"/>
+                                    <outlet property="commentsField" destination="0mt-nc-Y8O" id="9Dx-1P-kuR"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="e9y-cD-3IM" id="2Fk-9T-0uh"/>
+                            <outlet property="delegate" destination="e9y-cD-3IM" id="WE4-ja-zJV"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="bsn-MT-FPX">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="CR7-Ir-gvI">
+                            <connections>
+                                <segue destination="EUN-3d-ot4" kind="unwind" identifier="CancelRatingSegue" unwindAction="unwindToDetailViewController:" id="f67-KD-2gF"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="eT7-ye-suj">
+                            <connections>
+                                <segue destination="EUN-3d-ot4" kind="unwind" identifier="SaveRatingSegue" unwindAction="unwindToDetailViewController:" id="15H-PT-mAX"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sBt-CG-Mnp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="EUN-3d-ot4" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="-248" y="-464"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="FWF-7C-oa4">
+            <objects>
+                <navigationController storyboardIdentifier="Rating Navigation Controller" automaticallyAdjustsScrollViewInsets="NO" id="q06-Tm-CzA" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="04X-uM-Le6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="e9y-cD-3IM" kind="relationship" relationship="rootViewController" id="uaR-L9-0rM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jsH-8o-4gW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1060" y="-464"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="28-star-grey" width="26" height="26"/>
+        <image name="298-circlex" width="22" height="22"/>
+    </resources>
+    <color key="tintColor" red="0.99215692280000001" green="0.52549022440000004" blue="0.29019609089999998" alpha="1" colorSpace="deviceRGB"/>
+</document>

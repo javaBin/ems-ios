@@ -1,0 +1,6 @@
+framework module Collection_JSON_ObjC {
+  umbrella header "Collection-JSON-ObjC-umbrella.h"
+
+  export *
+  module * { export * }
+}

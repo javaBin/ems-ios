@@ -3,7 +3,7 @@ import UIKit
 public class TintButton: UIButton {
     public override var selected: Bool {
         didSet {
-            if (UIImage.instancesRespondToSelector("imageWithRenderingMode:")) {
+            if (UIImage.instancesRespondToSelector(#selector(UIImage.imageWithRenderingMode(_:)))) {
                 if (self.selected) {
                     self.tintColor = nil
                 } else {
@@ -16,7 +16,7 @@ public class TintButton: UIButton {
     public override func setImage(image: UIImage?, forState state: UIControlState) {
         var img : UIImage? = image
         
-        if (UIImage.instancesRespondToSelector("imageWithRenderingMode:")) {
+        if (UIImage.instancesRespondToSelector(#selector(UIImage.imageWithRenderingMode(_:)))) {
             img = img?.imageWithRenderingMode(.AlwaysTemplate)
         }
 
