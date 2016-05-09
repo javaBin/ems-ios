@@ -57,7 +57,11 @@ class Session: NSManagedObject {
         do {
             return try formatSectionName(self.slotName)
         } catch {
-            return self.slotName!
+            if let slotName = self.slotName {
+                return slotName
+            }
+            
+            return ""
         }
     }
     

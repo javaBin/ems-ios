@@ -118,6 +118,8 @@
 		839BD670176FA67000900712 /* EMSSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD66F176FA67000900712 /* EMSSpeaker.m */; };
 		83B24CC61B45213B00AA41AD /* TestRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B24CC51B45213B00AA41AD /* TestRating.swift */; };
 		83D5CBA417749EEA00527620 /* EMSFeatureConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */; };
+		83E9AFDB1CE0803D008D1415 /* EMSCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 832764E81CDA241B00F26494 /* EMSCoreDataModel.xcdatamodeld */; };
+		83E9AFDD1CE08D60008D1415 /* EMSConference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFDC1CE08D60008D1415 /* EMSConference.swift */; };
 		83EBB1691CD20D0D00F381A8 /* CommentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB1681CD20D0D00F381A8 /* CommentViewCell.swift */; };
 		83EBB16A1CD20D1500F381A8 /* CommentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB1681CD20D0D00F381A8 /* CommentViewCell.swift */; };
 		83EBB16D1CD2148E00F381A8 /* AddCommentsToRating.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB16C1CD2148E00F381A8 /* AddCommentsToRating.xcmappingmodel */; };
@@ -355,6 +357,7 @@
 		83B24CC51B45213B00AA41AD /* TestRating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestRating.swift; sourceTree = "<group>"; };
 		83D5CBA217749EEA00527620 /* EMSFeatureConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSFeatureConfig.h; sourceTree = "<group>"; };
 		83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSFeatureConfig.m; sourceTree = "<group>"; };
+		83E9AFDA1CE07FFF008D1415 /* EMSCoreDataModel 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "EMSCoreDataModel 8.xcdatamodel"; sourceTree = "<group>"; };
 		83EBB1681CD20D0D00F381A8 /* CommentViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewCell.swift; sourceTree = "<group>"; };
 		83EBB16C1CD2148E00F381A8 /* AddCommentsToRating.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = AddCommentsToRating.xcmappingmodel; sourceTree = "<group>"; };
 		83FE6CF41CD9FAD00069CF7A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -1352,6 +1355,7 @@
 				F394C99317F0173900FAFBD4 /* AddVideoLinkMapping.xcmappingmodel in Sources */,
 				1556C49A1CDA754600D9B175 /* Rating+CoreDataProperties.swift in Sources */,
 				4E1AD00E5B0570877570A148 /* EMSTracking.m in Sources */,
+				83E9AFDB1CE0803D008D1415 /* EMSCoreDataModel.xcdatamodeld in Sources */,
 				4E1AD3DC51344037FDC2CFFC /* EMSRootParser.m in Sources */,
 				1556C4A61CDA754600D9B175 /* Speaker.swift in Sources */,
 				EA81CDDF19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */,
@@ -1962,6 +1966,7 @@
 		832764E81CDA241B00F26494 /* EMSCoreDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				83E9AFDA1CE07FFF008D1415 /* EMSCoreDataModel 8.xcdatamodel */,
 				832764E91CDA241B00F26494 /* EMSCoreDataModel 2.xcdatamodel */,
 				832764EA1CDA241B00F26494 /* EMSCoreDataModel 3.xcdatamodel */,
 				832764EB1CDA241B00F26494 /* EMSCoreDataModel 4.xcdatamodel */,
@@ -1970,7 +1975,7 @@
 				832764EE1CDA241B00F26494 /* EMSCoreDataModel 7.xcdatamodel */,
 				832764EF1CDA241B00F26494 /* EMSCoreDataModel.xcdatamodel */,
 			);
-			currentVersion = 832764EE1CDA241B00F26494 /* EMSCoreDataModel 7.xcdatamodel */;
+			currentVersion = 83E9AFDA1CE07FFF008D1415 /* EMSCoreDataModel 8.xcdatamodel */;
 			path = EMSCoreDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

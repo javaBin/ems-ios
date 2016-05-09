@@ -1,9 +1,9 @@
 //
 //  Session+CoreDataProperties.swift
-//  EMS
+//  
 //
-//  Created by Chris Searle on 04/05/16.
-//  Copyright © 2016 Chris Searle. All rights reserved.
+//  Created by Chris Searle on 09/05/16.
+//
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
 //  to delete and recreate this implementation file for your updated model.
@@ -29,6 +29,7 @@ extension Session {
     @NSManaged var summary: String?
     @NSManaged var title: String?
     @NSManaged var videoLink: String?
+    @NSManaged var link: String?
     @NSManaged var conference: Conference?
     @NSManaged var keywords: NSSet?
     @NSManaged var room: Room?

@@ -286,6 +286,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
     session.language = ems.language;
     session.summary = ems.summary;
     session.level = ems.level;
+    session.link = [ems.link absoluteString];
     session.videoLink = [ems.videoLink absoluteString];
 
     NSSet *foundLevels = [conference.conferenceLevels objectsPassingTest:^BOOL(id obj, BOOL *stop) {

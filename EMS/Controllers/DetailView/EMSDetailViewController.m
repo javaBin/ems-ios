@@ -465,9 +465,6 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
     NSString *shareString = [NSString stringWithFormat:@"%@ - %@", self.session.conference.name, self.session.title];
     DDLogVerbose(@"About to share for %@", shareString);
 
-    // TODO - web URL?
-    // NSURL *shareUrl = [NSURL URLWithString:@"http://www.java.no"];
-
     NSMutableArray *shareItems = [[NSMutableArray alloc] init];
     NSMutableArray *shareActivities = [[NSMutableArray alloc] init];
 
@@ -478,6 +475,10 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
         [shareActivities addObject:[[NHCalendarActivity alloc] init]];
     }
 
+    if (self.session.link) {
+        [shareItems addObject:self.session.link];
+    }
+    
     if (self.session.videoLink) {
         [shareItems addObject:self.session.videoLink];
     }
