@@ -34,6 +34,6 @@
 
 - (void)syncManagedObjectContext;
 
-- (void)crashlyticsDidDetectCrashDuringPreviousExecution:(Crashlytics *)crashlytics;
+- (void)popAlert:(UIAlertController *) alert;
 
 @end

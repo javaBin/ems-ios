@@ -23,28 +23,11 @@ NSString *const EMSUserRequestedSessionNotificationSessionKey = @"EMSUserRequest
 
 static const DDLogLevel ddLogLevel = DDLogLevelDebug;
 
-@interface EMSLocalNotificationManager () <UIAlertViewDelegate, NSFetchedResultsControllerDelegate>
+@interface EMSLocalNotificationManager () <NSFetchedResultsControllerDelegate>
 @property(nonatomic) NSFetchedResultsController *fetchedResultsController;
 @end
 
-@implementation EMSLocalNotificationManager {
-@private
-
-    NSMutableDictionary *_notificationDictionary;
-
-    NSInteger _nextAlertViewTag;
-
-}
-
-- (id)init {
-    self = [super init];
-    if (self) {
-        _notificationDictionary = [NSMutableDictionary dictionary];
-        _nextAlertViewTag = 0;
-    }
-    return self;
-}
-
+@implementation EMSLocalNotificationManager {}
 
 + (EMSLocalNotificationManager *)sharedInstance {
 
@@ -119,32 +102,16 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
 #pragma mark - Present Notification
 
 - (void)presentLocalNotificationAlert:(UILocalNotification *)notification {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Reminder", @"Title for local notification about upcoming session.")
-                                                    message:notification.alertBody
-                                                   delegate:self cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                                          otherButtonTitles:notification.alertAction, nil];
-
-    alert.delegate = self;
-    alert.tag = _nextAlertViewTag++;
-
-    _notificationDictionary[@(alert.tag)] = notification;
-
-    [alert show];
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == alertView.firstOtherButtonIndex) {
-
-        UILocalNotification *notification = _notificationDictionary[@(alertView.tag)];
-
-        if (notification) {
-            [_notificationDictionary removeObjectForKey:@(alertView.tag)];
-
-
-            [self activateWithNotification:notification];
-        }
-    }
-
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Reminder", @"Title for local notification about upcoming session.") message:notification.alertBody preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *action = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [self activateWithNotification:notification];
+    }];
+    
+    [alert addAction:action];
+    
+    [[EMSAppDelegate sharedAppDelegate] popAlert:alert];
 }
 
 #pragma mark - Favorite session tracking
@@ -157,7 +124,6 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
     }
 
     [self updateAllNotifications];
-
 }
 
 - (NSFetchedResultsController *)fetchedResultsController {

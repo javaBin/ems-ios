@@ -191,8 +191,13 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
 - (void)presentError:(NSError *)error {
     NSAssert([NSThread isMainThread], @"Can only be called on main thread.");
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Download failed", @"Conference download failed error dialog title.") message:[error localizedDescription] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"Error dialog dismiss button.") otherButtonTitles:nil];
-    [alertView show];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Download failed", @"Conference download failed error dialog title.") message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *action = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"Error dialog dismiss button.") style:UIAlertActionStyleCancel handler:nil];
+    
+    [alert addAction:action];
+    
+    [[EMSAppDelegate sharedAppDelegate] popAlert:alert];
 }
 
 

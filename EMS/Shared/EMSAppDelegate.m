@@ -367,13 +367,13 @@ int networkCount = 0;
 - (void)showErrorAlertWithTitle:(NSString *)title
                      andMessage:
                              (NSString *)message {
-    UIAlertView *errorAlert = [[UIAlertView alloc]
-            initWithTitle:title
-                  message:message
-                 delegate:nil
-        cancelButtonTitle:NSLocalizedString(@"OK", "Error dialog dismiss button")
-        otherButtonTitles:nil];
-    [errorAlert show];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *action = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", "Error dialog dismiss button") style:UIAlertActionStyleCancel handler:nil];
+    
+    [alert addAction:action];
+
+    [self popAlert:alert];
 }
 
 + (EMSAppDelegate *)sharedAppDelegate {
@@ -505,6 +505,20 @@ int networkCount = 0;
     }
     
     return isShowingSessionDetails;
+}
+
+- (void)popAlert:(UIAlertController *) alert {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIWindow *window = self.window;
+    
+        if (window) {
+            UIViewController *rootVC = window.rootViewController;
+        
+            if (rootVC) {
+                [rootVC presentViewController:alert animated:YES completion:nil];
+            }
+        }
+    });
 }
 
 @end
