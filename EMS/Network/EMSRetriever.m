@@ -6,7 +6,6 @@
 
 #import "EMSRetriever.h"
 
-#import "EMSEventsParser.h"
 #import "EMSConfig.h"
 
 #import "EMSAppDelegate.h"

@@ -103,7 +103,6 @@
 		836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836331311770DD2B000F8D95 /* EMSSearchViewController.m */; };
 		837F68621A80CE2600AC7C97 /* EMSTestEventsParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 837F68611A80CE2600AC7C97 /* EMSTestEventsParser.m */; };
 		837F68641A80E3BC00AC7C97 /* slots.json in Resources */ = {isa = PBXBuildFile; fileRef = 837F68631A80E3BC00AC7C97 /* slots.json */; };
-		839BD65F176F9BD400900712 /* EMSEventsParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD63E176F9BD400900712 /* EMSEventsParser.m */; };
 		839BD660176F9BD400900712 /* EMSDateConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD640176F9BD400900712 /* EMSDateConverter.m */; };
 		839BD661176F9BD400900712 /* EMSRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD642176F9BD400900712 /* EMSRetriever.m */; };
 		839BD663176F9BD400900712 /* EMSRoomsParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD647176F9BD400900712 /* EMSRoomsParser.m */; };
@@ -124,6 +123,8 @@
 		83E9AFE71CE09428008D1415 /* EMSSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFE51CE09428008D1415 /* EMSSlot.swift */; };
 		83E9AFE91CE09541008D1415 /* EMSSpeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFE81CE09541008D1415 /* EMSSpeaker.swift */; };
 		83E9AFEA1CE09541008D1415 /* EMSSpeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFE81CE09541008D1415 /* EMSSpeaker.swift */; };
+		83E9AFEE1CE09F08008D1415 /* EMSEventsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFED1CE09F08008D1415 /* EMSEventsParser.swift */; };
+		83E9AFEF1CE09F08008D1415 /* EMSEventsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFED1CE09F08008D1415 /* EMSEventsParser.swift */; };
 		83EBB1691CD20D0D00F381A8 /* CommentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB1681CD20D0D00F381A8 /* CommentViewCell.swift */; };
 		83EBB16A1CD20D1500F381A8 /* CommentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB1681CD20D0D00F381A8 /* CommentViewCell.swift */; };
 		83EBB16D1CD2148E00F381A8 /* AddCommentsToRating.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB16C1CD2148E00F381A8 /* AddCommentsToRating.xcmappingmodel */; };
@@ -192,7 +193,6 @@
 		F394C97117F0173900FAFBD4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6D117685885009077D3 /* main.m */; };
 		F394C97217F0173900FAFBD4 /* EMSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6D517685885009077D3 /* EMSAppDelegate.m */; };
 		F394C97417F0173900FAFBD4 /* EMSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E601769C3CD0078C709 /* EMSModel.m */; };
-		F394C97617F0173900FAFBD4 /* EMSEventsParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD63E176F9BD400900712 /* EMSEventsParser.m */; };
 		F394C97717F0173900FAFBD4 /* EMSDateConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD640176F9BD400900712 /* EMSDateConverter.m */; };
 		F394C97817F0173900FAFBD4 /* EMSRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD642176F9BD400900712 /* EMSRetriever.m */; };
 		F394C97A17F0173900FAFBD4 /* EMSRoomsParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD647176F9BD400900712 /* EMSRoomsParser.m */; };
@@ -277,7 +277,6 @@
 		4E1AD3429BD33789CEAB8981 /* EMSSpeakersParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSpeakersParserDelegate.h; sourceTree = "<group>"; };
 		4E1AD432868D01852ACE1A04 /* EMSSpeakersRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSpeakersRetriever.h; sourceTree = "<group>"; };
 		4E1AD4BD3EA75DE0EA2F36CD /* EMSRootParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSRootParser.m; sourceTree = "<group>"; };
-		4E1AD5906A3F485CAB5C75AB /* EMSEventsParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSEventsParserDelegate.h; sourceTree = "<group>"; };
 		4E1AD63BE5285CC7F6F90AFC /* EMSRootParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSRootParser.h; sourceTree = "<group>"; };
 		4E1AD6B14458A2997A59456D /* EMSTracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSTracking.h; sourceTree = "<group>"; };
 		4E1AD7801B1EF0B9E87AAF57 /* EMSSpeakersRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSpeakersRetriever.m; sourceTree = "<group>"; };
@@ -325,8 +324,6 @@
 		837F68581A80CC8400AC7C97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		837F68611A80CE2600AC7C97 /* EMSTestEventsParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSTestEventsParser.m; sourceTree = "<group>"; };
 		837F68631A80E3BC00AC7C97 /* slots.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = slots.json; sourceTree = "<group>"; };
-		839BD63D176F9BD400900712 /* EMSEventsParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSEventsParser.h; sourceTree = "<group>"; };
-		839BD63E176F9BD400900712 /* EMSEventsParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSEventsParser.m; sourceTree = "<group>"; };
 		839BD63F176F9BD400900712 /* EMSDateConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSDateConverter.h; sourceTree = "<group>"; };
 		839BD640176F9BD400900712 /* EMSDateConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDateConverter.m; sourceTree = "<group>"; };
 		839BD641176F9BD400900712 /* EMSRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSRetriever.h; sourceTree = "<group>"; };
@@ -352,6 +349,7 @@
 		83E9AFE21CE091BC008D1415 /* EMSSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EMSSession.swift; sourceTree = "<group>"; };
 		83E9AFE51CE09428008D1415 /* EMSSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EMSSlot.swift; sourceTree = "<group>"; };
 		83E9AFE81CE09541008D1415 /* EMSSpeaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EMSSpeaker.swift; sourceTree = "<group>"; };
+		83E9AFED1CE09F08008D1415 /* EMSEventsParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EMSEventsParser.swift; sourceTree = "<group>"; };
 		83EBB1681CD20D0D00F381A8 /* CommentViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewCell.swift; sourceTree = "<group>"; };
 		83EBB16C1CD2148E00F381A8 /* AddCommentsToRating.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = AddCommentsToRating.xcmappingmodel; sourceTree = "<group>"; };
 		83FE6CF41CD9FAD00069CF7A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -643,8 +641,7 @@
 			isa = PBXGroup;
 			children = (
 				83E9AFEB1CE09611008D1415 /* Model */,
-				839BD63E176F9BD400900712 /* EMSEventsParser.m */,
-				839BD63D176F9BD400900712 /* EMSEventsParser.h */,
+				83E9AFEC1CE09EBE008D1415 /* Parsers */,
 				839BD63F176F9BD400900712 /* EMSDateConverter.h */,
 				839BD640176F9BD400900712 /* EMSDateConverter.m */,
 				839BD641176F9BD400900712 /* EMSRetriever.h */,
@@ -664,7 +661,6 @@
 				EA6132BB193FC35B000F54DC /* EMSConfig.m */,
 				4E1AD4BD3EA75DE0EA2F36CD /* EMSRootParser.m */,
 				4E1AD63BE5285CC7F6F90AFC /* EMSRootParser.h */,
-				4E1AD5906A3F485CAB5C75AB /* EMSEventsParserDelegate.h */,
 				4E1ADA797F2772220481910D /* EMSRoomsParserDelegate.h */,
 				4E1AD7B3AF25B52F352C823B /* EMSRootParserDelegate.h */,
 				4E1ADA00CE361180FFAC7350 /* EMSSessionsParserDelegate.h */,
@@ -742,6 +738,14 @@
 				83E9AFE81CE09541008D1415 /* EMSSpeaker.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		83E9AFEC1CE09EBE008D1415 /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				83E9AFED1CE09F08008D1415 /* EMSEventsParser.swift */,
+			);
+			path = Parsers;
 			sourceTree = "<group>";
 		};
 		EA11337D19A6A49A008D000A /* Notifications */ = {
@@ -1207,6 +1211,7 @@
 			files = (
 				1556C49D1CDA754600D9B175 /* ConferenceLevel.swift in Sources */,
 				1556C4A31CDA754600D9B175 /* Speaker+CoreDataProperties.swift in Sources */,
+				83E9AFEE1CE09F08008D1415 /* EMSEventsParser.swift in Sources */,
 				F35BB6D217685885009077D3 /* main.m in Sources */,
 				EA6132BC193FC35B000F54DC /* EMSConfig.m in Sources */,
 				F35BB6D617685885009077D3 /* EMSAppDelegate.m in Sources */,
@@ -1215,7 +1220,6 @@
 				83E9AFE31CE091BC008D1415 /* EMSSession.swift in Sources */,
 				F3939E611769C3CE0078C709 /* EMSModel.m in Sources */,
 				1556C48B1CDA754600D9B175 /* Conference.swift in Sources */,
-				839BD65F176F9BD400900712 /* EMSEventsParser.m in Sources */,
 				15204C1F18DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */,
 				1556C4A11CDA754600D9B175 /* Slot.swift in Sources */,
 				839BD660176F9BD400900712 /* EMSDateConverter.m in Sources */,
@@ -1293,7 +1297,6 @@
 				F394C97417F0173900FAFBD4 /* EMSModel.m in Sources */,
 				83E9AFE71CE09428008D1415 /* EMSSlot.swift in Sources */,
 				83E9AFDE1CE08D60008D1415 /* EMSConference.swift in Sources */,
-				F394C97617F0173900FAFBD4 /* EMSEventsParser.m in Sources */,
 				1556C4A01CDA754600D9B175 /* Slot+CoreDataProperties.swift in Sources */,
 				15204C2018DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */,
 				F394C97717F0173900FAFBD4 /* EMSDateConverter.m in Sources */,
@@ -1327,6 +1330,7 @@
 				F394C98517F0173900FAFBD4 /* EMSSpeakersParser.m in Sources */,
 				EAE809A41BC495F200EAA446 /* StarView.swift in Sources */,
 				1556C4B31CDA957D00D9B175 /* ConferenceDetailViewController.swift in Sources */,
+				83E9AFEF1CE09F08008D1415 /* EMSEventsParser.swift in Sources */,
 				83E9AFE41CE091BC008D1415 /* EMSSession.swift in Sources */,
 				EAE8099D1BC494B800EAA446 /* HairLineView.swift in Sources */,
 				F30A8CE6192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m in Sources */,
