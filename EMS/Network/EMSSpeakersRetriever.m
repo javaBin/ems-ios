@@ -5,9 +5,7 @@
 #import "EMS-Swift.h"
 
 #import "EMSSpeakersRetriever.h"
-#import "EMSSpeakersParserDelegate.h"
 #import "EMSAppDelegate.h"
-#import "EMSSpeakersParser.h"
 #import "EMSTracking.h"
 #import "NSURLResponse+EMSExtensions.h"
 

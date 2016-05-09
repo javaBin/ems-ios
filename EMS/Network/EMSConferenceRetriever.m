@@ -12,9 +12,6 @@
 
 #import "EMSRetriever.h"
 #import "EMSAppDelegate.h"
-#import "EMSSessionsParser.h"
-#import "EMSRoomsParser.h"
-#import "EMSSlotsParser.h"
 #import "EMSTracking.h"
 
 static const DDLogLevel ddLogLevel = DDLogLevelDebug;
@@ -79,12 +76,12 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
     
     
     NSOperation *slotsDoneOperation = [NSBlockOperation blockOperationWithBlock:^{
-        NSLog(@"Slots is done saving");
+        DDLogDebug(@"Slots is done saving");
     }];
     self.slotsDoneOperation = slotsDoneOperation;
     
     NSOperation *roomsDoneOperation = [NSBlockOperation blockOperationWithBlock:^{
-        NSLog(@"Rooms is done saving");
+        DDLogDebug(@"Rooms is done saving");
     }];
     self.roomsDoneOperation = roomsDoneOperation;
 

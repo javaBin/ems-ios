@@ -10,7 +10,6 @@
 
 #import "EMSAppDelegate.h"
 
-#import "EMSRootParser.h"
 #import "EMSTracking.h"
 #import "EMSConferenceRetriever.h"
 
