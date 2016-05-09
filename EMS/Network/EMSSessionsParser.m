@@ -5,8 +5,6 @@
 #import "EMS-Swift.h"
 
 #import "EMSSessionsParser.h"
-#import "EMSSession.h"
-#import "EMSSpeaker.h"
 
 #import "CJCollection.h"
 #import "CJItem.h"
@@ -71,6 +69,9 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
         
         if ([@"alternate video" isEqualToString:link.rel]) {
             session.videoLink = link.href;
+        }
+        if ([@"alternate" isEqualToString:link.rel]) {
+            session.link = link.href;
         }
         if ([@"attachment collection" isEqualToString:link.rel]) {
             session.attachmentCollection = link.href;

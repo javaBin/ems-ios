@@ -5,7 +5,6 @@
 #import "EMS-Swift.h"
 
 #import "EMSRoomsParser.h"
-#import "EMSRoom.h"
 
 #import "CJCollection.h"
 #import "CJItem.h"

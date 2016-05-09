@@ -6,12 +6,6 @@
 
 #import "EMS-Swift.h"
 
-#import "EMSConference.h"
-#import "EMSSlot.h"
-#import "EMSRoom.h"
-#import "EMSSession.h"
-#import "EMSSpeaker.h"
-
 #import "EMSAppDelegate.h"
 
 #import "EMSTracking.h"

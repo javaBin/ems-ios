@@ -5,7 +5,6 @@
 #import "EMS-Swift.h"
 
 #import "EMSSlotsParser.h"
-#import "EMSSlot.h"
 
 #import "CJCollection.h"
 #import "CJItem.h"
@@ -48,7 +47,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
                 slot.start = [EMSDateConverter dateFromString:value];
             }
             if ([@"duration" isEqualToString:field]) {
-                slot.duration = [value integerValue];
+                slot.duration = [NSNumber numberWithInteger:[value integerValue]];
             }
 
         }];
