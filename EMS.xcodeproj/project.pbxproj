@@ -100,6 +100,7 @@
 		836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836331311770DD2B000F8D95 /* EMSSearchViewController.m */; };
 		837F68621A80CE2600AC7C97 /* EMSTestEventsParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 837F68611A80CE2600AC7C97 /* EMSTestEventsParser.m */; };
 		837F68641A80E3BC00AC7C97 /* slots.json in Resources */ = {isa = PBXBuildFile; fileRef = 837F68631A80E3BC00AC7C97 /* slots.json */; };
+		8388C9FE1D5A0EA000AAD56C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1556C4AE1CDA8EF300D9B175 /* Images.xcassets */; };
 		839BD660176F9BD400900712 /* EMSDateConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD640176F9BD400900712 /* EMSDateConverter.m */; };
 		839BD661176F9BD400900712 /* EMSRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD642176F9BD400900712 /* EMSRetriever.m */; };
 		839BD66B176F9BD400900712 /* EMSMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD657176F9BD400900712 /* EMSMainViewController.m */; };
@@ -971,6 +972,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8388C9FE1D5A0EA000AAD56C /* Images.xcassets in Resources */,
 				EAA965361BB9BB8900BEB749 /* Filter.storyboard in Resources */,
 				EAE2CF5019A934B3002F44FC /* Main.storyboard in Resources */,
 				F3D5E2C41770946100888A7E /* style.css in Resources */,
