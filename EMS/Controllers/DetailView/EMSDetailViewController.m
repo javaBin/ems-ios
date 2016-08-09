@@ -765,7 +765,7 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
                 if ([fileManager isReadableFileAtPath:[location path]]) {
                     NSError *fileError;
 
-                    if ([fileManager isDeletableFileAtPath:pngFilePath]) {
+                    if ([fileManager fileExistsAtPath:pngFilePath] && [fileManager isDeletableFileAtPath:pngFilePath]) {
                         [fileManager removeItemAtPath:pngFilePath error:&fileError];
 
                         if (fileError != nil) {
