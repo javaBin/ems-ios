@@ -87,8 +87,7 @@ IB_DESIGNABLE
         [speakerNames addObject:speaker.name];
     }];
     
-    NSString *speakers    = [speakerNames componentsJoinedByString:@", "];
-    
+    NSString *speakers = [speakerNames componentsJoinedByString:@", "];
     
     static NSDateFormatter *formatter;
     if (!formatter) {
@@ -98,11 +97,21 @@ IB_DESIGNABLE
         formatter.dateStyle = NSDateFormatterNoStyle;
     }
     
+    NSString *roomName = self.session.room.name;
     
-    NSString *time = [NSString stringWithFormat:@"%@-%@", [formatter stringFromDate:self.session.slot.start], [formatter stringFromDate:self.session.slot.end]];
-    
-    self.room.text = [NSString stringWithFormat:@"%@: %@ – %@", self.session.room.name, time, speakers];
+    if (roomName == nil) {
+        roomName = @"";
+    } else {
+        roomName = [roomName stringByAppendingString:@": "];
+    }
 
+    NSString *time = @"";
+    
+    if (self.session.slot != nil && self.session.slot.start != nil && self.session.slot.end != nil) {
+        time = [NSString stringWithFormat:@"%@-%@ - ", [formatter stringFromDate:self.session.slot.start], [formatter stringFromDate:self.session.slot.end]];
+    }
+    
+    self.room.text = [NSString stringWithFormat:@"%@%@%@", roomName, time, speakers];
     
     //Accessibility
     
