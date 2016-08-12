@@ -12,6 +12,11 @@ import CoreData
 @objc(Slot)
 class Slot: NSManagedObject {
 
-// Insert code here to add functionality to your managed object subclass
-
+    func duration() -> NSTimeInterval? {
+        if let st = self.start, ed = self.end {
+            return ed.timeIntervalSinceDate(st)
+        }
+        
+        return nil
+    }
 }

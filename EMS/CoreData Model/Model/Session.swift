@@ -65,6 +65,14 @@ class Session: NSManagedObject {
         }
     }
     
+    func duration() -> NSTimeInterval {
+        if let drn = self.slot?.duration() {
+            return drn
+        }
+        
+        return 0
+    }
+    
     private func formatSectionName(name: String?)  throws -> String {
         guard let parts = name?.characters.split(" ")
             else { throw DateFormatterError.InvalidFormat }

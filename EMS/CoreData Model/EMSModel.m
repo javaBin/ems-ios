@@ -826,6 +826,8 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
 }
 
 - (BOOL)storeSessions:(NSArray *)sessions forHref:(NSString *)href error:(NSError **)error {
+    __block NSTimeInterval maxDuration = 0;
+    
     if (sessions == nil || sessions.count == 0) {
         if (error != NULL) {
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
@@ -891,6 +893,10 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
         [seen addObject:session.href];
 
         [self populateSession:session fromEMS:hrefKeyed[session.href] forConference:conference];
+
+        if (![session.format isEqualToString:@"workshop"]) {
+            maxDuration = fmax(maxDuration, [session duration]);
+        }
     }];
 
 
@@ -909,19 +915,36 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
             EMSSession *ems = (EMSSession *) obj;
 
             [self populateSession:session fromEMS:ems forConference:conference];
+
+            if (![session.format isEqualToString:@"workshop"]) {
+                maxDuration = fmax(maxDuration, [session duration]);
+            }
         }
     }];
 
+    // Fixup short sessions
+    DDLogVerbose(@"Setting slotName for short sessions");
+    NSArray *sessionsWithSlot = [self
+                      sessionsForPredicate:[NSPredicate predicateWithFormat:@"format == %@ AND conference == %@ AND slot != nil", @"presentation", conference] andSort:nil];
+    
+    [sessionsWithSlot enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        Session *session = (Session *)obj;
+        
+        if (session.duration < maxDuration) {
+            [session setSlotName:[self slotNameForStart:session.slot.start toEnd:[NSDate dateWithTimeInterval:maxDuration sinceDate:session.slot.start]]];
+        }
+    }];
+    
     // Fixup lightning sessions
     DDLogVerbose(@"Setting slotName for lightning sessions");
     NSArray *lightning = [self
-            sessionsForPredicate:[NSPredicate predicateWithFormat:@"(format == %@ AND conference == %@ AND slotName = nil)", @"lightning-talk", conference]
+            sessionsForPredicate:[NSPredicate predicateWithFormat:@"(format == %@ AND conference == %@)", @"lightning-talk", conference]
                          andSort:nil];
 
     [lightning enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Session *session = (Session *) obj;
 
-        [session setSlotName:[self getSlotNameForLightningSlot:session.slot forConference:conference]];
+        [session setSlotName:[self getSlotNameForLightningSlot:session.slot forConference:conference withMaxDuration:maxDuration]];
     }];
 
     if ((conference.start == nil || conference.end == nil) && conference.sessions.count > 0) {
@@ -965,7 +988,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
 
 #pragma mark - utility
 
-- (NSString *)getSlotNameForLightningSlot:(Slot *)slot forConference:(Conference *)conference {
+- (NSString *)getSlotNameForLightningSlot:(Slot *)slot forConference:(Conference *)conference withMaxDuration:(NSTimeInterval) maxDuration {
     if (slot == nil || slot.start == nil || slot.end == nil) {
         DDLogVerbose(@"GSNFLS: Slot data looks strange, %@, %@, %@", slot, slot.start, slot.end);
 
@@ -991,24 +1014,26 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
 
         DDLogVerbose(@"GSNFLS: Checking %@ - %@ with %lu possible slots for %@ - %@", s.start, s.end, (unsigned long) s.sessions.count, slot.start, slot.end);
 
-        if (s.sessions.count > 0) {
-            if (![s.sessions containsObject:slot]) {
-                __block BOOL sawWorkshop = NO;
+        if ([s.end timeIntervalSinceDate:s.start] == maxDuration) {
+            if (s.sessions.count > 0) {
+                if (![s.sessions containsObject:slot]) {
+                    __block BOOL sawWorkshop = NO;
 
-                [s.sessions enumerateObjectsUsingBlock:^(id sessionObj, BOOL *sessionStop) {
-                    Session *session = (Session *) sessionObj;
+                    [s.sessions enumerateObjectsUsingBlock:^(id sessionObj, BOOL *sessionStop) {
+                        Session *session = (Session *) sessionObj;
 
-                    if ([session.format isEqualToString:@"workshop"]) {
-                        sawWorkshop = YES;
-                        *sessionStop = YES;
+                        if ([session.format isEqualToString:@"workshop"]) {
+                            sawWorkshop = YES;
+                            *sessionStop = YES;
+                        }
+                    }];
+
+                    if (!sawWorkshop) {
+                        DDLogVerbose(@"GSNFLS: Found %@ - %@ for %@ - %@", s.start, s.end, slot.start, slot.end);
+
+                        found = s;
+                        *stop = YES;
                     }
-                }];
-
-                if (!sawWorkshop) {
-                    DDLogVerbose(@"GSNFLS: Found %@ - %@ for %@ - %@", s.start, s.end, slot.start, slot.end);
-
-                    found = s;
-                    *stop = YES;
                 }
             }
         }
@@ -1033,23 +1058,26 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
         return nil;
     }
 
+    return [self slotNameForStart:slot.start toEnd:slot.end];
+}
 
+- (NSString *)slotNameForStart:(NSDate *)start toEnd:(NSDate *)end {
     static NSDateFormatter *dateFormatterDate;
     static NSDateFormatter *dateFormatterTime;
-
+    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         dateFormatterDate = [[NSDateFormatter alloc] init];
         dateFormatterTime = [[NSDateFormatter alloc] init];
-
+        
         [dateFormatterDate setDateFormat:@"yyyy-MM-dd"];
         [dateFormatterTime setDateFormat:@"HH:mm"];
     });
-
+    
     return [NSString stringWithFormat:@"%@ %@ - %@",
-                                      [dateFormatterDate stringFromDate:slot.start],
-                                      [dateFormatterTime stringFromDate:slot.start],
-                                      [dateFormatterTime stringFromDate:slot.end]];
+            [dateFormatterDate stringFromDate:start],
+            [dateFormatterTime stringFromDate:start],
+            [dateFormatterTime stringFromDate:end]];
 }
 
 - (Session *)toggleFavourite:(Session *)session {
