@@ -17,9 +17,6 @@ abstract_target 'EMS' do
   target 'JavaZone' do
   end
   
-  target 'flatMap' do
-  end
-
   target 'JavaZone Tests' do
   end
 

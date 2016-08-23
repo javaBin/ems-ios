@@ -8,65 +8,34 @@
 
 /* Begin PBXBuildFile section */
 		15204C1F18DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */; };
-		15204C2018DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */; };
 		1556C4811CDA754600D9B175 /* Session+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C46C1CDA754600D9B175 /* Session+CoreDataProperties.swift */; };
-		1556C4821CDA754600D9B175 /* Session+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C46C1CDA754600D9B175 /* Session+CoreDataProperties.swift */; };
 		1556C4831CDA754600D9B175 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C46D1CDA754600D9B175 /* Session.swift */; };
-		1556C4841CDA754600D9B175 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C46D1CDA754600D9B175 /* Session.swift */; };
 		1556C4851CDA754600D9B175 /* Room+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C46E1CDA754600D9B175 /* Room+CoreDataProperties.swift */; };
-		1556C4861CDA754600D9B175 /* Room+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C46E1CDA754600D9B175 /* Room+CoreDataProperties.swift */; };
 		1556C4871CDA754600D9B175 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C46F1CDA754600D9B175 /* Room.swift */; };
-		1556C4881CDA754600D9B175 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C46F1CDA754600D9B175 /* Room.swift */; };
 		1556C4891CDA754600D9B175 /* Conference+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4701CDA754600D9B175 /* Conference+CoreDataProperties.swift */; };
-		1556C48A1CDA754600D9B175 /* Conference+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4701CDA754600D9B175 /* Conference+CoreDataProperties.swift */; };
 		1556C48B1CDA754600D9B175 /* Conference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4711CDA754600D9B175 /* Conference.swift */; };
-		1556C48C1CDA754600D9B175 /* Conference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4711CDA754600D9B175 /* Conference.swift */; };
 		1556C48D1CDA754600D9B175 /* ConferenceKeyword+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4721CDA754600D9B175 /* ConferenceKeyword+CoreDataProperties.swift */; };
-		1556C48E1CDA754600D9B175 /* ConferenceKeyword+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4721CDA754600D9B175 /* ConferenceKeyword+CoreDataProperties.swift */; };
 		1556C48F1CDA754600D9B175 /* ConferenceKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4731CDA754600D9B175 /* ConferenceKeyword.swift */; };
-		1556C4901CDA754600D9B175 /* ConferenceKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4731CDA754600D9B175 /* ConferenceKeyword.swift */; };
 		1556C4911CDA754600D9B175 /* ConferenceType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4741CDA754600D9B175 /* ConferenceType+CoreDataProperties.swift */; };
-		1556C4921CDA754600D9B175 /* ConferenceType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4741CDA754600D9B175 /* ConferenceType+CoreDataProperties.swift */; };
 		1556C4931CDA754600D9B175 /* ConferenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4751CDA754600D9B175 /* ConferenceType.swift */; };
-		1556C4941CDA754600D9B175 /* ConferenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4751CDA754600D9B175 /* ConferenceType.swift */; };
 		1556C4951CDA754600D9B175 /* Keyword+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4761CDA754600D9B175 /* Keyword+CoreDataProperties.swift */; };
-		1556C4961CDA754600D9B175 /* Keyword+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4761CDA754600D9B175 /* Keyword+CoreDataProperties.swift */; };
 		1556C4971CDA754600D9B175 /* Keyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4771CDA754600D9B175 /* Keyword.swift */; };
-		1556C4981CDA754600D9B175 /* Keyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4771CDA754600D9B175 /* Keyword.swift */; };
 		1556C4991CDA754600D9B175 /* Rating+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4781CDA754600D9B175 /* Rating+CoreDataProperties.swift */; };
-		1556C49A1CDA754600D9B175 /* Rating+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4781CDA754600D9B175 /* Rating+CoreDataProperties.swift */; };
 		1556C49B1CDA754600D9B175 /* ConferenceLevel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4791CDA754600D9B175 /* ConferenceLevel+CoreDataProperties.swift */; };
-		1556C49C1CDA754600D9B175 /* ConferenceLevel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4791CDA754600D9B175 /* ConferenceLevel+CoreDataProperties.swift */; };
 		1556C49D1CDA754600D9B175 /* ConferenceLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47A1CDA754600D9B175 /* ConferenceLevel.swift */; };
-		1556C49E1CDA754600D9B175 /* ConferenceLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47A1CDA754600D9B175 /* ConferenceLevel.swift */; };
 		1556C49F1CDA754600D9B175 /* Slot+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47B1CDA754600D9B175 /* Slot+CoreDataProperties.swift */; };
-		1556C4A01CDA754600D9B175 /* Slot+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47B1CDA754600D9B175 /* Slot+CoreDataProperties.swift */; };
 		1556C4A11CDA754600D9B175 /* Slot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47C1CDA754600D9B175 /* Slot.swift */; };
-		1556C4A21CDA754600D9B175 /* Slot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47C1CDA754600D9B175 /* Slot.swift */; };
 		1556C4A31CDA754600D9B175 /* Speaker+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47D1CDA754600D9B175 /* Speaker+CoreDataProperties.swift */; };
-		1556C4A41CDA754600D9B175 /* Speaker+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47D1CDA754600D9B175 /* Speaker+CoreDataProperties.swift */; };
 		1556C4A51CDA754600D9B175 /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47E1CDA754600D9B175 /* Speaker.swift */; };
-		1556C4A61CDA754600D9B175 /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47E1CDA754600D9B175 /* Speaker.swift */; };
 		1556C4A71CDA754600D9B175 /* SpeakerPic+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47F1CDA754600D9B175 /* SpeakerPic+CoreDataProperties.swift */; };
-		1556C4A81CDA754600D9B175 /* SpeakerPic+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C47F1CDA754600D9B175 /* SpeakerPic+CoreDataProperties.swift */; };
 		1556C4A91CDA754600D9B175 /* SpeakerPic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4801CDA754600D9B175 /* SpeakerPic.swift */; };
-		1556C4AA1CDA754600D9B175 /* SpeakerPic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4801CDA754600D9B175 /* SpeakerPic.swift */; };
 		1556C4AC1CDA8A3E00D9B175 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4AB1CDA8A3E00D9B175 /* AboutViewController.swift */; };
-		1556C4AD1CDA8A3E00D9B175 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4AB1CDA8A3E00D9B175 /* AboutViewController.swift */; };
 		1556C4B21CDA957D00D9B175 /* ConferenceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4B11CDA957D00D9B175 /* ConferenceDetailViewController.swift */; };
-		1556C4B31CDA957D00D9B175 /* ConferenceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4B11CDA957D00D9B175 /* ConferenceDetailViewController.swift */; };
 		15806D071B4D75C400EFFB47 /* NSDate+EMSExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 15806D061B4D75C400EFFB47 /* NSDate+EMSExtensions.m */; };
-		15806D081B4D75C400EFFB47 /* NSDate+EMSExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 15806D061B4D75C400EFFB47 /* NSDate+EMSExtensions.m */; };
 		15D284E41CDA5F6500FD3F52 /* DDCrashlyticsLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D284E31CDA5F6500FD3F52 /* DDCrashlyticsLogger.swift */; };
-		15D284E51CDA5F6500FD3F52 /* DDCrashlyticsLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D284E31CDA5F6500FD3F52 /* DDCrashlyticsLogger.swift */; };
-		15FD80E21CE0E5280073B1DA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1556C4AE1CDA8EF300D9B175 /* Images.xcassets */; };
-		4E1AD00E5B0570877570A148 /* EMSTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */; };
-		4E1AD032EC53C9E396CAD414 /* EMSSpeakersRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1AD7801B1EF0B9E87AAF57 /* EMSSpeakersRetriever.m */; };
 		4E1AD35397D90DE204F516F2 /* EMSTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */; };
-		4E1AD52D6C458D6D36CECFBA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4E1AD0EE5411335585333A2F /* README.md */; };
 		4E1AD738AAB8C89E2FF89CB1 /* ChangeLog in Resources */ = {isa = PBXBuildFile; fileRef = 4E1ADFF5906ECB18F85E943C /* ChangeLog */; };
 		4E1AD77617AC893954D9A3D7 /* EMS-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4E1ADCA4A8B28565D66D9816 /* EMS-Config.plist */; };
-		4E1ADC3468CFC054FD549975 /* ChangeLog in Resources */ = {isa = PBXBuildFile; fileRef = 4E1ADFF5906ECB18F85E943C /* ChangeLog */; };
 		4E1ADE290D991D1633B27066 /* EMSSpeakersRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1AD7801B1EF0B9E87AAF57 /* EMSSpeakersRetriever.m */; };
 		4E1ADFF1BCEBD89ABF3ACAE4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4E1AD0EE5411335585333A2F /* README.md */; };
 		5A4160A1A9308B14EA4C85D8 /* EMSTestSpeakersParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A416D9FB7C232AAE3CE8518 /* EMSTestSpeakersParser.m */; };
@@ -75,7 +44,6 @@
 		5A416373BE23A1920C51ED23 /* speakers.json in Resources */ = {isa = PBXBuildFile; fileRef = 5A416FF3FE1C13CF6A368C9B /* speakers.json */; };
 		5A41664B5785031931F6E8F6 /* rooms.json in Resources */ = {isa = PBXBuildFile; fileRef = 5A4163F46F3439C519558165 /* rooms.json */; };
 		5A4166E6F45437C6545E3C4A /* TintButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4163968458233F329A569D /* TintButton.swift */; };
-		5A41688B322BF8E59FBF4F3E /* TintButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4163968458233F329A569D /* TintButton.swift */; };
 		5A41693E03F65F0A8006386F /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = 5A4161A69C9115F0CFF36204 /* events.json */; };
 		5A41697BB085BA29489DD9E6 /* sessions.json in Resources */ = {isa = PBXBuildFile; fileRef = 5A416D72DD69483C5D094AC3 /* sessions.json */; };
 		5A4169D2EECA2B8CFBD4B2A1 /* EMSTestConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4167DAA06AD9CEFB3ADC81 /* EMSTestConfig.m */; };
@@ -83,20 +51,14 @@
 		5A416DF1AD8C8B5C2B8D705A /* root.json in Resources */ = {isa = PBXBuildFile; fileRef = 5A4165BC94D7E35DD7BA0550 /* root.json */; };
 		5A416EE92A3DE4AF00CE90DF /* EMSTestSessionsParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A41651D424876FC83F85EC5 /* EMSTestSessionsParser.m */; };
 		5C193EEAF470EB18E4986DD2 /* Pods_EMS_JavaZone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE12C77EEF62022C1BC8A86B /* Pods_EMS_JavaZone.framework */; };
-		5EE3638024EEB1625A0FDEB8 /* Pods_EMS_flatMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8367441AC2EF46FB3BF90A9A /* Pods_EMS_flatMap.framework */; };
-		72A8D23A0F61EBA5DD99D33D /* NSURLResponse+EMSExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 72A8DE57C7743D16672B2213 /* NSURLResponse+EMSExtensions.m */; };
 		72A8D4AB9F0401AEED460AE7 /* NSURLResponse+EMSExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 72A8DE57C7743D16672B2213 /* NSURLResponse+EMSExtensions.m */; };
 		8322B32D1B4681DE008DE85B /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8322B32C1B4681DE008DE85B /* Rating.swift */; };
-		8322B32E1B4681DE008DE85B /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8322B32C1B4681DE008DE85B /* Rating.swift */; };
 		832764F01CDA241B00F26494 /* EMSCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 832764E81CDA241B00F26494 /* EMSCoreDataModel.xcdatamodeld */; };
 		832764F91CDA299D00F26494 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6CE17685885009077D3 /* InfoPlist.strings */; };
 		833EF2DB1774E49F005E24A3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */; };
 		835263D21B45195F00ED97D7 /* RatingApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835263D11B45195F00ED97D7 /* RatingApi.swift */; };
 		835D903E1B46737C0038FA3E /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835D903D1B46737C0038FA3E /* RatingViewController.swift */; };
-		835D903F1B46737C0038FA3E /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835D903D1B46737C0038FA3E /* RatingViewController.swift */; };
-		835D90401B4674240038FA3E /* RatingApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835263D11B45195F00ED97D7 /* RatingApi.swift */; };
 		835D90421B4675960038FA3E /* RatingViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835D90411B4675960038FA3E /* RatingViewCell.swift */; };
-		835D90431B4675960038FA3E /* RatingViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835D90411B4675960038FA3E /* RatingViewCell.swift */; };
 		836331321770DD2B000F8D95 /* EMSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836331311770DD2B000F8D95 /* EMSSearchViewController.m */; };
 		837F68621A80CE2600AC7C97 /* EMSTestEventsParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 837F68611A80CE2600AC7C97 /* EMSTestEventsParser.m */; };
 		837F68641A80E3BC00AC7C97 /* slots.json in Resources */ = {isa = PBXBuildFile; fileRef = 837F68631A80E3BC00AC7C97 /* slots.json */; };
@@ -107,34 +69,20 @@
 		839BD66C176F9BD400900712 /* EMSSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD659176F9BD400900712 /* EMSSettingsViewController.m */; };
 		83B24CC61B45213B00AA41AD /* TestRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B24CC51B45213B00AA41AD /* TestRating.swift */; };
 		83D5CBA417749EEA00527620 /* EMSFeatureConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */; };
-		83E9AFDB1CE0803D008D1415 /* EMSCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 832764E81CDA241B00F26494 /* EMSCoreDataModel.xcdatamodeld */; };
 		83E9AFDD1CE08D60008D1415 /* EMSConference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFDC1CE08D60008D1415 /* EMSConference.swift */; };
-		83E9AFDE1CE08D60008D1415 /* EMSConference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFDC1CE08D60008D1415 /* EMSConference.swift */; };
 		83E9AFE01CE09162008D1415 /* EMSRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFDF1CE09162008D1415 /* EMSRoom.swift */; };
-		83E9AFE11CE09162008D1415 /* EMSRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFDF1CE09162008D1415 /* EMSRoom.swift */; };
 		83E9AFE31CE091BC008D1415 /* EMSSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFE21CE091BC008D1415 /* EMSSession.swift */; };
-		83E9AFE41CE091BC008D1415 /* EMSSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFE21CE091BC008D1415 /* EMSSession.swift */; };
 		83E9AFE61CE09428008D1415 /* EMSSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFE51CE09428008D1415 /* EMSSlot.swift */; };
-		83E9AFE71CE09428008D1415 /* EMSSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFE51CE09428008D1415 /* EMSSlot.swift */; };
 		83E9AFE91CE09541008D1415 /* EMSSpeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFE81CE09541008D1415 /* EMSSpeaker.swift */; };
-		83E9AFEA1CE09541008D1415 /* EMSSpeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFE81CE09541008D1415 /* EMSSpeaker.swift */; };
 		83E9AFEE1CE09F08008D1415 /* EMSEventsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFED1CE09F08008D1415 /* EMSEventsParser.swift */; };
-		83E9AFEF1CE09F08008D1415 /* EMSEventsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFED1CE09F08008D1415 /* EMSEventsParser.swift */; };
 		83E9AFF11CE0B56F008D1415 /* EMSSlotsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFF01CE0B56F008D1415 /* EMSSlotsParser.swift */; };
-		83E9AFF21CE0B56F008D1415 /* EMSSlotsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFF01CE0B56F008D1415 /* EMSSlotsParser.swift */; };
 		83E9AFF41CE0B97D008D1415 /* EMSRoomsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFF31CE0B97D008D1415 /* EMSRoomsParser.swift */; };
-		83E9AFF51CE0B97D008D1415 /* EMSRoomsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFF31CE0B97D008D1415 /* EMSRoomsParser.swift */; };
 		83E9AFF71CE0BA70008D1415 /* EMSSpeakersParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFF61CE0BA70008D1415 /* EMSSpeakersParser.swift */; };
-		83E9AFF81CE0BA70008D1415 /* EMSSpeakersParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFF61CE0BA70008D1415 /* EMSSpeakersParser.swift */; };
 		83E9AFFA1CE0BC14008D1415 /* EMSRootParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFF91CE0BC14008D1415 /* EMSRootParser.swift */; };
-		83E9AFFB1CE0BC14008D1415 /* EMSRootParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFF91CE0BC14008D1415 /* EMSRootParser.swift */; };
 		83E9AFFD1CE0BE0D008D1415 /* EMSSessionsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFFC1CE0BE0D008D1415 /* EMSSessionsParser.swift */; };
-		83E9AFFE1CE0BE0D008D1415 /* EMSSessionsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFFC1CE0BE0D008D1415 /* EMSSessionsParser.swift */; };
 		83EBB1691CD20D0D00F381A8 /* CommentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB1681CD20D0D00F381A8 /* CommentViewCell.swift */; };
-		83EBB16A1CD20D1500F381A8 /* CommentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB1681CD20D0D00F381A8 /* CommentViewCell.swift */; };
 		83EBB16D1CD2148E00F381A8 /* AddCommentsToRating.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB16C1CD2148E00F381A8 /* AddCommentsToRating.xcmappingmodel */; };
 		83FE6CF21CD9F7F00069CF7A /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15A735D119BDB7F5001AAC7C /* EMS-Keys.plist */; };
-		83FE6CF31CD9F7F70069CF7A /* EMS-Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA74604119A42A3600E24D04 /* EMS-Keys.plist */; };
 		83FE6CF51CD9FAD00069CF7A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 83FE6CF41CD9FAD00069CF7A /* libz.tbd */; };
 		83FE6CF71CD9FAE50069CF7A /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 83FE6CF61CD9FAE50069CF7A /* libstdc++.tbd */; };
 		D8D8519C847F2BA51BF235FF /* Pods_EMS_JavaZone_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8079FC83F185C0EC188CD07 /* Pods_EMS_JavaZone_Tests.framework */; };
@@ -142,7 +90,6 @@
 		EA09B83B1BC191780053E3BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA09B83D1BC191780053E3BB /* InfoPlist.strings */; };
 		EA09B83F1BC1E03D0053E3BB /* HairLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA09B83E1BC1E03D0053E3BB /* HairLineView.swift */; };
 		EA11338719A7A880008D000A /* EMSLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */; };
-		EA11338819A7A880008D000A /* EMSLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA11338619A7A880008D000A /* EMSLocalNotificationManager.m */; };
 		EA3A02DD1BBF2322006104F2 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3A02DC1BBF2322006104F2 /* StarView.swift */; };
 		EA461F441BBF8926000998AC /* EmsDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F431BBF8926000998AC /* EmsDescriptionTableViewCell.swift */; };
 		EA461F461BBF9A40000998AC /* TypeLabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F451BBF9A40000998AC /* TypeLabelCollectionViewCell.swift */; };
@@ -150,39 +97,18 @@
 		EA461F4A1BC04CDA000998AC /* ActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F491BC04CDA000998AC /* ActionTableViewCell.swift */; };
 		EA6132BC193FC35B000F54DC /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
 		EA81CDDE19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = EA81CDDD19AF8F0400FE43A2 /* EMSConferenceRetriever.m */; };
-		EA81CDDF19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = EA81CDDD19AF8F0400FE43A2 /* EMSConferenceRetriever.m */; };
-		EA8F2C831944CCB7002EAE1F /* EMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6132BB193FC35B000F54DC /* EMSConfig.m */; };
 		EA9ACCBD19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */; };
-		EA9ACCBE19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9ACCBC19A9764500D369C6 /* EMSSessionTitleTableViewCell.m */; };
 		EAA965321BB9BAC400BEB749 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965311BB9BAC400BEB749 /* Settings.storyboard */; };
-		EAA965331BB9BAC400BEB749 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965311BB9BAC400BEB749 /* Settings.storyboard */; };
 		EAA965361BB9BB8900BEB749 /* Filter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965341BB9BB8900BEB749 /* Filter.storyboard */; };
-		EAA965371BB9BB8900BEB749 /* Filter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965341BB9BB8900BEB749 /* Filter.storyboard */; };
 		EAA965391BB9C1C600BEB749 /* Detail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965381BB9C1C600BEB749 /* Detail.storyboard */; };
-		EAA9653A1BB9C1C600BEB749 /* Detail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA965381BB9C1C600BEB749 /* Detail.storyboard */; };
 		EACD33EC1BBC4FF60060C28E /* TypeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACD33EB1BBC4FF60060C28E /* TypeLabel.swift */; };
 		EACD33EE1BBC810D0060C28E /* SessionLevelLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACD33ED1BBC810D0060C28E /* SessionLevelLineView.swift */; };
 		EAE2CF5019A934B3002F44FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6E017685885009077D3 /* Main.storyboard */; };
-		EAE2CF5219A934DD002F44FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6E017685885009077D3 /* Main.storyboard */; };
 		EAE4330819A52F1C002C3EBA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAE4330619A52F1C002C3EBA /* Localizable.strings */; };
-		EAE4330919A52F1C002C3EBA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAE4330619A52F1C002C3EBA /* Localizable.strings */; };
 		EAE4330B19A52F75002C3EBA /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = EAE4330D19A52F75002C3EBA /* about.html */; };
-		EAE4330F19A52FA5002C3EBA /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = EAE4331119A52FA5002C3EBA /* about.html */; };
 		EAE809911BC48C8600EAA446 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAE809901BC48C8600EAA446 /* Launch Screen.storyboard */; };
-		EAE809951BC4941B00EAA446 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAE809901BC48C8600EAA446 /* Launch Screen.storyboard */; };
-		EAE8099C1BC494B500EAA446 /* ActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F491BC04CDA000998AC /* ActionTableViewCell.swift */; };
-		EAE8099D1BC494B800EAA446 /* HairLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA09B83E1BC1E03D0053E3BB /* HairLineView.swift */; };
-		EAE8099E1BC494BC00EAA446 /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F471BBF9CD5000998AC /* CategoriesTableViewCell.swift */; };
-		EAE8099F1BC494BF00EAA446 /* TypeLabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F451BBF9A40000998AC /* TypeLabelCollectionViewCell.swift */; };
-		EAE809A01BC494C700EAA446 /* EmsDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA461F431BBF8926000998AC /* EmsDescriptionTableViewCell.swift */; };
-		EAE809A11BC494CB00EAA446 /* TypeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACD33EB1BBC4FF60060C28E /* TypeLabel.swift */; };
-		EAE809A21BC494CE00EAA446 /* SessionLevelLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACD33ED1BBC810D0060C28E /* SessionLevelLineView.swift */; };
-		EAE809A31BC495D500EAA446 /* Rating.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA09B82A1BC084D70053E3BB /* Rating.storyboard */; };
-		EAE809A41BC495F200EAA446 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3A02DC1BBF2322006104F2 /* StarView.swift */; };
 		F30A8CDB192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */ = {isa = PBXBuildFile; fileRef = F30A8CDA192B42FF0066DFD9 /* EMSDetailViewRow.m */; };
-		F30A8CDC192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */ = {isa = PBXBuildFile; fileRef = F30A8CDA192B42FF0066DFD9 /* EMSDetailViewRow.m */; };
 		F30A8CE5192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F30A8CE4192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m */; };
-		F30A8CE6192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F30A8CE4192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m */; };
 		F31862371770340200292371 /* EMSDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F31862361770340200292371 /* EMSDetailViewController.m */; };
 		F31862421770501800292371 /* EMSSessionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F31862411770501800292371 /* EMSSessionCell.m */; };
 		F354B0BA1781AA1D007F7B01 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = F354B0B81781AA1D007F7B01 /* iTunesArtwork.png */; };
@@ -195,32 +121,7 @@
 		F37953CB17797E41000B7CDD /* EMSAdvancedSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = F37953CA17797E41000B7CDD /* EMSAdvancedSearch.m */; };
 		F3939E50176887090078C709 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3939E4F176887090078C709 /* CoreData.framework */; };
 		F3939E611769C3CE0078C709 /* EMSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E601769C3CD0078C709 /* EMSModel.m */; };
-		F394C97117F0173900FAFBD4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6D117685885009077D3 /* main.m */; };
-		F394C97217F0173900FAFBD4 /* EMSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F35BB6D517685885009077D3 /* EMSAppDelegate.m */; };
-		F394C97417F0173900FAFBD4 /* EMSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F3939E601769C3CD0078C709 /* EMSModel.m */; };
-		F394C97717F0173900FAFBD4 /* EMSDateConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD640176F9BD400900712 /* EMSDateConverter.m */; };
-		F394C97817F0173900FAFBD4 /* EMSRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD642176F9BD400900712 /* EMSRetriever.m */; };
-		F394C97F17F0173900FAFBD4 /* EMSMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD657176F9BD400900712 /* EMSMainViewController.m */; };
-		F394C98017F0173900FAFBD4 /* EMSSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD659176F9BD400900712 /* EMSSettingsViewController.m */; };
-		F394C98317F0173900FAFBD4 /* EMSDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F31862361770340200292371 /* EMSDetailViewController.m */; };
-		F394C98417F0173900FAFBD4 /* EMSSessionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F31862411770501800292371 /* EMSSessionCell.m */; };
-		F394C98617F0173900FAFBD4 /* EMSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836331311770DD2B000F8D95 /* EMSSearchViewController.m */; };
-		F394C99017F0173900FAFBD4 /* EMSFeatureConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */; };
-		F394C99117F0173900FAFBD4 /* EMSAdvancedSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = F37953CA17797E41000B7CDD /* EMSAdvancedSearch.m */; };
-		F394C99317F0173900FAFBD4 /* AddVideoLinkMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F3CEA3CE17B224170092776F /* AddVideoLinkMapping.xcmappingmodel */; };
-		F394C99617F0173900FAFBD4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833EF2DA1774E49F005E24A3 /* SystemConfiguration.framework */; };
-		F394C99717F0173900FAFBD4 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3E601E01772F7EC000673AE /* EventKit.framework */; };
-		F394C99817F0173900FAFBD4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3939E4F176887090078C709 /* CoreData.framework */; };
-		F394C99917F0173900FAFBD4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB6C517685885009077D3 /* UIKit.framework */; };
-		F394C99A17F0173900FAFBD4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB6C717685885009077D3 /* Foundation.framework */; };
-		F394C99B17F0173900FAFBD4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB6C917685885009077D3 /* CoreGraphics.framework */; };
-		F394C9A017F0173900FAFBD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F35BB6CE17685885009077D3 /* InfoPlist.strings */; };
-		F394C9B517F0173900FAFBD4 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = F3D5E2C31770946100888A7E /* style.css */; };
-		F394C9CE17F0173900FAFBD4 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = F354B0B81781AA1D007F7B01 /* iTunesArtwork.png */; };
-		F394C9CF17F0173900FAFBD4 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F354B0B91781AA1D007F7B01 /* iTunesArtwork@2x.png */; };
-		F394C9E717F01C0300FAFBD4 /* EMS-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = F394C9E617F01C0300FAFBD4 /* EMS-Config.plist */; };
 		F3AABDE919AB16C6003D1D1C /* AddTimestampToSpeaker.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F3AABDE819AB16C5003D1D1C /* AddTimestampToSpeaker.xcmappingmodel */; };
-		F3AABDEA19AB16C6003D1D1C /* AddTimestampToSpeaker.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F3AABDE819AB16C5003D1D1C /* AddTimestampToSpeaker.xcmappingmodel */; };
 		F3CEA3CF17B224170092776F /* AddVideoLinkMapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F3CEA3CE17B224170092776F /* AddVideoLinkMapping.xcmappingmodel */; };
 		F3D5E2C41770946100888A7E /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = F3D5E2C31770946100888A7E /* style.css */; };
 		F3E601E11772F7EC000673AE /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3E601E01772F7EC000673AE /* EventKit.framework */; };
@@ -271,7 +172,6 @@
 		15E1310D1CDA3D6200957E20 /* EMSSearchViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSearchViewDelegate.h; sourceTree = "<group>"; };
 		3DC5ABAEF4FD246126D1616A /* Pods-EMS-JavaZone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMS-JavaZone.release.xcconfig"; path = "Pods/Target Support Files/Pods-EMS-JavaZone/Pods-EMS-JavaZone.release.xcconfig"; sourceTree = "<group>"; };
 		4E1AD00D04FA079A848CDAE5 /* JavaZone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "JavaZone-Info.plist"; sourceTree = "<group>"; };
-		4E1AD0E07B70D148B519768B /* flatMap-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "flatMap-Info.plist"; sourceTree = "<group>"; };
 		4E1AD0EE5411335585333A2F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; path = README.md; sourceTree = "<group>"; };
 		4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSTracking.m; sourceTree = "<group>"; };
 		4E1AD432868D01852ACE1A04 /* EMSSpeakersRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSpeakersRetriever.h; sourceTree = "<group>"; };
@@ -346,10 +246,7 @@
 		83EBB16C1CD2148E00F381A8 /* AddCommentsToRating.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = AddCommentsToRating.xcmappingmodel; sourceTree = "<group>"; };
 		83FE6CF41CD9FAD00069CF7A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		83FE6CF61CD9FAE50069CF7A /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
-		8F1AA11BD95D4B5E646161EC /* Pods-EMS-flatMap.debug run crashlytics.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMS-flatMap.debug run crashlytics.xcconfig"; path = "Pods/Target Support Files/Pods-EMS-flatMap/Pods-EMS-flatMap.debug run crashlytics.xcconfig"; sourceTree = "<group>"; };
 		A4647E03BE9A10F278B9CB8A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		B2E679A6D00ED77304E9D169 /* Pods-EMS-flatMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMS-flatMap.release.xcconfig"; path = "Pods/Target Support Files/Pods-EMS-flatMap/Pods-EMS-flatMap.release.xcconfig"; sourceTree = "<group>"; };
-		B5FCF5C7C89EFE81437DDE43 /* Pods-EMS-flatMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMS-flatMap.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EMS-flatMap/Pods-EMS-flatMap.debug.xcconfig"; sourceTree = "<group>"; };
 		CE12C77EEF62022C1BC8A86B /* Pods_EMS_JavaZone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EMS_JavaZone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1581B6A0B2740B18088FCDA /* Pods.debug run crashlytics.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods.debug run crashlytics.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.debug run crashlytics.xcconfig"; sourceTree = "<group>"; };
 		D3C112D7A724E7C64F48F928 /* Pods-EMS-JavaZone Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMS-JavaZone Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EMS-JavaZone Tests/Pods-EMS-JavaZone Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -371,7 +268,6 @@
 		EA461F491BC04CDA000998AC /* ActionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionTableViewCell.swift; sourceTree = "<group>"; };
 		EA6132BA193FC35B000F54DC /* EMSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConfig.h; sourceTree = "<group>"; };
 		EA6132BB193FC35B000F54DC /* EMSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConfig.m; sourceTree = "<group>"; };
-		EA74604119A42A3600E24D04 /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
 		EA81CDDC19AF8F0400FE43A2 /* EMSConferenceRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSConferenceRetriever.h; sourceTree = "<group>"; };
 		EA81CDDD19AF8F0400FE43A2 /* EMSConferenceRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSConferenceRetriever.m; sourceTree = "<group>"; };
 		EA9ACCBB19A9764500D369C6 /* EMSSessionTitleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSessionTitleTableViewCell.h; sourceTree = "<group>"; };
@@ -384,8 +280,6 @@
 		EAE4330719A52F1C002C3EBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EAE4330C19A52F75002C3EBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = en; path = en.lproj/about.html; sourceTree = "<group>"; };
 		EAE4330E19A52F7C002C3EBA /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = nb; path = nb.lproj/about.html; sourceTree = "<group>"; };
-		EAE4331019A52FA5002C3EBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = en; path = en.lproj/about.html; sourceTree = "<group>"; };
-		EAE4331319A53115002C3EBA /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = nb; path = nb.lproj/about.html; sourceTree = "<group>"; };
 		EAE809901BC48C8600EAA446 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "../Launch Screen.storyboard"; sourceTree = "<group>"; };
 		F30A8CD9192B42FF0066DFD9 /* EMSDetailViewRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSDetailViewRow.h; sourceTree = "<group>"; };
 		F30A8CDA192B42FF0066DFD9 /* EMSDetailViewRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSDetailViewRow.m; sourceTree = "<group>"; };
@@ -410,8 +304,6 @@
 		F3939E4F176887090078C709 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		F3939E5F1769C3CD0078C709 /* EMSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSModel.h; sourceTree = "<group>"; };
 		F3939E601769C3CD0078C709 /* EMSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSModel.m; sourceTree = "<group>"; };
-		F394C9DE17F0173900FAFBD4 /* flatMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = flatMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F394C9E617F01C0300FAFBD4 /* EMS-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Config.plist"; sourceTree = "<group>"; };
 		F3AABDE819AB16C5003D1D1C /* AddTimestampToSpeaker.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = AddTimestampToSpeaker.xcmappingmodel; sourceTree = "<group>"; };
 		F3CEA3CE17B224170092776F /* AddVideoLinkMapping.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = AddVideoLinkMapping.xcmappingmodel; sourceTree = "<group>"; };
 		F3D5E2C31770946100888A7E /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
@@ -441,20 +333,6 @@
 				F35BB6C817685885009077D3 /* Foundation.framework in Frameworks */,
 				F35BB6CA17685885009077D3 /* CoreGraphics.framework in Frameworks */,
 				5C193EEAF470EB18E4986DD2 /* Pods_EMS_JavaZone.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F394C99517F0173900FAFBD4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F394C99617F0173900FAFBD4 /* SystemConfiguration.framework in Frameworks */,
-				F394C99717F0173900FAFBD4 /* EventKit.framework in Frameworks */,
-				F394C99817F0173900FAFBD4 /* CoreData.framework in Frameworks */,
-				F394C99917F0173900FAFBD4 /* UIKit.framework in Frameworks */,
-				F394C99A17F0173900FAFBD4 /* Foundation.framework in Frameworks */,
-				F394C99B17F0173900FAFBD4 /* CoreGraphics.framework in Frameworks */,
-				5EE3638024EEB1625A0FDEB8 /* Pods_EMS_flatMap.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,9 +416,6 @@
 				FAF1608CEBD0C97C536E166C /* Pods-EMS-JavaZone.debug.xcconfig */,
 				157476A5E7E3A98238DDE81A /* Pods-EMS-JavaZone.debug run crashlytics.xcconfig */,
 				3DC5ABAEF4FD246126D1616A /* Pods-EMS-JavaZone.release.xcconfig */,
-				B5FCF5C7C89EFE81437DDE43 /* Pods-EMS-flatMap.debug.xcconfig */,
-				8F1AA11BD95D4B5E646161EC /* Pods-EMS-flatMap.debug run crashlytics.xcconfig */,
-				B2E679A6D00ED77304E9D169 /* Pods-EMS-flatMap.release.xcconfig */,
 				DDCCC1E48A7E4158EE1828C2 /* Pods-EMS-JavaZone Tests.debug.xcconfig */,
 				10FEEBB7F77D543DBDC3DA6F /* Pods-EMS-JavaZone Tests.debug run crashlytics.xcconfig */,
 				D3C112D7A724E7C64F48F928 /* Pods-EMS-JavaZone Tests.release.xcconfig */,
@@ -551,7 +426,6 @@
 		832764E61CDA1FF200F26494 /* Applications */ = {
 			isa = PBXGroup;
 			children = (
-				F394C9E117F019F600FAFBD4 /* flatMap */,
 				F394C9E017F019E400FAFBD4 /* JavaZone */,
 			);
 			name = Applications;
@@ -752,7 +626,6 @@
 				837F68561A80CC8400AC7C97 /* JavaZone Tests */,
 				F35BB6C417685885009077D3 /* Frameworks */,
 				EA1E8F6317E782E8000F2DB7 /* JavaZone.app */,
-				F394C9DE17F0173900FAFBD4 /* flatMap.app */,
 				4E1AD0EE5411335585333A2F /* README.md */,
 				4E1ADFF5906ECB18F85E943C /* ChangeLog */,
 				648F22F76B1C8A1B0290C7F4 /* Pods */,
@@ -823,17 +696,6 @@
 			path = JavaZone;
 			sourceTree = "<group>";
 		};
-		F394C9E117F019F600FAFBD4 /* flatMap */ = {
-			isa = PBXGroup;
-			children = (
-				EAE4331119A52FA5002C3EBA /* about.html */,
-				F394C9E617F01C0300FAFBD4 /* EMS-Config.plist */,
-				4E1AD0E07B70D148B519768B /* flatMap-Info.plist */,
-				EA74604119A42A3600E24D04 /* EMS-Keys.plist */,
-			);
-			path = flatMap;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -878,27 +740,6 @@
 			productReference = EA1E8F6317E782E8000F2DB7 /* JavaZone.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F394C96E17F0173900FAFBD4 /* flatMap */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F394C9DA17F0173900FAFBD4 /* Build configuration list for PBXNativeTarget "flatMap" */;
-			buildPhases = (
-				F394C96F17F0173900FAFBD4 /* 📦 Check Pods Manifest.lock */,
-				F394C97017F0173900FAFBD4 /* Sources */,
-				F394C99517F0173900FAFBD4 /* Frameworks */,
-				F394C99F17F0173900FAFBD4 /* Resources */,
-				F394C9D817F0173900FAFBD4 /* ShellScript */,
-				F394C9D917F0173900FAFBD4 /* 📦 Copy Pods Resources */,
-				2E885FB0635FA8E4BF26BA58 /* 📦 Embed Pods Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = flatMap;
-			productName = EMS;
-			productReference = F394C9DE17F0173900FAFBD4 /* flatMap.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -927,9 +768,6 @@
 							};
 						};
 					};
-					F394C96E17F0173900FAFBD4 = {
-						DevelopmentTeam = 8WE6452SWH;
-					};
 				};
 			};
 			buildConfigurationList = F35BB6BD17685885009077D3 /* Build configuration list for PBXProject "EMS" */;
@@ -947,7 +785,6 @@
 			projectRoot = "";
 			targets = (
 				F35BB6C117685885009077D3 /* JavaZone */,
-				F394C96E17F0173900FAFBD4 /* flatMap */,
 				837F68541A80CC8400AC7C97 /* JavaZone Tests */,
 			);
 		};
@@ -992,30 +829,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F394C99F17F0173900FAFBD4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				EAE2CF5219A934DD002F44FC /* Main.storyboard in Resources */,
-				F394C9A017F0173900FAFBD4 /* InfoPlist.strings in Resources */,
-				EAE809951BC4941B00EAA446 /* Launch Screen.storyboard in Resources */,
-				F394C9B517F0173900FAFBD4 /* style.css in Resources */,
-				EAE4330F19A52FA5002C3EBA /* about.html in Resources */,
-				F394C9E717F01C0300FAFBD4 /* EMS-Config.plist in Resources */,
-				EAE809A31BC495D500EAA446 /* Rating.storyboard in Resources */,
-				EAE4330919A52F1C002C3EBA /* Localizable.strings in Resources */,
-				83FE6CF31CD9F7F70069CF7A /* EMS-Keys.plist in Resources */,
-				EAA9653A1BB9C1C600BEB749 /* Detail.storyboard in Resources */,
-				EAA965371BB9BB8900BEB749 /* Filter.storyboard in Resources */,
-				15FD80E21CE0E5280073B1DA /* Images.xcassets in Resources */,
-				F394C9CE17F0173900FAFBD4 /* iTunesArtwork.png in Resources */,
-				F394C9CF17F0173900FAFBD4 /* iTunesArtwork@2x.png in Resources */,
-				4E1AD52D6C458D6D36CECFBA /* README.md in Resources */,
-				EAA965331BB9BAC400BEB749 /* Settings.storyboard in Resources */,
-				4E1ADC3468CFC054FD549975 /* ChangeLog in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1032,21 +845,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EMS-JavaZone/Pods-EMS-JavaZone-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		2E885FB0635FA8E4BF26BA58 /* 📦 Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EMS-flatMap/Pods-EMS-flatMap-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4A77BC0944B9460287F79FE8 /* 📦 Copy Pods Resources */ = {
@@ -1107,49 +905,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		F394C96F17F0173900FAFBD4 /* 📦 Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		F394C9D817F0173900FAFBD4 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ \"${EMS_RUN_CRASHLYTICS}\" == \"1\" ]\nthen\n./Crashlytics.framework/run 76243485dba0d4938b2917f78d8106a6ff1d0d0b\nfi";
-		};
-		F394C9D917F0173900FAFBD4 /* 📦 Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EMS-flatMap/Pods-EMS-flatMap-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FDE1AEE00420C2B21E8C87F5 /* 📦 Copy Pods Resources */ = {
@@ -1268,88 +1023,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F394C97017F0173900FAFBD4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F394C97117F0173900FAFBD4 /* main.m in Sources */,
-				F394C97217F0173900FAFBD4 /* EMSAppDelegate.m in Sources */,
-				F394C97417F0173900FAFBD4 /* EMSModel.m in Sources */,
-				83E9AFE71CE09428008D1415 /* EMSSlot.swift in Sources */,
-				83E9AFDE1CE08D60008D1415 /* EMSConference.swift in Sources */,
-				1556C4A01CDA754600D9B175 /* Slot+CoreDataProperties.swift in Sources */,
-				15204C2018DB84070062874A /* RemoveSlugMapping.xcmappingmodel in Sources */,
-				F394C97717F0173900FAFBD4 /* EMSDateConverter.m in Sources */,
-				83E9AFFB1CE0BC14008D1415 /* EMSRootParser.swift in Sources */,
-				1556C49E1CDA754600D9B175 /* ConferenceLevel.swift in Sources */,
-				F394C97817F0173900FAFBD4 /* EMSRetriever.m in Sources */,
-				83E9AFF21CE0B56F008D1415 /* EMSSlotsParser.swift in Sources */,
-				1556C48A1CDA754600D9B175 /* Conference+CoreDataProperties.swift in Sources */,
-				83EBB16A1CD20D1500F381A8 /* CommentViewCell.swift in Sources */,
-				EAE8099F1BC494BF00EAA446 /* TypeLabelCollectionViewCell.swift in Sources */,
-				1556C4AD1CDA8A3E00D9B175 /* AboutViewController.swift in Sources */,
-				EAE809A11BC494CB00EAA446 /* TypeLabel.swift in Sources */,
-				F394C97F17F0173900FAFBD4 /* EMSMainViewController.m in Sources */,
-				F394C98017F0173900FAFBD4 /* EMSSettingsViewController.m in Sources */,
-				1556C4A21CDA754600D9B175 /* Slot.swift in Sources */,
-				1556C4841CDA754600D9B175 /* Session.swift in Sources */,
-				1556C4A41CDA754600D9B175 /* Speaker+CoreDataProperties.swift in Sources */,
-				83E9AFF81CE0BA70008D1415 /* EMSSpeakersParser.swift in Sources */,
-				1556C4941CDA754600D9B175 /* ConferenceType.swift in Sources */,
-				EA11338819A7A880008D000A /* EMSLocalNotificationManager.m in Sources */,
-				1556C48E1CDA754600D9B175 /* ConferenceKeyword+CoreDataProperties.swift in Sources */,
-				15806D081B4D75C400EFFB47 /* NSDate+EMSExtensions.m in Sources */,
-				F394C98317F0173900FAFBD4 /* EMSDetailViewController.m in Sources */,
-				835D903F1B46737C0038FA3E /* RatingViewController.swift in Sources */,
-				F394C98417F0173900FAFBD4 /* EMSSessionCell.m in Sources */,
-				1556C4AA1CDA754600D9B175 /* SpeakerPic.swift in Sources */,
-				835D90431B4675960038FA3E /* RatingViewCell.swift in Sources */,
-				1556C4981CDA754600D9B175 /* Keyword.swift in Sources */,
-				83E9AFEA1CE09541008D1415 /* EMSSpeaker.swift in Sources */,
-				8322B32E1B4681DE008DE85B /* Rating.swift in Sources */,
-				EAE809A41BC495F200EAA446 /* StarView.swift in Sources */,
-				1556C4B31CDA957D00D9B175 /* ConferenceDetailViewController.swift in Sources */,
-				83E9AFEF1CE09F08008D1415 /* EMSEventsParser.swift in Sources */,
-				83E9AFFE1CE0BE0D008D1415 /* EMSSessionsParser.swift in Sources */,
-				83E9AFE41CE091BC008D1415 /* EMSSession.swift in Sources */,
-				EAE8099D1BC494B800EAA446 /* HairLineView.swift in Sources */,
-				F30A8CE6192B5BE00066DFD9 /* EMSTopAlignCellTableViewCell.m in Sources */,
-				F394C98617F0173900FAFBD4 /* EMSSearchViewController.m in Sources */,
-				1556C4861CDA754600D9B175 /* Room+CoreDataProperties.swift in Sources */,
-				F3AABDEA19AB16C6003D1D1C /* AddTimestampToSpeaker.xcmappingmodel in Sources */,
-				15D284E51CDA5F6500FD3F52 /* DDCrashlyticsLogger.swift in Sources */,
-				EAE809A21BC494CE00EAA446 /* SessionLevelLineView.swift in Sources */,
-				F30A8CDC192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */,
-				1556C4961CDA754600D9B175 /* Keyword+CoreDataProperties.swift in Sources */,
-				835D90401B4674240038FA3E /* RatingApi.swift in Sources */,
-				EA8F2C831944CCB7002EAE1F /* EMSConfig.m in Sources */,
-				1556C4901CDA754600D9B175 /* ConferenceKeyword.swift in Sources */,
-				EA9ACCBE19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */,
-				1556C4881CDA754600D9B175 /* Room.swift in Sources */,
-				1556C4A81CDA754600D9B175 /* SpeakerPic+CoreDataProperties.swift in Sources */,
-				F394C99017F0173900FAFBD4 /* EMSFeatureConfig.m in Sources */,
-				F394C99117F0173900FAFBD4 /* EMSAdvancedSearch.m in Sources */,
-				1556C4821CDA754600D9B175 /* Session+CoreDataProperties.swift in Sources */,
-				EAE8099C1BC494B500EAA446 /* ActionTableViewCell.swift in Sources */,
-				EAE8099E1BC494BC00EAA446 /* CategoriesTableViewCell.swift in Sources */,
-				F394C99317F0173900FAFBD4 /* AddVideoLinkMapping.xcmappingmodel in Sources */,
-				1556C49A1CDA754600D9B175 /* Rating+CoreDataProperties.swift in Sources */,
-				4E1AD00E5B0570877570A148 /* EMSTracking.m in Sources */,
-				83E9AFDB1CE0803D008D1415 /* EMSCoreDataModel.xcdatamodeld in Sources */,
-				1556C4A61CDA754600D9B175 /* Speaker.swift in Sources */,
-				EA81CDDF19AF8F0400FE43A2 /* EMSConferenceRetriever.m in Sources */,
-				4E1AD032EC53C9E396CAD414 /* EMSSpeakersRetriever.m in Sources */,
-				72A8D23A0F61EBA5DD99D33D /* NSURLResponse+EMSExtensions.m in Sources */,
-				83E9AFE11CE09162008D1415 /* EMSRoom.swift in Sources */,
-				1556C48C1CDA754600D9B175 /* Conference.swift in Sources */,
-				EAE809A01BC494C700EAA446 /* EmsDescriptionTableViewCell.swift in Sources */,
-				5A41688B322BF8E59FBF4F3E /* TintButton.swift in Sources */,
-				83E9AFF51CE0B97D008D1415 /* EMSRoomsParser.swift in Sources */,
-				1556C49C1CDA754600D9B175 /* ConferenceLevel+CoreDataProperties.swift in Sources */,
-				1556C4921CDA754600D9B175 /* ConferenceType+CoreDataProperties.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1394,15 +1067,6 @@
 			children = (
 				EAE4330C19A52F75002C3EBA /* en */,
 				EAE4330E19A52F7C002C3EBA /* nb */,
-			);
-			name = about.html;
-			sourceTree = "<group>";
-		};
-		EAE4331119A52FA5002C3EBA /* about.html */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EAE4331019A52FA5002C3EBA /* en */,
-				EAE4331319A53115002C3EBA /* nb */,
 			);
 			name = about.html;
 			sourceTree = "<group>";
@@ -1677,83 +1341,6 @@
 			};
 			name = Release;
 		};
-		F394C9DB17F0173900FAFBD4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B5FCF5C7C89EFE81437DDE43 /* Pods-EMS-flatMap.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "flatMap - AppIcon";
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 23;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"COCOAPODS=1",
-					FM,
-				);
-				INFOPLIST_FILE = "flatMap/flatMap-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = net.chrissearle.ems.flatMap;
-				PRODUCT_MODULE_NAME = EMS;
-				PRODUCT_NAME = flatMap;
-				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "EMS-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				VERSIONING_SYSTEM = "apple-generic";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		F394C9DD17F0173900FAFBD4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B2E679A6D00ED77304E9D169 /* Pods-EMS-flatMap.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "flatMap - AppIcon";
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 23;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"COCOAPODS=1",
-					FM,
-				);
-				INFOPLIST_FILE = "flatMap/flatMap-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.chrissearle.ems.flatMap;
-				PRODUCT_MODULE_NAME = EMS;
-				PRODUCT_NAME = flatMap;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0C88122F-AAA1-4104-952D-FFAA4290D539";
-				SWIFT_OBJC_BRIDGING_HEADER = "EMS-Bridging-Header.h";
-				VERSIONING_SYSTEM = "apple-generic";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
 		F39861E819A1E621004DC41B /* Debug Run Crashlytics */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1859,45 +1446,6 @@
 			};
 			name = "Debug Run Crashlytics";
 		};
-		F39861EA19A1E621004DC41B /* Debug Run Crashlytics */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8F1AA11BD95D4B5E646161EC /* Pods-EMS-flatMap.debug run crashlytics.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "flatMap - AppIcon";
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 23;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "EMS/EMS-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"COCOAPODS=1",
-					FM,
-				);
-				INFOPLIST_FILE = "flatMap/flatMap-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = net.chrissearle.ems.flatMap;
-				PRODUCT_MODULE_NAME = EMS;
-				PRODUCT_NAME = flatMap;
-				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "EMS-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				VERSIONING_SYSTEM = "apple-generic";
-				WRAPPER_EXTENSION = app;
-			};
-			name = "Debug Run Crashlytics";
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1927,16 +1475,6 @@
 				F35BB6E917685885009077D3 /* Debug */,
 				F39861E919A1E621004DC41B /* Debug Run Crashlytics */,
 				F35BB6EA17685885009077D3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F394C9DA17F0173900FAFBD4 /* Build configuration list for PBXNativeTarget "flatMap" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F394C9DB17F0173900FAFBD4 /* Debug */,
-				F39861EA19A1E621004DC41B /* Debug Run Crashlytics */,
-				F394C9DD17F0173900FAFBD4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

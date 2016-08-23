@@ -5,7 +5,6 @@ EMS-redux client app for iOS.
 Currently used for
 
 * JavaZone
-* flatMap
 
 Can be used by anyone who is using EMS-redux or who can deliver the same Collection+JSON feed structure.
 
@@ -15,7 +14,7 @@ EMS-redux is provided by javaBin: https://github.com/javaBin/ems-redux
 
 ## Building
 
-The file EMS/EMS-Keys.plist is not provided. You will need to create this plist file. Use `EMS/Config/EMS-Keys.sample.plist` as a sample, and place your file in either `JavaZone/EMS-Keys.plist` or `/flatMap/EMS-Keys.plist`.
+The file EMS/EMS-Keys.plist is not provided. You will need to create this plist file. Use `EMS/Config/EMS-Keys.sample.plist` as a sample, and place your file in  the application directory - e.g. `JavaZone/EMS-Keys.plist`.
 
 The current keys it provides are:
 
