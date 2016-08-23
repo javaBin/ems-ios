@@ -212,7 +212,6 @@
 		836331301770DD2B000F8D95 /* EMSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSearchViewController.h; sourceTree = "<group>"; };
 		836331311770DD2B000F8D95 /* EMSSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSearchViewController.m; sourceTree = "<group>"; };
 		8363313B1770F06C000F8D95 /* EMSSearchViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EMSSearchViewDelegate.h; path = EMS/View/EMSSearchViewDelegate.h; sourceTree = "<group>"; };
-		8367441AC2EF46FB3BF90A9A /* Pods_EMS_flatMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EMS_flatMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		837F68551A80CC8400AC7C97 /* JavaZone Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "JavaZone Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		837F68581A80CC8400AC7C97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		837F68611A80CE2600AC7C97 /* EMSTestEventsParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSTestEventsParser.m; sourceTree = "<group>"; };
@@ -647,7 +646,6 @@
 				F35BB6C717685885009077D3 /* Foundation.framework */,
 				F35BB6C917685885009077D3 /* CoreGraphics.framework */,
 				CE12C77EEF62022C1BC8A86B /* Pods_EMS_JavaZone.framework */,
-				8367441AC2EF46FB3BF90A9A /* Pods_EMS_flatMap.framework */,
 				E8079FC83F185C0EC188CD07 /* Pods_EMS_JavaZone_Tests.framework */,
 			);
 			name = Frameworks;
