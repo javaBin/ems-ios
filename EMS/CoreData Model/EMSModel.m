@@ -947,24 +947,19 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
         [session setSlotName:[self getSlotNameForLightningSlot:session.slot forConference:conference withMaxDuration:maxDuration]];
     }];
 
-    if ((conference.start == nil || conference.end == nil) && conference.sessions.count > 0) {
-        DDLogVerbose(@"Setting conference dates from session dates for href %@", conference.href);
+    DDLogVerbose(@"Setting conference dates from session dates for href %@", conference.href);
 
-        NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"slot.start" ascending:YES];
-        NSArray *sorted = [self sessionsForPredicate:[NSPredicate predicateWithFormat:@"(format != %@ AND conference == %@)", @"workshop", conference] andSort:@[dateDescriptor]];
+    NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"slot.start" ascending:YES];
+    NSArray *sorted = [self sessionsForPredicate:[NSPredicate predicateWithFormat:@"(format != %@ AND conference == %@ AND slot != nil)", @"workshop", conference] andSort:@[dateDescriptor]];
 
-        if (conference.start == nil) {
-            Session *first = sorted[0];
-            DDLogVerbose(@"Setting conference start date from session for href %@ to %@", conference.href, first.slot.start);
-            conference.start = first.slot.start;
-        }
-        if (conference.end == nil) {
-            Session *last = [sorted lastObject];
-            DDLogVerbose(@"Setting conference end date from session for href %@ to %@", conference.href, last.slot.end);
-            conference.end = last.slot.end;
-        }
-    }
+    Session *first = sorted[0];
+    DDLogVerbose(@"Setting conference start date from session for href %@ to %@", conference.href, first.slot.start);
+    conference.start = first.slot.start;
 
+    Session *last = [sorted lastObject];
+    DDLogVerbose(@"Setting conference end date from session for href %@ to %@", conference.href, last.slot.end);
+    conference.end = last.slot.end;
+    
     DDLogVerbose(@"Need to delete conference metafields where none on session");
 
     // TODO - delete metafields
