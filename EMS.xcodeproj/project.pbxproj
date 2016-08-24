@@ -1246,7 +1246,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Chris Searle (3QT967G4GA)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				EMS_RUN_CRASHLYTICS = 1;
+				EMS_RUN_CRASHLYTICS = 0;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREFIX_HEADER = "EMS/Shared/EMS-Prefix.pch";
