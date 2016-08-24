@@ -43,11 +43,6 @@
     return NO;
 }
 
-+ (BOOL)isCrashlyticsEnabled {
-    NSDictionary *keyDict = [self keyDictionary];
-    return [keyDict[@"crashlytics-enabled"] boolValue];
-}
-
 + (BOOL)isGoogleAnalyticsEnabled {
     return ([self keyDictionary][@"google-analytics-tracking-id"] != nil);
 }

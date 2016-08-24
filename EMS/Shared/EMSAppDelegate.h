@@ -4,11 +4,10 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import <Crashlytics/Crashlytics.h>
 
 #import "EMSModel.h"
 
-@interface EMSAppDelegate : UIResponder <UIApplicationDelegate, CrashlyticsDelegate, UISplitViewControllerDelegate>
+@interface EMSAppDelegate : UIResponder <UIApplicationDelegate, UISplitViewControllerDelegate>
 
 @property(strong, nonatomic) UIWindow *window;
 

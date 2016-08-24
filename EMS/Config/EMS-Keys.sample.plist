@@ -4,7 +4,5 @@
 <dict>
 	<key>google-analytics-tracking-id</key>
 	<string>UA-YOUR_TRACKING_ID_HERE</string>
-	<key>crashlytics-enabled</key>
-	<false/>
 </dict>
 </plist>

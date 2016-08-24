@@ -18,7 +18,6 @@ The file EMS/EMS-Keys.plist is not provided. You will need to create this plist 
 
 The current keys it provides are:
 
-* crashlytics-api-key
 * google-analytics-tracking-id
 
 **DO NOT JUST COPY THE SAMPLE FILE!** It will use the placeholders as keys and things will break. If you do not have keys - create an empty plist file.
@@ -41,7 +40,3 @@ None of these are to be used on production builds.
 ## But I don't have the keys or accounts?
 
 For most things we'll detect that and not use them.
-
-The one that this currently doesn't work totally with is Crashlytics.
-
-To run Crashlytics in debug - you will need to change your scheme's build configuration from Debug to Debug Run Crashlytics.

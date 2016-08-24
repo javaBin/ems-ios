@@ -3,7 +3,6 @@
 //  EMSAppDelegate.m
 //
 
-#import <Fabric/Fabric.h>
 #import <Pushwoosh/PushNotificationManager.h>
 
 #import "EMS-Swift.h"
@@ -44,24 +43,9 @@ int networkCount = 0;
 }
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [DDLog addLogger:[DDASLLogger sharedInstance] withLevel:ddLogLevel];
-    [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:ddLogLevel];
+    [Loggers setupLoggers];
 
     NSDictionary *prefs = [EMSFeatureConfig keyDictionary];
-
-    if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-        [Fabric with:@[[Crashlytics class]]];
-
-#ifdef DEBUG_CRASHLYTICS
-        [[Crashlytics sharedInstance] setDebugMode:YES];
-#endif
-        
-        DDCrashlyticsLogger *crashlyticsLog = [[DDCrashlyticsLogger alloc] init];
-        
-        [DDLog addLogger:crashlyticsLog];
-
-        DDLogVerbose(@"Connected to crashlytics");
-    }
 
     DDLogVerbose(@"WE STARTED");
 
@@ -70,7 +54,6 @@ int networkCount = 0;
     if ([EMSFeatureConfig isFeatureEnabled:fRemoteNotifications]) {
         // TODO
     }
-    
     
     PushNotificationManager * pushManager = [PushNotificationManager pushManager];
     pushManager.delegate = self;
@@ -410,15 +393,6 @@ int networkCount = 0;
             app.networkActivityIndicatorVisible = NO;
         }
     });
-}
-
-- (void)crashlyticsDidDetectReportForLastExecution:(CLSReport *)report completionHandler:(void (^)(BOOL submit))completionHandler {
-    DDLogVerbose(@"Crash detected - clearing advanced search");
-    
-    EMSAdvancedSearch *advancedSearch = [[EMSAdvancedSearch alloc] init];
-    [advancedSearch clear];
-    
-    completionHandler(YES);
 }
 
 #pragma mark - State restoration

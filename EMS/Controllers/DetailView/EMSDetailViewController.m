@@ -458,10 +458,6 @@ typedef NS_ENUM(NSUInteger, EMSDetailViewControllerSection) {
 - (void)share:(id)sender {
     self.shareButton.enabled = NO;
 
-    if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-        [[Crashlytics sharedInstance] setObjectValue:self.session.href forKey:@"lastSharedSession"];
-    }
-
     NSString *shareString = [NSString stringWithFormat:@"%@ - %@", self.session.conference.name, self.session.title];
     DDLogVerbose(@"About to share for %@", shareString);
 

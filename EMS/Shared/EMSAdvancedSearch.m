@@ -92,11 +92,6 @@ NSString *const PrefsSearchField = @"searchFields";
     [defaults setObject:[NSDictionary dictionaryWithDictionary:fieldsAsArrays] forKey:PrefsSearchField];
 
     [defaults synchronize];
-
-    if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-        [[Crashlytics sharedInstance] setObjectValue:self.searchText forKey:@"lastStoredSearchText"];
-        [[Crashlytics sharedInstance] setObjectValue:self.fields forKey:@"lastStoredSearchFields"];
-    }
 }
 
 - (void)retrieve {
@@ -115,11 +110,6 @@ NSString *const PrefsSearchField = @"searchFields";
 
             [self setFieldValues:[[storedSearchFields allKeys] containsObject:key] ? [NSSet setWithArray:storedSearchFields[key]] : [NSSet set] forKey:i];
         }
-    }
-
-    if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-        [[Crashlytics sharedInstance] setObjectValue:self.searchText forKey:@"lastRetrievedSearchText"];
-        [[Crashlytics sharedInstance] setObjectValue:self.fields forKey:@"lastRetrievedSearchFields"];
     }
 }
 

@@ -249,10 +249,6 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
 
         NSPredicate *resultPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
 
-        if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-            [[Crashlytics sharedInstance] setObjectValue:resultPredicate forKey:@"activePredicate"];
-        }
-
         return resultPredicate;
     }
 
@@ -488,12 +484,7 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
         
         destination.session = session;
         
-        if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-            [[Crashlytics sharedInstance] setObjectValue:session.href forKey:@"lastDetailSession"];
-        }
-        
         [EMSTracking trackEventWithCategory:@"listView" action:@"detail" label:session.href];
-        
     }
 
     if ([[segue identifier] isEqualToString:@"showSearchView"]) {
@@ -917,11 +908,6 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
     NSString *sessionUrl = userInfo[EMSUserRequestedSessionNotificationSessionKey];
     
     if (sessionUrl) {
-        
-        if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-            [[Crashlytics sharedInstance] setObjectValue:sessionUrl forKey:@"lastDetailSessionFromNotification"];
-        }
-        
         
         [EMSTracking trackEventWithCategory:@"listView" action:@"detailFromNotification" label:sessionUrl];
         

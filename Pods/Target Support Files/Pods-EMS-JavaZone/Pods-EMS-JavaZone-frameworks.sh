@@ -88,11 +88,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Collection-JSON-ObjC/Collection_JSON_ObjC.framework"
   install_framework "$BUILT_PRODUCTS_DIR/NHCalendarActivity/NHCalendarActivity.framework"
 fi
-if [[ "$CONFIGURATION" == "Debug Run Crashlytics" ]]; then
-  install_framework "$BUILT_PRODUCTS_DIR/CocoaLumberjack/CocoaLumberjack.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/Collection-JSON-ObjC/Collection_JSON_ObjC.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/NHCalendarActivity/NHCalendarActivity.framework"
-fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/CocoaLumberjack/CocoaLumberjack.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Collection-JSON-ObjC/Collection_JSON_ObjC.framework"

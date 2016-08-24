@@ -7,9 +7,6 @@ PODS:
   - CocoaLumberjack/Swift (2.3.0):
     - CocoaLumberjack/Extensions
   - Collection-JSON-ObjC (1.0.1)
-  - Crashlytics (3.7.0):
-    - Fabric (~> 1.6.3)
-  - Fabric (1.6.7)
   - GoogleAnalytics (3.14.0)
   - NHCalendarActivity (0.0.3)
   - Pushwoosh (4.0.3)
@@ -17,8 +14,6 @@ PODS:
 DEPENDENCIES:
   - CocoaLumberjack/Swift (~> 2.3)
   - Collection-JSON-ObjC (~> 1.0)
-  - Crashlytics
-  - Fabric
   - GoogleAnalytics (~> 3.14)
   - NHCalendarActivity (~> 0.0)
   - Pushwoosh (~> 4.0)
@@ -26,12 +21,10 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   CocoaLumberjack: 97fab7ee5f507fe54445cca7ea80f926729cfd15
   Collection-JSON-ObjC: 4f1c9fe35f6e8f1cb51e015d6182d23efc0652a0
-  Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
-  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   GoogleAnalytics: 9be1afdb8deeac4bb5f13ca7f7d3b9db2a1f43dc
   NHCalendarActivity: c20c09dd71fba011c9dc252f6210d01134137a63
   Pushwoosh: c7ef2511cca181201e137018e3ea4c2e1d78b0a9
 
-PODFILE CHECKSUM: 5e24433da0b63addc62f2af78c6bf681c54fa71b
+PODFILE CHECKSUM: 6cfd2704ffba1315460c3fc2d898ca367c63a161
 
-COCOAPODS: 1.0.0.rc.2
+COCOAPODS: 1.0.1

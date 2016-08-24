@@ -20,18 +20,12 @@
         
         <h2>Tracking and logging</h2>
         
-        <p>This application has a slightly unusual usage pattern. It gets a little usage before JavaZone, it gets extremely heavy usage for two days while JavaZone is running, and it gets almost no usage until the next JavaZone is getting close. This means we have very little chance to get feedback so that we can improve it over time and need to find out what is important for the users during two days each year. That's why the app includes both analytics and crash logging.</p>
+        <p>This application has a slightly unusual usage pattern. It gets a little usage before JavaZone, it gets extremely heavy usage for two days while JavaZone is running, and it gets almost no usage until the next JavaZone is getting close. This means we have very little chance to get feedback so that we can improve it over time and need to find out what is important for the users during two days each year. That's why the app includes analytics.</p>
         
         <h3 class="about">Analytics</h3>
         
         <p>Tracking in the application logs what pages and views are open and how long data transfers are. It logs <b>no</b> personal information about you nor does it log more information about your device other than what hardware (iPhone, iPad) and what iOS version.</p>
         <p>This information will be used for two things. The main one is for working on improvements to the app itself. The other is at the end of JavaZone each year to provide an overall aggregate set of statistics on which talks was most popular (most favourited, most shared etc) to be able to make an even better conference the next year.</p>
-        
-        <h3 class="about">Crash reporting</h3>
-        
-        <p>We test the application in advance of JavaZone but do not have a chance to replicate the load that it receives during the actual conference or on as many different devices that it will be used on during the conference. So - to catch bugs that cause application termination we're using a crash reporting framework.</p>
-        
-        <p>If the application does crash - then on next start you will be asked if you would like to send a crash report (you can choose to always send - if so then it remembers this). We'd really appreciate that you do so if you can. It will send information on what you were doing in the application and where you were. It will also send information on what hardware (iPhone/iPad) and iOS version. It will <b>not</b> send any personal information.</p>
         
     </body>
 </html>

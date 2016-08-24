@@ -32,7 +32,6 @@
 		1556C4AC1CDA8A3E00D9B175 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4AB1CDA8A3E00D9B175 /* AboutViewController.swift */; };
 		1556C4B21CDA957D00D9B175 /* ConferenceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1556C4B11CDA957D00D9B175 /* ConferenceDetailViewController.swift */; };
 		15806D071B4D75C400EFFB47 /* NSDate+EMSExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 15806D061B4D75C400EFFB47 /* NSDate+EMSExtensions.m */; };
-		15D284E41CDA5F6500FD3F52 /* DDCrashlyticsLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D284E31CDA5F6500FD3F52 /* DDCrashlyticsLogger.swift */; };
 		4E1AD35397D90DE204F516F2 /* EMSTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */; };
 		4E1AD738AAB8C89E2FF89CB1 /* ChangeLog in Resources */ = {isa = PBXBuildFile; fileRef = 4E1ADFF5906ECB18F85E943C /* ChangeLog */; };
 		4E1AD77617AC893954D9A3D7 /* EMS-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4E1ADCA4A8B28565D66D9816 /* EMS-Config.plist */; };
@@ -68,6 +67,8 @@
 		839BD66B176F9BD400900712 /* EMSMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD657176F9BD400900712 /* EMSMainViewController.m */; };
 		839BD66C176F9BD400900712 /* EMSSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839BD659176F9BD400900712 /* EMSSettingsViewController.m */; };
 		83B24CC61B45213B00AA41AD /* TestRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B24CC51B45213B00AA41AD /* TestRating.swift */; };
+		83C3E80B1D6D86020002B56B /* LogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C3E8091D6D86020002B56B /* LogFormatter.swift */; };
+		83C3E80C1D6D86020002B56B /* Loggers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C3E80A1D6D86020002B56B /* Loggers.swift */; };
 		83D5CBA417749EEA00527620 /* EMSFeatureConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */; };
 		83E9AFDD1CE08D60008D1415 /* EMSConference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFDC1CE08D60008D1415 /* EMSConference.swift */; };
 		83E9AFE01CE09162008D1415 /* EMSRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E9AFDF1CE09162008D1415 /* EMSRoom.swift */; };
@@ -138,7 +139,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		10FEEBB7F77D543DBDC3DA6F /* Pods-EMS-JavaZone Tests.debug run crashlytics.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMS-JavaZone Tests.debug run crashlytics.xcconfig"; path = "Pods/Target Support Files/Pods-EMS-JavaZone Tests/Pods-EMS-JavaZone Tests.debug run crashlytics.xcconfig"; sourceTree = "<group>"; };
 		15204C1E18DB84070062874A /* RemoveSlugMapping.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = RemoveSlugMapping.xcmappingmodel; sourceTree = "<group>"; };
 		1556C46C1CDA754600D9B175 /* Session+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1556C46D1CDA754600D9B175 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
@@ -164,11 +164,9 @@
 		1556C4AB1CDA8A3E00D9B175 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		1556C4AE1CDA8EF300D9B175 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1556C4B11CDA957D00D9B175 /* ConferenceDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConferenceDetailViewController.swift; sourceTree = "<group>"; };
-		157476A5E7E3A98238DDE81A /* Pods-EMS-JavaZone.debug run crashlytics.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMS-JavaZone.debug run crashlytics.xcconfig"; path = "Pods/Target Support Files/Pods-EMS-JavaZone/Pods-EMS-JavaZone.debug run crashlytics.xcconfig"; sourceTree = "<group>"; };
 		15806D051B4D75C400EFFB47 /* NSDate+EMSExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+EMSExtensions.h"; sourceTree = "<group>"; };
 		15806D061B4D75C400EFFB47 /* NSDate+EMSExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+EMSExtensions.m"; sourceTree = "<group>"; };
 		15A735D119BDB7F5001AAC7C /* EMS-Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EMS-Keys.plist"; sourceTree = "<group>"; };
-		15D284E31CDA5F6500FD3F52 /* DDCrashlyticsLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDCrashlyticsLogger.swift; sourceTree = "<group>"; };
 		15E1310D1CDA3D6200957E20 /* EMSSearchViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSearchViewDelegate.h; sourceTree = "<group>"; };
 		3DC5ABAEF4FD246126D1616A /* Pods-EMS-JavaZone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMS-JavaZone.release.xcconfig"; path = "Pods/Target Support Files/Pods-EMS-JavaZone/Pods-EMS-JavaZone.release.xcconfig"; sourceTree = "<group>"; };
 		4E1AD00D04FA079A848CDAE5 /* JavaZone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "JavaZone-Info.plist"; sourceTree = "<group>"; };
@@ -191,7 +189,6 @@
 		5A416D72DD69483C5D094AC3 /* sessions.json */ = {isa = PBXFileReference; lastKnownFileType = file.json; path = sessions.json; sourceTree = "<group>"; };
 		5A416D9FB7C232AAE3CE8518 /* EMSTestSpeakersParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSTestSpeakersParser.m; sourceTree = "<group>"; };
 		5A416FF3FE1C13CF6A368C9B /* speakers.json */ = {isa = PBXFileReference; lastKnownFileType = file.json; path = speakers.json; sourceTree = "<group>"; };
-		6D16B444F2A97F37E8160B34 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		72A8D87D677DB805A5EADFAA /* NSURLResponse+EMSExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLResponse+EMSExtensions.h"; sourceTree = "<group>"; };
 		72A8DE57C7743D16672B2213 /* NSURLResponse+EMSExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLResponse+EMSExtensions.m"; sourceTree = "<group>"; };
 		8322B32C1B4681DE008DE85B /* Rating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
@@ -211,7 +208,6 @@
 		835D90411B4675960038FA3E /* RatingViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingViewCell.swift; sourceTree = "<group>"; };
 		836331301770DD2B000F8D95 /* EMSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSSearchViewController.h; sourceTree = "<group>"; };
 		836331311770DD2B000F8D95 /* EMSSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSearchViewController.m; sourceTree = "<group>"; };
-		8363313B1770F06C000F8D95 /* EMSSearchViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EMSSearchViewDelegate.h; path = EMS/View/EMSSearchViewDelegate.h; sourceTree = "<group>"; };
 		837F68551A80CC8400AC7C97 /* JavaZone Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "JavaZone Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		837F68581A80CC8400AC7C97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		837F68611A80CE2600AC7C97 /* EMSTestEventsParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSTestEventsParser.m; sourceTree = "<group>"; };
@@ -227,6 +223,8 @@
 		839BD659176F9BD400900712 /* EMSSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSSettingsViewController.m; sourceTree = "<group>"; };
 		83B24CC41B45213B00AA41AD /* JavaZone Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JavaZone Tests-Bridging-Header.h"; sourceTree = "<group>"; };
 		83B24CC51B45213B00AA41AD /* TestRating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestRating.swift; sourceTree = "<group>"; };
+		83C3E8091D6D86020002B56B /* LogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogFormatter.swift; sourceTree = "<group>"; };
+		83C3E80A1D6D86020002B56B /* Loggers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loggers.swift; sourceTree = "<group>"; };
 		83D5CBA217749EEA00527620 /* EMSFeatureConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSFeatureConfig.h; sourceTree = "<group>"; };
 		83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSFeatureConfig.m; sourceTree = "<group>"; };
 		83E9AFDA1CE07FFF008D1415 /* EMSCoreDataModel 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "EMSCoreDataModel 8.xcdatamodel"; sourceTree = "<group>"; };
@@ -245,9 +243,7 @@
 		83EBB16C1CD2148E00F381A8 /* AddCommentsToRating.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = AddCommentsToRating.xcmappingmodel; sourceTree = "<group>"; };
 		83FE6CF41CD9FAD00069CF7A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		83FE6CF61CD9FAE50069CF7A /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
-		A4647E03BE9A10F278B9CB8A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		CE12C77EEF62022C1BC8A86B /* Pods_EMS_JavaZone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EMS_JavaZone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D1581B6A0B2740B18088FCDA /* Pods.debug run crashlytics.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods.debug run crashlytics.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.debug run crashlytics.xcconfig"; sourceTree = "<group>"; };
 		D3C112D7A724E7C64F48F928 /* Pods-EMS-JavaZone Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMS-JavaZone Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EMS-JavaZone Tests/Pods-EMS-JavaZone Tests.release.xcconfig"; sourceTree = "<group>"; };
 		DDCCC1E48A7E4158EE1828C2 /* Pods-EMS-JavaZone Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMS-JavaZone Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EMS-JavaZone Tests/Pods-EMS-JavaZone Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		E8079FC83F185C0EC188CD07 /* Pods_EMS_JavaZone_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EMS_JavaZone_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -409,14 +405,9 @@
 		648F22F76B1C8A1B0290C7F4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6D16B444F2A97F37E8160B34 /* Pods.debug.xcconfig */,
-				D1581B6A0B2740B18088FCDA /* Pods.debug run crashlytics.xcconfig */,
-				A4647E03BE9A10F278B9CB8A /* Pods.release.xcconfig */,
 				FAF1608CEBD0C97C536E166C /* Pods-EMS-JavaZone.debug.xcconfig */,
-				157476A5E7E3A98238DDE81A /* Pods-EMS-JavaZone.debug run crashlytics.xcconfig */,
 				3DC5ABAEF4FD246126D1616A /* Pods-EMS-JavaZone.release.xcconfig */,
 				DDCCC1E48A7E4158EE1828C2 /* Pods-EMS-JavaZone Tests.debug.xcconfig */,
-				10FEEBB7F77D543DBDC3DA6F /* Pods-EMS-JavaZone Tests.debug run crashlytics.xcconfig */,
 				D3C112D7A724E7C64F48F928 /* Pods-EMS-JavaZone Tests.release.xcconfig */,
 			);
 			name = Pods;
@@ -629,7 +620,6 @@
 				4E1ADFF5906ECB18F85E943C /* ChangeLog */,
 				648F22F76B1C8A1B0290C7F4 /* Pods */,
 				837F68551A80CC8400AC7C97 /* JavaZone Tests.xctest */,
-				8363313B1770F06C000F8D95 /* EMSSearchViewDelegate.h */,
 				835263D01B45195F00ED97D7 /* EMS-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
@@ -663,7 +653,6 @@
 				EAE4330619A52F1C002C3EBA /* Localizable.strings */,
 				F35BB6CE17685885009077D3 /* InfoPlist.strings */,
 				F35BB6D117685885009077D3 /* main.m */,
-				15D284E31CDA5F6500FD3F52 /* DDCrashlyticsLogger.swift */,
 				F35BB6D317685885009077D3 /* EMS-Prefix.pch */,
 				F35BB6D417685885009077D3 /* EMSAppDelegate.h */,
 				F35BB6D517685885009077D3 /* EMSAppDelegate.m */,
@@ -673,6 +662,8 @@
 				83D5CBA317749EEA00527620 /* EMSFeatureConfig.m */,
 				4E1AD28B5453F46BA68AAF34 /* EMSTracking.m */,
 				4E1AD6B14458A2997A59456D /* EMSTracking.h */,
+				83C3E8091D6D86020002B56B /* LogFormatter.swift */,
+				83C3E80A1D6D86020002B56B /* Loggers.swift */,
 				15806D051B4D75C400EFFB47 /* NSDate+EMSExtensions.h */,
 				15806D061B4D75C400EFFB47 /* NSDate+EMSExtensions.m */,
 				F3D5E2C31770946100888A7E /* style.css */,
@@ -701,12 +692,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 837F68601A80CC8500AC7C97 /* Build configuration list for PBXNativeTarget "JavaZone Tests" */;
 			buildPhases = (
-				D396F9701F511D29BAB2FAB7 /* 📦 Check Pods Manifest.lock */,
+				D396F9701F511D29BAB2FAB7 /* [CP] Check Pods Manifest.lock */,
 				837F68511A80CC8400AC7C97 /* Sources */,
 				837F68521A80CC8400AC7C97 /* Frameworks */,
 				837F68531A80CC8400AC7C97 /* Resources */,
-				6EA7BB2537110DDA6AF6C261 /* 📦 Embed Pods Frameworks */,
-				FDE1AEE00420C2B21E8C87F5 /* 📦 Copy Pods Resources */,
+				6EA7BB2537110DDA6AF6C261 /* [CP] Embed Pods Frameworks */,
+				FDE1AEE00420C2B21E8C87F5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -722,12 +713,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F35BB6E817685885009077D3 /* Build configuration list for PBXNativeTarget "JavaZone" */;
 			buildPhases = (
-				F15340BFC7864A9580FD3334 /* 📦 Check Pods Manifest.lock */,
+				F15340BFC7864A9580FD3334 /* [CP] Check Pods Manifest.lock */,
 				F35BB6BE17685885009077D3 /* Sources */,
 				F35BB6BF17685885009077D3 /* Frameworks */,
 				F35BB6C017685885009077D3 /* Resources */,
-				4A77BC0944B9460287F79FE8 /* 📦 Copy Pods Resources */,
-				296D22E9A2981C7C6C6D9007 /* 📦 Embed Pods Frameworks */,
+				4A77BC0944B9460287F79FE8 /* [CP] Copy Pods Resources */,
+				296D22E9A2981C7C6C6D9007 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -830,14 +821,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		296D22E9A2981C7C6C6D9007 /* 📦 Embed Pods Frameworks */ = {
+		296D22E9A2981C7C6C6D9007 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -845,14 +836,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EMS-JavaZone/Pods-EMS-JavaZone-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4A77BC0944B9460287F79FE8 /* 📦 Copy Pods Resources */ = {
+		4A77BC0944B9460287F79FE8 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -860,14 +851,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EMS-JavaZone/Pods-EMS-JavaZone-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6EA7BB2537110DDA6AF6C261 /* 📦 Embed Pods Frameworks */ = {
+		6EA7BB2537110DDA6AF6C261 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -875,14 +866,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EMS-JavaZone Tests/Pods-EMS-JavaZone Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D396F9701F511D29BAB2FAB7 /* 📦 Check Pods Manifest.lock */ = {
+		D396F9701F511D29BAB2FAB7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -890,14 +881,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		F15340BFC7864A9580FD3334 /* 📦 Check Pods Manifest.lock */ = {
+		F15340BFC7864A9580FD3334 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -905,14 +896,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		FDE1AEE00420C2B21E8C87F5 /* 📦 Copy Pods Resources */ = {
+		FDE1AEE00420C2B21E8C87F5 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -987,18 +978,19 @@
 				1556C4911CDA754600D9B175 /* ConferenceType+CoreDataProperties.swift in Sources */,
 				1556C4871CDA754600D9B175 /* Room.swift in Sources */,
 				F3AABDE919AB16C6003D1D1C /* AddTimestampToSpeaker.xcmappingmodel in Sources */,
+				83C3E80B1D6D86020002B56B /* LogFormatter.swift in Sources */,
 				1556C4A91CDA754600D9B175 /* SpeakerPic.swift in Sources */,
 				1556C4A71CDA754600D9B175 /* SpeakerPic+CoreDataProperties.swift in Sources */,
 				83EBB16D1CD2148E00F381A8 /* AddCommentsToRating.xcmappingmodel in Sources */,
 				F30A8CDB192B42FF0066DFD9 /* EMSDetailViewRow.m in Sources */,
 				1556C49B1CDA754600D9B175 /* ConferenceLevel+CoreDataProperties.swift in Sources */,
+				83C3E80C1D6D86020002B56B /* Loggers.swift in Sources */,
 				EACD33EC1BBC4FF60060C28E /* TypeLabel.swift in Sources */,
 				1556C4971CDA754600D9B175 /* Keyword.swift in Sources */,
 				1556C4851CDA754600D9B175 /* Room+CoreDataProperties.swift in Sources */,
 				EA9ACCBD19A9764500D369C6 /* EMSSessionTitleTableViewCell.m in Sources */,
 				83D5CBA417749EEA00527620 /* EMSFeatureConfig.m in Sources */,
 				F37953CB17797E41000B7CDD /* EMSAdvancedSearch.m in Sources */,
-				15D284E41CDA5F6500FD3F52 /* DDCrashlyticsLogger.swift in Sources */,
 				1556C4891CDA754600D9B175 /* Conference+CoreDataProperties.swift in Sources */,
 				EA461F441BBF8926000998AC /* EmsDescriptionTableViewCell.swift in Sources */,
 				832764F01CDA241B00F26494 /* EMSCoreDataModel.xcdatamodeld in Sources */,
@@ -1123,37 +1115,6 @@
 			};
 			name = Debug;
 		};
-		837F685E1A80CC8400AC7C97 /* Debug Run Crashlytics */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 10FEEBB7F77D543DBDC3DA6F /* Pods-EMS-JavaZone Tests.debug run crashlytics.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = "JavaZone Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.chrissearle.incogito.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "JavaZone Tests/JavaZone Tests-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JavaZone.app/JavaZone";
-			};
-			name = "Debug Run Crashlytics";
-		};
 		837F685F1A80CC8400AC7C97 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D3C112D7A724E7C64F48F928 /* Pods-EMS-JavaZone Tests.release.xcconfig */;
@@ -1201,7 +1162,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Chris Searle (3QT967G4GA)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chris Searle (3QT967G4GA)";
 				COPY_PHASE_STRIP = NO;
-				EMS_RUN_CRASHLYTICS = 0;
 				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1244,7 +1204,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Chris Searle (3QT967G4GA)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				EMS_RUN_CRASHLYTICS = 0;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREFIX_HEADER = "EMS/Shared/EMS-Prefix.pch";
@@ -1339,111 +1298,6 @@
 			};
 			name = Release;
 		};
-		F39861E819A1E621004DC41B /* Debug Run Crashlytics */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULE_DEBUGGING = NO;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Chris Searle (3QT967G4GA)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chris Searle (3QT967G4GA)";
-				COPY_PHASE_STRIP = NO;
-				EMS_RUN_CRASHLYTICS = 1;
-				ENABLE_BITCODE = NO;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREFIX_HEADER = "EMS/Shared/EMS-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = (
-					"-DUSE_TEST_DATE=1",
-					"-DTEST_PROD=1",
-					"-DDEBUG_CRASHLYTICS=1",
-				);
-				PROVISIONING_PROFILE = "fbdf3f3c-2544-4e3a-aab9-9806aafbb488";
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = "Debug Run Crashlytics";
-		};
-		F39861E919A1E621004DC41B /* Debug Run Crashlytics */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 157476A5E7E3A98238DDE81A /* Pods-EMS-JavaZone.debug run crashlytics.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "JavaZone - AppIcon";
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 23;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"COCOAPODS=1",
-					JZ,
-				);
-				INFOPLIST_FILE = "EMS/Applications/JavaZone/JavaZone-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
-				ONLY_ACTIVE_ARCH = YES;
-				"OTHER_CFLAGS[arch=*]" = (
-					"$(inherited)",
-					"-isystem",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"-isystem",
-					"\"${PODS_ROOT}/Headers/Public/CocoaLumberjack\"",
-					"-isystem",
-					"\"${PODS_ROOT}/Headers/Public/Collection-JSON-ObjC\"",
-					"-isystem",
-					"\"${PODS_ROOT}/Headers/Public/Crashlytics\"",
-					"-isystem",
-					"\"${PODS_ROOT}/Headers/Public/CrashlyticsLumberjack\"",
-					"-isystem",
-					"\"${PODS_ROOT}/Headers/Public/Fabric\"",
-					"-isystem",
-					"\"${PODS_ROOT}/Headers/Public/GoogleAnalytics\"",
-					"-isystem",
-					"\"${PODS_ROOT}/Headers/Public/NHCalendarActivity\"",
-					"-isystem",
-					"\"${PODS_ROOT}/Headers/Public/Pushwoosh\"",
-					"-DDEBUG_CRASHLYTICS=1",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.chrissearle.incogito.JavaZone;
-				PRODUCT_MODULE_NAME = EMS;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "EMS-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
-				VERSIONING_SYSTEM = "apple-generic";
-				WRAPPER_EXTENSION = app;
-			};
-			name = "Debug Run Crashlytics";
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1451,7 +1305,6 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				837F685D1A80CC8400AC7C97 /* Debug */,
-				837F685E1A80CC8400AC7C97 /* Debug Run Crashlytics */,
 				837F685F1A80CC8400AC7C97 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1461,7 +1314,6 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F35BB6E617685885009077D3 /* Debug */,
-				F39861E819A1E621004DC41B /* Debug Run Crashlytics */,
 				F35BB6E717685885009077D3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1471,7 +1323,6 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F35BB6E917685885009077D3 /* Debug */,
-				F39861E919A1E621004DC41B /* Debug Run Crashlytics */,
 				F35BB6EA17685885009077D3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

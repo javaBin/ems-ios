@@ -103,10 +103,6 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
     
     NSURL *href = [defaults URLForKey:@"activeConference"];
     
-    if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-        [[Crashlytics sharedInstance] setObjectValue:href forKey:@"lastRetrievedConference"];
-    }
-    
     return href;
 }
 
@@ -117,10 +113,6 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
     [defaults setURL:href forKey:@"activeConference"];
     
     [defaults synchronize];
-    
-    if ([EMSFeatureConfig isCrashlyticsEnabled]) {
-        [[Crashlytics sharedInstance] setObjectValue:href forKey:@"lastStoredConference"];
-    }
 }
 
 - (void)cancelConferenceRefresh {
