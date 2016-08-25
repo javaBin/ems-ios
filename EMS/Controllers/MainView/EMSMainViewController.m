@@ -918,7 +918,9 @@ static void *kRefreshActiveConferenceContext = &kRefreshActiveConferenceContext;
 
             DDLogVerbose(@"Preparing detail view from passed href %@", session);
 
-            EMSDetailViewController *detailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EMSDetailViewController"];
+            UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Detail" bundle:nil];
+            
+            EMSDetailViewController *detailViewController = [storyboard instantiateViewControllerWithIdentifier:@"EMSDetailViewController"];
             
             detailViewController.session = session;
             
