@@ -1111,7 +1111,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
 
 - (NSDate *)dateForConference:(Conference *)conference andDate:(NSDate *)date {
     NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"slot.start" ascending:YES];
-    NSArray *sessions = [self sessionsForPredicate:[NSPredicate predicateWithFormat:@"(format != %@ AND conference == %@)", @"workshop", conference] andSort:@[dateDescriptor]];
+    NSArray *sessions = [self sessionsForPredicate:[NSPredicate predicateWithFormat:@"(format != %@ AND conference == %@ AND slot != nil)", @"workshop", conference] andSort:@[dateDescriptor]];
     
     Session *firstSession = sessions[0];
     NSDate *conferenceDate = firstSession.slot.start;
