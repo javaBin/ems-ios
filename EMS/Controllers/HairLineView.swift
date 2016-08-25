@@ -1,9 +1,5 @@
 //
 //  HairLineView.swift
-//  EMS
-//
-//  Created by Jobb on 05.10.2015.
-//  Copyright © 2015 Chris Searle. All rights reserved.
 //
 
 import Foundation

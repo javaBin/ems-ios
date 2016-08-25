@@ -1,9 +1,5 @@
 //
 //  StarView.swift
-//  EMS
-//
-//  Created by Jobb on 02.10.2015.
-//  Copyright © 2015 Chris Searle. All rights reserved.
 //
 
 import Foundation

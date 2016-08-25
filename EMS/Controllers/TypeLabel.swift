@@ -1,9 +1,5 @@
 //
 //  TypeLabel.swift
-//  EMS
-//
-//  Created by Jobb on 30.09.2015.
-//  Copyright © 2015 Chris Searle. All rights reserved.
 //
 
 import Foundation

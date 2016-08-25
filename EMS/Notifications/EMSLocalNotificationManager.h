@@ -1,9 +1,5 @@
 //
-//  EMSLocalNotificationManager2.h
-//  EMS
-//
-//  Created by Jobb on 22.08.14.
-//  Copyright (c) 2014 Chris Searle. All rights reserved.
+//  EMSLocalNotificationManager.h
 //
 
 #import <Foundation/Foundation.h>
