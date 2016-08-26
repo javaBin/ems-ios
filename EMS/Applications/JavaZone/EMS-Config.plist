@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>rating-server</key>
-	<string>http://test.javazone.no/devnull/server/</string>
+	<string>https://test.javazone.no/devnull/server/</string>
 	<key>rating-server-prod</key>
-	<string>http://javazone.no/devnull/server/</string>
+	<string>https://javazone.no/devnull/server/</string>
 	<key>features</key>
 	<dict>
 		<key>links</key>
@@ -18,9 +18,9 @@
 		<true/>
 	</dict>
 	<key>ems-root-url-prod</key>
-	<string>http://javazone.no/ems/server/</string>
+	<string>https://javazone.no/ems/server/</string>
 	<key>ems-root-url</key>
-	<string>http://test.javazone.no/ems/server/</string>
+	<string>https://test.javazone.no/ems/server/</string>
 	<key>level-sort</key>
 	<dict>
 		<key>beginner</key>

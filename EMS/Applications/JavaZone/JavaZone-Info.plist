@@ -32,11 +32,6 @@
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>javazone.no</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
 			<key>www.gravatar.com</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
