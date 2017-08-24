@@ -1,4 +1,8 @@
-# ems-ios
+# Update 2017
+
+From JavaZone 2017 this application is replaced with appZone: https://github.com/javaBin/appZone
+
+## ems-ios
 
 EMS-redux client app for iOS.
 
